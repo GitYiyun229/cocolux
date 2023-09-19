@@ -1,0 +1,28 @@
+.bg-out-content-about {
+  background: linear-gradient(180deg, #E8FFF6 0%, #FFFFFF 100%);
+}
+@media (min-width: 767px) {
+  .bg-out-content-about {
+    min-height: 950px;
+  }
+}
+@media (min-width: 767px) {
+  .bg-out-content-about .top-content-about {
+    height: 950px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+}
+
+.content-choose-me {
+  background: linear-gradient(180deg, #FFFFFF 0%, #E8FFF6 100%);
+}
+
+.content-about-customer {
+  background: linear-gradient(180deg, #E8FFF6 0%, #FFFFFF 100%);
+}
+
+.content-about-faq {
+  background: linear-gradient(180deg, #FFFFFF 0%, #E8FFF6 100%);
+}

@@ -1,0 +1,186 @@
+.table-width-auto {
+    width: 100% !important;
+}
+
+.content-wrapper > .content {
+    padding: 20px;
+}
+
+.custom-control-label::before {
+    left: -18px;
+}
+
+.custom-control-label::after {
+    left: -18px;
+}
+
+.select2-selection__choice {
+    color: #000000 !important;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.table-history .fa-trash {
+    cursor: pointer;
+}
+
+.select2-container .select2-selection--single {
+    height: 38px;
+}
+
+.btn-delete-img {
+    position: absolute;
+    top: -5px;
+    right: 0px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    height: 30px;
+    width: 30px;
+    background-color: #000000;
+    text-align: center;
+    z-index: 2;
+    border-radius: 50%;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+table.dataTable.no-footer {
+     border-bottom: 0;
+}
+
+table.dataTable thead th, table.dataTable thead td {
+    border-bottom: 0;
+}
+
+table.dataTable thead th {
+    color: #8a879c;
+}
+
+.dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
+    color: #8a879c;
+}
+
+.unread-message {
+    font-weight: 600;
+    background: #efefef;
+}
+
+.comment-trainee {
+    padding: 20px;
+    border: 1px solid #dee2e6;
+}
+
+.direct-chat-messages {
+    -webkit-transform: translate(0,0);
+    transform: translate(0,0);
+    height: 600px;
+    overflow: auto;
+    padding: 10px;
+}
+
+#order-table .dropdown-menu-status {
+    width: 200px;
+    padding: 10px 15px 10px 15px;
+}
+
+.hidden {
+    display: none;
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+.card-success:not(.card-outline)>.card-header {
+    background-color: #28a745;
+}
+
+.card-primary:not(.card-outline)>.card-header {
+    background-color: #007bff;
+}
+
+.competition-sections {
+    position: fixed;
+    width: 20%;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.card-success {
+    transition: all 0.15s ease 0s;
+    height: inherit;
+    width: inherit;
+}
+
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    height: 19px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(19px);
+    -ms-transform: translateX(19px);
+    transform: translateX(19px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 20px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+/*end toggle switch*/
+
+.nav-sidebar .nav-header:not(:first-of-type) {
+     padding: 0;
+}

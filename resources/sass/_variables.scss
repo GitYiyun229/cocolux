@@ -1,0 +1,56 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'GoogleSans', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+$activeColor: #BC2330;
+
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1140px,
+    xxl: 1230px
+) !default;
+
+h1,h2,h3,h4{
+    font-family: 'GoogleSans-Bold', sans-serif;
+}
+
+.container-top{
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    width: 100%;
+    padding-right: calc(var(--bs-gutter-x) * 0.5);
+    padding-left: calc(var(--bs-gutter-x) * 0.5);
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 576px) {
+    .container-top {
+        max-width: 540px;
+    }
+}
+@media (min-width: 768px) {
+    .container-top {
+        max-width: 720px;
+    }
+}
+@media (min-width: 992px) {
+    .container-top {
+        max-width: 960px;
+    }
+}
+@media (min-width: 1200px) {
+    .container-top {
+        max-width: 1680px;
+    }
+}
+@media (min-width: 1400px) {
+    .container-top {
+        max-width: 1680px;
+    }
+}

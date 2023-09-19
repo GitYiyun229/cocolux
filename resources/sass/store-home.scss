@@ -1,0 +1,47 @@
+.top-content-media{
+    padding-top: 80px;
+    .title-page{
+        font-family: SVN-SVN-A-Love-Of-Thunder;
+        color: #E91A22;
+        font-size: 48px;
+        text-transform: uppercase;
+        margin-bottom: 45px;
+        text-align: center;
+    }
+}
+.list-store-home{
+    margin-bottom: 80px;
+    .search{
+
+    }
+    .list-stores{
+        border: 1px solid #DBD9D9;
+        border-radius: 8px;
+        overflow: hidden;
+        max-height: 551px;
+        overflow-y: auto;
+        .item-store{
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+            &:nth-child(odd){
+                background: #FEFBF3;
+            }
+            .title-store{
+                font-family: GoogleSans-Bold;
+                a{
+                    color: #000;
+                }
+            }
+            ul{
+                margin: 0;
+                li{
+                    color: #4F4646;
+                    svg{
+                        min-width: 20px;
+                        margin-right: 8px;
+                    }
+                }
+            }
+        }
+    }
+}

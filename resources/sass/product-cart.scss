@@ -1,0 +1,176 @@
+.cart-content-products{
+    padding: 80px 0;
+    .title-box-cart{
+        margin-bottom: 40px;
+        color: var(--neutral-neutral-13, #0E0202);
+        leading-trim: both;
+        text-edge: cap;
+        font-family: GoogleSans-Bold;
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 100%; /* 32px */
+        text-transform: uppercase;
+    }
+    .list-product-in-cart{
+        .item-product-in-cart{
+            border-bottom: 1px solid #F1F0F0;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            img{
+                border-radius: 8px;
+                overflow: hidden;
+            }
+            .title-product{
+                font-family: GoogleSans-Bold;
+                font-size: 18px;
+                text-transform: uppercase;
+                margin-bottom: 0;
+                color: #000;
+            }
+            .remove-product-in-cart{
+                margin-bottom: 0;
+            }
+            .price-product-root{
+                color: #E91A22;
+                font-family: GoogleSans-Bold;
+                margin: 7px 0;
+            }
+            .number-input {
+                border: 1px solid #d5d5d5;
+                border-radius: 8px;
+                display: inline-flex;
+                box-sizing: border-box;
+                * {
+                    box-sizing: border-box;
+                }
+                .quantity {
+                    border: none;
+                    padding: 5px 0;
+                    width: 40px;
+                    text-align: center;
+                    -webkit-appearance: textfield;
+                    -moz-appearance: textfield;
+                    appearance: textfield;
+                    &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+                        -webkit-appearance: none;
+                    }
+                }
+                button {
+                    outline: none;
+                    -webkit-appearance: none;
+                    background-color: transparent;
+                    border: none;
+                    align-items: center;
+                    justify-content: center;
+                    width: 2rem;
+                    cursor: pointer;
+                    margin: 0;
+                    position: relative;
+
+                    &:before, &:after {
+                        display: inline-block;
+                        position: absolute;
+                        content: '';
+                        width: 1rem;
+                        height: 2px;
+                        background-color: #212121;
+                        transform: translate(-50%, -50%);
+                    }
+                    &.plus:after {
+                        transform: translate(-50%, -50%) rotate(90deg);
+                    }
+                }
+            }
+            .subtotal-product{
+                font-family: GoogleSans-Bold;
+            }
+            &:hover{
+                .title-product{
+                    color: #E91A22;
+                }
+            }
+        }
+    }
+    .box-price-before{
+        border-bottom: 1px solid #F1F0F0;
+        margin-bottom: 24px;
+        padding-bottom: 15px;
+        .text-end{
+            font-family: GoogleSans-Bold;
+        }
+        tr{
+            td{
+                padding: 10px 0;
+            }
+        }
+    }
+    .box-price-after{
+        .price-total{
+            font-family: GoogleSans-Bold;
+            font-size: 20px;
+        }
+    }
+}
+.form-in-detail-cart{
+    .top-form{
+        input,textarea{
+            border: 1px solid var(--neutral-neutral-5, #DBD9D9);
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin-bottom: 15px;
+            background: #fff;
+        }
+        .custom-control{
+            cursor: pointer;
+            user-select: none;
+            padding-left: 25px;
+            margin-bottom: 15px;
+            &:hover input[type="radio"] ~ .checkmark {
+                background-color: #ccc;
+            }
+            input[type="radio"]{
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                &:checked ~ .checkmark {
+                    background-color: #BC2330;
+                }
+                &:checked ~ .checkmark:after {
+                    display: block;
+                }
+            }
+            .checkmark {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 16px;
+                width: 16px;
+                background-color: #eee;
+                border-radius: 50%;
+                margin-top: 4px;
+                &:after {
+                    content: "";
+                    position: absolute;
+                    display: none;
+                    top: 4px;
+                    left: 4px;
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background: white;
+                }
+            }
+        }
+    }
+    .submit-form-popup{
+        padding: 12px 0;
+        font-family: GoogleSans-Bold;
+        font-size: 14px;
+        text-transform: uppercase;
+        border-radius: 8px;
+        color: #fff;
+        background: var(--primary-primary-500, #E91A22);
+        box-shadow: 24px 24px 64px 0px rgba(233, 26, 34, 0.32);
+    }
+}

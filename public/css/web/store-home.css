@@ -1,0 +1,45 @@
+.top-content-media {
+  padding-top: 80px;
+}
+.top-content-media .title-page {
+  font-family: SVN-SVN-A-Love-Of-Thunder;
+  color: #E91A22;
+  font-size: 48px;
+  text-transform: uppercase;
+  margin-bottom: 45px;
+  text-align: center;
+}
+
+.list-store-home {
+  margin-bottom: 80px;
+}
+.list-store-home .list-stores {
+  border: 1px solid #DBD9D9;
+  border-radius: 8px;
+  overflow: hidden;
+  max-height: 551px;
+  overflow-y: auto;
+}
+.list-store-home .list-stores .item-store {
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+}
+.list-store-home .list-stores .item-store:nth-child(odd) {
+  background: #FEFBF3;
+}
+.list-store-home .list-stores .item-store .title-store {
+  font-family: GoogleSans-Bold;
+}
+.list-store-home .list-stores .item-store .title-store a {
+  color: #000;
+}
+.list-store-home .list-stores .item-store ul {
+  margin: 0;
+}
+.list-store-home .list-stores .item-store ul li {
+  color: #4F4646;
+}
+.list-store-home .list-stores .item-store ul li svg {
+  min-width: 20px;
+  margin-right: 8px;
+}

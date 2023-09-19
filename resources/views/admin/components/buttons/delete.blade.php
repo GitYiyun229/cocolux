@@ -1,0 +1,1 @@
+<button type="button" class="btn btn-sm btn-outline-danger btn-delete" data-url="@if(isset($urlDelete)) {{ $urlDelete }} @endif" data-table-id="@if(isset($lowerModelName)) #{{ $lowerModelName }}-table @endif" title="@lang('form.button.delete')"><i class="fa fa-trash"></i></button>
