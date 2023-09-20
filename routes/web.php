@@ -17,27 +17,13 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Route::get('/save-city-from-api', 'ApiController@saveCityFromApi');
+Route::get('/save-attribute-from-api', 'ApiController@saveAttributeFromApi');
+Route::get('/save-attribute-value-from-api', 'ApiController@saveAttributeValueFromApi');
 
-Route::group(['namespace' => 'Web', 'middleware' => 'language', 'prefix' => LaravelLocalization::setLocale()], function (){
+Route::group(['namespace' => 'Web', 'middleware' => 'language'], function (){
     Route::get('/', 'HomeController@index')->name('home');
-    Route::get(LaravelLocalization::transRoute('routes.page'), 'PageController@index')->name('page');
-    Route::get(LaravelLocalization::transRoute('routes.article.cat'), 'ArticleController@cat')->name('catArticle');
-    Route::get(LaravelLocalization::transRoute('routes.article.detail'), 'ArticleController@detail')->name('detailArticle');
-    Route::get(LaravelLocalization::transRoute('routes.contact'), 'ContactController@index')->name('detailContact');
     Route::post('/lien-he', 'ContactController@store')->name('detailContactStore');
-    Route::get(LaravelLocalization::transRoute('routes.album'), 'MediaController@album')->name('album');
-    Route::get(LaravelLocalization::transRoute('routes.video'), 'MediaController@video')->name('video');
-    Route::get(LaravelLocalization::transRoute('routes.store'), 'StoreController@index')->name('store');
-    Route::get(LaravelLocalization::transRoute('routes.product.home'), 'ProductController@index')->name('productHome');
-    Route::get(LaravelLocalization::transRoute('routes.product.cat'), 'ProductController@cat')->name('productCat');
-    Route::get(LaravelLocalization::transRoute('routes.product.detail'), 'ProductController@detail')->name('productDetail');
-    Route::post('/dat-ban', 'ProductController@bookTable')->name('bookTable');
-    Route::post('/them-vao-gio-hang', 'ProductController@addToCart')->name('addToCart');
-    Route::post('/update-gio-hang', 'ProductController@updateCart')->name('updateCart');
-    Route::get(LaravelLocalization::transRoute('routes.cart.home'), 'ProductController@showCart')->name('showCart');
-    Route::get(LaravelLocalization::transRoute('routes.cart.delete'), 'ProductController@removeItem')->name('removeItem');
-    Route::post('/order', 'ProductController@order')->name('order');
-    Route::get(LaravelLocalization::transRoute('routes.cart.success'), 'ProductController@success')->name('orderProductSuccess');
 });
 
 //Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
