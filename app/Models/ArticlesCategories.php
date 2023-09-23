@@ -12,10 +12,10 @@ class ArticlesCategories extends Model
     const TYPE_PROMOTION = 1;
     const TYPE_ARTICLE = 0;
 
-    protected $guarded = ['id'];
+//    protected $guarded = ['id'];
 
-    public function articles()
-    {
-        return $this->belongsTo(Article::class, 'id', 'category_id');
-    }
+//    public function articles()
+//    {
+//        return $this->belongsTo(Article::class, 'id', 'category_id');
+//    }
 }

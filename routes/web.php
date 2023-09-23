@@ -18,8 +18,16 @@ use Illuminate\Http\Request;
 |
 */
 //Route::get('/save-city-from-api', 'ApiController@saveCityFromApi');
-Route::get('/save-attribute-from-api', 'ApiController@saveAttributeFromApi');
-Route::get('/save-attribute-value-from-api', 'ApiController@saveAttributeValueFromApi');
+//Route::get('/save-attribute-from-api', 'ApiController@saveAttributeFromApi');
+//Route::get('/save-attribute-value-from-api', 'ApiController@saveAttributeValueFromApi');
+//Route::get('/save-product-category-from-api', 'ApiController@saveProductCategoryFromApi');
+//Route::get('/save-product-rating-from-api', 'ApiController@saveProductRatingFromApi');
+//Route::get('/save-product-comment-from-api', 'ApiController@saveProductCommentFromApi');
+//Route::get('/save-article-category-from-api', 'ApiController@saveArticleCategoryFromApi');
+//Route::get('/save-article-from-api', 'ApiController@saveArticleFromApi');
+//Route::get('/save-store-from-api', 'ApiController@saveStoreFromApi');
+//Route::get('/save-products-from-api', 'ApiController@saveProductsFromApi');
+Route::get('/save-product-options-from-api', 'ApiController@saveProductOptionsFromApi');
 
 Route::group(['namespace' => 'Web', 'middleware' => 'language'], function (){
     Route::get('/', 'HomeController@index')->name('home');

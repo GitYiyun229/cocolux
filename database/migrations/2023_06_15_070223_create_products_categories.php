@@ -17,11 +17,15 @@ class CreateProductsCategories extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('slug')->default('');
+            $table->string('logo')->nullable();
             $table->string('image')->nullable();
             $table->string('ordering')->nullable();
             $table->string('seo_title')->nullable();
             $table->string('seo_keyword')->nullable();
             $table->text('seo_description')->nullable();
+            $table->string('path')->nullable();
+            $table->integer('parent_id')->nullable();
+            $table->string('normalize_path')->nullable();
             $table->tinyInteger('active')->default(0)->comment('0: Không hoạt động; 1: Hoạt động');
             $table->timestamps();
         });

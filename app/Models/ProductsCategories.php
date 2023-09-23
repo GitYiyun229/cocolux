@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductsCategories extends Model
 {
-    const STATUS_ACTIVE = 1;
-    const STATUS_INACTIVE = 0;
+//    const STATUS_ACTIVE = 1;
+//    const STATUS_INACTIVE = 0;
 
-    protected $guarded = ['id'];
+//    protected $guarded = ['id'];
 
-    public function products()
-    {
-        return $this->hasMany(Product::class, 'category_id', 'id');
-    }
+//    public function products()
+//    {
+//        return $this->hasMany(Product::class, 'category_id', 'id');
+//    }
 }
