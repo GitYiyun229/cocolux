@@ -27,7 +27,8 @@ use Illuminate\Http\Request;
 //Route::get('/save-article-from-api', 'ApiController@saveArticleFromApi');
 //Route::get('/save-store-from-api', 'ApiController@saveStoreFromApi');
 //Route::get('/save-products-from-api', 'ApiController@saveProductsFromApi');
-Route::get('/save-product-options-from-api', 'ApiController@saveProductOptionsFromApi');
+//Route::get('/save-product-options-from-api', 'ApiController@saveProductOptionsFromApi');
+Route::get('/save-promotions-from-api', 'ApiController@savePromotionsFromApi');
 
 Route::group(['namespace' => 'Web', 'middleware' => 'language'], function (){
     Route::get('/', 'HomeController@index')->name('home');

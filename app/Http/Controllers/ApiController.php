@@ -11,13 +11,14 @@ use App\Models\ProductComments;
 use App\Models\ProductOptions;
 use App\Models\ProductRatings;
 use App\Models\ProductsCategories;
+use App\Models\Promotions;
 use App\Models\Stocks;
 use App\Models\Stores;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use App\Models\City;
-use Illuminate\Session\Store;
+use Carbon\Carbon;
 
 class ApiController extends Controller
 {
@@ -508,6 +509,59 @@ class ApiController extends Controller
                             $apiDataStock->save();
                         }
                     }
+                }
+            }
+        }
+
+        // Hoặc sử dụng Query Builder
+        // DB::table('api_data')->insert($data);
+
+        return 'Dữ liệu từ API đã được lưu vào cơ sở dữ liệu.';
+    }
+
+    public function savePromotionsFromApi()
+    {
+        // Sử dụng thư viện Guzzle để gửi yêu cầu GET đến API
+        $client = new Client([
+            'base_uri' => 'http://api.cocolux.com/', // Điều này giữ nguyên HTTP
+            RequestOptions::VERIFY => false, // Tắt kiểm tra chứng chỉ SSL
+        ]);
+
+        $response = $client->get('v1/promotions?skip=0&limit=400');
+
+
+        // Lấy nội dung JSON từ phản hồi
+        $data = json_decode($response->getBody(), true);
+        $chunkSize = 50; // Số lượng bản ghi trong mỗi lô
+        $dataChunks = array_chunk($data['data'], $chunkSize);
+
+        foreach ($dataChunks as $chunk) {
+            foreach ($chunk as $item) {
+                $newId = $item['id'];
+
+                // Tìm hoặc tạo một bản ghi dựa trên ID
+                $apiDatasss = Promotions::find($newId);
+
+                // Chỉ cập nhật các trường nếu bản ghi chưa tồn tại
+                if (!$apiDatasss) {
+                    // Lưu dữ liệu từng bản ghi
+                    $apiData = new Promotions();
+                    $apiData->id = $item['id'];
+                    $apiData->code = $item['code'];
+                    $apiData->name = $item['name'];
+                    $apiData->content = $item['content'];
+                    $apiData->image_layer = $item['image_layer']?$item['image_layer']:'';
+                    $apiData->thumbnail_url = $item['thumbnail_url']?$item['thumbnail_url']:'';
+                    $dateTime = Carbon::createFromTimestamp($item['applied_stop_time']);
+                    $timestampString = $dateTime->toDateTimeString();
+                    $apiData->applied_stop_time = $timestampString;
+
+                    $dateTime2 = Carbon::createFromTimestamp($item['applied_start_time']);
+                    $timestampString2 = $dateTime2->toDateTimeString();
+                    $apiData->applied_start_time = $timestampString2;
+//                    $apiData->active = 1;
+                    // Lưu dữ liệu vào cơ sở dữ liệu
+                    $apiData->save();
                 }
             }
         }
