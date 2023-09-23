@@ -9,8 +9,6 @@
         </div>
         <!-- Main Footer -->
         @include('web.partials._footer')
-        @include('web.partials._offcanvas')
-        @include('web.partials._icon')
     </div>
     <nav class="menu-mobile d-block d-lg-none" id="menu-mobile">
         <ul>
@@ -62,29 +60,4 @@
         }
     </script>
 
-    <script>
-        $(".cartToastBtn").on('click', function () {
-            var bsAlert = new bootstrap.Toast($('#cartToast'));
-            bsAlert.show();
-        })
-    </script>
-    <script>
-        function order(id_prd) {
-            var quantity = $("#quantity").val();
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '{{ route('addToCart') }}',
-                data: {
-                    quantity: quantity?quantity:1,
-                    id: id_prd,
-                    _token: $('meta[name="csrf-token"]').attr("content")
-                },
-                success: function (data) {
-                    console.log(data);
-                    $("#number-added-cart").html(data.total);
-                }
-            });
-        }
-    </script>
 @endsection

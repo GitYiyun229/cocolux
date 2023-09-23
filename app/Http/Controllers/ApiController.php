@@ -6,6 +6,8 @@ use App\Models\Article;
 use App\Models\ArticlesCategories;
 use App\Models\Attribute;
 use App\Models\AttributeValues;
+use App\Models\Banners;
+use App\Models\Page;
 use App\Models\Product;
 use App\Models\ProductComments;
 use App\Models\ProductOptions;
@@ -568,6 +570,97 @@ class ApiController extends Controller
 
         // Hoặc sử dụng Query Builder
         // DB::table('api_data')->insert($data);
+
+        return 'Dữ liệu từ API đã được lưu vào cơ sở dữ liệu.';
+    }
+
+    public function saveBannersFromApi()
+    {
+        // Sử dụng thư viện Guzzle để gửi yêu cầu GET đến API
+        $client = new Client([
+            'base_uri' => 'http://api.cocolux.com/', // Điều này giữ nguyên HTTP
+            RequestOptions::VERIFY => false, // Tắt kiểm tra chứng chỉ SSL
+        ]);
+
+        $response = $client->get('v1/banners?skip=0&limit=400');
+
+
+        // Lấy nội dung JSON từ phản hồi
+        $data = json_decode($response->getBody(), true);
+        $chunkSize = 50; // Số lượng bản ghi trong mỗi lô
+        $dataChunks = array_chunk($data['data'], $chunkSize);
+
+        foreach ($dataChunks as $chunk) {
+            foreach ($chunk as $item) {
+                $newId = $item['id'];
+
+                // Tìm hoặc tạo một bản ghi dựa trên ID
+                $apiDatasss = Banners::find($newId);
+
+                // Chỉ cập nhật các trường nếu bản ghi chưa tồn tại
+                if (!$apiDatasss) {
+                    // Lưu dữ liệu từng bản ghi
+                    $apiData = new Banners();
+                    $apiData->id = $item['id'];
+                    $apiData->url = $item['url'];
+                    $apiData->type = $item['type'];
+                    $apiData->title = $item['title'];
+                    $apiData->content = $item['content'];
+                    $apiData->image_url = $item['image_url'];
+                    $apiData->mobile_url = $item['mobile_url'];
+                    $apiData->view_count = $item['view_count'];
+                    $apiData->click_count = $item['click_count'];
+                    $apiData->active = $item['is_active'] ? 1 : 0;
+                    // Lưu dữ liệu vào cơ sở dữ liệu
+                    $apiData->save();
+                }
+            }
+        }
+
+        return 'Dữ liệu từ API đã được lưu vào cơ sở dữ liệu.';
+    }
+
+    public function savePageAuthorFromApi()
+    {
+        // Sử dụng thư viện Guzzle để gửi yêu cầu GET đến API
+        $client = new Client([
+            'base_uri' => 'http://api.cocolux.com/', // Điều này giữ nguyên HTTP
+            RequestOptions::VERIFY => false, // Tắt kiểm tra chứng chỉ SSL
+        ]);
+
+        $response = $client->get('v1/authors?skip=0&limit=400');
+
+
+        // Lấy nội dung JSON từ phản hồi
+        $data = json_decode($response->getBody(), true);
+        $chunkSize = 50; // Số lượng bản ghi trong mỗi lô
+        $dataChunks = array_chunk($data['data'], $chunkSize);
+
+        foreach ($dataChunks as $chunk) {
+            foreach ($chunk as $item) {
+                $newId = $item['id'];
+
+                // Tìm hoặc tạo một bản ghi dựa trên ID
+                $apiDatasss = Page::find($newId);
+
+                // Chỉ cập nhật các trường nếu bản ghi chưa tồn tại
+                if (!$apiDatasss) {
+                    // Lưu dữ liệu từng bản ghi
+                    $apiData = new Page();
+                    $apiData->id = $item['id'];
+                    $apiData->content = $item['content'];
+                    $apiData->slug = $item['slug'];
+                    $apiData->title = $item['title'];
+                    $apiData->page_cat_id = 1;
+                    $apiData->active = $item['is_active'] ? 1 : 0;
+                    $apiData->seo_title = $item['meta_title'];
+                    $apiData->seo_keyword = $item['meta_keyword'];
+                    $apiData->seo_description = $item['meta_description'];
+                    // Lưu dữ liệu vào cơ sở dữ liệu
+                    $apiData->save();
+                }
+            }
+        }
 
         return 'Dữ liệu từ API đã được lưu vào cơ sở dữ liệu.';
     }

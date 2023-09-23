@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//lay dữ liệu cũ
 //Route::get('/save-city-from-api', 'ApiController@saveCityFromApi');
 //Route::get('/save-attribute-from-api', 'ApiController@saveAttributeFromApi');
 //Route::get('/save-attribute-value-from-api', 'ApiController@saveAttributeValueFromApi');
@@ -28,11 +29,13 @@ use Illuminate\Http\Request;
 //Route::get('/save-store-from-api', 'ApiController@saveStoreFromApi');
 //Route::get('/save-products-from-api', 'ApiController@saveProductsFromApi');
 //Route::get('/save-product-options-from-api', 'ApiController@saveProductOptionsFromApi');
-Route::get('/save-promotions-from-api', 'ApiController@savePromotionsFromApi');
+//Route::get('/save-promotions-from-api', 'ApiController@savePromotionsFromApi');
+//Route::get('/save-banners-from-api', 'ApiController@saveBannersFromApi');
+//Route::get('/save-page-author-from-api', 'ApiController@savePageAuthorFromApi');
 
-Route::group(['namespace' => 'Web', 'middleware' => 'language'], function (){
+Route::group(['namespace' => 'Web'], function (){
     Route::get('/', 'HomeController@index')->name('home');
-    Route::post('/lien-he', 'ContactController@store')->name('detailContactStore');
+//    Route::post('/lien-he', 'ContactController@store')->name('detailContactStore');
 });
 
 //Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')

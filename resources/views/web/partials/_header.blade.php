@@ -19,11 +19,7 @@
                     </div>
                     <div class="form-select-lang" >
                         <i class="fas fa-globe"></i>
-                        <select name="locale" id="change_locale" class="text-capitalize" >
-                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                                <option value="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" {{ LaravelLocalization::getCurrentLocale() == $localeCode ? 'selected' : '' }}>{{ $localeCode }}</option>
-                            @endforeach
-                        </select>
+
                     </div>
                     <button class="btn btn-order" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Đặt bàn <i class="fas fa-chevron-right"></i></button>
                 </div>
