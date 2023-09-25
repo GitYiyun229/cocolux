@@ -18,7 +18,7 @@
 <body>
     @yield('page')
     <!-- jQuery -->
-    <script src="{{ asset('/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('/js/web/jquery-3.7.1.min.js') }}"></script>
     <!-- Scripts -->
     @yield('script')
 </body>

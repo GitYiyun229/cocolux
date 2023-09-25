@@ -402,7 +402,7 @@ class ApiController extends Controller
             foreach ($chunk as $item) {
                 $newId = $item['id'];
 
-                // Tìm hoặc tạo một bản ghi dựa trên ID
+                // Tìm một bản ghi dựa trên ID
                 $apiDatasss = Product::find($newId);
 
                 // Chỉ cập nhật các trường nếu bản ghi chưa tồn tại

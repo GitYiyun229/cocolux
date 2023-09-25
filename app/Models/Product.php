@@ -26,6 +26,12 @@ class Product extends Model
         return $this->belongsTo(ProductsCategories::class, 'category_id', 'id');
     }
 
+    public function productOption()
+    {
+        return $this->hasMany(ProductOptions::class, 'parent_id', 'id');
+    }
+
+
     public function getImageResizeAttribute()
     {
         $img_path = pathinfo($this->image, PATHINFO_DIRNAME);

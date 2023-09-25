@@ -3,16 +3,6 @@
     "/js/web/main.js": "/js/web/main.js",
     "/js/admin/setting.js": "/js/admin/setting.js",
     "/css/app.css": "/css/app.css",
-    "/css/web/page-home.css": "/css/web/page-home.css",
-    "/css/web/contact.css": "/css/web/contact.css",
     "/css/web/home.css": "/css/web/home.css",
-    "/css/web/style.css": "/css/web/style.css",
-    "/css/web/product-cart.css": "/css/web/product-cart.css",
-    "/css/web/product-detail.css": "/css/web/product-detail.css",
-    "/css/web/products-home.css": "/css/web/products-home.css",
-    "/css/web/store-home.css": "/css/web/store-home.css",
-    "/css/web/album-home.css": "/css/web/album-home.css",
-    "/css/web/contact-detail.css": "/css/web/contact-detail.css",
-    "/css/web/news-detail.css": "/css/web/news-detail.css",
-    "/css/web/news-home.css": "/css/web/news-home.css"
+    "/css/web/template.css": "/css/web/template.css"
 }

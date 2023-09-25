@@ -22,23 +22,19 @@
 @endsection
 
 @section('link')
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="{{ asset('/css/all.min.css') }}">
-    <!-- IonIcons -->
-    <link rel="stylesheet" href="{{ asset('/css/fontawesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/js/web/fontawesome-free-6.1.1-web/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/mmenu.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/web/template.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/web/style.css') }}">
 @endsection
 
 @section('script')
     <!-- Bootstrap -->
     <script src="{{ asset('/js/web/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/fontawesome.min.js') }}"></script>
+    <script src="{{ asset('/js/web/template.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('js/mmenu.js') }}"></script>
     <script src="{{ asset('js/web/main.js') }}" defer></script>
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v17.0" nonce="yQawsNWn"></script>
     <script>
         let toastrSuccsee = '{{ Session::get('success') }}';
         let toastrDanger = '{{ Session::get('danger') }}';

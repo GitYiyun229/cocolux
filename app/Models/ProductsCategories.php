@@ -11,9 +11,4 @@ class ProductsCategories extends Model
 //    const STATUS_INACTIVE = 0;
 
     protected $guarded = ['id'];
-
-    public function products()
-    {
-        return $this->hasMany(Product::class, 'category_id', 'id');
-    }
 }
