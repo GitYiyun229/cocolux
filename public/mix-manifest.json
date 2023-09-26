@@ -2,7 +2,12 @@
     "/js/app.js": "/js/app.js",
     "/js/web/main.js": "/js/web/main.js",
     "/js/admin/setting.js": "/js/admin/setting.js",
-    "/css/app.css": "/css/app.css",
+    "/css/web/content.css": "/css/web/content.css",
     "/css/web/home.css": "/css/web/home.css",
-    "/css/web/template.css": "/css/web/template.css"
+    "/css/web/template.css": "/css/web/template.css",
+    "/css/web/style.css": "/css/web/style.css",
+    "/css/app.css": "/css/app.css",
+    "/css/web/product-detail.css": "/css/web/product-detail.css",
+    "/css/web/article-detail.css": "/css/web/article-detail.css",
+    "/css/web/article-list.css": "/css/web/article-list.css"
 }

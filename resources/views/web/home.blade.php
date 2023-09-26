@@ -39,7 +39,7 @@
                 <div class="slide-main">
                     <div class="slide-template-slick">
                         @forelse($product_hots as $item)
-                        <a href="" class="product-template">
+                        <a href="{{ route('detailProduct',['slug'=>$item->slug, 'sku' =>$item->sku]) }}" class="product-template">
                             <div class="product-discount">
                                 <span class="pe-1">5%</span>
                             </div>
@@ -86,15 +86,18 @@
             </div>
 
             <div class="section-product-category">
+                @forelse($cats as $cat)
                 <div class="section mb-5">
                     <div class="section-top">
                         <div class="section-menu">
                             <a href="" class="section-title">
-                                <h2 class="text-uppercase mb-0">Trang điểm</h2>
+                                <h2 class="text-uppercase mb-0">{{ $cat->title }}</h2>
                             </a>
                             <div class="section-sub-menu">
-                                <a href="" class="text-uppercase">Trang điểm mặt</a>
-                                <a href="" class="text-uppercase">Trang điểm mắt</a>
+                                @forelse($cat_sub[$cat->id] as $sub)
+                                <a href="" class="text-uppercase">{{ $sub->title }}</a>
+                                @empty
+                                @endforelse
                             </div>
                         </div>
                         <a href="" class="section-more text-uppercase">Xem thêm</a>
@@ -102,409 +105,45 @@
                     <div class="section-main bg-white">
                         <div class="section-poster">
                             <a href="">
-                                <img src="./img-example/1642039157957-trang-điểm.jpeg" alt="" class="img-fluid">
+                                <img src="{{ $cat->image }}" alt="" class="img-fluid">
                             </a>
                         </div>
                         <div class="section-content">
-                            <a href="" class="product-template">
+                            @forelse($product_cats[$cat->id] as $item)
+                            <a href="{{ route('detailProduct',['slug'=>$item->slug, 'sku' =>$item->sku]) }}" class="product-template">
                                 <div class="product-discount">
                                     <span class="pe-1">5%</span>
                                 </div>
                                 <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
+                                    <img src="{{ $item->image }}" alt="{{ $item->title }}" class="img-fluid">
                                 </div>
                                 <div class="product-price">
                                     <div class="public-price">254.600 đ</div>
                                     <div class="origin-price">268.000 đ</div>
                                 </div>
                                 <div class="product-brand">
-                                    MAYBELLINE
+                                    {{ $item->brand }}
                                 </div>
                                 <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
+                                    {{ $item->title }}
                                 </div>
                             </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
+                            @empty
+                            @endforelse
                         </div>
                     </div>
                 </div>
-
-                <div class="section mb-5">
-                    <div class="section-top">
-                        <div class="section-menu">
-                            <a href="" class="section-title">
-                                <h2 class="text-uppercase mb-0">Trang điểm</h2>
-                            </a>
-                            <div class="section-sub-menu">
-                                <a href="" class="text-uppercase">Trang điểm mặt</a>
-                                <a href="" class="text-uppercase">Trang điểm mắt</a>
-                            </div>
-                        </div>
-                        <a href="" class="section-more text-uppercase">Xem thêm</a>
-                    </div>
-                    <div class="section-main bg-white">
-                        <div class="section-poster">
-                            <a href="" class="section-poster">
-                                <img src="./img-example/1642039157957-trang-điểm.jpeg" alt="" class="img-fluid">
-                            </a>
-                        </div>
-                        <div class="section-content">
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                            <a href="" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="./img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
-                                </div>
-                                <div class="product-brand">
-                                    MAYBELLINE
-                                </div>
-                                <div class="product-title">
-                                    Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                @empty
+                @endforelse
             </div>
 
             <div class="section-banner-middle mb-5">
+                @forelse($subBanner2 as $item)
                 <a class="" href="">
-                    <img alt="La Roche-Posay Sale 10%" src="./img-example/1642040388948-banner-cocolux-5.jpeg" class="img-fluid">
+                    <img alt="{{ $item->title }}" src="{{ asset($item->image_url) }}" class="img-fluid">
                 </a>
-                <a class="" href="">
-                    <img alt="Maybelline Sale 10%" src="./img-example/1642040393768-banner-cocolux-6.jpeg" class="img-fluid">
-                </a>
-                <a class="" href="">
-                    <img alt="Vichy sale 10%" src="./img-example/1642040399279-banner-cocolux-12.jpeg" class="img-fluid">
-                </a>
+                @empty
+                @endforelse
             </div>
 
             <div class="section-article mb-5">
@@ -516,7 +155,7 @@
                 </div>
                 <div class="section-main">
                     @forelse($articles as $item)
-                    <a href="" class="article-item" title="{{ $item->title }}">
+                    <a href="{{ route('detailArticle',['slug'=>$item->slug,'id'=>$item->id]) }}" class="article-item" title="{{ $item->title }}">
                         <div class="article-img">
                             <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="img-fluid">
                         </div>

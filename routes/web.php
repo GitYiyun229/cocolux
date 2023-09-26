@@ -35,7 +35,17 @@ use Illuminate\Http\Request;
 
 Route::group(['namespace' => 'Web'], function (){
     Route::get('/', 'HomeController@index')->name('home');
-//    Route::post('/lien-he', 'ContactController@store')->name('detailContactStore');
+    Route::get('/blog', 'ArticleController@index')->name('homeArticle');
+    Route::get('/chuyen-muc/{slug}-i.{id}', 'ArticleController@cat')
+        ->where(['slug' => '[-a-zA-Z0-9]+', 'id' => '[0-9]+'])
+        ->name('catArticle');
+    Route::get('/blog/{slug}-i.{id}', 'ArticleController@detail')
+        ->where(['slug' => '[-a-zA-Z0-9]+', 'id' => '[0-9]+'])
+        ->name('detailArticle');
+    Route::get('/{cat_slug}/{slug}', 'PageController@index')->name('detailPage');
+    Route::get('/{slug}-i.{sku}', 'ProductController@detail')
+        ->where(['slug' => '[-a-zA-Z0-9]+', 'id' => '[0-9]+'])
+        ->name('detailProduct');
 });
 
 //Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')

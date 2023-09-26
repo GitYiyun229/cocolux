@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BookTable;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\ProductOptions;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProductCategoryInterface;
 use App\Repositories\Contracts\ProductInterface;
@@ -37,11 +38,10 @@ class ProductController extends Controller
         return view('web.product.cat',compact('cat','cats','products'));
     }
 
-    public function detail ($slugCat,$slug){
-        $cat = $this->productCategoryRepository->getOneBySlug($slugCat);
-        $products = $this->productRepository->getList(['active' => 1],['id','title','slug','image','price','category_id'], 3,['category']);
-        $product = $this->productRepository->getOneBySlug($slug);
-        return view('web.product.detail',compact('cat','product','products'));
+    public function detail ($slug,$sku){
+        $product = ProductOptions::where(['sku' => $sku])->first();
+        $products = $this->productRepository->getList(['active' => 1,'is_hot' => 1],['id','title','slug','image','price','category_id','sku'], 3,['category']);
+        return view('web.product.detail',compact('product','products'));
     }
 
     public function bookTable (CreateBookTable $req){

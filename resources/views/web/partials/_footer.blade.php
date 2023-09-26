@@ -23,8 +23,6 @@
             </div>
             <div class="footer-col">
                 <a href="" class="footer-get-code">
-                    <img src="./images//icon-x64.jpg" alt="get code" class="img-fluid">
-                    Nhấn vào để nhận mã
                 </a>
                 <div class="dmca-cocolux">
                     <a href="https://www.dmca.com/Protection/Status.aspx?ID=4f30b842-a954-4ab6-8ce0-d5476814e254&amp;refurl=https://cocolux.com/thong-tin/gioi-thieu" title="DMCA.com Protection Status" class="dmca-badge">
@@ -42,11 +40,11 @@
                         <img src="./images/QR-code-appstore.png" alt="cocolux" class="img-fluid img-qr">
                         <div class="app-box">
                             <a href="https://apps.apple.com/us/app/cocolux/id1529709256" target="_blank">
-                                <img src="./images/ic-appstore.svg" alt="cocolux" class="img-fluid img-app">
+                                <img src="{{ asset('images/ic-appstore.svg') }}" alt="cocolux" class="img-fluid img-app">
                                 <span> App Store</span>
                             </a>
                             <a href="https://play.google.com/store/apps/details?id=com.cocoshop.android" target="_blank">
-                                <img src="./images/ic-googleplay.svg" alt="cocolux" class="img-fluid img-app">
+                                <img src="{{ asset('images/ic-googleplay.svg') }}" alt="cocolux" class="img-fluid img-app">
                                 <span> Google Play</span>
                             </a>
                         </div>

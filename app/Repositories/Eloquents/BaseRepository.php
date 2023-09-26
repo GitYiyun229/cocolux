@@ -97,7 +97,7 @@ abstract class BaseRepository implements BaseInterface
      */
     public function paginate(int $limit, array $columns = ['*'], array $where = [], array $relationships = [])
     {
-        return $this->model->select($columns)->where($where)->latest()->with($relationships)->paginate($limit ?? config('data.limit', 20));
+        return $this->model->select($columns)->where($where)->orderBy('id', 'DESC')->latest()->with($relationships)->paginate($limit ?? config('data.limit', 20));
     }
 
     /**
@@ -137,7 +137,7 @@ abstract class BaseRepository implements BaseInterface
             return $query->with($relationships)->first();
         }
 
-        return $query->with($relationships)->get();
+        return $query->with($relationships)->orderBy('id', 'DESC')->get();
     }
 
     /**

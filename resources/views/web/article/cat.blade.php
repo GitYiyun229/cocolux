@@ -4,24 +4,7 @@
     <main>
 
         <div class="container">
-            <nav aria-label="breadcrumb" class="pt-3 pb-3 mb-4">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item">
-                        <a href="#">
-                            <i class="fa-solid fa-house-chimney"></i>
-                            Trang chủ
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item" aria-current="page">
-                        Review mỹ phẩm
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Review 4 thỏi son Black Rouge đỏ đất được yêu thích nhất
-                    </li>
-                </ol>
-            </nav>
-
-            <div class="layout-page-news-list mb-5">
+            <div class="layout-page-news-list pt-4 mb-5">
                 <div class="layout-menu">
                     <div class="news-categories layout-box bg-white">
                         <p class="mb-0 text-center text-uppercase fw-bold layout-title text-red">Blog làm đẹp</p>
@@ -62,18 +45,25 @@
                 </div>
 
                 <div class="layout-main">
-                    <div class="layout-main-detail layout-box layout-padding bg-white">
-                        <h1 class="detail-title text-center fw-bold mb-4">
-                            {{ $article->title }}
-                        </h1>
-
-                        <div class="detail-summary">
-                            {{ $article->description }}
-                        </div>
-
-                        <div class="detail-content">
-                            {!! $article->content !!}
-                        </div>
+                    <div class="layout-main-content">
+                        @forelse($article as $item)
+                            <a href="{{ route('detailArticle',['slug'=>$item->slug,'id'=>$item->id]) }}" class="news-item layout-box layout-padding bg-white">
+                                <div class="news-img" title="{{ $item->title }}">
+                                    <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="img-fluid">
+                                </div>
+                                <div class="news-main">
+                                    <p class="news-title fw-bold">{{ $item->title }}</p>
+                                    <div class="news-time">
+                                        <img src="./images/ic-datetime.svg" alt="datetime" class="img-fluid">
+                                        21/09/2023 09:45:38
+                                    </div>
+                                    <div class="news-summary">
+                                        {{ $item->description }}
+                                    </div>
+                                </div>
+                            </a>
+                        @empty
+                        @endforelse
                     </div>
                 </div>
 
@@ -101,6 +91,7 @@
                     </div>
                 </div>
             </div>
+            {{ $article->links('web.components.pagination') }}
         </div>
 
     </main>
@@ -109,7 +100,6 @@
 @section('link')
     @parent
     <link rel="stylesheet" href="{{ asset('/css/web/article-list.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/web/article-detail.css') }}">
 @endsection
 
 @section('script')

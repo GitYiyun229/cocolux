@@ -390,7 +390,7 @@ class ApiController extends Controller
             RequestOptions::VERIFY => false, // Tắt kiểm tra chứng chỉ SSL
         ]);
 
-        $response = $client->get('v1/products/ddd/products?types=item&order_by=desc&sort_by=updated_at&limit=100&skip=5000');
+        $response = $client->get('v1/products/ddd/products?types=item&order_by=desc&sort_by=updated_at&limit=100&skip=5300');
 
 
         // Lấy nội dung JSON từ phản hồi
@@ -421,8 +421,29 @@ class ApiController extends Controller
                     $apiData->normal_price = $item['normal_price'];
                     $apiData->description = $item['description'];
                     $apiData->document = $item['document'];
-                    $apiData->attributes = json_encode($item['attributes']);
-                    $apiData->categories = json_encode($item['categories']);
+
+                    if ($item['attributes']){
+                        $apiData->attributes = json_encode($item['attributes']);
+                        $result_attribute = [];
+                        foreach ($item['attributes'] as $attri) {
+                            $result_attribute[] = $attri['id'] . ':' . $attri['value']['id'];
+                        }
+                        $attribute_path = implode(',', $result_attribute);
+                        $apiData->attribute_path = $attribute_path;
+                    }
+
+                    if ($item['categories']){
+                        $apiData->categories = json_encode($item['categories']);
+
+                        $category = $item['categories'];
+                        $category = end($category);
+                        $apiData->category_id = $category['id'];
+
+                        $idArray = array_column($item['categories'], 'id'); // Trích xuất giá trị 'id' từ mảng
+                        $category_path = implode(',', $idArray);
+                        $apiData->category_path = $category_path;
+                    }
+
                     $apiData->suppliers = json_encode($item['suppliers']);
                     $apiData->hot_deal = json_encode($item['hot_deal']);
                     $apiData->flash_deal = json_encode($item['flash_deal']);

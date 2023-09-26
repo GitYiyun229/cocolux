@@ -6,8 +6,8 @@
 </div>
 <div class="header-main">
     <div class="container">
-        <a href="" title="cocolux" class="header-main-logo">
-            <img src="./images//logo-full-black-cocolux.png" alt="cocolux" class="img-fluid logo-full">
+        <a href="{{ route('home') }}" title="cocolux" class="header-main-logo">
+            <img src="{{ $setting['logo'] }}" alt="cocolux" class="img-fluid logo-full">
         </a>
         <a href="" title="cocolux" class="header-main-logo-icon">
             <img src="./images//logo-black-cocolux.svg" alt="cocolux" class="img-fluid logo-icon">
@@ -152,18 +152,18 @@
                 </div>
                 <input type="text" class="form-control" name="keyword" id="keyword" placeholder="Tìm sản phẩm bạn mong muốn...">
                 <a class="form-submit">
-                    <img src="./images/search-icon.svg" alt="" class="img-fluid">
+                    <img src="{{ asset('images/search-icon.svg') }}" alt="" class="img-fluid">
                 </a>
             </form>
 
             <a href="./checkout.html" class="menu-btn">
-                <img src="./images/cart-icon.svg" alt="">
+                <img src="{{ asset('images/cart-icon.svg') }}" alt="">
                 <span>Giỏ hàng</span>
                 <span class="cart-items-total">1</span>
             </a>
 
             <a href="tel:0988888825" class="menu-btn menu-call-hotline">
-                <img src="./images/hotline-icon.svg" alt="hotline" class="img-fluid">
+                <img src="{{ asset('images/hotline-icon.svg') }}" alt="hotline" class="img-fluid">
                 <span>Hỗ trợ <br> Khách hàng</span>
             </a>
         </div>
@@ -171,7 +171,7 @@
 </div>
 <div class="header-bottom">
     <div class="container header-bottom-menu header-menu">
-        <div class="menu-item menu-site active">
+        <div class="menu-item menu-site @if (request()->route()->getName() == 'home') active @endif">
             <a href="">
                 <i class="fa-solid fa-bars"></i>
                 Danh mục sản phẩm

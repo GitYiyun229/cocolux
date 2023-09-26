@@ -1,101 +1,105 @@
 @extends('web.layouts.web')
 
 @section('content')
-    <div class="top-content-promotion">
+    <main>
+
         <div class="container">
-            <h1 class="title-page">Tin tức</h1>
-        </div>
-    </div>
-    <div class="list-article-home">
-        <div class="container">
-            <div class="row">
-                @php
-                    $articleFirst = isset($articles)?$articles[0]:[];
-                @endphp
-                <div class="col-md-6 position-relative big-article">
-                    <div class="article-item">
-                        <div class="article-item-content">
-                            <a href="{{ route('detailArticle',['slug' => $articleFirst->slug,'id' => $articleFirst->id]) }}" class="image-other-article">
-                                @include('web.components.image', ['src' => $articleFirst->image_resize['lager'], 'title' => $articleFirst->title])
-                            </a>
-                            <div class="box-content-article">
-                                <a href="{{ route('detailArticle',['slug' => $articleFirst->slug,'id' => $articleFirst->id]) }}">
-                                    <h4 class="title-article title-article-main">{{ $articleFirst->title }}</h4>
-                                </a>
-                                <p class="calendar-new calendar-new-normal d-flex align-items-center justify-content-between">
-                                    <span><i class="far fa-clock"></i> {{ $articleFirst->created_at }}</span>
-                                </p>
-                                <p class="des-article-related des-article-related-nomal">{{ $articleFirst->description }}</p>
+            <div class="layout-page-news-list pt-4 mb-5">
+                <div class="layout-menu">
+                    <div class="news-categories layout-box bg-white">
+                        <p class="mb-0 text-center text-uppercase fw-bold layout-title text-red">Blog làm đẹp</p>
+                        <a href="" class="category-item active fw-bold level-0">Review mỹ phẩm</a>
+                        <a href="" class="category-item fw-bold level-0">Tips làm đẹp</a>
+                        <a href="" class="category-item level-1">Da đẹp</a>
+                        <a href="" class="category-item level-1">Dáng đẹp</a>
+                        <a href="" class="category-item level-1">Tóc đẹp</a>
+                        <a href="" class="category-item level-1">Khỏe đẹp</a>
+                        <a href="" class="category-item fw-bold level-0">Thành phần mỹ phẩm</a>
+                        <a href="" class="category-item fw-bold level-0">Tin tức</a>
+                    </div>
+
+                    <div class="products-hot layout-box bg-white">
+                        <p class="mb-0 text-center text-uppercase fw-bold layout-title text-red">Sản phẩm hot</p>
+                        @forelse($product_hots as $item)
+                        <a href="" class="product-template">
+                            <div class="product-discount">
+                                <span class="pe-1">5%</span>
                             </div>
-                        </div>
+                            <div class="product-thumbnail">
+                                <img src="{{ asset($item->image) }}" alt=" {{ $item->title }}" class="img-fluid">
+                            </div>
+                            <div class="product-price">
+                                <div class="public-price">{{ format_money($item->productOption->first()->price) }}</div>
+                                <div class="origin-price">{{ format_money($item->productOption->first()->normal_price) }}</div>
+                            </div>
+                            <div class="product-brand">
+                                {{ $item->brand }}
+                            </div>
+                            <div class="product-title">
+                                {{ $item->productOption->first()->title }}
+                            </div>
+                        </a>
+                        @empty
+                        @endforelse
                     </div>
                 </div>
-                <div class="col-md-6 small-article">
-                    <div class="row article-list-other">
-                        @foreach($articles as $k => $item)
-                            @if($k > 0 && $k < 5)
-                                <div class="col-md-6 position-relative">
-                                    <div class="article-item">
-                                        <div class="article-item-content">
-                                            <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}" class="image-other-article">
-                                                @include('web.components.image', ['src' => $item->image_resize['small'], 'title' => $item->title])
-                                            </a>
-                                            <div class="box-content-article">
-                                                <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
-                                                    <h4 class="title-article">{{ $item->title }}</h4>
-                                                </a>
-                                                <p class="calendar-new d-flex align-items-center justify-content-between">
-                                                    <span><i class="far fa-clock"></i> {{ $item->created_at }}</span>
-                                                </p>
-                                                <p class="des-article-related">{{ $item->description }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
+
+                <div class="layout-main">
+                    <div class="layout-main-content">
+                        @forelse($article as $item)
+                        <a href="{{ route('detailArticle',['slug'=>$item->slug,'id'=>$item->id]) }}" class="news-item layout-box layout-padding bg-white">
+                            <div class="news-img" title="{{ $item->title }}">
+                                <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="img-fluid">
+                            </div>
+                            <div class="news-main">
+                                <p class="news-title fw-bold">{{ $item->title }}</p>
+                                <div class="news-time">
+                                    <img src="./images/ic-datetime.svg" alt="datetime" class="img-fluid">
+                                    21/09/2023 09:45:38
                                 </div>
-                            @endif
-                        @endforeach
-                    </div>
-                </div>
-                <hr class="my-4 mx-3">
-                @foreach($articles as $k => $item)
-                    @if($k < 5)
-                        <div class="col-md-12 position-relative">
-                            <div class="article-item">
-                                <div class="article-item-content">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}" class="image-other-article">
-                                                @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
-                                            </a>
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="box-content-article">
-                                                <a href="{{ route('detailArticle',['slug' => $item->slug,'id' => $item->id]) }}">
-                                                    <h4 class="title-article title-article-normal">{{ $item->title }}</h4>
-                                                </a>
-                                                <p class="calendar-new d-flex align-items-center justify-content-between">
-                                                    <span><i class="far fa-clock"></i> {{ $item->created_at }}</span>
-                                                </p>
-                                                <p class="des-article-related des-article-related-nomal">{{ $item->description }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="news-summary">
+                                    {{ $item->description }}
                                 </div>
                             </div>
-                        </div>
-                    @endif
-                @endforeach
+                        </a>
+                        @empty
+                        @endforelse
+                    </div>
+                </div>
+
+                <div class="layout-relate">
+                    <div class="layout-box bg-white">
+                        <p class="mb-0 pe-2 ps-2 text-uppercase fw-bold layout-title">Tin tức liên quan</p>
+                        @forelse($article_hot as $item)
+                        <a href="{{ route('detailArticle',['slug'=>$item->slug,'id'=>$item->id]) }}" class="news-item p-2 mb-3">
+                            <div class="news-img" title="{{ $item->title }}">
+                                <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="img-fluid">
+                            </div>
+                            <div class="news-main">
+                                <p class="news-title fw-bold">{{ $item->title }}</p>
+                                <div class="news-time">
+                                    <img src="./images/ic-datetime.svg" alt="datetime" class="img-fluid">
+                                    21/09/2023 09:45:38
+                                </div>
+                                <div class="news-summary">
+                                    {{ $item->description }}
+                                </div>
+                            </div>
+                        </a>
+                        @empty
+                        @endforelse
+                    </div>
+                </div>
             </div>
-            <div class="text-center">
-                {{ $articles->links('web.components.pagination') }}
-            </div>
+            {{ $article->links('web.components.pagination') }}
         </div>
-    </div>
+
+    </main>
 @endsection
 
 @section('link')
     @parent
-    <link rel="stylesheet" href="{{ asset('/css/web/news-home.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/web/article-list.css') }}">
 @endsection
 
 @section('script')

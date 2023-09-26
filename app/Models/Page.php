@@ -21,6 +21,11 @@ class Page extends Model
 
     protected $guarded = ['id'];
 
+    public function category()
+    {
+        return $this->hasOne(PageCategories::class, 'id','page_cat_id');
+    }
+
     public function getImageResizeAttribute()
     {
         $img_path = pathinfo($this->image, PATHINFO_DIRNAME);
