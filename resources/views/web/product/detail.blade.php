@@ -213,115 +213,43 @@
                         <h2 class="layout-title mb-2 fw-bold">Thông tin sản phẩm</h2>
 
                         <div class="product-attribute">
-                            <div class="attribute-item">
-                                <div class="attribute-title">
-                                    Nơi sản xuất
-                                </div>
-                                <div class="attribute-value">
-                                    Trung Quốc
-                                </div>
-                            </div>
-                            <div class="attribute-item">
-                                <div class="attribute-title">
-                                    Xuất xứ thương hiệu
-                                </div>
-                                <div class="attribute-value">
-                                    Mỹ
-                                </div>
-                            </div>
-                            <div class="attribute-item">
-                                <div class="attribute-title">
-                                    Thương hiệu
-                                </div>
-                                <div class="attribute-value">
-                                    MAYBELLINE
-                                </div>
-                            </div>
-                            <div class="attribute-item">
-                                <div class="attribute-title">
-                                    Loại da
-                                </div>
-                                <div class="attribute-value">
-                                    Mọi loại da
-                                </div>
-                            </div>
-                            <div class="attribute-item">
-                                <div class="attribute-title">
-                                    Kết cấu
-                                </div>
-                                <div class="attribute-value">
-                                    Dạng kem
-                                </div>
-                            </div>
-                            <div class="attribute-item">
-                                <div class="attribute-title">
-                                    Đặc tính
-                                </div>
-                                <div class="attribute-value">
-                                    Có màu
-                                </div>
-                            </div>
+                            @forelse($attribute_value as $item)
+                                @if($item->value->type == 'select')
+                                    <div class="attribute-item">
+                                        <div class="attribute-title">
+                                            {{ $item->name }}
+                                        </div>
+                                        <div class="attribute-value">
+                                            {{ $item->value->name }}
+                                        </div>
+                                    </div>
+                                @endif
+                            @empty
+                            @endforelse
                         </div>
                     </div>
 
                     <nav id="navbar-detail" class="navbar bg-white ">
                         <ul class="nav nav-pills">
-                            <li class="nav-item">
-                                <a class="nav-link nav-link-detail" href="#tab-0">Mô tả sản phẩm</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link nav-link-detail" href="#tab-1">Thành phần</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link nav-link-detail" href="#tab-2">Công dụng</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link nav-link-detail" href="#tab-3">Cách dùng</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link nav-link-detail" href="#tab-4">Review</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link nav-link-detail" href="#tab-5">Cách phân biệt thật giả</a>
-                            </li>
+                            @forelse($attribute_value as $k => $item)
+                                @if($item->value->type == 'ckeditor')
+                                    <li class="nav-item">
+                                        <a class="nav-link nav-link-detail" href="#tab-{{ $k }}">{{ $item->name }}</a>
+                                    </li>
+                                @endif
+                            @empty
+                            @endforelse
                         </ul>
                     </nav>
-
-                    <div class="layout-box layout-padding bg-white" id="tab-0">
-                        <h2 class="layout-title mb-2 fw-bold d-none">Mô tả sản phẩm</h2>
-                        <div class="layout-content-text"></div>
-                    </div>
-
-                    <div class="layout-box layout-padding bg-white" id="tab-1">
-                        <h2 class="layout-title mb-2 fw-bold">Thành phần</h2>
-                        <div class="layout-content-text"></div>
-                    </div>
-
-                    <div class="layout-box layout-padding bg-white" id="tab-2">
-                        <h2 class="layout-title mb-2 fw-bold">Công dụng</h2>
-                        <div class="layout-content-text"></div>
-                    </div>
-
-                    <div class="layout-box layout-padding bg-white" id="tab-3">
-                        <h2 class="layout-title mb-2 fw-bold">Cách dùng</h2>
-                        <div class="layout-content-text"></div>
-                    </div>
-
-                    <div class="layout-box layout-padding bg-white" id="tab-4">
-                        <h2 class="layout-title mb-2 fw-bold">Review</h2>
-                        <div class="layout-content-text"></div>
-                    </div>
-
-                    <div class="layout-box layout-padding bg-white" id="tab-5">
-                        <h2 class="layout-title mb-2 fw-bold">Cách phân biệt thật giả</h2>
-                        <div class="layout-content-text"></div>
-                    </div>
-
-                    <div class="layout-box layout-padding bg-white">
-                        <h2 class="layout-title mb-2 fw-bold">Đánh giá</h2>
-                        <div class="layout-comment"></div>
-                    </div>
-
+                    @forelse($attribute_value as $k => $item)
+                        @if($item->value->type == 'ckeditor')
+                            <div class="layout-box layout-padding bg-white" id="tab-{{ $k }}">
+                                <h2 class="layout-title mb-2 fw-bold d-none">{{ $item->name }}</h2>
+                                <div class="layout-content-text">{!! $item->value->name !!}</div>
+                            </div>
+                        @endif
+                    @empty
+                    @endforelse
                 </div>
 
                 <div class="layout-right">

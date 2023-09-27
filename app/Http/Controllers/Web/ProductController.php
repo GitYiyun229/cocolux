@@ -53,9 +53,11 @@ class ProductController extends Controller
     public function detail ($slug,$sku){
         $product = ProductOptions::where(['sku' => $sku])->with(['product'])->first();
         $list_image = json_decode($product->images);
+        $attribute_value = json_decode($product->product->attributes);
+//        dd($attribute_value);
         $list_product_parent = ProductOptions::where(['parent_id' => $product->parent_id])->get();
         $products = $this->productRepository->getList(['active' => 1,'is_hot' => 1],['id','title','slug','image','price','category_id','sku'], 3,['category']);
-        return view('web.product.detail',compact('product','products','list_image','list_product_parent'));
+        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value'));
     }
 
     public function bookTable (CreateBookTable $req){
