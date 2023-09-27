@@ -9,4 +9,10 @@ class Attribute extends Model
 {
 //    use HasFactory;
     protected $table = 'attribute';
+    protected $guarded = ['id'];
+
+    public function attributeValue()
+    {
+        return $this->hasMany(AttributeValues::class, 'attribute_id', 'id');
+    }
 }

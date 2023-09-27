@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
 use App\Models\BookTable;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use App\Models\ProductOptions;
+use App\Models\ProductsCategories;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProductCategoryInterface;
 use App\Repositories\Contracts\ProductInterface;
@@ -31,17 +34,28 @@ class ProductController extends Controller
         return view('web.product.home',compact('cat','products'));
     }
 
-    public function cat($slug){
-        $cat = $this->productCategoryRepository->getOneBySlug($slug);
-        $cats = $this->productCategoryRepository->getList(['active' => 1],['id','title','slug'], 0);
+    public function cat($slug,$id){
+        $cat = $this->productCategoryRepository->getOneById($id);
+        $cats = ProductsCategories::where(['active' => 1,'parent_id' => $id])->orWhere(['id' => $id])->select('id','title','slug','parent_id')->get();
+        $attributes = Attribute::where(['active' => 1,'type' => 'select'])->select('id','name','code')->with(['attributeValue'=>function($query){
+
+            }])->get();
         $products = $this->productRepository->paginate(12,['id','slug','image','title','price','category_id'],['active'=>1,'category_id'=>$cat->id],['category']);
-        return view('web.product.cat',compact('cat','cats','products'));
+        $products = Product::where(['active' => 1])
+            ->select('id','title','image','brand','hot_deal','sku','slug')
+            ->with(['productOption' => function($query){
+                $query->where(['is_default' => 1,'active' => 1])
+                    ->select('id','sku', 'title', 'parent_id','price','slug','images');
+            }])->limit(10)->get();
+        return view('web.product.cat',compact('cat','cats','products','attributes'));
     }
 
     public function detail ($slug,$sku){
-        $product = ProductOptions::where(['sku' => $sku])->first();
+        $product = ProductOptions::where(['sku' => $sku])->with(['product'])->first();
+        $list_image = json_decode($product->images);
+        $list_product_parent = ProductOptions::where(['parent_id' => $product->parent_id])->get();
         $products = $this->productRepository->getList(['active' => 1,'is_hot' => 1],['id','title','slug','image','price','category_id','sku'], 3,['category']);
-        return view('web.product.detail',compact('product','products'));
+        return view('web.product.detail',compact('product','products','list_image','list_product_parent'));
     }
 
     public function bookTable (CreateBookTable $req){

@@ -8,6 +8,7 @@
     "/css/web/style.css": "/css/web/style.css",
     "/css/app.css": "/css/app.css",
     "/css/web/product-detail.css": "/css/web/product-detail.css",
+    "/css/web/product-cat.css": "/css/web/product-cat.css",
     "/css/web/article-detail.css": "/css/web/article-detail.css",
     "/css/web/article-list.css": "/css/web/article-list.css"
 }

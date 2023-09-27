@@ -42,10 +42,13 @@ Route::group(['namespace' => 'Web'], function (){
     Route::get('/blog/{slug}-i.{id}', 'ArticleController@detail')
         ->where(['slug' => '[-a-zA-Z0-9]+', 'id' => '[0-9]+'])
         ->name('detailArticle');
-    Route::get('/{cat_slug}/{slug}', 'PageController@index')->name('detailPage');
+    Route::get('/danh-muc/{slug}-i.{id}', 'ProductController@cat')
+        ->where(['slug' => '[-a-zA-Z0-9]+', 'id' => '[0-9]+'])
+        ->name('catProduct');
     Route::get('/{slug}-i.{sku}', 'ProductController@detail')
         ->where(['slug' => '[-a-zA-Z0-9]+', 'id' => '[0-9]+'])
         ->name('detailProduct');
+    Route::get('/{cat_slug}/{slug}', 'PageController@index')->name('detailPage');
 });
 
 //Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')

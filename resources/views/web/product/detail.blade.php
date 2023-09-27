@@ -33,17 +33,16 @@
                         <div class="product-detail">
                             <div class="detail-thumbnail">
                                 <div class="thumbnail-nav">
-                                    <a class="thumbnail-item active">
-                                        <img src="/img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
+                                    @forelse($list_image as $k => $item)
+                                    <a class="thumbnail-item @if( $k== 0) active @endif">
+                                        <img src="{{ $item }}" alt="{{ $product->title }}" class="img-fluid">
                                     </a>
-                                    <a class="thumbnail-item">
-                                        <img src="/img-example/cetaphil.png" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
-                                    </a>
-
+                                    @empty
+                                    @endforelse
                                 </div>
 
                                 <div class="thumnail-image">
-                                    <img src="/img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid" id="detail-thumbnail-image">
+                                    <img src="{{ $list_image[0] }}" alt="{{ $product->title }}" class="img-fluid" id="detail-thumbnail-image">
 
                                     <div class="detail-share">
                                         Thêm vào danh sách yêu thích
@@ -52,17 +51,17 @@
                             </div>
 
                             <div class="detail-infomation">
-                                <a href="" class="detail-brand fw-bold d-flex mb-1">MAYBELLINE</a>
+                                <a href="" class="detail-brand fw-bold d-flex mb-1">{{ $product->product->brand }}</a>
 
-                                <h1 class="detail-title fw-bold mb-1">Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml</h1>
+                                <h1 class="detail-title fw-bold mb-1">{{ $product->title }}</h1>
 
                                 <div class="detail-sku mb-2">
-                                    <div class="">Mã sản phẩm: 4901301251589</div> |
+                                    <div class="">Mã sản phẩm: {{ $product->sku }}</div> |
                                     <div class="star-rating" style="--rating: 4.6;"></div>
                                     <div class="review-count">0 đánh giá</div>
                                 </div>
 
-                                <div class="detail-flash text-uppercase fw-bold mb-1">
+                                <div class="detail-flash text-uppercase fw-bold mb-1 d-none">
                                     <div class="flash-title d-flex align-items-center">
                                         <img src="/images/hot_icon.svg" alt="flash sale" class="img-fluid">
                                         flash sale
@@ -75,24 +74,21 @@
                                 </div>
 
                                 <div class="detail-price mb-4">
-                                    <div class="public-price"><span class="fw-bold">273.600 đ </span>(Đã bảo gồm VAT)</div>
+                                    <div class="public-price"><span class="fw-bold">{{ format_money($product->price) }}</span>(Đã bảo gồm VAT)</div>
                                     <div class="origin-price">
-                                        <span>Giá hãng: 288.000 đ</span>
+                                        <span>Giá hãng: {{ format_money($product->nomal_price) }}</span>
                                         <span>- Tiết kiệm được 14.400 đ</span>
                                         <span>(5%)</span>
                                     </div>
                                 </div>
 
                                 <div class="detail-relate mb-4">
-                                    <a href="" class="active" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml">
-                                        <img src="/img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml" class="img-fluid">
+                                    @forelse($list_product_parent as $item)
+                                    <a href="{{ route('detailProduct',['slug'=>$item->slug, 'sku' =>$item->sku]) }}" class="@if ($product->id == $item->id) active @endif" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $item->title }}">
+                                        <img src="{{ json_decode($item->images)[0] }}" alt="{{ $item->title }}" class="img-fluid">
                                     </a>
-                                    <a href="" class="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 24 30ml">
-                                        <img src="/img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 24 30ml" class="img-fluid">
-                                    </a>
-                                    <a href="" class="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 26 30ml">
-                                        <img src="/img-example/1644976001639-kem-nen-fit-me-maybelline-m-p-spf-22-300x300.jpeg" alt="Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 26 30ml" class="img-fluid">
-                                    </a>
+                                    @empty
+                                    @endforelse
                                 </div>
 
                                 <div class="detail-quantity mb-4">
@@ -100,7 +96,7 @@
                                     <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="1">
                                 </div>
 
-                                <div class="detail-flash-progess mb-3">
+                                <div class="detail-flash-progess mb-3 d-none">
                                     <div class="progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                                         <div class="progress-bar" style="width: 25%"></div>
                                     </div>

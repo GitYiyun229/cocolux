@@ -21,5 +21,6 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/content.scss', 'public/css/web')
     .sass('resources/sass/article-list.scss', 'public/css/web')
     .sass('resources/sass/article-detail.scss', 'public/css/web')
+    .sass('resources/sass/product-cat.scss', 'public/css/web')
     .sass('resources/sass/product-detail.scss', 'public/css/web')
     .sourceMaps();

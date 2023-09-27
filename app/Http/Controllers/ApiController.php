@@ -411,7 +411,7 @@ class ApiController extends Controller
                     $apiData = new Product();
                     $apiData->id = $item['id'];
                     $apiData->title = $item['name'];
-                    $apiData->slug = $item['slug'];
+                    $apiData->slug = strstr($item['slug'],"-i.",true);
                     $apiData->sku = $item['sku'];
                     $apiData->image = $item['thumbnail_url'];
                     $apiData->brand = $item['brand'];
@@ -501,7 +501,7 @@ class ApiController extends Controller
                     $apiData = new ProductOptions();
                     $apiData->id = $item['id'];
                     $apiData->title = $item['name'];
-                    $apiData->slug = $item['slug'];
+                    $apiData->slug = strstr($item['slug'],"-i.",true);
                     $apiData->sku = $item['sku'];
                     $apiData->images = json_encode($item['images']);
                     $apiData->brand = $item['brand'];
