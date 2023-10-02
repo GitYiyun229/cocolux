@@ -1,0 +1,53 @@
+.layout-page-payment-success{
+    padding: 20px 30px;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-gap: 20px;
+    align-items: center;
+    font-size: 14px;
+    a{
+        color: #4688f1;
+        &:hover{
+            color: #4688f1;
+        }
+    }
+
+    .continue{
+        color: #fff;
+        background: #c73030;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: center;
+        padding: 0 12px;
+        width: fit-content;
+        margin: auto;
+        border-radius: 5px;
+        height: 50px;
+        font-weight: 700;
+        font-size: 14px;
+        &:hover{
+            color: #fff;
+            opacity: 0.6;
+        }
+    }
+}
+
+.layout-title{
+    font-size: 20px;
+    color: #c73030;
+}
+
+.order-info {
+    a{
+        display: inline-block;
+        padding: 5px 18px;
+        border: 1px dashed #bebebe;
+        color: #707070;
+        font-size: 20px;
+        font-weight: 700;
+        &:hover{
+            color: #0abb87;
+        }
+    }
+}

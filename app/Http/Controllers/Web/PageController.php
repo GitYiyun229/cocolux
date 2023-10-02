@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function index($cat_slug, $slug){
+    public function index($slug){
 
         $page = Page::where('slug', $slug)->with('category')->select('id','title','content','image','description','page_cat_id')->first();
         if (!$page) {

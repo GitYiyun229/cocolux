@@ -10,7 +10,7 @@
             <img src="{{ $setting['logo'] }}" alt="cocolux" class="img-fluid logo-full">
         </a>
         <a href="" title="cocolux" class="header-main-logo-icon">
-            <img src="./images//logo-black-cocolux.svg" alt="cocolux" class="img-fluid logo-icon">
+            <img src="{{ $setting['logo_scroll'] }}" alt="cocolux" class="img-fluid logo-icon">
         </a>
         <div class="header-menu">
             <div class="menu-item menu-site">
@@ -19,8 +19,10 @@
                     Danh mục sản phẩm
                 </a>
                 <div class="menu-content">
+                    @forelse($cat_products as $item)
                     <div class="menu-item">
-                        <a href="" class="menu-btn">Trang điểm <i class="fa-solid fa-angle-right"></i></a>
+                        <a href="" class="menu-btn">{{ $item->title }} <i class="fa-solid fa-angle-right"></i></a>
+{{--                        @if($item->children)--}}
                         <div class="menu-content">
                             <div class="position-relative h-100 w-100">
                                 <div class="menu-group-top">
@@ -48,70 +50,13 @@
                                     </div>
                                 </div>
                                 <div class="menu-poster">
-                                    <img src="./images/poster-example.jpeg" alt="">
+                                    <img src="{{ asset('images/poster-example.jpeg') }}" alt="">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="menu-item">
-                        <a href="" class="menu-btn">Son môi <i class="fa-solid fa-angle-right"></i></a>
-                        <div class="menu-content">
-                            <div class="position-relative h-100 w-100">
-                                <div class="menu-group-top">
-                                    <a href="">Nổi bật</a>
-                                    <a href="">Bán chạy</a>
-                                    <a href="">Hàng mới</a>
-                                </div>
-                                <div class="menu-group-bottom">
-                                    <div class="menu-col-item">
-                                        <a href="" class="item-parent">Son Thỏi</a>
-                                    </div>
-                                    <div class="menu-col-item">
-                                        <a href="" class="item-parent">Son Bóng</a>
-                                    </div>
-                                    <div class="menu-col-item">
-                                        <a href="" class="item-parent">Son Dưỡng</a>
-                                    </div>
-                                    <div class="menu-col-item">
-                                        <a href="" class="item-parent">Mặt nạ ngủ môi</a>
-                                    </div>
-                                    <div class="menu-col-item">
-                                        <a href="" class="item-parent">Tẩy da chết môi</a>
-                                    </div>
-                                </div>
-                                <div class="menu-poster">
-                                    <img src="./images/poster-example.jpeg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <a href="" class="menu-btn">Chăm sóc da <i class="fa-solid fa-angle-right"></i></a>
-                    </div>
-                    <div class="menu-item">
-                        <a href="" class="menu-btn">Chăm sóc cơ thể <i class="fa-solid fa-angle-right"></i></a>
-                    </div>
-                    <div class="menu-item">
-                        <a href="" class="menu-btn">Chăm sóc tóc <i class="fa-solid fa-angle-right"></i></a>
-                    </div>
-                    <div class="menu-item">
-                        <a href="" class="menu-btn">Dụng cụ <i class="fa-solid fa-angle-right"></i></a>
-                    </div>
-                    <div class="menu-item">
-                        <a href="" class="menu-btn">Nước hoa <i class="fa-solid fa-angle-right"></i></a>
-                    </div>
-                    <div class="menu-item">
-                        <a href="" class="menu-btn">Mỹ phẩm Hight-End <i class="fa-solid fa-angle-right"></i></a>
-                    </div>
-                    <div class="menu-item">
-                        <a href="" class="menu-btn">Mỹ phẩm chức năng <i class="fa-solid fa-angle-right"></i></a>
-                    </div>
-                    <div class="menu-item">
-                        <a href="" class="menu-btn">Gift Set <i class="fa-solid fa-angle-right"></i></a>
-                    </div>
-                    <div class="menu-item">
-                        <a href="" class="menu-btn">Sản phẩm khác <i class="fa-solid fa-angle-right"></i></a>
-                    </div>
+                    @empty
+                    @endforelse
                 </div>
             </div>
         </div>
@@ -156,10 +101,10 @@
                 </a>
             </form>
 
-            <a href="./checkout.html" class="menu-btn">
+            <a href="{{ route('showCart') }}" class="menu-btn">
                 <img src="{{ asset('images/cart-icon.svg') }}" alt="">
                 <span>Giỏ hàng</span>
-                <span class="cart-items-total">1</span>
+                <span class="cart-items-total" id="number-added-cart">{{ getCart() }}</span>
             </a>
 
             <a href="tel:0988888825" class="menu-btn menu-call-hotline">
@@ -206,7 +151,7 @@
                                 </div>
                             </div>
                             <div class="menu-poster">
-                                <img src="./images/poster-example.jpeg" alt="">
+                                <img src="{{ asset('images/poster-example.jpeg') }}" alt="">
                             </div>
                         </div>
                     </div>
@@ -238,7 +183,7 @@
                                 </div>
                             </div>
                             <div class="menu-poster">
-                                <img src="./images/poster-example.jpeg" alt="">
+                                <img src="{{ asset('images/poster-example.jpeg') }}" alt="">
                             </div>
                         </div>
                     </div>
@@ -273,10 +218,10 @@
             </div>
         </div>
         <div class="menu-item">
-            <a href="">Giới thiệu</a>
+            <a href="{{ route('detailPage',['slug' => 'gioi-thieu']) }}">Giới thiệu</a>
         </div>
         <div class="menu-item">
-            <a href="">Thương hiệu</a>
+            <a href="{{ route('homeBrand') }}">Thương hiệu</a>
         </div>
         <div class="menu-item">
             <a href="">Khuyến mại</a>
@@ -296,10 +241,10 @@
             <a href="">Hàng mới về</a>
         </div>
         <div class="menu-item">
-            <a href="">Xu hướng làm đẹp</a>
+            <a href="{{ route('homeArticle') }}">Xu hướng làm đẹp</a>
         </div>
         <div class="menu-item ms-auto">
-            <a href=""><img src="./images/smart-phone.svg" alt="" class="ìm-fluid">Tải ứng dụng</a>
+            <a href=""><img src="{{ asset('images/smart-phone.svg') }}" alt="" class="ìm-fluid">Tải ứng dụng</a>
         </div>
         <div class="menu-item">
             <a href="">Xu Tra cứu đơn hàng</a>

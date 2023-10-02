@@ -1061,6 +1061,50 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 
 /***/ }),
 
+/***/ "./resources/sass/brand-list.scss":
+/*!****************************************!*\
+  !*** ./resources/sass/brand-list.scss ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9icmFuZC1saXN0LnNjc3MuanMiLCJtYXBwaW5ncyI6IjtBQUFBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcmVzb3VyY2VzL3Nhc3MvYnJhbmQtbGlzdC5zY3NzP2E3ZmUiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luXG5leHBvcnQge307Il0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/sass/brand-list.scss\n");
+
+/***/ }),
+
+/***/ "./resources/sass/cart-checkout.scss":
+/*!*******************************************!*\
+  !*** ./resources/sass/cart-checkout.scss ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9jYXJ0LWNoZWNrb3V0LnNjc3MuanMiLCJtYXBwaW5ncyI6IjtBQUFBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcmVzb3VyY2VzL3Nhc3MvY2FydC1jaGVja291dC5zY3NzP2MyNWEiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luXG5leHBvcnQge307Il0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/sass/cart-checkout.scss\n");
+
+/***/ }),
+
+/***/ "./resources/sass/cart-payment.scss":
+/*!******************************************!*\
+  !*** ./resources/sass/cart-payment.scss ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9jYXJ0LXBheW1lbnQuc2Nzcy5qcyIsIm1hcHBpbmdzIjoiO0FBQUEiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Fzcy9jYXJ0LXBheW1lbnQuc2Nzcz9jNTg0Il0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpblxuZXhwb3J0IHt9OyJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/sass/cart-payment.scss\n");
+
+/***/ }),
+
+/***/ "./resources/sass/cart-success.scss":
+/*!******************************************!*\
+  !*** ./resources/sass/cart-success.scss ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9jYXJ0LXN1Y2Nlc3Muc2Nzcy5qcyIsIm1hcHBpbmdzIjoiO0FBQUEiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Fzcy9jYXJ0LXN1Y2Nlc3Muc2Nzcz84MzExIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpblxuZXhwb3J0IHt9OyJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/sass/cart-success.scss\n");
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -1265,6 +1309,10 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 			"css/web/template": 0,
 /******/ 			"css/web/style": 0,
 /******/ 			"css/app": 0,
+/******/ 			"css/web/cart-success": 0,
+/******/ 			"css/web/cart-payment": 0,
+/******/ 			"css/web/cart-checkout": 0,
+/******/ 			"css/web/brand-list": 0,
 /******/ 			"css/web/product-detail": 0,
 /******/ 			"css/web/product-cat": 0,
 /******/ 			"css/web/article-detail": 0,
@@ -1318,16 +1366,20 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/app.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/style.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/template.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/home.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/content.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/article-list.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/article-detail.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/product-cat.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/product-detail.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/style.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/template.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/home.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/content.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/article-list.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/article-detail.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/product-cat.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/product-detail.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/brand-list.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/cart-checkout.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/cart-payment.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/cart-success.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

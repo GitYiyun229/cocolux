@@ -84,7 +84,7 @@
 
                                 <div class="detail-relate mb-4">
                                     @forelse($list_product_parent as $item)
-                                    <a href="{{ route('detailProduct',['slug'=>$item->slug, 'sku' =>$item->sku]) }}" class="@if ($product->id == $item->id) active @endif" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $item->title }}">
+                                    <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?$item->slug:$product_root->slug, 'sku' => $item->sku]) }}" class="@if ($product->id == $item->id) active @endif" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $item->title }}">
                                         <img src="{{ json_decode($item->images)[0] }}" alt="{{ $item->title }}" class="img-fluid">
                                     </a>
                                     @empty
@@ -195,14 +195,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="" class="btn btn-add-card">
+                                    <button class="btn btn-add-card" onclick="order({{ $product->id }})">
                                         <i class="fa-solid fa-cart-plus"></i>
                                         Giỏ hàng
-                                    </a>
-                                    <a href="" class="btn btn-buy-now">
+                                    </button>
+                                    <button class="btn btn-buy-now">
                                         <i class="fa-solid fa-cart-shopping"></i>
                                         Mua ngay
-                                    </a>
+                                    </button>
                                 </div>
 
                             </div>
@@ -369,6 +369,26 @@
                 };
 
             }, 1e3);
+        }
+    </script>
+
+    <script>
+        function order(id_prd) {
+            var quantity = $("#quantity").val();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '{{ route('addToCart') }}',
+                data: {
+                    quantity: quantity?quantity:1,
+                    id: id_prd,
+                    _token: $('meta[name="csrf-token"]').attr("content")
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#number-added-cart").html(data.total);
+                }
+            });
         }
     </script>
 @endsection

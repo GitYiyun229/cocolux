@@ -23,4 +23,8 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/article-detail.scss', 'public/css/web')
     .sass('resources/sass/product-cat.scss', 'public/css/web')
     .sass('resources/sass/product-detail.scss', 'public/css/web')
+    .sass('resources/sass/brand-list.scss', 'public/css/web')
+    .sass('resources/sass/cart-checkout.scss', 'public/css/web')
+    .sass('resources/sass/cart-payment.scss', 'public/css/web')
+    .sass('resources/sass/cart-success.scss', 'public/css/web')
     .sourceMaps();

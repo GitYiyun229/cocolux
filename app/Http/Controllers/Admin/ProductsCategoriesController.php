@@ -78,15 +78,10 @@ class ProductsCategoriesController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ProductsCategories  $productsCategories
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ProductsCategories $productsCategories)
+    public function sort()
     {
-        //
+        $cats = $this->productCategoryRepository->getAll();
+        return view('admin.product-category.sort',compact('cats'));
     }
 
     /**

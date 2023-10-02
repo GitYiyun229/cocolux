@@ -36,6 +36,7 @@ use Illuminate\Http\Request;
 Route::group(['namespace' => 'Web'], function (){
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/blog', 'ArticleController@index')->name('homeArticle');
+    Route::get('/thuong-hieu', 'AttributeController@attributeBrand')->name('homeBrand');
     Route::get('/chuyen-muc/{slug}-i.{id}', 'ArticleController@cat')
         ->where(['slug' => '[-a-zA-Z0-9]+', 'id' => '[0-9]+'])
         ->name('catArticle');
@@ -48,7 +49,14 @@ Route::group(['namespace' => 'Web'], function (){
     Route::get('/{slug}-i.{sku}', 'ProductController@detail')
         ->where(['slug' => '[-a-zA-Z0-9]+', 'id' => '[0-9]+'])
         ->name('detailProduct');
-    Route::get('/{cat_slug}/{slug}', 'PageController@index')->name('detailPage');
+    Route::post('/them-vao-gio-hang', 'ProductController@addToCart')->name('addToCart');
+    Route::post('/update-gio-hang', 'ProductController@updateCart')->name('updateCart');
+    Route::get('/checkout', 'ProductController@showCart')->name('showCart');
+    Route::get('/checkout/payment', 'ProductController@payment')->name('payment');
+    Route::get('/xoa-san-pham/{id}', 'ProductController@removeItem')->name('removeItem');
+    Route::post('/order', 'ProductController@order')->name('order');
+    Route::get('dat-hang-thanh-cong/{id}', 'ProductController@success')->name('orderProductSuccess');
+    Route::get('/thong-tin/{slug}', 'PageController@index')->name('detailPage');
 });
 
 //Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
@@ -154,6 +162,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('', 'ProductsCategoriesController@index')->name('index');
         Route::get('/create', 'ProductsCategoriesController@create')->name('create')->middleware('permission:create_product_categories');
         Route::post('/store', 'ProductsCategoriesController@store')->name('store')->middleware('permission:create_product_categories');
+        Route::get('/sort', 'ProductsCategoriesController@sort')->name('sort')->middleware('permission:create_product_categories');
         Route::get('/edit/{id}', 'ProductsCategoriesController@edit')->name('edit')->middleware('permission:edit_product_categories');
         Route::post('/update/{id}', 'ProductsCategoriesController@update')->name('update')->middleware('permission:edit_product_categories');
         Route::post('/destroy/{id}', 'ProductsCategoriesController@destroy')->name('destroy')->middleware('permission:delete_product_categories');

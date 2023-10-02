@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\MenuCategoryTranslation;
 use Illuminate\Http\Request;
 use App\DataTables\MenuCategoryDataTable;
 use App\Repositories\Contracts\MenuCategoryInterface;
@@ -53,13 +52,7 @@ class MenuCategoryController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
-            $local = request()->input('locale','vi');
-
-            $model = $this->menuCategoryRepository->create($data);
-            foreach(\LaravelLocalization::getSupportedLocales() as $localeCode => $properties){
-                $langTranslation = new MenuCategoryTranslation(['lang' => $localeCode, 'name' => $localeCode == $local ? $data['name']:'']);
-                $model->translations()->save($langTranslation);
-            }
+            $this->menuCategoryRepository->create($data);
             DB::commit();
             Session::flash('success', trans('message.create_menu_category_success'));
             return redirect()->back();
@@ -96,10 +89,7 @@ class MenuCategoryController extends Controller
     public function edit($id)
     {
         $local = request()->query('local','vi');
-        $menu_category = $this->menuCategoryRepository->getOneById($id,['translations' => function($query){
-            $local = request()->query('local','vi');
-            $query->where(['lang'=> $local ])->select('id','name','menu_category_id');
-        }]);
+        $menu_category = $this->menuCategoryRepository->getOneById($id);
         return view('admin.menu-category.update', compact('menu_category','local'));
     }
 
@@ -114,19 +104,10 @@ class MenuCategoryController extends Controller
     {
         try {
             $data = $req->validated();
-            $local = request()->input('locale','vi');
-            $category = $this->menuCategoryRepository->getOneById($id,['translations']);
-            $englishTranslation = $category->translations->where('lang', $local)->first();
-            $category->translations->name = $data['name'];
-            $category->translations->lang = $local;
-            if ($englishTranslation) {
-                $englishTranslation->name = $data['name'];
-                $englishTranslation->lang = $local;
-                $englishTranslation->save();
-            }
-            $category->save();
+            $category = $this->menuCategoryRepository->getOneById($id);
+            $category->update($data);
             Session::flash('success', trans('message.update_menu_category_success'));
-            return redirect()->back();
+            return redirect()->route('admin.menu-category.edit', $id);
         } catch (\Exception $exception) {
             \Log::info([
                 'message' => $exception->getMessage(),

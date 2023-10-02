@@ -110,7 +110,7 @@
                         </div>
                         <div class="section-content">
                             @forelse($product_cats[$cat->id] as $item)
-                            <a href="{{ route('detailProduct',['slug'=>$item->slug, 'sku' =>$item->sku]) }}" class="product-template">
+                            <a href="{{ route('detailProduct',['slug'=> $item->slug, 'sku' => $item->sku]) }}" class="product-template">
                                 <div class="product-discount">
                                     <span class="pe-1">5%</span>
                                 </div>

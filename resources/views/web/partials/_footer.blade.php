@@ -3,7 +3,7 @@
         <div class="footer-top">
             <div class="footer-col">
                 <a href="" title="cocolux m-0">
-                    <img src="./images/logo-full-white-cocolux.png" alt="cocolux" class="img-fluid">
+                    <img src="{{ $setting['logo_footer'] }}" alt="cocolux" class="img-fluid">
                 </a>
                 <p class="mt-4">Cocolux là hệ thống phân phối mỹ phẩm chính hãng uy tín và dịch vụ chăm sóc khách hàng tận tâm . Đến với Coco bạn có thể hoàn toàn yên tâm khi sẽ chọn được cho mình bộ sản phẩm phù hợp và ưng ý từ các nhãn hàng nổi tiếng trên toàn thế giới.</p>
             </div>
@@ -37,7 +37,7 @@
                 </div>
                 <div class="license-page">
                     <div class="link-app">
-                        <img src="./images/QR-code-appstore.png" alt="cocolux" class="img-fluid img-qr">
+                        <img src="{{ $setting['qr_code_appstore'] }}" alt="cocolux" class="img-fluid img-qr">
                         <div class="app-box">
                             <a href="https://apps.apple.com/us/app/cocolux/id1529709256" target="_blank">
                                 <img src="{{ asset('images/ic-appstore.svg') }}" alt="cocolux" class="img-fluid img-app">
@@ -50,8 +50,8 @@
                         </div>
                     </div>
                     <div class="license-image">
-                        <img src="./images/BCT-noi-khong-voi-hang-gia.png" class="img-fluid">
-                        <a href="http://online.gov.vn/Home/WebDetails/80058" target="_blank"><img src="./images/bo-cong-thuong-xanh.svg" class="img-fluid"></a>
+                        <img src="{{ asset('images/BCT-noi-khong-voi-hang-gia.png') }}" class="img-fluid">
+                        <a href="http://online.gov.vn/Home/WebDetails/80058" target="_blank"><img src="{{ asset('images/bo-cong-thuong-xanh.svg') }}" class="img-fluid"></a>
                     </div>
                 </div>
             </div>
@@ -74,18 +74,18 @@
             <div class="footer-col">
                 <p class="title-2">KẾT NỐI</p>
                 <div class="link-icon">
-                    <a href="https://www.facebook.com/cocoluxofficial" target="blank"><img src="./images/ic-facebook.svg" alt="cocolux" class="img-fluid"></a>
-                    <a href="https://www.instagram.com/cocolux.vn" target="blank"><img src="./images/ic-insta.svg" alt="cocolux" class="img-fluid"></a>
-                    <a href="http://bit.ly/cocoshopchanel" target="blank"><img src="./images/ic-youtube.svg" alt="cocolux" class="img-fluid"></a>
-                    <a href="https://www.tiktok.com/@cocolux.com?lang=vi-VN" class="ic-invert" target="blank"><img src="./images/ic-tiktok.svg" alt="cocolux" class="img-fluid filter-white"></a>
-                    <a class="ic-invert ic-zalo" target="blank"><img src="./images/ic-zalo.svg" alt="cocolux" class="img-fluid filter-white"></a>
+                    <a href="https://www.facebook.com/cocoluxofficial" target="blank"><img src="{{ asset('images/ic-facebook.svg') }}" alt="cocolux" class="img-fluid"></a>
+                    <a href="https://www.instagram.com/cocolux.vn" target="blank"><img src="{{ asset('images/ic-insta.svg') }}" alt="cocolux" class="img-fluid"></a>
+                    <a href="http://bit.ly/cocoshopchanel" target="blank"><img src="{{ asset('images/ic-youtube.svg') }}" alt="cocolux" class="img-fluid"></a>
+                    <a href="https://www.tiktok.com/@cocolux.com?lang=vi-VN" class="ic-invert" target="blank"><img src="{{ asset('images/ic-tiktok.svg') }}" alt="cocolux" class="img-fluid filter-white"></a>
+                    <a class="ic-invert ic-zalo" target="blank"><img src="{{ asset('images/ic-zalo.svg') }}" alt="cocolux" class="img-fluid filter-white"></a>
                 </div>
                 <p class="title">PHƯƠNG THỨC THANH TOÁN</p>
                 <div class="link-icon">
-                    <a><img src="./images/ic-cash.svg" alt="cocolux" class="img-fluid"></a>
-                    <a><img src="./images/ic-internet-banking.svg" alt="cocolux" class="img-fluid"></a>
-                    <a><img src="./images/ic-visa.svg" alt="cocolux" class="img-fluid"></a>
-                    <a><img src="./images/ic-mastercard.svg" alt="cocolux" class="img-fluid"></a>
+                    <a><img src="{{ asset('images/ic-cash.svg') }}" alt="cocolux" class="img-fluid"></a>
+                    <a><img src="{{ asset('images/ic-internet-banking.svg') }}" alt="cocolux" class="img-fluid"></a>
+                    <a><img src="{{ asset('images/ic-visa.svg') }}" alt="cocolux" class="img-fluid"></a>
+                    <a><img src="{{ asset('images/ic-mastercard.svg') }}" alt="cocolux" class="img-fluid"></a>
                 </div>
             </div>
             <div class="footer-col">
