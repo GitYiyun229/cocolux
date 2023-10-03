@@ -7,11 +7,11 @@
 @section('title_file', trans('form.product_category.'))
 
 @section('content')
-    <a href="{{ route('admin.product-category.index') }}" class="btn btn-primary mb-3"><i class="fas fa-list"></i> Danh mục sản phẩm</a>
-    <div class="dd" id="nestable" data-url="{{ route('admin.product-category.updateTree') }}">
+    <a href="{{ route('admin.article-category.index') }}" class="btn btn-primary mb-3"><i class="fas fa-list"></i> Danh mục bài viết</a>
+    <div class="dd" id="nestable" data-url="{{ route('admin.article-category.updateTree') }}">
         <ol class="dd-list">
             @foreach ($cats as $shop)
-                @include('admin.product-category.item', ['item'=>$shop])
+                @include('admin.article-category.item', ['item'=>$shop])
             @endforeach
         </ol>
     </div>

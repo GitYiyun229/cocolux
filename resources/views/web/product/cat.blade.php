@@ -33,7 +33,7 @@
                                 <div class="filter-group-title">Danh mục</div>
                                 <div class="filter-group-items">
                                     @forelse($cats as $item)
-                                    <a class="filter-item @if($item->parent_id) filter-item-child @endif">{{ $item->title }}</a>
+                                    <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}" class="filter-item @if($item->parent_id) filter-item-child @endif">{{ $item->title }}</a>
                                     @empty
                                     @endforelse
                                 </div>

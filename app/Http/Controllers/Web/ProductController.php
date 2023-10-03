@@ -39,13 +39,13 @@ class ProductController extends Controller
         $cats = ProductsCategories::where(['active' => 1,'parent_id' => $id])->orWhere(['id' => $id])->select('id','title','slug','parent_id')->get();
         $attributes = Attribute::where(['active' => 1,'type' => 'select'])->select('id','name','code')->with(['attributeValue'=>function($query){
 
-            }])->get();
-        $products = Product::where(['active' => 1])
+        }])->get();
+        $products = Product::where(['active' => 1])->where('category_path', 'LIKE', '%'.$id.'%')
             ->select('id','title','image','brand','hot_deal','sku','slug')
             ->with(['productOption' => function($query){
                 $query->where(['is_default' => 1,'active' => 1])
                     ->select('id','sku', 'title', 'parent_id','price','slug','images');
-            }])->limit(10)->paginate(30 ?? config('data.limit', 20));
+            }])->limit(10)->paginate(30 ?? config('data.limit', 30));
         return view('web.product.cat',compact('cat','cats','products','attributes'));
     }
 

@@ -27,7 +27,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $cat_article = $this->articleCategoryRepository->getAll();
+        $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
         $article = $this->articleRepository->paginate(12,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1]);
         $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
         $product_hots = Product::where(['active' => 1, 'is_hot' => 1])
@@ -51,7 +51,7 @@ class ArticleController extends Controller
         if (!$category) {
             abort(404);
         }
-        $cat_article = $this->articleCategoryRepository->getAll();
+        $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
         $article = $this->articleRepository->paginate(12,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1,'category_id'=>$id]);
         $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
         $product_hots = Product::where(['active' => 1, 'is_hot' => 1])

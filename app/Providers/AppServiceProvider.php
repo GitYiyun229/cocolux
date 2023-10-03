@@ -40,8 +40,8 @@ class AppServiceProvider extends ServiceProvider
                 $menu = $menuRepository->getMenusByCategoryId(1)->toTree();
             }
             if (Schema::hasTable('products_categories')) {
-//                $cat_products = ProductsCategories::where(['active' => 1])->with('children')->whereNull('parent_id')->get();
-                $cat_products = getCategoriesTree(ProductsCategories::all());
+                $cat_products = ProductsCategories::where(['is_visible' => 1])->withDepth()->defaultOrder()->get()->toTree();
+//                $cat_products = getCategoriesTree(ProductsCategories::all());
 //                dd($cat_products);
             }
 //            View::composer(['web.partials._header', 'web.partials._footer'], function ($view) {

@@ -34,13 +34,6 @@
                 <li>
                     <input type="checkbox" id="home" value="0" data-link="{{ route('home') }}" data-name="Trang chủ"><label for="home">Trang chủ</label>
                 </li>
-                @if(!empty($product_categories))
-                    @foreach($product_categories as $k => $product)
-                        <li>
-                            <input type="checkbox" id="product_{{ $product->id }}" value="{{ $product->id }}"  data-link="" data-name="{{ $product->title }}"><label for="product_{{ $product->id }}">{{ $product->title }}</label>
-                        </li>
-                    @endforeach
-                @endif
                 @if(!empty($article_categories))
                     @foreach($article_categories as $k => $article)
                         <li>

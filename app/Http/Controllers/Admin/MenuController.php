@@ -42,10 +42,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $local = request()->query('local','vi');
         $category_id = request()->query('category_id');
         $article_categories = $this->articleCategoryRepository->getAll();
-        $product_categories = $this->productRepository->getAll();
         $menu_categories = $this->menuCategoryRepository->getList(null,['*'],null);
         $pages = $this->pageRepository->getAll();
         if ($menu_categories->count() === 0){
@@ -56,8 +54,7 @@ class MenuController extends Controller
             $category_id = $menu_categories->first()->id;
         }
         $menu = $this->menuRepository->getMenusByCategoryId($category_id)->toTree();
-        $translations = $this->menuRepository->getList(null,['*'],null);
-        return view('admin.menu.index', compact('article_categories','menu_categories','menu','category_id','pages','product_categories','local','translations'));
+        return view('admin.menu.index', compact('article_categories','menu_categories','menu','category_id','pages'));
     }
 
     /**

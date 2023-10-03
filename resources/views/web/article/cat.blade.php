@@ -8,7 +8,10 @@
                 <div class="layout-menu">
                     <div class="news-categories layout-box bg-white">
                         <p class="mb-0 text-center text-uppercase fw-bold layout-title text-red">Blog làm đẹp</p>
-                        <a href="" class="category-item active fw-bold level-0">Review mỹ phẩm</a>
+                        @forelse($cat_article as $parent)
+                            <a href="{{ route('catArticle', ['slug' => $parent->slug, 'id' => $parent->id]) }}" class="category-item active fw-bold level-0">{{ $parent->title }}</a>
+                        @empty
+                        @endforelse
                         <a href="" class="category-item fw-bold level-0">Tips làm đẹp</a>
                         <a href="" class="category-item level-1">Da đẹp</a>
                         <a href="" class="category-item level-1">Dáng đẹp</a>

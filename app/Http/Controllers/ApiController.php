@@ -153,10 +153,12 @@ class ApiController extends Controller
                 $apiData->path = $item['path']?implode(',',$item['path']):null;
                 $apiData->parent_id = $item['parent_id'];
                 $apiData->is_home = $item['is_home_visible']?1:0;
+                $apiData->is_visible = $item['is_visible']?1:0;
                 $apiData->seo_title = $item['meta_title'];
                 $apiData->seo_keyword = $item['meta_keyword'];
                 $apiData->seo_description = $item['meta_description'];
                 $apiData->active = $item['is_active']?1:0;
+                $apiData->ordering = $item['position']?$item['position']:0;
                 // Lưu dữ liệu vào cơ sở dữ liệu
                 $apiData->save();
             }

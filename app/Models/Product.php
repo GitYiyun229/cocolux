@@ -19,7 +19,7 @@ class Product extends Model
         'image_resize',
     ];
 
-//    protected $guarded = ['id'];
+    protected $guarded = ['id'];
 
     public function category()
     {

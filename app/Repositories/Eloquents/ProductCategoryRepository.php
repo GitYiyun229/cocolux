@@ -14,4 +14,9 @@ class ProductCategoryRepository extends BaseRepository implements ProductCategor
     {
         return 'App\Models\ProductsCategories';
     }
+
+    public function updateTreeRebuild($root = null, $data)
+    {
+        return $this->model->rebuildSubtree(null, $data);
+    }
 }

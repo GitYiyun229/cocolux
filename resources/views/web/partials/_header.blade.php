@@ -21,8 +21,8 @@
                 <div class="menu-content">
                     @forelse($cat_products as $item)
                     <div class="menu-item">
-                        <a href="" class="menu-btn">{{ $item->title }} <i class="fa-solid fa-angle-right"></i></a>
-{{--                        @if($item->children)--}}
+                        <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}" class="menu-btn">{{ $item->title }} <i class="fa-solid fa-angle-right"></i></a>
+                        @if(count($item->children) > 0)
                         <div class="menu-content">
                             <div class="position-relative h-100 w-100">
                                 <div class="menu-group-top">
@@ -31,29 +31,25 @@
                                     <a href="">Hàng mới</a>
                                 </div>
                                 <div class="menu-group-bottom">
+                                    @forelse($item->children as $child)
                                     <div class="menu-col-item">
-                                        <a href="" class="item-parent">Trang điểm mặt</a>
-                                        <a href="" class="item-child">Kem Lót</a>
-                                        <a href="" class="item-child">Kem nền - BB Cream</a>
-                                        <a href="" class="item-child">Che khuyết điểm</a>
-                                        <a href="" class="item-child">Phấn phủ</a>
-                                        <a href="" class="item-child">Phấn má</a>
-                                        <a href="" class="item-child">Phấn nước - Cushion</a>
-                                        <a href="" class="item-child">Tạo khối - Hightlight</a>
+                                        <a href="{{ route('catProduct',['slug' => $child->slug, 'id' => $child->id]) }}" class="item-parent">{{ $child->title }}</a>
+                                        @if(count($child->children) > 0)
+                                            @forelse($child->children as $lv3)
+                                                <a href="{{ route('catProduct',['slug' => $lv3->slug, 'id' => $lv3->id]) }}" class="item-child">{{ $lv3->title }}</a>
+                                            @empty
+                                            @endforelse
+                                        @endif
                                     </div>
-                                    <div class="menu-col-item">
-                                        <a href="" class="item-parent">Trang điểm mắt</a>
-                                        <a href="" class="item-child">Phấn mắt/ Nhũ mắt</a>
-                                        <a href="" class="item-child">Kẻ mắt</a>
-                                        <a href="" class="item-child">Kẻ chân mày</a>
-                                        <a href="" class="item-child">Mascara</a>
-                                    </div>
+                                    @empty
+                                    @endforelse
                                 </div>
                                 <div class="menu-poster">
-                                    <img src="{{ asset('images/poster-example.jpeg') }}" alt="">
+                                    <img src="{{ $item->image }}" alt="">
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
                     @empty
                     @endforelse
@@ -68,31 +64,18 @@
                     </button>
                     <div class="dropdown-menu header-main-dropdown">
                         <div class="dropdown-item item-parent">Tất cả</div>
+                        @forelse($cat_products as $item)
                         <section>
-                            <div class="dropdown-item item-parent">Trang Điểm</div>
-                            <div class="dropdown-item item-child">Trang Điểm Mặt</div>
-                            <div class="dropdown-item item-child">Trang Điểm Mắt</div>
+                            <div class="dropdown-item item-parent">{{ $item->title }}</div>
+                            @if(count($item->children) > 0)
+                                @forelse($item->children as $child)
+                                    <div class="dropdown-item item-child">{{ $child->title }}</div>
+                                @empty
+                                @endforelse
+                            @endif
                         </section>
-                        <section>
-                            <div class="dropdown-item item-parent">Son môi</div>
-                            <div class="dropdown-item item-child">Son Thỏi</div>
-                            <div class="dropdown-item item-child">Son Kem</div>
-                            <div class="dropdown-item item-child">Son Dưỡng</div>
-                            <div class="dropdown-item item-child">Son Bóng</div>
-                            <div class="dropdown-item item-child">Mặt Nạ Ngủ Môi</div>
-                            <div class="dropdown-item item-child">Tẩy da chết môi</div>
-                        </section>
-                        <section>
-                            <div class="dropdown-item item-parent">Chăm Sóc Cơ Thể</div>
-                            <div class="dropdown-item item-child">Chăm Sóc Răng Miệng</div>
-                            <div class="dropdown-item item-child">Dưỡng Thể</div>
-                            <div class="dropdown-item item-child">Body Mist - Xịt Thơm</div>
-                            <div class="dropdown-item item-child">Làm Sạch</div>
-                            <div class="dropdown-item item-child">Kem Tay</div>
-                            <div class="dropdown-item item-child">Lăn Xịt Khử Mùi</div>
-                            <div class="dropdown-item item-child">Kem Trị Rạn/ Tan Mỡ</div>
-                            <div class="dropdown-item item-child">Chăm Sóc Vùng Kín</div>
-                        </section>
+                        @empty
+                        @endforelse
                     </div>
                 </div>
                 <input type="text" class="form-control" name="keyword" id="keyword" placeholder="Tìm sản phẩm bạn mong muốn...">
@@ -122,8 +105,10 @@
                 Danh mục sản phẩm
             </a>
             <div class="menu-content">
+                @forelse($cat_products as $item)
                 <div class="menu-item">
-                    <a href="" class="menu-btn">Trang điểm <i class="fa-solid fa-angle-right"></i></a>
+                    <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}" class="menu-btn">{{ $item->title }} <i class="fa-solid fa-angle-right"></i></a>
+                    @if(count($item->children) > 0)
                     <div class="menu-content">
                         <div class="position-relative h-100 w-100">
                             <div class="menu-group-top">
@@ -132,89 +117,28 @@
                                 <a href="">Hàng mới</a>
                             </div>
                             <div class="menu-group-bottom">
+                                @forelse($item->children as $child)
                                 <div class="menu-col-item">
-                                    <a href="" class="item-parent">Trang điểm mặt</a>
-                                    <a href="" class="item-child">Kem Lót</a>
-                                    <a href="" class="item-child">Kem nền - BB Cream</a>
-                                    <a href="" class="item-child">Che khuyết điểm</a>
-                                    <a href="" class="item-child">Phấn phủ</a>
-                                    <a href="" class="item-child">Phấn má</a>
-                                    <a href="" class="item-child">Phấn nước - Cushion</a>
-                                    <a href="" class="item-child">Tạo khối - Hightlight</a>
+                                    <a href="{{ route('catProduct',['slug' => $child->slug, 'id' => $child->id]) }}" class="item-parent">{{ $child->title }}</a>
+                                    @if(count($child->children) > 0)
+                                        @forelse($child->children as $lv3)
+                                            <a href="{{ route('catProduct',['slug' => $lv3->slug, 'id' => $lv3->id]) }}" class="item-child">{{ $lv3->title }}</a>
+                                        @empty
+                                        @endforelse
+                                    @endif
                                 </div>
-                                <div class="menu-col-item">
-                                    <a href="" class="item-parent">Trang điểm mắt</a>
-                                    <a href="" class="item-child">Phấn mắt/ Nhũ mắt</a>
-                                    <a href="" class="item-child">Kẻ mắt</a>
-                                    <a href="" class="item-child">Kẻ chân mày</a>
-                                    <a href="" class="item-child">Mascara</a>
-                                </div>
+                                @empty
+                                @endforelse
                             </div>
                             <div class="menu-poster">
-                                <img src="{{ asset('images/poster-example.jpeg') }}" alt="">
+                                <img src="{{ $item->image }}" alt="">
                             </div>
                         </div>
                     </div>
+                    @endif
                 </div>
-                <div class="menu-item">
-                    <a href="" class="menu-btn">Son môi <i class="fa-solid fa-angle-right"></i></a>
-                    <div class="menu-content">
-                        <div class="position-relative h-100 w-100">
-                            <div class="menu-group-top">
-                                <a href="">Nổi bật</a>
-                                <a href="">Bán chạy</a>
-                                <a href="">Hàng mới</a>
-                            </div>
-                            <div class="menu-group-bottom">
-                                <div class="menu-col-item">
-                                    <a href="" class="item-parent">Son Thỏi</a>
-                                </div>
-                                <div class="menu-col-item">
-                                    <a href="" class="item-parent">Son Bóng</a>
-                                </div>
-                                <div class="menu-col-item">
-                                    <a href="" class="item-parent">Son Dưỡng</a>
-                                </div>
-                                <div class="menu-col-item">
-                                    <a href="" class="item-parent">Mặt nạ ngủ môi</a>
-                                </div>
-                                <div class="menu-col-item">
-                                    <a href="" class="item-parent">Tẩy da chết môi</a>
-                                </div>
-                            </div>
-                            <div class="menu-poster">
-                                <img src="{{ asset('images/poster-example.jpeg') }}" alt="">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="menu-item">
-                    <a href="" class="menu-btn">Chăm sóc da <i class="fa-solid fa-angle-right"></i></a>
-                </div>
-                <div class="menu-item">
-                    <a href="" class="menu-btn">Chăm sóc cơ thể <i class="fa-solid fa-angle-right"></i></a>
-                </div>
-                <div class="menu-item">
-                    <a href="" class="menu-btn">Chăm sóc tóc <i class="fa-solid fa-angle-right"></i></a>
-                </div>
-                <div class="menu-item">
-                    <a href="" class="menu-btn">Dụng cụ <i class="fa-solid fa-angle-right"></i></a>
-                </div>
-                <div class="menu-item">
-                    <a href="" class="menu-btn">Nước hoa <i class="fa-solid fa-angle-right"></i></a>
-                </div>
-                <div class="menu-item">
-                    <a href="" class="menu-btn">Mỹ phẩm Hight-End <i class="fa-solid fa-angle-right"></i></a>
-                </div>
-                <div class="menu-item">
-                    <a href="" class="menu-btn">Mỹ phẩm chức năng <i class="fa-solid fa-angle-right"></i></a>
-                </div>
-                <div class="menu-item">
-                    <a href="" class="menu-btn">Gift Set <i class="fa-solid fa-angle-right"></i></a>
-                </div>
-                <div class="menu-item">
-                    <a href="" class="menu-btn">Sản phẩm khác <i class="fa-solid fa-angle-right"></i></a>
-                </div>
+                @empty
+                @endforelse
             </div>
         </div>
         <div class="menu-item">

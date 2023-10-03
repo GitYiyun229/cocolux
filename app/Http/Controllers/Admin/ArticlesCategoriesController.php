@@ -9,6 +9,7 @@ use App\Repositories\Contracts\ArticleCategoryInterface;
 use App\Repositories\Contracts\ArticleInterface;
 use App\Http\Requests\Article\CreateArticleCategory;
 use App\Http\Requests\Article\UpdateArticleCategory;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -153,5 +154,25 @@ class ArticlesCategoriesController extends Controller
             ];
         }
 
+    }
+
+    public function sort()
+    {
+        $cats = ArticlesCategories::where(['active' => 1])->withDepth()->defaultOrder()->get()->toTree();
+        return view('admin.article-category.sort',compact('cats'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param int $id
+     * @param updateTree $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateTree(Request $request)
+    {
+        $data = $request->data;
+        $this->articleCategoryRepository->updateTreeRebuild('id', $data);
+        return response()->json($data);
     }
 }

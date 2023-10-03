@@ -1,8 +1,7 @@
-<li class="dd-item" data-id="{{ $item->id }}" data-name="{{ $item->name }}" >
+<li class="dd-item" data-id="{{ $item->id }}" data-name="{{ $item->title }}" >
     <div class="dd-handle">
-        {{ $item->name }}
+        {{ $item->title }}
     </div>
-    <input type="text" class="form-control update-name" id="update-name-{{ $item->id }}" value="{{ $item->name }}">
     @if (count($item->children) > 0)
         <ol class="dd-list">
             @foreach ($item->children as $val)
