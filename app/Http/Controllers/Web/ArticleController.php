@@ -75,7 +75,7 @@ class ArticleController extends Controller
         }else{
             $limit = 3;
         }
-        $cat_article = $this->articleCategoryRepository->getAll();
+        $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
         $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
         $product_hots = Product::where(['active' => 1, 'is_hot' => 1])
             ->select('id','title','image','brand','hot_deal')

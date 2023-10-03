@@ -9,16 +9,18 @@
                     <div class="news-categories layout-box bg-white">
                         <p class="mb-0 text-center text-uppercase fw-bold layout-title text-red">Blog làm đẹp</p>
                         @forelse($cat_article as $parent)
-                            <a href="{{ route('catArticle', ['slug' => $parent->slug, 'id' => $parent->id]) }}" class="category-item active fw-bold level-0">{{ $parent->title }}</a>
+                            <a href="{{ route('catArticle', ['slug' => $parent->slug, 'id' => $parent->id]) }}"
+                               class="category-item @if (request()->is('*'.$parent->slug.'*')) active fw-bold @endif level-0">
+                                {{ $parent->title }}
+                            </a>
+                            @if(count($parent->children) > 0)
+                                @forelse($parent->children as $child)
+                                    <a href="{{ route('catArticle', ['slug' => $child->slug, 'id' => $child->id]) }}" class="category-item @if (request()->is('*'.$child->slug.'*')) active fw-bold @endif level-1">{{ $child->title }}</a>
+                                @empty
+                                @endforelse
+                            @endif
                         @empty
                         @endforelse
-                        <a href="" class="category-item fw-bold level-0">Tips làm đẹp</a>
-                        <a href="" class="category-item level-1">Da đẹp</a>
-                        <a href="" class="category-item level-1">Dáng đẹp</a>
-                        <a href="" class="category-item level-1">Tóc đẹp</a>
-                        <a href="" class="category-item level-1">Khỏe đẹp</a>
-                        <a href="" class="category-item fw-bold level-0">Thành phần mỹ phẩm</a>
-                        <a href="" class="category-item fw-bold level-0">Tin tức</a>
                     </div>
 
                     <div class="products-hot layout-box bg-white">
