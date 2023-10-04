@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://giakhanh.local'),
+    'url' => env('APP_URL', 'http://betacocolux.phongcachso.com'),
 
     'asset_url' => env('ASSET_URL', null),
 
