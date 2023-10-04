@@ -1017,6 +1017,94 @@ eval("/* module decorator */ module = __webpack_require__.nmd(module);\nvar __WE
 
 /***/ }),
 
+/***/ "./resources/sass/article-list.scss":
+/*!******************************************!*\
+  !*** ./resources/sass/article-list.scss ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9hcnRpY2xlLWxpc3Quc2Nzcy5qcyIsIm1hcHBpbmdzIjoiO0FBQUEiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Fzcy9hcnRpY2xlLWxpc3Quc2Nzcz84ZTRiIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpblxuZXhwb3J0IHt9OyJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/sass/article-list.scss\n");
+
+/***/ }),
+
+/***/ "./resources/sass/article-detail.scss":
+/*!********************************************!*\
+  !*** ./resources/sass/article-detail.scss ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9hcnRpY2xlLWRldGFpbC5zY3NzLmpzIiwibWFwcGluZ3MiOiI7QUFBQSIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3Jlc291cmNlcy9zYXNzL2FydGljbGUtZGV0YWlsLnNjc3M/Y2JmZCJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBleHRyYWN0ZWQgYnkgbWluaS1jc3MtZXh0cmFjdC1wbHVnaW5cbmV4cG9ydCB7fTsiXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/sass/article-detail.scss\n");
+
+/***/ }),
+
+/***/ "./resources/sass/product-cat.scss":
+/*!*****************************************!*\
+  !*** ./resources/sass/product-cat.scss ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9wcm9kdWN0LWNhdC5zY3NzLmpzIiwibWFwcGluZ3MiOiI7QUFBQSIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3Jlc291cmNlcy9zYXNzL3Byb2R1Y3QtY2F0LnNjc3M/ZTY1YSJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBleHRyYWN0ZWQgYnkgbWluaS1jc3MtZXh0cmFjdC1wbHVnaW5cbmV4cG9ydCB7fTsiXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/sass/product-cat.scss\n");
+
+/***/ }),
+
+/***/ "./resources/sass/product-detail.scss":
+/*!********************************************!*\
+  !*** ./resources/sass/product-detail.scss ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9wcm9kdWN0LWRldGFpbC5zY3NzLmpzIiwibWFwcGluZ3MiOiI7QUFBQSIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3Jlc291cmNlcy9zYXNzL3Byb2R1Y3QtZGV0YWlsLnNjc3M/YjA1ZiJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBleHRyYWN0ZWQgYnkgbWluaS1jc3MtZXh0cmFjdC1wbHVnaW5cbmV4cG9ydCB7fTsiXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/sass/product-detail.scss\n");
+
+/***/ }),
+
+/***/ "./resources/sass/brand-list.scss":
+/*!****************************************!*\
+  !*** ./resources/sass/brand-list.scss ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9icmFuZC1saXN0LnNjc3MuanMiLCJtYXBwaW5ncyI6IjtBQUFBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcmVzb3VyY2VzL3Nhc3MvYnJhbmQtbGlzdC5zY3NzP2E3ZmUiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luXG5leHBvcnQge307Il0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/sass/brand-list.scss\n");
+
+/***/ }),
+
+/***/ "./resources/sass/cart-checkout.scss":
+/*!*******************************************!*\
+  !*** ./resources/sass/cart-checkout.scss ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9jYXJ0LWNoZWNrb3V0LnNjc3MuanMiLCJtYXBwaW5ncyI6IjtBQUFBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcmVzb3VyY2VzL3Nhc3MvY2FydC1jaGVja291dC5zY3NzP2MyNWEiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luXG5leHBvcnQge307Il0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/sass/cart-checkout.scss\n");
+
+/***/ }),
+
+/***/ "./resources/sass/cart-payment.scss":
+/*!******************************************!*\
+  !*** ./resources/sass/cart-payment.scss ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9jYXJ0LXBheW1lbnQuc2Nzcy5qcyIsIm1hcHBpbmdzIjoiO0FBQUEiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Fzcy9jYXJ0LXBheW1lbnQuc2Nzcz9jNTg0Il0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpblxuZXhwb3J0IHt9OyJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/sass/cart-payment.scss\n");
+
+/***/ }),
+
+/***/ "./resources/sass/cart-success.scss":
+/*!******************************************!*\
+  !*** ./resources/sass/cart-success.scss ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9jYXJ0LXN1Y2Nlc3Muc2Nzcy5qcyIsIm1hcHBpbmdzIjoiO0FBQUEiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Fzcy9jYXJ0LXN1Y2Nlc3Muc2Nzcz84MzExIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpblxuZXhwb3J0IHt9OyJdLCJuYW1lcyI6W10sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/sass/cart-success.scss\n");
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -1028,6 +1116,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 
 /***/ }),
 
+/***/ "./resources/sass/style.scss":
+/*!***********************************!*\
+  !*** ./resources/sass/style.scss ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9zdHlsZS5zY3NzLmpzIiwibWFwcGluZ3MiOiI7QUFBQSIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3Jlc291cmNlcy9zYXNzL3N0eWxlLnNjc3M/MmM5ZiJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBleHRyYWN0ZWQgYnkgbWluaS1jc3MtZXh0cmFjdC1wbHVnaW5cbmV4cG9ydCB7fTsiXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/sass/style.scss\n");
+
+/***/ }),
+
 /***/ "./resources/sass/template.scss":
 /*!**************************************!*\
   !*** ./resources/sass/template.scss ***!
@@ -1035,7 +1134,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy90ZW1wbGF0ZS5zY3NzLmpzIiwibWFwcGluZ3MiOiI7QUFBQSIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3Jlc291cmNlcy9zYXNzL3RlbXBsYXRlLnNjc3M/ZDBjZiJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBleHRyYWN0ZWQgYnkgbWluaS1jc3MtZXh0cmFjdC1wbHVnaW5cbmV4cG9ydCB7fTsiXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/sass/template.scss\n");
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy90ZW1wbGF0ZS5zY3NzLmpzIiwibWFwcGluZ3MiOiI7QUFBQSIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3Jlc291cmNlcy9zYXNzL3RlbXBsYXRlLnNjc3M/NGI1ZiJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBleHRyYWN0ZWQgYnkgbWluaS1jc3MtZXh0cmFjdC1wbHVnaW5cbmV4cG9ydCB7fTsiXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/sass/template.scss\n");
 
 /***/ }),
 
@@ -1046,7 +1145,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extr
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9ob21lLnNjc3MuanMiLCJtYXBwaW5ncyI6IjtBQUFBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcmVzb3VyY2VzL3Nhc3MvaG9tZS5zY3NzPzdhYTUiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luXG5leHBvcnQge307Il0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/sass/home.scss\n");
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9ob21lLnNjc3MuanMiLCJtYXBwaW5ncyI6IjtBQUFBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcmVzb3VyY2VzL3Nhc3MvaG9tZS5zY3NzP2U5MDUiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luXG5leHBvcnQge307Il0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/sass/home.scss\n");
+
+/***/ }),
+
+/***/ "./resources/sass/content.scss":
+/*!*************************************!*\
+  !*** ./resources/sass/content.scss ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvc2Fzcy9jb250ZW50LnNjc3MuanMiLCJtYXBwaW5ncyI6IjtBQUFBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcmVzb3VyY2VzL3Nhc3MvY29udGVudC5zY3NzPzlhNDciXSwic291cmNlc0NvbnRlbnQiOlsiLy8gZXh0cmFjdGVkIGJ5IG1pbmktY3NzLWV4dHJhY3QtcGx1Z2luXG5leHBvcnQge307Il0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/sass/content.scss\n");
 
 /***/ }),
 
@@ -1194,9 +1304,19 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/js/app": 0,
-/******/ 			"css/app": 0,
+/******/ 			"css/web/content": 0,
 /******/ 			"css/web/home": 0,
-/******/ 			"css/web/template": 0
+/******/ 			"css/web/template": 0,
+/******/ 			"css/web/style": 0,
+/******/ 			"css/app": 0,
+/******/ 			"css/web/cart-success": 0,
+/******/ 			"css/web/cart-payment": 0,
+/******/ 			"css/web/cart-checkout": 0,
+/******/ 			"css/web/brand-list": 0,
+/******/ 			"css/web/product-detail": 0,
+/******/ 			"css/web/product-cat": 0,
+/******/ 			"css/web/article-detail": 0,
+/******/ 			"css/web/article-list": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -1246,10 +1366,20 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/home","css/web/template"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/home","css/web/template"], () => (__webpack_require__("./resources/sass/app.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/app","css/web/home","css/web/template"], () => (__webpack_require__("./resources/sass/template.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app","css/web/home","css/web/template"], () => (__webpack_require__("./resources/sass/home.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/style.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/template.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/home.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/content.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/article-list.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/article-detail.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/product-cat.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/product-detail.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/brand-list.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/cart-checkout.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/cart-payment.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/web/content","css/web/home","css/web/template","css/web/style","css/app","css/web/cart-success","css/web/cart-payment","css/web/cart-checkout","css/web/brand-list","css/web/product-detail","css/web/product-cat","css/web/article-detail","css/web/article-list"], () => (__webpack_require__("./resources/sass/cart-success.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

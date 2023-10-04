@@ -34,39 +34,10 @@
                 <li>
                     <input type="checkbox" id="home" value="0" data-link="{{ route('home') }}" data-name="Trang chủ"><label for="home">Trang chủ</label>
                 </li>
-                <li>
-                    <input type="checkbox" id="home_video" value="0" data-link="{{ route('video') }}" data-name="Video"><label for="home_video">Video</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="home_album" value="0" data-link="{{ route('album') }}" data-name="Hình ảnh"><label for="home_album">Hình ảnh</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="home_store" value="0" data-link="{{ route('store') }}" data-name="Hệ thống"><label for="home_store">Hệ thống</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="home_contact" value="0" data-link="{{ route('detailContact') }}" data-name="Liên hệ"><label for="home_contact">Liên hệ</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="home_product" value="0" data-link="{{ route('productHome') }}" data-name="Thực đơn"><label for="home_product">Thực đơn</label>
-                </li>
-                @if(!empty($product_categories))
-                    @foreach($product_categories as $k => $product)
-                        <li>
-                            <input type="checkbox" id="product_{{ $product->id }}" value="{{ $product->id }}"  data-link="{{ route('productCat',[$product->slug]) }}" data-name="{{ $product->title }}"><label for="product_{{ $product->id }}">{{ $product->title }}</label>
-                        </li>
-                    @endforeach
-                @endif
                 @if(!empty($article_categories))
                     @foreach($article_categories as $k => $article)
                         <li>
-                            <input type="checkbox" id="article_{{ $article->id }}" value="{{ $article->id }}"  data-link="{{ route('catArticle',[$article->slug]) }}" data-name="{{ $article->title }}"><label for="article_{{ $article->id }}">{{ $article->title }}</label>
-                        </li>
-                    @endforeach
-                @endif
-                @if(!empty($pages))
-                    @foreach($pages as $k => $page)
-                        <li>
-                            <input type="checkbox" id="page_{{ $page->id }}" value="{{ $page->id }}"  data-link="{{ route('page',[$page->slug]) }}" data-name="{{ $page->title }}"><label for="page_{{ $page->id }}">{{ $page->title }}</label>
+                            <input type="checkbox" id="article_{{ $article->id }}" value="{{ $article->id }}"  data-link="{{ route('catArticle',[$article->slug,$article->id]) }}" data-name="{{ $article->title }}"><label for="article_{{ $article->id }}">{{ $article->title }}</label>
                         </li>
                     @endforeach
                 @endif
@@ -79,13 +50,10 @@
         <div class="col-sm-6">
             <div class="d-flex">
                 <div class="col-md-6">
-                    @include('admin.components.buttons.change_lang',['url'=> route('admin.menu.index')])
-                </div>
-                <div class="col-md-6">
                     <label>Nhóm danh mục</label>
                     <select name="category_id" id="category_id" class="form-control">
                         @foreach($menu_categories as $menu_category)
-                            <option value="{{ $menu_category->translations->first()->id }}" {{ (isset($category_id) && $category_id == $menu_category->translations->first()->id) ?'selected':'' }}>{{ $menu_category->translations->first()->name }}</option>
+                            <option value="{{ $menu_category->first()->id }}" {{ (isset($category_id) && $category_id == $menu_category->first()->id) ?'selected':'' }}>{{ $menu_category->first()->name }}</option>
                         @endforeach
                     </select>
                 </div>

@@ -2,7 +2,17 @@
     "/js/app.js": "/js/app.js",
     "/js/web/main.js": "/js/web/main.js",
     "/js/admin/setting.js": "/js/admin/setting.js",
-    "/css/app.css": "/css/app.css",
+    "/css/web/content.css": "/css/web/content.css",
     "/css/web/home.css": "/css/web/home.css",
-    "/css/web/template.css": "/css/web/template.css"
+    "/css/web/template.css": "/css/web/template.css",
+    "/css/web/style.css": "/css/web/style.css",
+    "/css/app.css": "/css/app.css",
+    "/css/web/cart-success.css": "/css/web/cart-success.css",
+    "/css/web/cart-payment.css": "/css/web/cart-payment.css",
+    "/css/web/cart-checkout.css": "/css/web/cart-checkout.css",
+    "/css/web/brand-list.css": "/css/web/brand-list.css",
+    "/css/web/product-detail.css": "/css/web/product-detail.css",
+    "/css/web/product-cat.css": "/css/web/product-cat.css",
+    "/css/web/article-detail.css": "/css/web/article-detail.css",
+    "/css/web/article-list.css": "/css/web/article-list.css"
 }

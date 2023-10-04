@@ -23,7 +23,8 @@
 
 @section('link')
     <link rel="stylesheet" href="{{ asset('/js/web/fontawesome-free-6.1.1-web/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/mmenu.css') }}">
+{{--    <link rel="stylesheet" href="{{ asset('/css/mmenu.css') }}">--}}
+    <link rel="stylesheet" href="{{ asset('/css/web/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/web/template.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/web/style.css') }}">
 @endsection
@@ -33,7 +34,7 @@
     <script src="{{ asset('/js/web/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('/js/web/template.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('js/mmenu.js') }}"></script>
+{{--    <script src="{{ asset('js/mmenu.js') }}"></script>--}}
     <script src="{{ asset('js/web/main.js') }}" defer></script>
     <script>
         let toastrSuccsee = '{{ Session::get('success') }}';

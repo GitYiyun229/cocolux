@@ -1,0 +1,28 @@
+.layout-main-detail {
+  font-size: 16px;
+  text-align: justify;
+  padding: 18px 26px !important;
+}
+.layout-main-detail .detail-title {
+  font-size: 20px;
+  padding: 18px 26px 12px;
+}
+.layout-main-detail .detail-summary {
+  margin-bottom: 20px;
+}
+.layout-main-detail .detail-content img {
+  display: block;
+  max-width: 100% !important;
+  height: auto !important;
+}
+.layout-main-detail .detail-content video, .layout-main-detail .detail-content iframe {
+  max-width: 100% !important;
+}
+
+nav[aria-label=breadcrumb] {
+  border-bottom: none;
+  margin-bottom: 0 !important;
+}
+nav[aria-label=breadcrumb] ol {
+  justify-content: center;
+}

@@ -27,6 +27,8 @@ class CreateProductsCategories extends Migration
             $table->integer('parent_id')->nullable();
             $table->string('normalize_path')->nullable();
             $table->tinyInteger('active')->default(0)->comment('0: Không hoạt động; 1: Hoạt động');
+            $table->tinyInteger('is_home')->default(0)->nullable();
+            $table->tinyInteger('is_visible')->default(0)->nullable();
             $table->timestamps();
         });
     }

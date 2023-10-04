@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
 use App\Models\BookTable;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
+use App\Models\ProductOptions;
+use App\Models\ProductsCategories;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProductCategoryInterface;
 use App\Repositories\Contracts\ProductInterface;
@@ -30,46 +34,46 @@ class ProductController extends Controller
         return view('web.product.home',compact('cat','products'));
     }
 
-    public function cat($slug){
-        $cat = $this->productCategoryRepository->getOneBySlug($slug);
-        $cats = $this->productCategoryRepository->getList(['active' => 1],['id','title','slug'], 0);
-        $products = $this->productRepository->paginate(12,['id','slug','image','title','price','category_id'],['active'=>1,'category_id'=>$cat->id],['category']);
-        return view('web.product.cat',compact('cat','cats','products'));
+    public function cat($slug,$id){
+        $cat = $this->productCategoryRepository->getOneById($id);
+        $cats = ProductsCategories::where(['active' => 1,'parent_id' => $id])->orWhere(['id' => $id])->select('id','title','slug','parent_id')->get();
+        $attributes = Attribute::where(['active' => 1,'type' => 'select'])->select('id','name','code')->with(['attributeValue'=>function($query){
+
+        }])->get();
+        $products = Product::where(['active' => 1])->where('category_path', 'LIKE', '%'.$id.'%')
+            ->select('id','title','image','brand','hot_deal','sku','slug')
+            ->with(['productOption' => function($query){
+                $query->where(['is_default' => 1,'active' => 1])
+                    ->select('id','sku', 'title', 'parent_id','price','slug','images');
+            }])->limit(10)->paginate(30 ?? config('data.limit', 30));
+        return view('web.product.cat',compact('cat','cats','products','attributes'));
     }
 
-    public function detail ($slugCat,$slug){
-        $cat = $this->productCategoryRepository->getOneBySlug($slugCat);
-        $products = $this->productRepository->getList(['active' => 1],['id','title','slug','image','price','category_id'], 3,['category']);
-        $product = $this->productRepository->getOneBySlug($slug);
-        return view('web.product.detail',compact('cat','product','products'));
+    public function detail ($slug,$sku){
+        $product = ProductOptions::where(['sku' => $sku])->with(['product'])->first();
+        $list_image = json_decode($product->images);
+        $attribute_value = json_decode($product->product->attributes);
+        $stocks = json_decode($product->stocks);
+        $product_root = Product::where(['id' => $product->parent_id])->first();
+        $list_product_parent = ProductOptions::where(['parent_id' => $product->parent_id])->get();
+        $products = $this->productRepository->getList(['active' => 1,'is_hot' => 1],['id','title','slug','image','price','category_id','sku'], 3,['category']);
+        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root'));
     }
 
-    public function bookTable (CreateBookTable $req){
-        DB::beginTransaction();
-        try {
-            $data = $req->validated();
-            BookTable::create($data);
-            DB::commit();
-            Session::flash('success', trans('message.create_book_table_success'));
-            return redirect()->back();
-        } catch (\Exception $ex) {
-            DB::rollBack();
-            \Log::info([
-                'message' => $ex->getMessage(),
-                'line' => __LINE__,
-                'method' => __METHOD__
-            ]);
-
-            Session::flash('danger', trans('message.create_book_table_error'));
-            return redirect()->back();
-        }
-        return redirect()->back();
+    public function is_new(){
+        $products = Product::where(['active' => 1,'is_new' => 1])
+            ->select('id','title','image','brand','hot_deal','sku','slug')
+            ->with(['productOption' => function($query){
+                $query->where(['is_default' => 1,'active' => 1])
+                    ->select('id','sku', 'title', 'parent_id','price','slug','images');
+            }])->limit(10)->paginate(12 ?? config('data.limit', 20));
+        return view('web.product.new',compact('products'));
     }
 
     public function addToCart (Request $req){
         $productId = $req['id'];
         $quantity = $req['quantity'];
-        $product = $this->productRepository->getOneById($productId);
+        $product = ProductOptions::where(['id' => $productId])->with(['product'])->first();;
 
         if (!$product) {
             abort(404);
@@ -105,6 +109,7 @@ class ProductController extends Controller
     public function showCart()
     {
         $cart = Session::get('cart', []);
+
         // Duyệt qua các sản phẩm trong giỏ hàng để lấy thông tin sản phẩm
         $cartItems = [];
         $total_price = 0;
@@ -113,12 +118,12 @@ class ProductController extends Controller
             return redirect()->route('home');
         }
         foreach ($cart as $productId => $item) {
-            $product = $this->productRepository->getOneById($productId);
+            $product = ProductOptions::where(['id' => $productId])->with(['product'])->first();
             $quantity = $item['quantity']; // Số lượng
-
             // Thêm thông tin sản phẩm vào danh sách
             $cartItems[] = [
                 'product' => $product,
+                'image' => json_decode($product->images),
                 'quantity' => $quantity,
                 'subtotal' => $product->price * $quantity, // Tính tổng tiền cho mỗi sản phẩm
             ];
@@ -195,6 +200,33 @@ class ProductController extends Controller
         }
     }
 
+    public function payment()
+    {
+        $cart = Session::get('cart', []);
+
+        // Duyệt qua các sản phẩm trong giỏ hàng để lấy thông tin sản phẩm
+        $cartItems = [];
+        $total_price = 0;
+        if (!$cart){
+            Session::flash('danger', 'Chưa có sản phẩm nào trong giỏ hàng');
+            return redirect()->route('home');
+        }
+        foreach ($cart as $productId => $item) {
+            $product = ProductOptions::where(['id' => $productId])->with(['product'])->first();
+            $quantity = $item['quantity']; // Số lượng
+            // Thêm thông tin sản phẩm vào danh sách
+            $cartItems[] = [
+                'product' => $product,
+                'image' => json_decode($product->images),
+                'quantity' => $quantity,
+                'subtotal' => $product->price * $quantity, // Tính tổng tiền cho mỗi sản phẩm
+            ];
+            $total_price = $total_price + $product->price * $quantity;
+        }
+
+        return view('web.cart.payment', compact('cart','cartItems','total_price'));
+    }
+
     public function order (CreateOrder $req){
         DB::beginTransaction();
         try {
@@ -238,8 +270,8 @@ class ProductController extends Controller
 
 
     public function success ($id){
-        Session::forget('cart');
-        $order = Order::findOrFail($id);
-        return view('web.cart.register_success',compact('order'));
+//        Session::forget('cart');
+//        $order = Order::findOrFail($id);
+        return view('web.cart.register_success');
     }
 }

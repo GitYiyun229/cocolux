@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 class PageController extends Controller
 {
     public function index($slug){
-        $page = Page::where('slug', $slug)->select('id','content','image','image_title','description')->first();
+
+        $page = Page::where('slug', $slug)->with('category')->select('id','title','content','image','description','page_cat_id')->first();
         if (!$page) {
             abort(404);
         }

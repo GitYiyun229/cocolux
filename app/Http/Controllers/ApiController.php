@@ -153,10 +153,12 @@ class ApiController extends Controller
                 $apiData->path = $item['path']?implode(',',$item['path']):null;
                 $apiData->parent_id = $item['parent_id'];
                 $apiData->is_home = $item['is_home_visible']?1:0;
+                $apiData->is_visible = $item['is_visible']?1:0;
                 $apiData->seo_title = $item['meta_title'];
                 $apiData->seo_keyword = $item['meta_keyword'];
                 $apiData->seo_description = $item['meta_description'];
                 $apiData->active = $item['is_active']?1:0;
+                $apiData->ordering = $item['position']?$item['position']:0;
                 // Lưu dữ liệu vào cơ sở dữ liệu
                 $apiData->save();
             }
@@ -390,7 +392,7 @@ class ApiController extends Controller
             RequestOptions::VERIFY => false, // Tắt kiểm tra chứng chỉ SSL
         ]);
 
-        $response = $client->get('v1/products/ddd/products?types=item&order_by=desc&sort_by=updated_at&limit=100&skip=5000');
+        $response = $client->get('v1/products/ddd/products?types=item&order_by=desc&sort_by=updated_at&limit=100&skip=5300');
 
 
         // Lấy nội dung JSON từ phản hồi
@@ -411,7 +413,7 @@ class ApiController extends Controller
                     $apiData = new Product();
                     $apiData->id = $item['id'];
                     $apiData->title = $item['name'];
-                    $apiData->slug = $item['slug'];
+                    $apiData->slug = strstr($item['slug'],"-i.",true);
                     $apiData->sku = $item['sku'];
                     $apiData->image = $item['thumbnail_url'];
                     $apiData->brand = $item['brand'];
@@ -421,8 +423,29 @@ class ApiController extends Controller
                     $apiData->normal_price = $item['normal_price'];
                     $apiData->description = $item['description'];
                     $apiData->document = $item['document'];
-                    $apiData->attributes = json_encode($item['attributes']);
-                    $apiData->categories = json_encode($item['categories']);
+
+                    if ($item['attributes']){
+                        $apiData->attributes = json_encode($item['attributes']);
+                        $result_attribute = [];
+                        foreach ($item['attributes'] as $attri) {
+                            $result_attribute[] = $attri['id'] . ':' . $attri['value']['id'];
+                        }
+                        $attribute_path = implode(',', $result_attribute);
+                        $apiData->attribute_path = $attribute_path;
+                    }
+
+                    if ($item['categories']){
+                        $apiData->categories = json_encode($item['categories']);
+
+                        $category = $item['categories'];
+                        $category = end($category);
+                        $apiData->category_id = $category['id'];
+
+                        $idArray = array_column($item['categories'], 'id'); // Trích xuất giá trị 'id' từ mảng
+                        $category_path = implode(',', $idArray);
+                        $apiData->category_path = $category_path;
+                    }
+
                     $apiData->suppliers = json_encode($item['suppliers']);
                     $apiData->hot_deal = json_encode($item['hot_deal']);
                     $apiData->flash_deal = json_encode($item['flash_deal']);
@@ -480,7 +503,7 @@ class ApiController extends Controller
                     $apiData = new ProductOptions();
                     $apiData->id = $item['id'];
                     $apiData->title = $item['name'];
-                    $apiData->slug = $item['slug'];
+                    $apiData->slug = strstr($item['slug'],"-i.",true);
                     $apiData->sku = $item['sku'];
                     $apiData->images = json_encode($item['images']);
                     $apiData->brand = $item['brand'];

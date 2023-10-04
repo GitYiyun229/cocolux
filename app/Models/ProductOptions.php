@@ -11,6 +11,6 @@ class ProductOptions extends Model
 
     public function product()
     {
-        return $this->hasOne(Product::class, 'parent_id', 'id');
+        return $this->hasOne(Product::class, 'id', 'parent_id');
     }
 }

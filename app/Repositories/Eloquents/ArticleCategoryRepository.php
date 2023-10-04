@@ -14,4 +14,9 @@ class ArticleCategoryRepository extends BaseRepository implements ArticleCategor
     {
         return 'App\Models\ArticlesCategories';
     }
+
+    public function updateTreeRebuild($root = null, $data)
+    {
+        return $this->model->rebuildSubtree(null, $data);
+    }
 }

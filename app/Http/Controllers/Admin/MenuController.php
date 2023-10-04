@@ -42,14 +42,9 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $local = request()->query('local','vi');
         $category_id = request()->query('category_id');
         $article_categories = $this->articleCategoryRepository->getAll();
-        $product_categories = $this->productRepository->getAll();
-        $menu_categories = $this->menuCategoryRepository->getList(null,['*'],null,['translations' => function($query){
-            $local = request()->query('local','vi');
-            $query->where(['lang'=> $local ])->select('id','name','menu_category_id');
-        }]);
+        $menu_categories = $this->menuCategoryRepository->getList(null,['*'],null);
         $pages = $this->pageRepository->getAll();
         if ($menu_categories->count() === 0){
             Session::flash('danger', 'Chưa có nhóm menu nào');
@@ -59,11 +54,7 @@ class MenuController extends Controller
             $category_id = $menu_categories->first()->id;
         }
         $menu = $this->menuRepository->getMenusByCategoryId($category_id)->toTree();
-        $translations = $this->menuRepository->getList(null,['*'],null, ['translations' => function($query){
-            $local = request()->query('local','vi');
-            $query->where(['lang'=> $local ])->first()->withDepth()->defaultOrder()->get()->toTree();
-        }]);
-        return view('admin.menu.index', compact('article_categories','menu_categories','menu','category_id','pages','product_categories','local','translations'));
+        return view('admin.menu.index', compact('article_categories','menu_categories','menu','category_id','pages'));
     }
 
     /**

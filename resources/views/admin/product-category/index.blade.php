@@ -7,6 +7,7 @@
 
 @section('content')
     <a href="{{ route('admin.product-category.create') }}" class="btn btn-primary mb-3"><i class="fa fa-plus"></i> @lang('form.button.create')</a>
+    <a href="{{ route('admin.product-category.sort') }}" class="btn btn-primary mb-3"><i class="fas fa-sort"></i> @lang('form.button.sort')</a>
     {!! $dataTable->table(['id' => 'product-category-table', 'class' => 'table table-striped table-bordered table-width-auto']) !!}
 @endsection
 

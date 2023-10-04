@@ -1,61 +1,142 @@
 @extends('web.layouts.web')
 
 @section('content')
-    <div class="top-content-products">
+    <main>
+
         <div class="container">
-            <h1 class="title-page">Thực đơn</h1>
-            <ul class="list-unstyled list-menu-page">
-                <li>
-                    <a href="{{ route('productHome') }}" title="Thực đơn" >Tất cả</a>
-                </li>
-                @if(!empty($cats))
-                    @forelse($cats as $k => $item)
-                        <li>
-                            <a href="{{ route('productCat', $item->slug) }}" title="{{ $item->title }}" class="@if (request()->fullUrlIs(route('productCat', $item->slug))) active @endif">{{ $item->title }}</a>
-                        </li>
-                    @empty
-                    @endforelse
-                @endif
-            </ul>
-        </div>
-    </div>
-    <div class="list-products-home">
-        <div class="container">
-            <div class="row g-0 mg-for-product">
-                @if(!empty($products))
-                    @forelse($products as $k => $item)
-                        <div class="col-md-4 item-product">
-                            <div class="image-product-item d-block position-relative">
-                                @include('web.components.image', ['src' => $item->image_resize['resize'], 'title' => $item->title])
-                                <span class="position-absolute top-50 start-50 translate-middle w-100 h-100 bg-hover-black"></span>
-                                <div class="m-0 position-absolute top-50 start-50 translate-middle add-to-cart-cat">
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2"><a class="btn-danger btn" href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}">Xem chi tiết <i class="fas fa-chevron-right"></i></a></li>
-                                        <li><button class="btn btn-warning cartToastBtn" onclick="order({{ $item->id }})">Thêm giỏ hàng <i class="fas fa-cart-plus"></i></button></li>
-                                    </ul>
+            <nav aria-label="breadcrumb" class="pt-3 pb-3 mb-4">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a href="#">
+                            <i class="fa-solid fa-house-chimney"></i>
+                            Trang chủ
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page">
+                        Danh mục
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Trang điểm
+                    </li>
+                </ol>
+            </nav>
+
+            <div class="layout-page-products-list mb-5">
+                <div class="layout-main mb-5 bg-white">
+                    <div class="layout-filter">
+                        <div class="layout-title text-uppercase fw-bold">
+                            <i class="fa-solid fa-filter"></i>
+                            <span>Bộ lọc tìm kiếm</span>
+                        </div>
+                        <div class="filter-list">
+                            <div class="filter-group">
+                                <div class="filter-group-title">Danh mục</div>
+                                <div class="filter-group-items">
+                                    @forelse($cats as $item)
+                                    <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}" class="filter-item @if($item->parent_id) filter-item-child @endif">{{ $item->title }}</a>
+                                    @empty
+                                    @endforelse
                                 </div>
                             </div>
-                            <div class="box-item-detail">
-                                <a href="{{ route('productDetail',['slugCat'=>$item->category->slug,'slug'=>$item->slug]) }}" title="{{ $item->title }}">
-                                    <h4 class="title-product">{{ $item->title }}</h4>
-                                </a>
-                                <p class="price-product">{{ format_money($item->price) }}</p>
+                            @forelse($attributes as $attribute)
+                            <div class="filter-group">
+                                <div class="filter-group-title">{{ $attribute->name }}</div>
+                                <div class="filter-group-items">
+                                    @forelse($attribute->attributeValue as $item)
+                                    <a class="filter-item">{{ $item->name }} <span class="d-none">(62)</span></a>
+                                    @empty
+                                    @endforelse
+                                </div>
+                            </div>
+                            @empty
+                            @endforelse
+                        </div>
+                    </div>
+                    <div class="layout-list">
+                        <div class="layout-title text-uppercase fw-bold">
+                            <h1>Trang điểm (800 KẾT QUẢ)</h1>
+                        </div>
+
+                        <div class="layout-card">
+                            <div class="card-group">
+                                <div class="card-title">Lọc theo</div>
+                                <div class="card-items">
+                                    <a href="" class="card-item card-filter active">
+                                        Danh mục - Trang điểm mặt
+                                        <div class="del-icon">
+                                            <img src="./images/ic-delete.svg" alt="del" class="img-fluid">
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-group">
+                                <div class="card-title">Sắp xếp theo</div>
+                                <div class="card-items">
+                                    <a href="" class="card-item card-sort active">Nổi bật</a>
+                                    <a href="" class="card-item card-sort">Bán chạy</a>
+                                    <a href="" class="card-item card-sort">Hàng mới</a>
+                                    <a href="" class="card-item card-sort">Giá cao tới thấp</a>
+                                    <a href="" class="card-item card-sort">Giá thấp tới cao</a>
+                                </div>
                             </div>
                         </div>
-                    @empty
-                    @endforelse
-                @endif
+
+                        <div class="layout-list-items mb-4">
+                            @forelse($products as $item)
+                            <a href="{{ route('detailProduct',['slug' => $item->slug,'sku' => $item->sku]) }}" class="product-template">
+                                <div class="product-discount">
+                                    <span class="pe-1">5%</span>
+                                </div>
+                                <div class="product-thumbnail">
+                                    <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="img-fluid">
+                                </div>
+                                <div class="product-price">
+                                    <div class="public-price">{{ format_money($item->productOption->first()->price) }}</div>
+                                    <div class="origin-price">{{ format_money($item->productOption->first()->normal_price) }}</div>
+                                </div>
+                                <div class="product-brand">
+                                    {{ $item->brand }}
+                                </div>
+                                <div class="product-title">
+                                    {{ $item->productOption->first()->title }}
+                                </div>
+                            </a>
+                            @empty
+                            @endforelse
+                        </div>
+
+                        {{ $products->links('web.components.pagination') }}
+                    </div>
+                </div>
+
+                <div class="layout-bottom mb-5 bg-white">
+                    <div class="layout-article less">
+                        {!! $cat->content !!}
+                    </div>
+                    <div class="layout-btn-toggle d-flex align-items-center justify-content-center">
+                        <button class="btn-more-less">
+                            <span>Xem thêm</span>
+                            <i class="fa-solid fa-angles-down"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-            {{ $products->links('web.components.pagination') }}
         </div>
-    </div>
+
+    </main>
 @endsection
 
 @section('link')
     @parent
-    <link rel="stylesheet" href="{{ asset('/css/web/products-home.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/web/product-cat.css') }}">
 @endsection
 
 @section('script')
     @parent
+    <script>
+        $('.btn-more-less').click(function() {
+            $(this).toggleClass('less');
+            $('.layout-article').toggleClass('less');
+        })
+    </script>
 @endsection

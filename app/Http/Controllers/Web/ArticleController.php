@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\Product;
 use App\Repositories\Contracts\ArticleCategoryInterface;
 use App\Repositories\Contracts\ArticleInterface;
 use Illuminate\Http\Request;
@@ -26,8 +27,15 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $article = $this->articleRepository->getAll();
-        return view('web.article.home', compact('article'));
+        $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
+        $article = $this->articleRepository->paginate(12,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1]);
+        $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
+        $product_hots = Product::where(['active' => 1, 'is_hot' => 1])
+            ->select('id','title','image','brand','hot_deal')
+            ->with(['productOption' => function($query){
+                $query->where(['is_default' => 1,'active' => 1])->select('id', 'title', 'parent_id','price','slug','images');
+            }])->limit(5)->get();
+        return view('web.article.home', compact('article','cat_article','product_hots','article_hot'));
     }
 
     /**
@@ -35,22 +43,23 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function cat($slug)
+    public function cat($slug,$id)
     {
-        $category = ArticlesCategories::where(['slug'=> $slug,'active'=> 1])
-            ->select('id','title','type','seo_title','seo_keyword','seo_description')
+        $category = ArticlesCategories::where(['id'=> $id,'active'=> 1])
+            ->select('id','title','seo_title','seo_keyword','seo_description')
             ->first();
         if (!$category) {
             abort(404);
         }
-        if ($category->type == 1){
-            $articles = $this->articleRepository->paginate(9,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1,'category_id'=>$category->id]);
-            return view('web.article.promotion',compact('category','articles'));
-        }else{
-            $articles = $this->articleRepository->paginate(10,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1,'category_id'=>$category->id]);
-            return view('web.article.home',compact('category','articles'));
-        }
-
+        $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
+        $article = $this->articleRepository->paginate(12,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1,'category_id'=>$id]);
+        $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
+        $product_hots = Product::where(['active' => 1, 'is_hot' => 1])
+            ->select('id','title','image','brand','hot_deal')
+            ->with(['productOption' => function($query){
+                $query->where(['is_default' => 1,'active' => 1])->select('id', 'title', 'parent_id','price','slug','images');
+            }])->limit(5)->get();
+        return view('web.article.cat', compact('article','cat_article','product_hots','article_hot'));
     }
 
     /**
@@ -66,7 +75,13 @@ class ArticleController extends Controller
         }else{
             $limit = 3;
         }
-        $articles = $this->articleRepository->getList(['category_id' => $article->category_id,'active' => 1],['id','slug','image','description','title','active','category_id','created_at'], $limit);
-        return view('web.article.detail', compact('article','articles'));
+        $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
+        $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
+        $product_hots = Product::where(['active' => 1, 'is_hot' => 1])
+            ->select('id','title','image','brand','hot_deal')
+            ->with(['productOption' => function($query){
+                $query->where(['is_default' => 1,'active' => 1])->select('id', 'title', 'parent_id','price','slug','images');
+            }])->limit(5)->get();
+        return view('web.article.detail', compact('article','cat_article','article_hot','product_hots'));
     }
 }

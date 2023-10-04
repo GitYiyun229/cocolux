@@ -1,114 +1,77 @@
 @extends('web.layouts.web')
 
 @section('content')
-    <div class="cart-content-products">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 pe-md-5">
-                    <h2 class="title-box-cart">Giỏ hàng</h2>
-                    <ul class="list-unstyled list-product-in-cart">
-                        @forelse($cartItems as $item)
-                            <li class="item-product-in-cart">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <a href="{{ route('productDetail',['slugCat'=>$item['product']->category->slug,'slug'=>$item['product']->slug]) }}">
-                                            @include('web.components.image', ['src' => $item['product']->image_resize['resize'], 'title' => $item['product']->title])
-                                        </a>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <a href="{{ route('productDetail',['slugCat'=>$item['product']->category->slug,'slug'=>$item['product']->slug]) }}">
-                                                <h4 class="title-product">{{ $item['product']->title }}</h4>
-                                            </a>
-                                            <p class="remove-product-in-cart">
-                                                <a href="{{ route('removeItem',['id'=>$item["product"]->id]) }}" class="btn"><i class="fas fa-times"></i></a>
-                                            </p>
-                                        </div>
-                                        <p class="price-product-root">{{ format_money($item['product']->price) }}</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="number-input me-3" data-id="{{ $item["product"]->id }}">
-                                                <button onclick="this.parentNode.querySelector('input.quantity-{{ $item["product"]->id }}').stepDown()"></button>
-                                                <input type="number" min="1" name="quantity[{{ $item["product"]->id }}]" id="quantity-{{ $item["product"]->id }}" class="quantity quantity-{{ $item["product"]->id }}" value="{{ $item['quantity'] }}">
-                                                <button onclick="this.parentNode.querySelector('input.quantity-{{ $item["product"]->id }}').stepUp()" class="plus"></button>
-                                            </div>
-                                            <p class="mb-0 subtotal-product">{{ format_money($item['subtotal']) }}</p>
-                                        </div>
+    <main>
 
-                                    </div>
-                                </div>
-                            </li>
+        <div class="container">
+            <div class="layout-page-checkout mt-4 mb-5">
+                <div class="page-title mb-2 fw-bold">Giỏ hàng ({{ getCart() }} sản phẩm)</div>
+
+                <div class="table-container">
+                    <table class="page-table table table-hover mb-4">
+                        <thead>
+                        <tr class="fw-bold">
+                            <th></th>
+                            <th>Sản phẩm</th>
+                            <th>Giá sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @forelse($cartItems as $item)
+                        <tr>
+                            <td>
+                                <img src="{{ $item['image'][0] }}" alt="{{ $item['product']->title }}" class="img-fluid">
+                            </td>
+                            <td class="fw-bold">
+                                {{ $item['product']->title }}
+                            </td>
+                            <td>
+                                <div class="public-price">{{ format_money($item['product']->price) }}</div>
+                            </td>
+                            <td>
+                                <input type="number" min="1" name="quantity[]" class="form-control" value="{{ $item['quantity'] }}">
+                            </td>
+                            <td>
+                                {{ format_money($item['subtotal']) }}
+                            </td>
+                            <td>
+                                <a href="{{ route('removeItem',['id'=>$item["product"]->id]) }}">Xóa</a>
+                            </td>
+                        </tr>
                         @empty
                         @endforelse
-                    </ul>
-                    <div class="box-price-before">
-                        <table class="w-100">
-                            <tr>
-                                <td>Tạm tính</td>
-                                <td class="text-end">{{ format_money($total_price) }}</td>
-                            </tr>
-                            <tr>
-                                <td>Phí giao hàng</td>
-                                <td class="text-end">Miễn phí</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="box-price-after d-flex justify-content-between align-items-center">
-                        <span class="title-price-total">Tổng thanh toán</span>
-                        <span class="price-total">{{ format_money($total_price) }}</span>
-                    </div>
+                        <tr>
+                            <td colspan="6">
+                                <i class="fa-solid fa-truck-fast me-2"></i> Miễn phí vận chuyển toàn quốc cho đơn hàng từ 3 sản phẩm (99k/SP)
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col-md-6 ps-md-5">
-                    <h2 class="title-box-cart">Thông tin khách hàng</h2>
-                    <p class="description-for-form-cart">Bạn vui lòng nhập đúng số điện thoại để chúng tôi sẽ gọi xác nhận đơn hàng trước khi giao hàng. Xin cảm ơn!</p>
-                    <form action="{{ route('order') }}" class="form-in-detail-cart" name="form-in-detail-cart" id="form-in-detail-cart" method="post">
-                        @csrf
-                        <div class="top-form">
-                            <div class="form-group d-flex align-items-center">
-                                <div class="custom-control custom-radio me-5 position-relative">
-                                    <label for="gender1" class="custom-control-label">
-                                        <input class="custom-control-input custom-control-input-danger custom-control-input-outline" type="radio" value="0" id="gender1" name="gender" checked>
-                                        <span class="checkmark"></span>
-                                        Anh
-                                    </label>
-                                </div>
-                                <div class="custom-control custom-radio position-relative">
-                                    <label for="gender2" class="custom-control-label">
-                                        <input class="custom-control-input custom-control-input-danger custom-control-input-outline" type="radio" value="1" id="gender2" name="gender">
-                                        <span class="checkmark"></span>
-                                        Chị
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input type="text" value="{{ old('full_name') }}" class="form-control" name="full_name" placeholder="Họ và tên (bắt buộc)" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="number" value="{{ old('phone') }}" min="1" class="form-control" name="phone" placeholder="Số điện thoại (bắt buộc)" required>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input type="text" value="{{ old('email') }}" class="form-control" name="email" placeholder="Email (bắt buộc)" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="text" value="{{ old('address') }}" class="form-control" name="address" placeholder="Địa chỉ (không bắt buộc)">
-                                </div>
-                            </div>
-                            <textarea name="note" id="note" cols="30" rows="1" class="form-control" placeholder="Ghi chú thêm (Ví dụ: Giao hàng trong giờ hành chính)">{{ old('note') }}</textarea>
-                        </div>
-                        <button class="form-control submit-form-popup" type="submit">Đặt hàng ngay <i class="fas fa-angle-right"></i></button>
-                    </form>
+
+                <div class="page-confirm d-flex justify-content-end">
+                    <div class="item-confirm pe-4 text-end fw-bold">
+                        <p class="mb-0">Tổng tiền hàng ({{ getCart() }} sản phẩm)</p>
+                        <p class="mb-0 text-danger">{{ format_money($total_price) }}</p>
+                        <p class="mb-0">Nhận thêm: 5892 COCO COIN</p>
+                    </div>
+                    <div class="item-confirm">
+                        <a href="{{ route('payment') }}">Tiến hành đặt hàng</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+    </main>
 
 @endsection
 
 @section('link')
     @parent
-    <link rel="stylesheet" href="{{ asset('/css/web/product-cart.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/web/cart-checkout.css') }}">
 @endsection
 
 @section('script')

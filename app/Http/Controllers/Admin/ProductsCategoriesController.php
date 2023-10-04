@@ -78,15 +78,10 @@ class ProductsCategoriesController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\ProductsCategories  $productsCategories
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ProductsCategories $productsCategories)
+    public function sort()
     {
-        //
+        $cats = ProductsCategories::where(['is_visible' => 1])->withDepth()->defaultOrder()->get()->toTree();
+        return view('admin.product-category.sort',compact('cats'));
     }
 
     /**
@@ -150,5 +145,33 @@ class ProductsCategoriesController extends Controller
             'status' => true,
             'message' => trans('message.delete_product_category_success')
         ];
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $product_category = $this->productCategoryRepository->getOneById($id);
+        $product_category->update(['active' => !$product_category->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_product_category_success')
+        ];
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param int $id
+     * @param updateTree $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateTree(Request $request)
+    {
+        $data = $request->data;
+        $this->productCategoryRepository->updateTreeRebuild('id', $data);
+        return response()->json($data);
     }
 }

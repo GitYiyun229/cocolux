@@ -360,3 +360,17 @@ function getCart()
     }
     return $totalQuantity;
 }
+
+function getCategoriesTree($categories, $parentId = null)
+{
+    $tree = [];
+
+    foreach ($categories as $category) {
+        if ($category->parent_id === $parentId) {
+            $category->children = getCategoriesTree($categories, $category->id);
+            $tree[] = $category;
+        }
+    }
+
+    return $tree;
+}

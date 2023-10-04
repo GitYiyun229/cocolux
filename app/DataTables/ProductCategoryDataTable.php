@@ -12,6 +12,7 @@ use Yajra\DataTables\Services\DataTable;
 
 class ProductCategoryDataTable extends DataTable
 {
+    private $lowerModelName = 'product-category';
     /**
      * Build DataTable class.
      *
@@ -22,6 +23,15 @@ class ProductCategoryDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('active', function ($q) {
+                $url = route('admin.product-category.changeActive', $q->id);
+                $status = $q->active === ProductsCategories::STATUS_ACTIVE ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => $this->lowerModelName,
+                    'status' => $status,
+                ])->render();
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -33,7 +43,8 @@ class ProductCategoryDataTable extends DataTable
                 $urlDelete = route('admin.product-category.destroy', $q->id);
                 $lowerModelName = strtolower(class_basename(new ProductsCategories()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-            });
+            })
+            ->rawColumns(['active','action']);
     }
 
     /**

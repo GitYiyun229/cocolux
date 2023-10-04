@@ -159,57 +159,6 @@
                         </a>
                     </li>
                 @endcan
-                @can(['view_contact'])
-                <li class="nav-item">
-                    <a href="{{ route('admin.contact.index') }}" class="nav-link @if (request()->is('admin/contact')) active @endif">
-                        <i class="nav-icon fas fa-address-book"></i>
-                        <p>
-                            @lang('form.contact.')
-                        </p>
-                    </a>
-                </li>
-                @endcan
-                @can(['view_book_table'])
-                    <li class="nav-item">
-                        <a href="{{ route('admin.book-table.index') }}" class="nav-link @if (request()->is('admin/book-table')) active @endif">
-                            <i class="nav-icon fas fa-book-reader"></i>
-                            <p>
-                                @lang('form.book_table.')
-                            </p>
-                        </a>
-                    </li>
-                @endcan
-                <li class="nav-item @if (request()->is('admin/media*') || request()->is('admin/media*')) menu-open @endif">
-                    <a href="#" class="nav-link @if (request()->is('admin/media*') || request()->is('admin/media*')) active @endif">
-                        <i class="fas fa-photo-video"></i>
-                        <p>
-                            @lang('form.media.')
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        @can(['view_media_image'])
-                            <li class="nav-item">
-                                <a href="{{ route('admin.media-image.index') }}" class="nav-link @if (request()->is('admin/media-image*')) active @endif">
-                                    <i class="nav-icon fas fa-images"></i>
-                                    <p>
-                                        @lang('form.media._image')
-                                    </p>
-                                </a>
-                            </li>
-                        @endcan
-                        @can(['view_media_video'])
-                            <li class="nav-item">
-                                <a href="{{ route('admin.media-video.index') }}" class="nav-link @if (request()->is('admin/media-video*')) active @endif">
-                                    <i class="nav-icon fas fa-video"></i>
-                                    <p>
-                                        @lang('form.media._video')
-                                    </p>
-                                </a>
-                            </li>
-                        @endcan
-                    </ul>
-                </li>
 
                 @can(['view_product_orders'])
                     <li class="nav-item">
