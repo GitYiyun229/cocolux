@@ -597,6 +597,65 @@ class ApiController extends Controller
         return 'Dữ liệu từ API đã được lưu vào cơ sở dữ liệu.';
     }
 
+    public function updatePromotionsTypeFromApi()
+    {
+        // Sử dụng thư viện Guzzle để gửi yêu cầu GET đến API
+        $client = new Client([
+            'base_uri' => 'http://api.cocolux.com/', // Điều này giữ nguyên HTTP
+            RequestOptions::VERIFY => false, // Tắt kiểm tra chứng chỉ SSL
+        ]);
+
+        $response = $client->get('v1/promotions?skip=0&limit=400&type=hot_deal&statuses=finished');
+
+
+        // Lấy nội dung JSON từ phản hồi
+        $data = json_decode($response->getBody(), true);
+        $chunkSize = 50; // Số lượng bản ghi trong mỗi lô
+        $dataChunks = array_chunk($data['data'], $chunkSize);
+        $data_update = array();
+        if (count($dataChunks) > 0){
+            foreach ($dataChunks as $chunk) {
+                foreach ($chunk as $item) {
+                    $newId = $item['id'];
+                    // Tìm hoặc tạo một bản ghi dựa trên ID
+                    $apiDatasss = Promotions::find($newId);
+                    if ($apiDatasss){
+                        $data_update['name'] = $item['name'];
+                        $data_update['code'] = $item['code'];
+                        $data_update['content'] = $item['content'];
+                        $data_update['type'] = 'hot_deal';
+                        $data_update['status'] = 'finished';
+                        $apiDatasss->update($data_update);
+                    }else{
+                        $apiData = new Promotions();
+                        $apiData->id = $item['id'];
+                        $apiData->code = $item['code'];
+                        $apiData->name = $item['name'];
+                        $apiData->content = $item['content'];
+                        $apiData->image_layer = $item['image_layer']?$item['image_layer']:'';
+                        $apiData->thumbnail_url = $item['thumbnail_url']?$item['thumbnail_url']:'';
+                        $dateTime = Carbon::createFromTimestamp($item['applied_stop_time']);
+                        $timestampString = $dateTime->toDateTimeString();
+                        $apiData->applied_stop_time = $timestampString;
+
+                        $dateTime2 = Carbon::createFromTimestamp($item['applied_start_time']);
+                        $timestampString2 = $dateTime2->toDateTimeString();
+                        $apiData->applied_start_time = $timestampString2;
+                        $apiData->type = 'hot_deal';
+                        $apiData->status = 'finished';
+
+                        $apiData->save();
+                    }
+                }
+            }
+        }
+
+        // Hoặc sử dụng Query Builder
+        // DB::table('api_data')->insert($data);
+
+        return 'Dữ liệu từ API đã được lưu vào cơ sở dữ liệu.';
+    }
+
     public function saveBannersFromApi()
     {
         // Sử dụng thư viện Guzzle để gửi yêu cầu GET đến API

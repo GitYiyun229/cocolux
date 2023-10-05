@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\AttributeValues;
 use App\Models\Banners;
 use App\Models\Product;
+use App\Models\Setting;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ArticleInterface;
 use App\Repositories\Contracts\SlideInterface;
@@ -35,6 +38,17 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $logo = Setting::where('key', 'logo')->first();
+
+        SEOTools::setTitle('Hệ Thống Bán Lẻ Mỹ Phẩm Chính Hãng - Cocolux');
+        SEOTools::setDescription('Cocolux.com - Cung cấp +10000 mỹ phẩm chính hãng với +450 thương hiệu mỹ phẩm nổi tiếng & chất lượng | Giá cực tốt | Freeship HN trong 2h | Flash sale hấp dẫn');
+        SEOMeta::setKeywords('Cocolux, coco lux, mua mỹ phẩm chính hãng, son môi, chăm sóc da, chăm sóc tóc,trang điểm môi, chăm sóc cơ thể, kem dưỡng da, sữa rửa mặt, xịt khoáng, giá tốt nhất thị trường ');
+        SEOTools::addImages(asset($logo->value));
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('cocolux.com');
+
         $articles = $this->articleRepository->getList(['active' => 1,'is_home'=>1],['id','title','slug','description','image'], 4);
         $slider = Banners::where(['active' => 1, 'type' => 'home_v1_slider'])->select('id','url','image_url','mobile_url','content')->get();
         $subBanner = Banners::where(['active' => 1, 'type' => 'home_v1_sub_banner'])->select('id','url','image_url','mobile_url','content')->get(); // (2 cái ảnh nhỏ hiển thị cạnh banner)

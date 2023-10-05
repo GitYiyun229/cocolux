@@ -4,29 +4,7 @@
     <main>
 
         <div class="container">
-            <nav aria-label="breadcrumb" class="pt-3 pb-3 mb-4">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item">
-                        <a href="#">
-                            <i class="fa-solid fa-house-chimney"></i>
-                            Trang chủ
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item" aria-current="page">
-                        Trang điểm
-                    </li>
-                    <li class="breadcrumb-item" aria-current="page">
-                        Trang điểm mặt
-                    </li>
-                    <li class="breadcrumb-item" aria-current="page">
-                        Kem nền - BB Cream
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Kem Nền Maybelline Fit Me Matte Poreless Foundation SPF 22 30ml
-                    </li>
-                </ol>
-            </nav>
-
+            @include('web.components.breadcrumb',['links' => [] ])
             <div class="layout-page-product-detail mb-5">
                 <div class="layout-left">
                     <div class="layout-box layout-padding bg-white">
