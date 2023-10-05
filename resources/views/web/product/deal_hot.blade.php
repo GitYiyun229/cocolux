@@ -1,0 +1,36 @@
+@extends('web.layouts.web')
+
+@section('content')
+    <main>
+
+        <div class="container">
+            <div class="layout-page-hot-deal mt-4 mb-4">
+                <div class="layout-nav bg-white d-flex align-items-center mb-3">
+                    <a href="{{ route('dealHotProducts') }}" class="fw-bold text-uppercase fs-6 text-danger">Hot Deals</a>
+                    <a href="" class="fw-bold text-uppercase fs-6">Flash Deal</a>
+                    <a href="" class="fw-bold text-uppercase fs-6">Đang diễn ra</a>
+                </div>
+
+                <div class="layout-main d-grid">
+                    @forelse($promotions as $item)
+                    <a href="{{ route('dealHotDetailProducts',['id' => $item->id]) }}" title="{{ $item->name }}">
+                        <img src="{{ $item->thumbnail_url }}" alt="{{ $item->name }}" class="img-fluid mb-2">
+                        <div class="fw-bold fs-5">{{ $item->name }}</div>
+                    </a>
+                    @empty
+                    @endforelse
+                </div>
+            </div>
+        </div>
+
+    </main>
+@endsection
+
+@section('link')
+    @parent
+    <link rel="stylesheet" href="{{ asset('/css/web/hot-deal.css') }}">
+@endsection
+
+@section('script')
+    @parent
+@endsection

@@ -148,10 +148,10 @@
             <a href="{{ route('homeBrand') }}">Thương hiệu</a>
         </div>
         <div class="menu-item">
-            <a href="">Khuyến mại</a>
+            <a href="{{ route('dealHotProducts') }}">Khuyến mại</a>
             <div class="menu-content">
                 <div class="menu-item">
-                    <a href="">Hot Deals</a>
+                    <a href="{{ route('dealHotProducts') }}">Hot Deals</a>
                 </div>
                 <div class="menu-item">
                     <a href="">Flash Deals</a>
@@ -162,7 +162,7 @@
             </div>
         </div>
         <div class="menu-item">
-            <a href="">Hàng mới về</a>
+            <a href="{{ route('newProducts') }}">Hàng mới về</a>
         </div>
         <div class="menu-item">
             <a href="{{ route('homeArticle') }}">Xu hướng làm đẹp</a>
