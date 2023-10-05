@@ -29,4 +29,5 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/cart-success.scss', 'public/css/web')
     .sass('resources/sass/sale.scss', 'public/css/web')
     .sass('resources/sass/hot-deal.scss', 'public/css/web')
+    .sass('resources/sass/deal-detail.scss', 'public/css/web')
     .sourceMaps();

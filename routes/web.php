@@ -30,6 +30,7 @@ use Illuminate\Http\Request;
 //Route::get('/save-products-from-api', 'ApiController@saveProductsFromApi');
 //Route::get('/save-product-options-from-api', 'ApiController@saveProductOptionsFromApi');
 //Route::get('/save-promotions-from-api', 'ApiController@savePromotionsFromApi');
+//Route::get('/update-promotions-from-api', 'ApiController@updatePromotionsTypeFromApi');
 //Route::get('/save-banners-from-api', 'ApiController@saveBannersFromApi');
 //Route::get('/save-page-author-from-api', 'ApiController@savePageAuthorFromApi');
 
@@ -51,6 +52,7 @@ Route::group(['namespace' => 'Web'], function (){
         ->name('detailProduct');
     Route::get('/hang-moi-ve', 'ProductController@is_new')->name('newProducts');
     Route::get('/deal-hot', 'ProductController@deal_hot')->name('dealHotProducts');
+    Route::get('/deal-hot/{id}', 'ProductController@deal_hot_detail')->name('dealHotDetailProducts');
     Route::post('/them-vao-gio-hang', 'ProductController@addToCart')->name('addToCart');
     Route::post('/update-gio-hang', 'ProductController@updateCart')->name('updateCart');
     Route::get('/checkout', 'ProductController@showCart')->name('showCart');

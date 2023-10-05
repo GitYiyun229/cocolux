@@ -10,6 +10,7 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductOptions;
 use App\Models\ProductsCategories;
+use App\Models\Promotions;
 use App\Models\Setting;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
@@ -101,18 +102,34 @@ class ProductController extends Controller
 
         $logo = Setting::where('key', 'logo')->first();
 
-        SEOTools::setTitle('Hàng mới về | Cocolux.com');
-        SEOTools::setDescription('Săn Sale tại Cocolux: Giảm giá siêu sốc, miễn phí vận chuyển. Cuối tuần thả thơi mua sắm online cùng Cocolux!');
+        SEOTools::setTitle('Deal HOT: Tất cả Deal tại Cocolux | Cocolux.com');
+        SEOTools::setDescription('COCOLUX - Hệ thống mỹ phẩm hàng đầu Việt Nam');
         SEOTools::addImages(asset($logo->value));
         SEOTools::setCanonical(url()->current());
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('cocolux.com');
 
-        $products = ProductOptions::whereHas('product', function ($query) {
-            $query->where('is_new', 1);
-        })->select('id','sku', 'title', 'parent_id','price','slug','images')->paginate(30 ?? config('data.limit', 30));
-        return view('web.product.hot_deal',compact('products'));
+        $promotions = Promotions::where(['type' => 'hot_deal','status' => 'starting'])->select('id','name', 'code','thumbnail_url')->get();
+        return view('web.product.deal_hot',compact('promotions'));
+    }
+
+    public function deal_hot_detail($id){
+
+        $logo = Setting::where('key', 'logo')->first();
+
+        SEOTools::setTitle('Deals đang diễn ra | Cocolux.com');
+        SEOTools::setDescription('COCOLUX - Hệ thống mỹ phẩm hàng đầu Việt Nam');
+        SEOTools::addImages(asset($logo->value));
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('cocolux.com');
+
+        $promotion = Promotions::where(['type' => 'hot_deal','status' => 'starting','id' => $id])->select('id','name', 'code','thumbnail_url')->first();
+        $products = Product::whereJsonContains('hot_deal->id', $id)->pluck('id');
+        $productOptions = ProductOptions::whereIn('parent_id', $products)->select('id','sku', 'title', 'parent_id','price','slug','images')->get();
+        return view('web.product.deal_hot_detail',compact('promotion','products','productOptions'));
     }
 
     public function addToCart (Request $req){
