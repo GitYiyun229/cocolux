@@ -49,6 +49,8 @@ Route::group(['namespace' => 'Web'], function (){
     Route::get('/{slug}-i.{sku}', 'ProductController@detail')
         ->where(['slug' => '[-a-zA-Z0-9]+', 'id' => '[0-9]+'])
         ->name('detailProduct');
+    Route::get('/hang-moi-ve', 'ProductController@is_new')->name('newProducts');
+    Route::get('/deal-hot', 'ProductController@deal_hot')->name('dealHotProducts');
     Route::post('/them-vao-gio-hang', 'ProductController@addToCart')->name('addToCart');
     Route::post('/update-gio-hang', 'ProductController@updateCart')->name('updateCart');
     Route::get('/checkout', 'ProductController@showCart')->name('showCart');

@@ -162,7 +162,7 @@
             </div>
         </div>
         <div class="menu-item">
-            <a href="">Hàng mới về</a>
+            <a href="{{ route('newProducts') }}">Hàng mới về</a>
         </div>
         <div class="menu-item">
             <a href="{{ route('homeArticle') }}">Xu hướng làm đẹp</a>
