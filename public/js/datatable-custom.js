@@ -104,7 +104,11 @@ function renderDataAsBadge(data) {
 
 function renderImage(data) {
     if (data == null) return ''
-    var host = window.location.origin;
+    if (!data.startsWith("https://")) {
+        var host = window.location.origin;
+    }else{
+        var host = '';
+    }
     return '<img src="' + host + data + '" width="200px" >';
 }
 
