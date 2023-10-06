@@ -47,6 +47,6 @@ class Product extends Model
 
     public function getImageChangeUrlAttribute()
     {
-        return str_replace('https://cdn.cocolux.com','/cdn_images',$this->image);
+        return str_replace('https://cdn.cocolux.com','/images/cdn_images',$this->image);
     }
 }
