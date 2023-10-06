@@ -54,7 +54,7 @@
                         @forelse($article as $item)
                         <a href="{{ route('detailArticle',['slug'=>$item->slug,'id'=>$item->id]) }}" class="news-item layout-box layout-padding bg-white">
                             <div class="news-img" title="{{ $item->title }}">
-                                <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="img-fluid">
+                                <img src="{{ asset($item->image_change_url) }}" alt="{{ $item->title }}" class="img-fluid">
                             </div>
                             <div class="news-main">
                                 <p class="news-title fw-bold">{{ $item->title }}</p>
@@ -78,7 +78,7 @@
                         @forelse($article_hot as $item)
                         <a href="{{ route('detailArticle',['slug'=>$item->slug,'id'=>$item->id]) }}" class="news-item p-2 mb-3">
                             <div class="news-img" title="{{ $item->title }}">
-                                <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="img-fluid">
+                                <img src="{{ asset($item->image_change_url) }}" alt="{{ $item->title }}" class="img-fluid">
                             </div>
                             <div class="news-main">
                                 <p class="news-title fw-bold">{{ $item->title }}</p>
