@@ -48,10 +48,10 @@ class AppServiceProvider extends ServiceProvider
 //            });
         }
         View::share('setting', $setting);
-        View::composer(['web.partials._header', 'web.partials._footer','web.layouts.web'], function ($view) use ($menu, $cat_products) {
+        View::composer(['web.partials._header', 'web.partials._footer', 'web.layouts.web', 'web.home'], function ($view) use ($menu, $cat_products) {
             $view->with('menus', $menu);
             $view->with('cat_products', $cat_products);
         });
-
+         
     }
 }
