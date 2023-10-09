@@ -14,4 +14,16 @@ class RoleRepository extends BaseRepository implements RoleInterface
     {
         return 'App\Models\Role';
     }
+
+    /**
+     * Update permission of role
+     * @param int $id
+     * @param array $permissions
+     * @return mixed
+     */
+    public function updatePermission(int $id, array $permissions = [])
+    {
+        $role = $this->model->findOrFail($id);
+        return $role->syncPermissions($permissions);
+    }
 }

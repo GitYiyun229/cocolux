@@ -10,6 +10,10 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductOptions;
 use App\Models\ProductsCategories;
+use App\Models\Promotions;
+use App\Models\Setting;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProductCategoryInterface;
 use App\Repositories\Contracts\ProductInterface;
@@ -28,12 +32,6 @@ class ProductController extends Controller
         $this->productRepository = $productRepository;
     }
 
-    public function index(){
-        $cat = $this->productCategoryRepository->getList(['active' => 1],['id','title','slug'], 0);
-        $products = $this->productRepository->paginate(12,['id','slug','image','title','price','category_id'],['active'=>1],['category']);
-        return view('web.product.home',compact('cat','products'));
-    }
-
     public function cat($slug,$id){
         $cat = $this->productCategoryRepository->getOneById($id);
         $cats = ProductsCategories::where(['active' => 1,'parent_id' => $id])->orWhere(['id' => $id])->select('id','title','slug','parent_id')->get();
@@ -45,7 +43,17 @@ class ProductController extends Controller
             ->with(['productOption' => function($query){
                 $query->where(['is_default' => 1,'active' => 1])
                     ->select('id','sku', 'title', 'parent_id','price','slug','images');
-            }])->limit(10)->paginate(30 ?? config('data.limit', 30));
+            }])->paginate(30 ?? config('data.limit', 30));
+
+        SEOTools::setTitle($cat->seo_title?$cat->seo_title:$cat->title);
+        SEOTools::setDescription($cat->seo_description?$cat->seo_description:$cat->description);
+        SEOTools::addImages($cat->image?asset($cat->image):null);
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('cocolux.com');
+        SEOMeta::setKeywords($cat->seo_keyword?$cat->seo_keyword:$cat->title);
+
         return view('web.product.cat',compact('cat','cats','products','attributes'));
     }
 
@@ -54,20 +62,74 @@ class ProductController extends Controller
         $list_image = json_decode($product->images);
         $attribute_value = json_decode($product->product->attributes);
         $stocks = json_decode($product->stocks);
-        $product_root = Product::where(['id' => $product->parent_id])->first();
+        $product_root = Product::where(['id' => $product->parent_id])->select('id','slug','title','image','brand','description','attributes')->with(['category'])->first();
         $list_product_parent = ProductOptions::where(['parent_id' => $product->parent_id])->get();
         $products = $this->productRepository->getList(['active' => 1,'is_hot' => 1],['id','title','slug','image','price','category_id','sku'], 3,['category']);
+
+        SEOTools::setTitle($product->seo_title?$product->seo_title:$product->title);
+        SEOTools::setDescription($product->seo_description?$product->seo_description:$product->description);
+        SEOTools::addImages($product->image?asset($product->image):null);
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('cocolux.com');
+        SEOMeta::setKeywords($product->seo_keyword?$product->seo_keyword:$product->title);
+
         return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root'));
     }
 
     public function is_new(){
-        $products = Product::where(['active' => 1,'is_new' => 1])
-            ->select('id','title','image','brand','hot_deal','sku','slug')
-            ->with(['productOption' => function($query){
-                $query->where(['is_default' => 1,'active' => 1])
-                    ->select('id','sku', 'title', 'parent_id','price','slug','images');
-            }])->limit(10)->paginate(12 ?? config('data.limit', 20));
+
+        $logo = Setting::where('key', 'logo')->first();
+
+        SEOTools::setTitle('Hàng mới về | Cocolux.com');
+        SEOTools::setDescription('Săn Sale tại Cocolux: Giảm giá siêu sốc, miễn phí vận chuyển. Cuối tuần thả thơi mua sắm online cùng Cocolux!');
+        SEOTools::addImages(asset($logo->value));
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('cocolux.com');
+
+        $products = ProductOptions::with(['product' => function ($query) {
+            $query->select('id', 'is_new', 'brand');
+        }])->whereHas('product', function ($query) {
+            $query->where('is_new', 1);
+        })->select('id','sku', 'title', 'parent_id','price','slug','images')->paginate(30 ?? config('data.limit', 30));
         return view('web.product.new',compact('products'));
+    }
+
+    public function deal_hot(){
+
+        $logo = Setting::where('key', 'logo')->first();
+
+        SEOTools::setTitle('Deal HOT: Tất cả Deal tại Cocolux | Cocolux.com');
+        SEOTools::setDescription('COCOLUX - Hệ thống mỹ phẩm hàng đầu Việt Nam');
+        SEOTools::addImages(asset($logo->value));
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('cocolux.com');
+
+        $promotions = Promotions::where(['type' => 'hot_deal','status' => 'starting'])->select('id','name', 'code','thumbnail_url')->get();
+        return view('web.product.deal_hot',compact('promotions'));
+    }
+
+    public function deal_hot_detail($id){
+
+        $logo = Setting::where('key', 'logo')->first();
+
+        SEOTools::setTitle('Deals đang diễn ra | Cocolux.com');
+        SEOTools::setDescription('COCOLUX - Hệ thống mỹ phẩm hàng đầu Việt Nam');
+        SEOTools::addImages(asset($logo->value));
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('cocolux.com');
+
+        $promotion = Promotions::where(['type' => 'hot_deal','status' => 'starting','id' => $id])->select('id','name', 'code','thumbnail_url')->first();
+        $products = Product::whereJsonContains('hot_deal->id', $id)->pluck('id');
+        $productOptions = ProductOptions::whereIn('parent_id', $products)->select('id','sku', 'title', 'parent_id','price','slug','images')->get();
+        return view('web.product.deal_hot_detail',compact('promotion','products','productOptions'));
     }
 
     public function addToCart (Request $req){

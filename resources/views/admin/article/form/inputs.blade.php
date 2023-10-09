@@ -171,21 +171,22 @@
 </div>
 @section('script')
     @parent
-    <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
     <script>
-        InlineEditor
-            .create( document.querySelector( '#content' ),{
-                ckfinder: {
-                    uploadUrl: '{!! asset('ckfinder/core/connector/php/connector.php').'?command=QuickUpload&type=Images&responseType=json' !!}',
-                    options: {
-                        resourceType: 'Images'
-                    }
-                },
-                mediaEmbed: {previewsInData: true}
-            } )
-            .catch( error => {
-                console.error( error );
-            } );
+        CKEDITOR.replace( 'content' );
+        {{--InlineEditor--}}
+        {{--    .create( document.querySelector( '#content' ),{--}}
+        {{--        ckfinder: {--}}
+        {{--            uploadUrl: '{!! asset('ckfinder/core/connector/php/connector.php').'?command=QuickUpload&type=Images&responseType=json' !!}',--}}
+        {{--            options: {--}}
+        {{--                resourceType: 'Images'--}}
+        {{--            }--}}
+        {{--        },--}}
+        {{--        mediaEmbed: {previewsInData: true}--}}
+        {{--    } )--}}
+        {{--    .catch( error => {--}}
+        {{--        console.error( error );--}}
+        {{--    } );--}}
     </script>
 @endsection

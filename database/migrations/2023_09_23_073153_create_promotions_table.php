@@ -22,6 +22,8 @@ class CreatePromotionsTable extends Migration
             $table->string('image_layer')->nullable();
             $table->timestamp('applied_stop_time')->nullable();
             $table->timestamp('applied_start_time')->nullable();
+            $table->string('type')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ class Article extends Model
 
     protected $appends = [
         'image_resize',
+        'image_change_url'
     ];
 
 //    protected $guarded = ['id'];
@@ -35,5 +36,10 @@ class Article extends Model
             $array_resize[$k] = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
         }
         return $array_resize;
+    }
+
+    public function getImageChangeUrlAttribute()
+    {
+        return str_replace('https://cdn.cocolux.com','/images/cdn_images',$this->image);
     }
 }
