@@ -13,14 +13,14 @@
                                 <div class="thumbnail-nav">
                                     @forelse($list_image as $k => $item)
                                     <a class="thumbnail-item @if( $k== 0) active @endif">
-                                        <img src="{{ $item }}" alt="{{ $product->title }}" class="img-fluid">
+                                        <img src="{{ asset(replace_image($item)) }}" alt="{{ $product->title }}" class="img-fluid">
                                     </a>
                                     @empty
                                     @endforelse
                                 </div>
 
                                 <div class="thumnail-image">
-                                    <img src="{{ $list_image[0] }}" alt="{{ $product->title }}" class="img-fluid" id="detail-thumbnail-image">
+                                    <img src="{{ asset(replace_image($list_image[0])) }}" alt="{{ $product->title }}" class="img-fluid" id="detail-thumbnail-image">
 
                                     <div class="detail-share">
                                         Thêm vào danh sách yêu thích
@@ -63,7 +63,7 @@
                                 <div class="detail-relate mb-4">
                                     @forelse($list_product_parent as $item)
                                     <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?$item->slug:$product_root->slug, 'sku' => $item->sku]) }}" class="@if ($product->id == $item->id) active @endif" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $item->title }}">
-                                        <img src="{{ json_decode($item->images)[0] }}" alt="{{ $item->title }}" class="img-fluid">
+                                        <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                     </a>
                                     @empty
                                     @endforelse

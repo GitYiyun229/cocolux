@@ -100,7 +100,7 @@
                                 <span class="pe-1">5%</span>
                             </div>
                             <div class="product-thumbnail">
-                                <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="img-fluid">
+                                <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid">
                             </div>
                             <div class="product-price">
                                 <div class="public-price">{{ format_money($item->productOption->first()->price) }}</div>
@@ -171,7 +171,7 @@
                                     <span class="pe-1">5%</span>
                                 </div>
                                 <div class="product-thumbnail">
-                                    <img src="{{ $item->image }}" alt="{{ $item->title }}" class="img-fluid">
+                                    <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid">
                                 </div>
                                 <div class="product-price">
                                     <div class="public-price">254.600 đ</div>
