@@ -83,22 +83,22 @@
 
                         <div class="layout-list-items mb-4">
                             @forelse($products as $item)
-                            <a href="{{ route('detailProduct',['slug' => $item->slug,'sku' => $item->sku]) }}" class="product-template">
+                            <a href="{{ route('detailProduct',['slug' => $item->product->slug,'sku' => $item->sku]) }}" class="product-template">
                                 <div class="product-discount">
                                     <span class="pe-1">5%</span>
                                 </div>
                                 <div class="product-thumbnail">
-                                    <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="img-fluid">
+                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                 </div>
                                 <div class="product-price">
-                                    <div class="public-price">{{ format_money($item->productOption->first()->price) }}</div>
-                                    <div class="origin-price">{{ format_money($item->productOption->first()->normal_price) }}</div>
+                                    <div class="public-price">{{ format_money($item->price) }}</div>
+                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
                                 </div>
                                 <div class="product-brand">
                                     {{ $item->brand }}
                                 </div>
                                 <div class="product-title">
-                                    {{ $item->productOption->first()->title }}
+                                    {{ $item->title }}
                                 </div>
                             </a>
                             @empty
