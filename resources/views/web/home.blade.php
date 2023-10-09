@@ -193,6 +193,7 @@
             dots: true,
             infinite: true,
             autoplay: true,
+           
         });
 
         $('.slide-template-slick').slick({
@@ -202,6 +203,15 @@
             dots: false,
             infinite: true,
             autoplay: true,
+            responsive: [
+                {
+                    breakpoint: 960,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3
+                    }
+                }
+            ]
         });
     </script>
 @endsection

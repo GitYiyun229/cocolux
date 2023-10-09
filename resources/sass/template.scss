@@ -729,8 +729,62 @@ ol.breadcrumb{
 @media (max-width: 1366px) {
     .container{
         width: 1140px;
+        max-width: 100%;
     }
     .header-main.is-sticky .header-main-menu form input{
         width: 620px;
+    }
+}
+
+@media (max-width: 960px) {
+    .container{
+        // padding-right: 10px;
+        // padding-left: 10px;
+        max-width: 100%;
+        width: 100%;
+    }
+    .header-top{
+        display: none;
+    }
+    .header-bottom{
+        display: none;
+    }
+    .header-main-logo{
+        display: none !important;
+    }
+    .header-main{
+        height: auto;
+    }
+    .header-main .container{
+        padding: 10px;
+    }
+    .header-main .header-main-menu .menu-btn.menu-call-hotline{
+        display: none !important;
+    }
+    .header-main .header-main-menu .menu-btn span:nth-child(2){
+        display: none;
+    }
+    .header-main.is-sticky .header-main-menu form input{
+        width: auto;
+    }
+    .header-main .header-main-menu form input{
+        width: auto;
+    }
+    .header-main .header-main-logo-icon{
+        display: none !important;
+    }
+    .header-main .header-menu{
+        display: none !important;
+    }
+
+    .product-template .product-thumbnail img{
+        height: 140px;
+    }
+
+    footer .footer-bottom{
+        grid-template-columns: 1fr;
+    }
+    footer .footer-top{
+        grid-template-columns: 1fr;
     }
 }
