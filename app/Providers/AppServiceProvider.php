@@ -41,8 +41,6 @@ class AppServiceProvider extends ServiceProvider
             }
             if (Schema::hasTable('products_categories')) {
                 $cat_products = ProductsCategories::where(['is_visible' => 1])->withDepth()->defaultOrder()->get()->toTree();
-//                $cat_products = getCategoriesTree(ProductsCategories::all());
-//                dd($cat_products);
             }
 //            View::composer(['web.partials._header', 'web.partials._footer'], function ($view) {
 //                $config = Setting::all();
