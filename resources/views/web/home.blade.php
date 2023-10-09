@@ -26,7 +26,63 @@
                     @endforelse
                 </div>
             </div>
+            
+            <div class="section-categories-mobile d-grid d-lg-none">
+                <a href="" class="item-category d-flex flex-column align-items-center text-center text-uppercase" data-bs-toggle="modal" data-bs-target="#categoriesModal">
+                    <div class="section-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    Danh mục
+                </a>
+                @forelse($cat_products as $item)
+                <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}" class="item-category d-flex flex-column align-items-center text-center text-uppercase">
+                    <img src="{{ asset($item->logo) }}" alt="{{ $item->title }}" class="img-fluid" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
+                    {{ $item->title }}
+                </a>
+                @empty
+                @endforelse
+            </div>
 
+            <div class="modal modal-full fade" id="categoriesModal" tabindex="-1" aria-labelledby="categoriesModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            @forelse($cat_products as $item)
+                            <div class="d-flex gap-1 justify-content-between item-cate">
+                                <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}" class="cate-parent">
+                                    {{ $item->title }}
+                                </a>
+                                @if ($item->children)
+                                <a class="btn-collapse" data-bs-toggle="collapse" href="#collapse{{ $item->id }}" role="button" aria-expanded="false" aria-controls="collapse{{ $item->id }}"></a>
+                                @endif
+                            </div>
+
+                            @if ($item->children)
+                            <div class="collapse" id="collapse{{ $item->id }}">
+                                <div class="card">
+                                    @forelse($item->children as $child)
+                                        <a href="{{ route('catProduct', ['slug' => $child->slug, 'id' => $child->id]) }}" class="cate-child">
+                                            {{ $child->title }}
+                                        </a>
+                                    @empty
+                                    @endforelse
+                                </div>
+                            </div>
+                            @endif
+                            
+                            @empty
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="slide-template bg-white mb-4">
                 <div class="slide-top">
                     <a href="" class="slide-title">

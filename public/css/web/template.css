@@ -693,6 +693,30 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   content: "\f105";
 }
 
+.menu-mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 10;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
+}
+.menu-mobile ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+  height: 60px;
+}
+.menu-mobile a {
+  font-size: 14px;
+}
+.menu-mobile .text-danger {
+  color: #c73030 !important;
+}
+
 @keyframes progress_bar_fill {
   0% {
     background-position: 0 0;
@@ -730,17 +754,35 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   .header-main .container {
     padding: 10px;
   }
+  .header-main .header-main-menu {
+    width: 100%;
+    justify-content: space-between;
+  }
   .header-main .header-main-menu .menu-btn.menu-call-hotline {
     display: none !important;
   }
   .header-main .header-main-menu .menu-btn span:nth-child(2) {
     display: none;
   }
+  .header-main .header-main-menu form {
+    max-width: calc(100% - 60px);
+    width: 100%;
+  }
   .header-main.is-sticky .header-main-menu form input {
-    width: auto;
+    width: 100%;
   }
   .header-main .header-main-menu form input {
-    width: auto;
+    width: 100%;
+  }
+  .header-main .header-main-menu form .form-submit {
+    padding: 0 10px;
+    justify-content: center;
+  }
+  .header-main .header-main-menu form .form-submit img {
+    width: 24px;
+  }
+  .header-main .header-main-menu form .form-drop-btn span {
+    min-width: 60px;
   }
   .header-main .header-main-logo-icon {
     display: none !important;
@@ -751,10 +793,28 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   .product-template .product-thumbnail img {
     height: 140px;
   }
+  .brand-template img {
+    height: 140px;
+  }
+  footer {
+    margin-bottom: 60px;
+    padding: 20px 0;
+  }
   footer .footer-bottom {
     grid-template-columns: 1fr;
+    grid-gap: 26px;
+  }
+  footer .footer-bottom .footer-col:last-child {
+    display: none;
   }
   footer .footer-top {
     grid-template-columns: 1fr;
+  }
+  footer .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  footer .fb-thumb {
+    display: none;
   }
 }

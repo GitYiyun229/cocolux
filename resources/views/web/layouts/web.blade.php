@@ -12,11 +12,27 @@
     </div>
     <nav class="menu-mobile d-block d-lg-none" id="menu-mobile">
         <ul>
-            @if(!empty($menus))
-                @foreach ($menus as $shop)
-                    @include('web.components.menu.mobile', ['item'=>$shop])
-                @endforeach
-            @endif
+            @php
+            $routeName = \Route::currentRouteName();
+            @endphp
+            <li class="w-100 h-100">
+                <a href="{{ route('home') }}" class="d-flex align-items-center justify-content-center h-100 flex-column {{ $routeName == 'home' ? 'text-danger' : ''}}">
+                    <i class="fa-solid fa-house-chimney"></i>
+                    Trang chủ
+                </a>
+            </li>
+            <li class="w-100 h-100">
+                <a href="{{ route('dealHotProducts') }}" class="d-flex align-items-center justify-content-center h-100 flex-column {{ $routeName == 'dealHotProducts' ? 'text-danger' : ''}}">
+                    <i class="fa-solid fa-gift"></i>
+                    Ưu đãi
+                </a>
+            </li>
+            <li class="w-100 h-100">
+                <a href="{{ route('homeArticle') }}" class="d-flex align-items-center justify-content-center h-100 flex-column {{ $routeName == 'homeArticle' ? 'text-danger' : ''}}">
+                    <i class="fa-regular fa-newspaper"></i>
+                    Xu hướng
+                </a>
+            </li>
         </ul>
     </nav>
 @endsection
