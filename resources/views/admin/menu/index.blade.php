@@ -34,13 +34,24 @@
                 <li>
                     <input type="checkbox" id="home" value="0" data-link="{{ route('home') }}" data-name="Trang chủ"><label for="home">Trang chủ</label>
                 </li>
-                @if(!empty($article_categories))
-                    @foreach($article_categories as $k => $article)
-                        <li>
-                            <input type="checkbox" id="article_{{ $article->id }}" value="{{ $article->id }}"  data-link="{{ route('catArticle',[$article->slug,$article->id]) }}" data-name="{{ $article->title }}"><label for="article_{{ $article->id }}">{{ $article->title }}</label>
-                        </li>
-                    @endforeach
-                @endif
+                <li>
+                    <input type="checkbox" id="homeArticle" value="0" data-link="{{ route('homeArticle') }}" data-name="Trang chủ blog"><label for="homeArticle">Trang chủ blog</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="homeBrand" value="0" data-link="{{ route('homeBrand') }}" data-name="Thương hiệu"><label for="homeBrand">Thương hiệu</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="newProducts" value="0" data-link="{{ route('newProducts') }}" data-name="Hàng mới về"><label for="newProducts">Hàng mới về</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="dealHotProducts" value="0" data-link="{{ route('dealHotProducts') }}" data-name="Deal Hot"><label for="dealHotProducts">Deal Hot</label>
+                </li>
+                @forelse($page_thongtin as $item)
+                <li>
+                    <input type="checkbox" id="detailPage_{{ $item->slug }}" value="0" data-link="{{ route('detailPage',['slug'=>$item->slug]) }}" data-name="{{ $item->title }}"><label for="detailPage_{{ $item->slug }}">{{ $item->title }}</label>
+                </li>
+                @empty
+                @endforelse
                 <li>
                     <input type="checkbox" id="menu_other" value="0" data-link="#" data-name="Link bên ngoài"><label for="menu_other">Link bên ngoài</label>
                 </li>
@@ -53,7 +64,7 @@
                     <label>Nhóm danh mục</label>
                     <select name="category_id" id="category_id" class="form-control">
                         @foreach($menu_categories as $menu_category)
-                            <option value="{{ $menu_category->first()->id }}" {{ (isset($category_id) && $category_id == $menu_category->first()->id) ?'selected':'' }}>{{ $menu_category->first()->name }}</option>
+                            <option value="{{ $menu_category->id }}" {{ (isset($category_id) && $category_id == $menu_category->id) ?'selected':'' }}>{{ $menu_category->name }}</option>
                         @endforeach
                     </select>
                 </div>
