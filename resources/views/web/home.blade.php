@@ -27,7 +27,7 @@
                 </div>
             </div>
             
-            <div class="section-categories-mobile d-grid d-lg-none">
+            <div class="section-categories-mobile d-grid d-lg-none mb-4">
                 <a href="" class="item-category d-flex flex-column align-items-center text-center text-uppercase" data-bs-toggle="modal" data-bs-target="#categoriesModal">
                     <div class="section-icon">
                         <span></span>
@@ -52,7 +52,7 @@
                         <div class="modal-header">
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body pt-0">
                             @forelse($cat_products as $item)
                             <div class="d-flex gap-1 justify-content-between item-cate">
                                 <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}" class="cate-parent">
@@ -65,7 +65,7 @@
 
                             @if ($item->children)
                             <div class="collapse" id="collapse{{ $item->id }}">
-                                <div class="card">
+                                <div class="card border-0">
                                     @forelse($item->children as $child)
                                         <a href="{{ route('catProduct', ['slug' => $child->slug, 'id' => $child->id]) }}" class="cate-child">
                                             {{ $child->title }}
@@ -79,6 +79,46 @@
                             @empty
                             @endforelse
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-flash-mobile d-block d-lg-none slide-template bg-white mb-4">
+                <div class="slide-top">
+                    <div class="slide-title d-flex align-items-center gap-2">
+                        <a href="" title="Flash Deal" class="d-flex align-items-center gap-2">
+                            <img src="{{ asset('images/hot_icon.svg') }}" alt="flash deal" class="img-fluid" height="18" width="18">
+                            <h2>Flash Deal</h2>
+                        </a>
+                        |
+                        <div is-title="true" class="count-down d-flex align-items-center gap-1" time-end="Oct 30 2023 20:00:00"></div>
+                    </div>
+                    <a href="" class="slide-more">Xem tất cả</a>
+                </div>
+                <div class="slide-main">
+                    <div class="slide-template-slick">
+                        @forelse($product_hots as $item)
+                        <a href="{{ route('detailProduct',['slug'=>$item->slug, 'sku' =>$item->sku]) }}" class="product-template">
+                            <div class="product-discount">
+                                <span class="pe-1">5%</span>
+                            </div>
+                            <div class="product-thumbnail">
+                                <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid">
+                            </div>
+                            <div class="product-price">
+                                <div class="public-price">{{ format_money($item->productOption->first()->price) }}</div>
+                                <div class="origin-price">{{ format_money($item->productOption->first()->normal_price) }}</div>
+                            </div>
+                            <div class="product-brand">
+                                {{ $item->brand }}
+                            </div>
+                            <div class="product-title">
+                                {{ $item->productOption->first()->title }}
+                            </div>
+                            <div class="product-progress-sale count-down" time-end="Oct 30 2023 20:00:00"></div>
+                        </a>
+                        @empty
+                        @endforelse
                     </div>
                 </div>
             </div>
@@ -263,11 +303,56 @@
                 {
                     breakpoint: 960,
                     settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 3
+                        slidesToShow: 2.5,
+                        slidesToScroll: 2
                     }
                 }
             ]
         });
+
+        $(".count-down").each(function (e) {
+            countdowwn($(this));
+        });
+
+        function countdowwn(element) {
+            let is_title = element.attr('is-title');
+            let e = element.attr('time-end');
+            let l = new Date(e).getTime();
+            let n = setInterval(function () {
+                let e = new Date().getTime();
+                let t = l - e;
+                let a = Math.floor(t / 864e5);
+                let s = Math.floor((t % 864e5) / 36e5);
+                let o = Math.floor((t % 36e5) / 6e4);
+                e = Math.floor((t % 6e4) / 1e3);
+
+                if (is_title) {
+                    element.html(`
+                        <span>${a}</span>
+                        :
+                        <span>${s}</span>
+                        :
+                        <span>${o}</span>
+                        :
+                        <span>${e}</span>
+                    `);
+                } else {
+                    element.html(`
+                        <span>Còn ${a} ngày</span>
+                        
+                        <span>${s}</span>
+                        :
+                        <span>${o}</span>
+                        :
+                        <span>${e}</span>
+                    `);
+                }                
+
+                if (t < 0) {
+                    clearInterval(n), element.html("Đã hết khuyến mại")
+                };
+
+            }, 1e3);
+        }
     </script>
 @endsection
