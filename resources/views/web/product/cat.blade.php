@@ -43,7 +43,7 @@
                                 <div class="filter-group-title">{{ $attribute->name }}</div>
                                 <div class="filter-group-items">
                                     @forelse($attribute->attributeValue as $item)
-                                    <a class="filter-item">{{ $item->name }} <span class="d-none">(62)</span></a>
+                                    <a class="filter-item" href="">{{ $item->name }} <span class="d-none">(62)</span></a>
                                     @empty
                                     @endforelse
                                 </div>
@@ -54,7 +54,7 @@
                     </div>
                     <div class="layout-list">
                         <div class="layout-title text-uppercase fw-bold">
-                            <h1>Trang điểm (800 KẾT QUẢ)</h1>
+                            <h1>{{ $cat->title }} ({{ $products->total() }} KẾT QUẢ)</h1>
                         </div>
 
                         <div class="layout-card">
@@ -64,7 +64,7 @@
                                     <a href="" class="card-item card-filter active">
                                         Danh mục - Trang điểm mặt
                                         <div class="del-icon">
-                                            <img src="./images/ic-delete.svg" alt="del" class="img-fluid">
+                                            <img src="{{ asset('images/ic-delete.svg') }}" alt="del" class="img-fluid">
                                         </div>
                                     </a>
                                 </div>

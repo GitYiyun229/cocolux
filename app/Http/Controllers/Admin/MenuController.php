@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Page;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ArticleCategoryInterface;
 use App\Repositories\Contracts\ArticleInterface;
@@ -43,18 +44,17 @@ class MenuController extends Controller
     public function index()
     {
         $category_id = request()->query('category_id');
-        $article_categories = $this->articleCategoryRepository->getAll();
         $menu_categories = $this->menuCategoryRepository->getList(null,['*'],null);
-        $pages = $this->pageRepository->getAll();
         if ($menu_categories->count() === 0){
             Session::flash('danger', 'Chưa có nhóm menu nào');
             return redirect()->route('admin.menu-category.index');
         }
+        $page_thongtin = Page::where(['page_cat_id' => 3,'active' => 1])->select('id','slug','title')->get();
         if (empty($category_id)){
             $category_id = $menu_categories->first()->id;
         }
         $menu = $this->menuRepository->getMenusByCategoryId($category_id)->toTree();
-        return view('admin.menu.index', compact('article_categories','menu_categories','menu','category_id','pages'));
+        return view('admin.menu.index', compact('menu_categories','menu','category_id','page_thongtin'));
     }
 
     /**

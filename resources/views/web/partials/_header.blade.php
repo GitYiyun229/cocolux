@@ -1,7 +1,7 @@
 <div class="header-top">
     <div class="container">
         <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M280 0C408.1 0 512 103.9 512 232c0 13.3-10.7 24-24 24s-24-10.7-24-24c0-101.6-82.4-184-184-184c-13.3 0-24-10.7-24-24s10.7-24 24-24zm8 192a32 32 0 1 1 0 64 32 32 0 1 1 0-64zm-32-72c0-13.3 10.7-24 24-24c75.1 0 136 60.9 136 136c0 13.3-10.7 24-24 24s-24-10.7-24-24c0-48.6-39.4-88-88-88c-13.3 0-24-10.7-24-24zM117.5 1.4c19.4-5.3 39.7 4.6 47.4 23.2l40 96c6.8 16.3 2.1 35.2-11.6 46.3L144 207.3c33.3 70.4 90.3 127.4 160.7 160.7L345 318.7c11.2-13.7 30-18.4 46.3-11.6l96 40c18.6 7.7 28.5 28 23.2 47.4l-24 88C481.8 499.9 466 512 448 512C200.6 512 0 311.4 0 64C0 46 12.1 30.2 29.5 25.4l88-24z"/></svg>
-        <span class="ms-2">0988888825</span>
+        <span class="ms-2">{{ $setting['hotline'] }}</span>
     </div>
 </div>
 <div class="header-main">
@@ -90,7 +90,7 @@
                 <span class="cart-items-total" id="number-added-cart">{{ getCart() }}</span>
             </a>
 
-            <a href="tel:0988888825" class="menu-btn menu-call-hotline">
+            <a href="tel:{{ $setting['hotline'] }}" class="menu-btn menu-call-hotline">
                 <img src="{{ asset('images/hotline-icon.svg') }}" alt="hotline" class="img-fluid">
                 <span>Hỗ trợ <br> Khách hàng</span>
             </a>
@@ -141,32 +141,24 @@
                 @endforelse
             </div>
         </div>
-        <div class="menu-item">
-            <a href="{{ route('detailPage',['slug' => 'gioi-thieu']) }}">Giới thiệu</a>
-        </div>
-        <div class="menu-item">
-            <a href="{{ route('homeBrand') }}">Thương hiệu</a>
-        </div>
-        <div class="menu-item">
-            <a href="{{ route('dealHotProducts') }}">Khuyến mại</a>
-            <div class="menu-content">
+        @if(!empty($menus))
+            @forelse($menus as $item)
                 <div class="menu-item">
-                    <a href="{{ route('dealHotProducts') }}">Hot Deals</a>
+                    <a href="{{ $item->link }}">{{ $item->name }}</a>
+                    @if(count($item->children) > 0)
+                        <div class="menu-content">
+                            @forelse($item->children as $child)
+                                <div class="menu-item">
+                                    <a href="{{ $child->link }}">{{ $child->name }}</a>
+                                </div>
+                            @empty
+                            @endforelse
+                        </div>
+                    @endif
                 </div>
-                <div class="menu-item">
-                    <a href="">Flash Deals</a>
-                </div>
-                <div class="menu-item">
-                    <a href="">Đang diễn ra</a>
-                </div>
-            </div>
-        </div>
-        <div class="menu-item">
-            <a href="{{ route('newProducts') }}">Hàng mới về</a>
-        </div>
-        <div class="menu-item">
-            <a href="{{ route('homeArticle') }}">Xu hướng làm đẹp</a>
-        </div>
+            @empty
+            @endforelse
+        @endif
         <div class="menu-item ms-auto">
             <a href=""><img src="{{ asset('images/smart-phone.svg') }}" alt="" class="ìm-fluid">Tải ứng dụng</a>
         </div>
