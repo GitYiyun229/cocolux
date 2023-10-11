@@ -5,25 +5,25 @@
                 <a href="" title="cocolux m-0">
                     <img src="{{ $setting['logo_footer'] }}" alt="cocolux" class="img-fluid">
                 </a>
-                <p class="mt-4">Cocolux là hệ thống phân phối mỹ phẩm chính hãng uy tín và dịch vụ chăm sóc khách hàng tận tâm . Đến với Coco bạn có thể hoàn toàn yên tâm khi sẽ chọn được cho mình bộ sản phẩm phù hợp và ưng ý từ các nhãn hàng nổi tiếng trên toàn thế giới.</p>
+                {!! $setting['content_under_logo_footer'] !!}
             </div>
+            @if(!empty($menus_footer))
+                @forelse($menus_footer as $item)
+                    <div class="footer-col">
+                        <p class="title">{{ $item->name }}</p>
+                        @if(count($item->children) > 0)
+                            @forelse($item->children as $child)
+                                <a href="{{ $child->link }}" class="mt-2">{{ $child->name }}</a>
+                            @empty
+                            @endforelse
+                        @endif
+                    </div>
+                @empty
+                @endforelse
+            @endif
             <div class="footer-col">
-                <p class="title">Về cocolux</p>
-                <a href="" class="mt-2">Câu chuyện thương hiệu</a>
-                <a href="" class="mt-2">Về chúng tôi</a>
-                <a href="" class="mt-2">Liên hệ</a>
-            </div>
-            <div class="footer-col">
-                <p class="title">Chính sách</p>
-                <a href="" class="mt-2">Điều khoản sử dụng</a>
-                <a href="" class="mt-2">Chính sách đổi trả sản phẩm</a>
-                <a href="" class="mt-2">Chính sách và quy định chung</a>
-                <a href="" class="mt-2">Chính sách và giao nhận thanh toán</a>
-                <a href="" class="mt-2">Chính sách bảo mật thông tin cá nhân</a>
-            </div>
-            <div class="footer-col">
-                <a href="" class="footer-get-code">
-                </a>
+                <div id='root-confirm-get-code'></div>
+                <script src='https://cdn.traffic60s.com/traffic/script.php?v=20232023' type='application/javascript'></script>
                 <div class="dmca-cocolux">
                     <a href="https://www.dmca.com/Protection/Status.aspx?ID=4f30b842-a954-4ab6-8ce0-d5476814e254&amp;refurl=https://cocolux.com/thong-tin/gioi-thieu" title="DMCA.com Protection Status" class="dmca-badge">
                         <img src="https://images.dmca.com/Badges/dmca_protected_sml_120n.png?ID=4f30b842-a954-4ab6-8ce0-d5476814e254" alt="DMCA.com Protection Status">
@@ -39,11 +39,11 @@
                     <div class="link-app">
                         <img src="{{ $setting['qr_code_appstore'] }}" alt="cocolux" class="img-fluid img-qr">
                         <div class="app-box">
-                            <a href="https://apps.apple.com/us/app/cocolux/id1529709256" target="_blank">
+                            <a href="{{ $setting['link_app_ios'] }}" target="_blank">
                                 <img src="{{ asset('images/ic-appstore.svg') }}" alt="cocolux" class="img-fluid img-app">
                                 <span> App Store</span>
                             </a>
-                            <a href="https://play.google.com/store/apps/details?id=com.cocoshop.android" target="_blank">
+                            <a href="{{ $setting['link_app_android'] }}" target="_blank">
                                 <img src="{{ asset('images/ic-googleplay.svg') }}" alt="cocolux" class="img-fluid img-app">
                                 <span> Google Play</span>
                             </a>
@@ -58,27 +58,19 @@
         </div>
         <div class="footer-bottom">
             <div class="footer-col">
-                <p class="title-2">Cocolux.com thuộc bản quyền của Cocolux - <br> Hệ thống phân phối mỹ phẩm chính hãng</p>
-                <a href="" class="mt-2">Hệ thống cửa hàng của Cocolux</a>
-                <a href="" class="mt-2">Website: https://cocolux.com</a>
-                <a href="tel:+84988888825" class="mt-2">Hotline: +84-988888825</a>
-                <a href="mailto:cskh@Cocolux.vn" class="mt-2">Email: cskh@cocolux.com</a>
+                {!! $setting['footer_bottom_col_1'] !!}
             </div>
             <div class="footer-col">
-                <p class="title-2">Công Ty TNHH Thương Mại Và Đầu Tư Xuất Nhập Khẩu Việt Nam</p>
-                <p class="mb-1">Địa Chỉ Trụ Sở Chính: Số 07 Hoàng Cầu, Phường Ô Chợ Dừa, Quận Đống Đa, Thành Phố Hà Nội, Việt Nam</p>
-                <p class="mb-1">Đăng ký lần đầu ngày 10/5/2017</p>
-                <p class="mb-1">Đăng ký thay đổi lần thứ 3 vào 16/12/2022</p>
-                <p class="mb-1">MST: 0107837344</p>
+                {!! $setting['footer_bottom_col_2'] !!}
             </div>
             <div class="footer-col">
                 <p class="title-2">KẾT NỐI</p>
                 <div class="link-icon">
-                    <a href="https://www.facebook.com/cocoluxofficial" target="blank"><img src="{{ asset('images/ic-facebook.svg') }}" alt="cocolux" class="img-fluid"></a>
-                    <a href="https://www.instagram.com/cocolux.vn" target="blank"><img src="{{ asset('images/ic-insta.svg') }}" alt="cocolux" class="img-fluid"></a>
-                    <a href="http://bit.ly/cocoshopchanel" target="blank"><img src="{{ asset('images/ic-youtube.svg') }}" alt="cocolux" class="img-fluid"></a>
-                    <a href="https://www.tiktok.com/@cocolux.com?lang=vi-VN" class="ic-invert" target="blank"><img src="{{ asset('images/ic-tiktok.svg') }}" alt="cocolux" class="img-fluid filter-white"></a>
-                    <a class="ic-invert ic-zalo" target="blank"><img src="{{ asset('images/ic-zalo.svg') }}" alt="cocolux" class="img-fluid filter-white"></a>
+                    <a href="{{ $setting['link_facebook'] }}" target="blank"><img src="{{ asset('images/ic-facebook.svg') }}" alt="cocolux" class="img-fluid"></a>
+                    <a href="{{ $setting['link_instagram'] }}" target="blank"><img src="{{ asset('images/ic-insta.svg') }}" alt="cocolux" class="img-fluid"></a>
+                    <a href="{{ $setting['link_youtube'] }}" target="blank"><img src="{{ asset('images/ic-youtube.svg') }}" alt="cocolux" class="img-fluid"></a>
+                    <a href="{{ $setting['link_tiktok'] }}" class="ic-invert" target="blank"><img src="{{ asset('images/ic-tiktok.svg') }}" alt="cocolux" class="img-fluid filter-white"></a>
+                    <a class="ic-invert ic-zalo" href="{{ $setting['link_zalo'] }}" target="blank"><img src="{{ asset('images/ic-zalo.svg') }}" alt="cocolux" class="img-fluid filter-white"></a>
                 </div>
                 <p class="title">PHƯƠNG THỨC THANH TOÁN</p>
                 <div class="link-icon">

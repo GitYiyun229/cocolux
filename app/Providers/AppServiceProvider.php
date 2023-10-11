@@ -29,7 +29,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(SettingInterface $settingRepository,MenuInterface $menuRepository)
     {
-        $menu = null;
+        $menu_top = null;
+        $menu_footer = null;
         $cat_products = null;
         $setting = null;
         if (!Request::is('admin/*')) {
@@ -37,7 +38,8 @@ class AppServiceProvider extends ServiceProvider
                 $setting = $settingRepository->getAll()->pluck('value', 'key');
             }
             if (Schema::hasTable('menu')) {
-                $menu = $menuRepository->getMenusByCategoryId(1)->toTree();
+                $menu_top = $menuRepository->getMenusByCategoryId(3)->toTree();
+                $menu_footer = $menuRepository->getMenusByCategoryId(4)->toTree();
             }
             if (Schema::hasTable('products_categories')) {
                 $cat_products = ProductsCategories::where(['is_visible' => 1])->withDepth()->defaultOrder()->get()->toTree();
@@ -48,10 +50,11 @@ class AppServiceProvider extends ServiceProvider
 //            });
         }
         View::share('setting', $setting);
-        View::composer(['web.partials._header', 'web.partials._footer', 'web.layouts.web', 'web.home'], function ($view) use ($menu, $cat_products) {
-            $view->with('menus', $menu);
+        View::composer(['web.partials._header', 'web.partials._footer', 'web.layouts.web', 'web.home'], function ($view) use ($menu_top,$menu_footer , $cat_products) {
+            $view->with('menus', $menu_top);
+            $view->with('menus_footer', $menu_footer);
             $view->with('cat_products', $cat_products);
         });
-         
+
     }
 }
