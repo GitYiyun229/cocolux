@@ -703,6 +703,28 @@ footer{
     }
 }
 
+.pagination{
+    gap: 8px;
+    .page-link{
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 100% !important;
+        font-size: 0.83rem;
+        font-weight: 700;
+        line-height: normal;
+        border: 1px solid #d3d3d3;
+        color: #000;
+        &.active{
+            background: #000;
+            color: #fff;
+        }
+    }
+}
+
 nav[aria-label=breadcrumb]{
     border-bottom: 1px solid #d4d4d4;
 }
@@ -845,6 +867,10 @@ ol.breadcrumb{
         padding-right: 10px;
     }
     footer .fb-thumb{
+        display: none;
+    }
+
+    nav[aria-label=breadcrumb]{
         display: none;
     }
 }

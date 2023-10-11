@@ -2,7 +2,7 @@
 
 @section('content')
     <main>
-
+         
         <div class="container">
             @include('web.components.breadcrumb',['links' => [] ])
             <div class="layout-page-product-detail mb-5">
@@ -12,16 +12,17 @@
                             <div class="detail-thumbnail">
                                 <div class="thumbnail-nav">
                                     @forelse($list_image as $k => $item)
-                                    <a class="thumbnail-item @if( $k== 0) active @endif">
+                                    <a data-index="{{ $k }}" class="thumbnail-item thumbnail-item-{{ $k }} @if( $k== 0) active @endif" data-bs-toggle="modal" data-bs-target="#imageModal">
                                         <img src="{{ asset(replace_image($item)) }}" alt="{{ $product->title }}" class="img-fluid">
                                     </a>
                                     @empty
                                     @endforelse
                                 </div>
 
-                                <div class="thumnail-image">
-                                    <img src="{{ asset(replace_image($list_image[0])) }}" alt="{{ $product->title }}" class="img-fluid" id="detail-thumbnail-image">
-
+                                <div class="thumbnail-image">
+                                    <a href="" data-bs-toggle="modal" data-bs-target="#imageModal">
+                                        <img src="{{ asset(replace_image($list_image[0])) }}" alt="{{ $product->title }}" class="img-fluid detail-thumbnail-image">
+                                    </a>
                                     <div class="detail-share">
                                         Thêm vào danh sách yêu thích
                                     </div>
@@ -222,12 +223,104 @@
                     @forelse($attribute_value as $k => $item)
                         @if($item->value->type == 'ckeditor')
                             <div class="layout-box layout-padding bg-white" id="tab-{{ $k }}">
-                                <h2 class="layout-title mb-2 fw-bold d-none">{{ $item->name }}</h2>
+                                <h2 class="layout-title mb-2 fw-bold d-lg-none">{{ $item->name }}</h2>
                                 <div class="layout-content-text">{!! $item->value->name !!}</div>
                             </div>
                         @endif
                     @empty
                     @endforelse
+
+                    <div class="layout-box layout-padding bg-white">
+                        <h2 class="layout-title mb-2 fw-bold">Đánh giá</h2>
+                        <p>Khách hàng đánh giá</p>
+
+                        <div class="layout-rating mb-4">
+                            <div class="layout-rating-item text-center">
+                                <p>Đánh giá trung bình</p>
+                                <div class="product-total-rating">
+                                    4.8
+                                </div>
+                                <div class="product-total-review">30 nhận xét</div>
+                            </div>
+                            <div class="layout-rating-item">
+                                @for($i = 5; $i >= 1; $i --)
+                                <div class="product-rating-item d-grid align-items-center gap-1">
+                                    <div class="">{{ $i }} sao</div>
+                                    <div class="progress" role="progressbar" aria-label="Example 20px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar" style="width: 21%"></div>
+                                    </div>
+                                    <div>
+                                        21%
+                                    </div>
+                                    <div class="">
+                                        @switch($i)
+                                            @case(1)
+                                                Rất tệ
+                                                @break
+                                            @case(2)
+                                                Không hài lòng
+                                                @break
+                                            @case(3)
+                                                Bình thường
+                                                @break
+                                            @case(4)
+                                                Hài lòng
+                                                @break
+                                            @case(5)
+                                                Rất hài lòng
+                                                @break
+                                            @default 
+                                        @endswitch
+                                    </div>
+                                </div>
+                                @endfor
+                            </div>
+                            <div class="layout-rating-item text-center">
+                                <p>Chia sẻ cảm nghĩ của bạn về sản phẩm</p>
+                                <button class="fw-bold text-white">Viết bình luận</button>
+                            </div>
+                        </div>
+
+                        <form class="layout-review mb-4" id="formReivew" action="" method="POST" enctype="multipart/form-data">
+                            <p class="mb-2">Đánh giá sản phẩm này *</p>
+                            <div class="review-rating position-relative d-flex align-items-center mb-3 fs-4">
+                                @for ($i = 1; $i <= 5; $i++)
+                                <div class="review-rating-item" value="{{ $i }}">
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                @endfor
+                            </div>
+                            <input type="hidden" name="rate" id="rate" value="0">
+                            <input type="file" class="d-none" name="image" multiple id="image" accept="image/*" id="image">
+                            <textarea name="content" id="content" rows="3" class="form-control mb-3" placeholder="Nhập mô tả ở đây"></textarea>
+                            <div class="d-flex justify-content-between">
+                                <p class="mb-0">Thêm ảnh sản phẩm (tối đa 5)</p>
+                                <div class="text-end">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <div class="list-image-review d-flex align-items-center gap-2"></div>
+                                        <a href="" class="submit-image d-inline-block fw-bold">Chọn hình</a>
+                                    </div>
+                                    <a href="" class="submit-review d-inline-block fw-bold">Gửi</a>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="layout-feedback">
+                            <div class="feedback-title mb-4 d-flex align-items-center justify-content-between">
+                                <p class="mb-0">0 đánh giá cho sản phẩm này</p>
+                                <div class="feedback-sort">
+                                    <select name="" id="">
+                                        <option value="">Ngày tạo mới nhất</option>
+                                        <option value="">Ngày tạo lâu nhất</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="feedback-list">
+                                <p class="mb-1 text-secondary">Chưa có đánh giá nào cho sản phẩm này</p>
+                                <p class="mb-0">Hãy trở thành người đầu tiên đánh giá cho sản phẩm này...</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="layout-right">
@@ -260,7 +353,42 @@
                 </div>
             </div>
 
-            <div class="mb-2"></div>
+            <div class="layout-fixed d-flex align-items-center position-fixed top-0 start-0 w-100 d-lg-none">
+                <a href="javascript:void(0)" onclick="history.back()" class="d-flex align-items-center justify-content-center">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </a>
+                <span>{{ $product->title }}</span>
+            </div>
+        </div>
+
+        <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0">
+                    <div class="modal-body">
+                        <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="main-image position-relative">
+                            <img src="{{ asset(replace_image($list_image[0])) }}" class="img-fluid detail-thumbnail-image-modal" alt="{{ $product->image }}">
+                            <a href="" class="btn-slide-prev position-absolute d-flex align-items-center justify-content-center text-white">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </a>
+                            <a href="" class="btn-slide-next position-absolute d-flex align-items-center justify-content-center text-white">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </a>
+                        </div>
+                        <div class="main-right">
+                            <div class="product-title fw-bold mb-2">{{ $product->title }}</div>
+                            <div class="product-thumbnails">
+                                @forelse($list_image as $k => $item)
+                                <a data-index="{{ $k }}" class="modal-thumbnail-item thumbnail-item-{{ $k }} @if( $k== 0) active @endif">
+                                    <img src="{{ asset(replace_image($item)) }}" alt="{{ $product->title }}" class="img-fluid">
+                                </a>
+                                @empty
+                                @endforelse
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </main>
@@ -276,6 +404,95 @@
     <script>
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+        $('.btn-slide-next').click(function(e) {
+            changeSlide(e, 1);
+        })
+
+        $('.btn-slide-prev').click(function(e) {
+            changeSlide(e, -1);
+        })
+
+        function changeSlide(e, type) {
+            e.preventDefault();
+
+            let currentElement = $('.modal-thumbnail-item.active');
+            let index = parseInt(currentElement.attr('data-index'));
+            let total = $('.modal-thumbnail-item').length;
+            let changeIndex;
+           
+            if (type > 0) {
+                changeIndex = index + 1 >= total ? 0 : index + 1;
+            } else {
+                changeIndex = index == 0 ? total - 1 : index - 1;
+            }
+
+            $('.modal-thumbnail-item.thumbnail-item-'+changeIndex).click();
+        }
+
+        $('.submit-image').click(function(e){
+            e.preventDefault();
+            $("#image").click();
+        })
+
+        $('#image').change(function() {
+            const files = this.files;
+            const maxAllowedFiles = 5;
+       
+            $('.list-image-review').empty();
+
+            if (files.length > 5) {
+                console.log('Chỉ được up tối đa 5 ảnh');
+            }
+
+            for (let i = 0; i < Math.min(maxAllowedFiles, files.length); i++) {
+                const file = files[i];
+                const image = $('<img class="img-fluid" width="50" height="50">').addClass('uploaded-image');
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    image.attr('src', e.target.result);
+                };
+                reader.readAsDataURL(file);
+                $('.list-image-review').append(image);
+            }
+        })
+
+        $('.submit-review').click(function(e) {
+            e.preventDefault();
+            let content = $('#content').val();
+            let rate = $('#rate').val();
+            $('.review-rating p').remove();
+            $('#content').next('p').remove();
+            if (rate == 0){             
+                $('.review-rating').append('<p class="position-absolute text-danger m-0" style="left: 150px; font-size: 14px">Vui lòng đánh giá sản phẩm.</p>');
+                return false;
+            }
+            if (!content.trim()) {
+                $('#content').focus();
+                $('<p class="mb-2 text-danger">Vui lòng nhập nội dung đánh giá của bạn.</p>').insertAfter("#content");
+                return false;
+            }
+            $(this).closest('form').submit();
+        })
+
+        $('.review-rating-item').hover(function() {
+            toggleStar(parseInt($(this).attr('value')))
+        }, function() {
+            toggleStar(parseInt($('#rate').val()))
+        })
+
+        $('.review-rating-item').click(function() {
+            let value = parseInt($(this).attr('value'));
+            $('#rate').val(value);
+            toggleStar(value)
+        })
+
+        function toggleStar(value) {
+            $(`.review-rating-item`).removeClass('active')
+            for (let i = 1; i <= value; i++) {
+                $(`.review-rating-item:eq(${i - 1})`).addClass('active')
+            }
+        }
 
         $('.nav-link-detail').click(function(e) {
             e.preventDefault();
@@ -296,8 +513,21 @@
 
         $('.thumbnail-item').click(function() {
             let src = $(this).find('img').attr('src');
-            $('#detail-thumbnail-image').attr('src', src);
+            let index = $(this).attr('data-index');
+
+            $('.detail-thumbnail-image').attr('src', src);
+            $('.detail-thumbnail-image-modal').attr('src', src);
+
             $('.thumbnail-item').removeClass('active');
+            $('.modal-thumbnail-item').removeClass('active');
+            $('.thumbnail-item-'+index).addClass('active');
+            // $(this).addClass('active');
+        })
+
+        $('.modal-thumbnail-item').click(function() {
+            let src = $(this).find('img').attr('src');
+            $('.detail-thumbnail-image-modal').attr('src', src);
+            $('.modal-thumbnail-item').removeClass('active');
             $(this).addClass('active');
         })
 
@@ -333,14 +563,14 @@
                 e = Math.floor((t % 6e4) / 1e3);
 
                 element.html(`
-            <span>${a}</span>
-            :
-            <span>${s}</span>
-            :
-            <span>${o}</span>
-            :
-            <span>${e}</span>
-        `);
+                    <span>${a}</span>
+                    :
+                    <span>${s}</span>
+                    :
+                    <span>${o}</span>
+                    :
+                    <span>${e}</span>
+                `);
 
                 if (t < 0) {
                     clearInterval(n), element.html("Đã hết khuyến mại")
