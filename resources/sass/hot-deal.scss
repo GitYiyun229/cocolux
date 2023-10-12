@@ -28,3 +28,21 @@
         }
     }
 }
+
+@media (max-width: 960px) {
+    .layout-nav a{
+        width: 100%;
+        padding: 15px 0;
+        text-align: center;
+    }
+    .layout-main{
+        padding: 0 10px;
+        grid-template-columns: 1fr;
+    }
+    .layout-main a img{
+        height: 150px;
+    }
+    .layout-main div{
+        font-size: 14px !important;
+    }
+}
