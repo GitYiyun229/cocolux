@@ -22,92 +22,111 @@
             </nav>
 
             <div class="layout-page-products-list mb-5">
-                <div class="layout-main mb-5 bg-white">
-                    <div class="layout-filter">
-                        <div class="layout-title text-uppercase fw-bold">
-                            <i class="fa-solid fa-filter"></i>
-                            <span>Bộ lọc tìm kiếm</span>
-                        </div>
-                        <div class="filter-list">
-                            <div class="filter-group">
-                                <div class="filter-group-title">Danh mục</div>
-                                <div class="filter-group-items">
-                                    @forelse($cats as $item)
-                                    <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}" class="filter-item @if($item->parent_id) filter-item-child @endif">{{ $item->title }}</a>
-                                    @empty
-                                    @endforelse
-                                </div>
+                <form action="{{ route('catProduct',['slug' => $cat->slug,'id' =>$cat->id]) }}" id="form_filter" method="get">
+                    <div class="layout-main mb-5 bg-white">
+                        <div class="layout-filter">
+                            <div class="layout-title text-uppercase fw-bold">
+                                <i class="fa-solid fa-filter"></i>
+                                <span>Bộ lọc tìm kiếm</span>
                             </div>
-                            @forelse($attributes as $attribute)
-                            <div class="filter-group">
-                                <div class="filter-group-title">{{ $attribute->name }}</div>
-                                <div class="filter-group-items">
-                                    @forelse($attribute->attributeValue as $item)
-                                    <a class="filter-item">{{ $item->name }} <span class="d-none">(62)</span></a>
-                                    @empty
-                                    @endforelse
+                            <div class="filter-list">
+                                <div class="filter-group">
+                                    <div class="filter-group-title">Danh mục</div>
+                                    <div class="filter-group-items">
+                                        @forelse($cats as $item)
+                                            <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}" class="filter-item @if($item->parent_id) filter-item-child @endif">{{ $item->title }}</a>
+                                        @empty
+                                        @endforelse
+                                    </div>
                                 </div>
+                                @forelse($attributes as $attribute)
+                                    <div class="filter-group">
+                                        <div class="filter-group-title">{{ $attribute->name }}</div>
+                                        <div class="filter-group-items {{ $attribute->code }}">
+                                            @forelse($attribute->attributeValue as $item)
+                                                <span class="filter-item" data-name="{{ $attribute->code }}" data-value="{{ $item->id }}" >
+                                                    <input type="hidden" name="{{ $attribute->code }}" value="{{ request($attribute->code) == $item->id ? $item->id : '' }}">
+                                                    {{ $item->name }} <span>({{ $countArray[$attribute->id.':'.$item->id] }})</span>
+                                                </span>
+                                            @empty
+                                            @endforelse
+                                        </div>
+                                    </div>
+                                @empty
+                                @endforelse
                             </div>
-                            @empty
-                            @endforelse
                         </div>
-                    </div>
-                    <div class="layout-list">
-                        <div class="layout-title text-uppercase fw-bold">
-                            <h1>Trang điểm (800 KẾT QUẢ)</h1>
-                        </div>
+                        <div class="layout-list">
+                            <div class="layout-title text-uppercase fw-bold">
+                                <h1>{{ $cat->title }} ({{ $products->total() }} KẾT QUẢ)</h1>
+                            </div>
 
-                        <div class="layout-card">
-                            <div class="card-group">
-                                <div class="card-title">Lọc theo</div>
-                                <div class="card-items">
-                                    <a href="" class="card-item card-filter active">
-                                        Danh mục - Trang điểm mặt
-                                        <div class="del-icon">
-                                            <img src="./images/ic-delete.svg" alt="del" class="img-fluid">
+                            <div class="layout-card">
+                                <div class="card-group">
+                                    <div class="card-title">Lọc theo</div>
+                                    <div class="card-items">
+                                        @forelse($attributes as $attribute)
+                                            @if(request($attribute->code))
+                                                <span class="card-item card-filter active">
+                                                    {{ $attribute->name }}:
+                                                    @forelse($attribute->attributeValue as $item)
+                                                        @if(request($attribute->code) == $item->id)
+                                                            {{ $item->name }}
+                                                        @endif
+                                                    @empty
+                                                    @endforelse
+                                                    <div class="del-icon" data-code="{{ $attribute->code }}">
+                                                        <img src="{{ asset('images/ic-delete.svg') }}" alt="del" class="img-fluid">
+                                                    </div>
+                                                </span>
+                                            @endif
+                                        @empty
+                                        @endforelse
+
+                                    </div>
+                                </div>
+                                <div class="card-group">
+                                    <div class="card-title">Sắp xếp theo</div>
+                                    <div class="card-items">
+                                        @forelse($sorts as $k => $item)
+                                        <span class="card-item card-sort {{ request('sort') == $k ? 'active' : '' }}" data-name="sort" data-value="{{ $k }}">
+                                            <input type="hidden" name="sort" value="{{ request('sort') == $k ? $k : '' }}">
+                                            {{ $item }}
+                                        </span>
+                                        @empty
+                                        @endforelse
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="layout-list-items mb-4">
+                                @forelse($products as $item)
+                                    <a href="{{ route('detailProduct',['slug' => $item->product->slug,'sku' => $item->sku]) }}" class="product-template">
+                                        <div class="product-discount">
+                                            <span class="pe-1">5%</span>
+                                        </div>
+                                        <div class="product-thumbnail">
+                                            <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
+                                        </div>
+                                        <div class="product-price">
+                                            <div class="public-price">{{ format_money($item->price) }}</div>
+                                            <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                        </div>
+                                        <div class="product-brand">
+                                            {{ $item->brand }}
+                                        </div>
+                                        <div class="product-title">
+                                            {{ $item->title }}
                                         </div>
                                     </a>
-                                </div>
+                                @empty
+                                @endforelse
                             </div>
-                            <div class="card-group">
-                                <div class="card-title">Sắp xếp theo</div>
-                                <div class="card-items">
-                                    <a href="" class="card-item card-sort active">Nổi bật</a>
-                                    <a href="" class="card-item card-sort">Bán chạy</a>
-                                    <a href="" class="card-item card-sort">Hàng mới</a>
-                                    <a href="" class="card-item card-sort">Giá cao tới thấp</a>
-                                    <a href="" class="card-item card-sort">Giá thấp tới cao</a>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="layout-list-items mb-4">
-                            @forelse($products as $item)
-                            <a href="{{ route('detailProduct',['slug' => $item->product->slug,'sku' => $item->sku]) }}" class="product-template">
-                                <div class="product-discount">
-                                    <span class="pe-1">5%</span>
-                                </div>
-                                <div class="product-thumbnail">
-                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">{{ format_money($item->price) }}</div>
-                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
-                                </div>
-                                <div class="product-brand">
-                                    {{ $item->brand }}
-                                </div>
-                                <div class="product-title">
-                                    {{ $item->title }}
-                                </div>
-                            </a>
-                            @empty
-                            @endforelse
+                            {{ $products->links('web.components.pagination') }}
                         </div>
-
-                        {{ $products->links('web.components.pagination') }}
                     </div>
-                </div>
+                </form>
 
                 <div class="layout-bottom mb-5 bg-white">
                     <div class="layout-article less">
@@ -138,5 +157,38 @@
             $(this).toggleClass('less');
             $('.layout-article').toggleClass('less');
         })
+
+        $('.filter-item').click(function () {
+            var newValue = $(this).data('value');
+            var className = $(this).data('name');
+            $('.'+className).find('input[type="hidden"]').val(null);
+            $(this).find('input[type="hidden"]').val(newValue);
+            $('#form_filter').submit();
+        });
+
+        $('.card-item').click(function () {
+            var newValue = $(this).data('value');
+            var className = $(this).data('name');
+            $('.card-item').find('input[type="hidden"]').val(null);
+            $(this).find('input[type="hidden"]').val(newValue);
+            $('#form_filter').submit();
+        });
+
+        $('.del-icon').click(function () {
+            var className = $(this).data('code');
+            $('.'+className).find('input[type="hidden"]').val(null);
+            $('#form_filter').submit();
+        });
+
+        $('#form_filter').submit(function () {
+            $(this).find('input').each(function () {
+                if ($(this).val() === '') {
+                    console.log(1);
+                    $(this).remove(); // Loại bỏ input
+                    // $(this).prop('disabled', true); // Vô hiệu hóa input
+                }
+            });
+        });
+
     </script>
 @endsection

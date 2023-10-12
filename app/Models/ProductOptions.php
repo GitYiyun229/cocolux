@@ -10,14 +10,37 @@ class ProductOptions extends Model
 //    use HasFactory;
 
     protected $appends = [
+        'is_home',
+        'is_hot',
         'is_new',
         'brand',
-        'image_first'
+        'image_first',
+        'attribute_path'
     ];
 
     public function product()
     {
         return $this->hasOne(Product::class, 'id', 'parent_id');
+    }
+
+    public function getIsHomeAttribute()
+    {
+        $product = $this->product;
+        if ($product) {
+            return $product->is_home;
+        } else {
+            return null;
+        }
+    }
+
+    public function getIsHotAttribute()
+    {
+        $product = $this->product;
+        if ($product) {
+            return $product->is_hot;
+        } else {
+            return null;
+        }
     }
 
     public function getIsNewAttribute()
@@ -35,6 +58,16 @@ class ProductOptions extends Model
         $product = $this->product;
         if ($product) {
             return $product->brand;
+        } else {
+            return null;
+        }
+    }
+
+    public function getAttributePathAttribute()
+    {
+        $product = $this->product;
+        if ($product) {
+            return $product->attribute_path;
         } else {
             return null;
         }
