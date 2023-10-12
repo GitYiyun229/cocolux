@@ -167,3 +167,9 @@
   width: auto;
   background: #FBF1D9;
 }
+
+@media (max-width: 960px) {
+  .layout-page-payment {
+    grid-template-columns: 1fr;
+  }
+}

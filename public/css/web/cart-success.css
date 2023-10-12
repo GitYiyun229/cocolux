@@ -49,3 +49,14 @@
 .order-info a:hover {
   color: #0abb87;
 }
+
+@media (max-width: 960px) {
+  .layout-page-payment-success {
+    grid-template-columns: 1fr;
+  }
+  .layout-image img {
+    width: 200px;
+    display: block;
+    margin: auto;
+  }
+}

@@ -24,7 +24,7 @@
             <div class="footer-col">
                 <div id='root-confirm-get-code'></div>
                 <script src='https://cdn.traffic60s.com/traffic/script.php?v=20232023' type='application/javascript'></script>
-                <div class="dmca-cocolux">
+                <div class="dmca-cocolux mt-3">
                     <a href="https://www.dmca.com/Protection/Status.aspx?ID=4f30b842-a954-4ab6-8ce0-d5476814e254&amp;refurl=https://cocolux.com/thong-tin/gioi-thieu" title="DMCA.com Protection Status" class="dmca-badge">
                         <img src="https://images.dmca.com/Badges/dmca_protected_sml_120n.png?ID=4f30b842-a954-4ab6-8ce0-d5476814e254" alt="DMCA.com Protection Status">
                     </a>
