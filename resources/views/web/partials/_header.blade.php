@@ -26,9 +26,9 @@
                         <div class="menu-content">
                             <div class="position-relative h-100 w-100">
                                 <div class="menu-group-top">
-                                    <a href="">Nổi bật</a>
-                                    <a href="">Bán chạy</a>
-                                    <a href="">Hàng mới</a>
+                                    <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}?sort=1">Nổi bật</a>
+                                    <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}?sort=2">Bán chạy</a>
+                                    <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}?sort=3">Hàng mới</a>
                                 </div>
                                 <div class="menu-group-bottom">
                                     @forelse($item->children as $child)
@@ -57,19 +57,19 @@
             </div>
         </div>
         <div class="header-main-menu">
-            <form action="" name="" method="get">
+            <form action="{{ route('search') }}" name="search_product" id="search_product" method="get">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle form-drop-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle form-drop-btn" id="dropdown_change" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <span>Tất cả</span>
                     </button>
-                    <div class="dropdown-menu header-main-dropdown">
+                    <div class="dropdown-menu header-main-dropdown" >
                         <div class="dropdown-item item-parent">Tất cả</div>
                         @forelse($cat_products as $item)
                         <section>
-                            <div class="dropdown-item item-parent">{{ $item->title }}</div>
+                            <div class="dropdown-item item-parent" data-value="{{ $item->id }}">{{ $item->title }}</div>
                             @if(count($item->children) > 0)
                                 @forelse($item->children as $child)
-                                    <div class="dropdown-item item-child">{{ $child->title }}</div>
+                                    <div class="dropdown-item item-child" data-value="{{ $child->id }}">{{ $child->title }}</div>
                                 @empty
                                 @endforelse
                             @endif
@@ -78,10 +78,11 @@
                         @endforelse
                     </div>
                 </div>
-                <input type="text" class="form-control" name="keyword" id="keyword" placeholder="Tìm sản phẩm bạn mong muốn...">
-                <a class="form-submit">
+                <input type="text" class="form-control" name="keyword" id="keyword" placeholder="Tìm sản phẩm bạn mong muốn..." required>
+                <input type="hidden" name="categories" id="cat_product">
+                <button type="submit" class="btn form-submit">
                     <img src="{{ asset('images/search-icon.svg') }}" alt="" class="img-fluid">
-                </a>
+                </button>
             </form>
 
             <a href="{{ route('showCart') }}" class="menu-btn">
@@ -112,9 +113,9 @@
                     <div class="menu-content">
                         <div class="position-relative h-100 w-100">
                             <div class="menu-group-top">
-                                <a href="">Nổi bật</a>
-                                <a href="">Bán chạy</a>
-                                <a href="">Hàng mới</a>
+                                <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}?sort=1">Nổi bật</a>
+                                <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}?sort=2">Bán chạy</a>
+                                <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}?sort=3">Hàng mới</a>
                             </div>
                             <div class="menu-group-bottom">
                                 @forelse($item->children as $child)

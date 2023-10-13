@@ -1,12 +1,13 @@
 $(document).ready(function() {
-    // var fixmeTop = $('.navbar-finalstyle').offset().top;
-    // console.log(fixmeTop);
-    // $(window).scroll(function() {
-    //     var currentScroll = $(window).scrollTop();
-    //     if (currentScroll >= 30) {
-    //         $('.navbar-finalstyle').addClass('active-menu');
-    //     } else {
-    //         $('.navbar-finalstyle').removeClass('active-menu');
-    //     }
-    // });
+    $('.item-parent, .item-child').on('click', function() {
+        var selectedItem = $(this).data('value');
+        $('#cat_product').val(selectedItem);
+    });
+    $('#search_product').submit(function () {
+        $(this).find('input').each(function () {
+            if ($(this).val() === '') {
+                $(this).remove();
+            }
+        });
+    });
 });

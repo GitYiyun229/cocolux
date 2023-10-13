@@ -24,14 +24,15 @@ class CreateOrder extends FormRequest
     public function rules()
     {
         return [
-            'full_name' => 'required',
-            'email' => 'required|email',
-            'phone' => [
+            'name' => 'required',
+            'tel' => [
                 'required',
                 'regex:/^(0|\+84)[0-9]{9,10}$/'
             ],
-            'address' => 'nullable',
-            'gender' => 'required',
+            'city' => 'required',
+            'district' => 'required',
+            'ward' => 'required',
+            'address' => 'required',
             'note' => 'nullable'
         ];
     }
@@ -39,11 +40,13 @@ class CreateOrder extends FormRequest
     public function messages()
     {
         return [
-            'full_name.required' => 'Vui lòng nhập Họ tên.',
-            'email.required' => 'Vui lòng nhập địa chỉ email.',
-            'email.email' => 'Định dạng email không hợp lệ.',
-            'phone.required' => 'Số điện thoại là bắt buộc.',
-            'phone.regex' => 'Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại bắt đầu bằng số 0 và có 9-10 chữ số.'
+            'name.required' => 'Vui lòng nhập Họ tên.',
+            'tel.required' => 'Số điện thoại là bắt buộc.',
+            'city.required' => 'Chọn tỉnh thành phố.',
+            'district.required' => 'Chọn quận huyện.',
+            'ward.required' => 'Chọn phường xã.',
+            'address.required' => 'Nhập địa chỉ chi tiết.',
+            'tel.regex' => 'Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại bắt đầu bằng số 0 và có 9-10 chữ số.'
         ];
     }
 }
