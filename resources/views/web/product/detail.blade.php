@@ -2,7 +2,7 @@
 
 @section('content')
     <main>
-         
+
         <div class="container">
             @include('web.components.breadcrumb',['links' => [] ])
             <div class="layout-page-product-detail mb-5">
@@ -224,7 +224,7 @@
                         @if($item->value->type == 'ckeditor')
                             <div class="layout-box layout-padding bg-white" id="tab-{{ $k }}">
                                 <h2 class="layout-title mb-2 fw-bold d-lg-none">{{ $item->name }}</h2>
-                                <div class="layout-content-text">{!! $item->value->name !!}</div>
+                                <div class="layout-content-text">{!! replace_image($item->value->name) !!}</div>
                             </div>
                         @endif
                     @empty
@@ -269,7 +269,7 @@
                                             @case(5)
                                                 Rất hài lòng
                                                 @break
-                                            @default 
+                                            @default
                                         @endswitch
                                     </div>
                                 </div>
@@ -420,7 +420,7 @@
             let index = parseInt(currentElement.attr('data-index'));
             let total = $('.modal-thumbnail-item').length;
             let changeIndex;
-           
+
             if (type > 0) {
                 changeIndex = index + 1 >= total ? 0 : index + 1;
             } else {
@@ -438,7 +438,7 @@
         $('#image').change(function() {
             const files = this.files;
             const maxAllowedFiles = 5;
-       
+
             $('.list-image-review').empty();
 
             if (files.length > 5) {
@@ -463,7 +463,7 @@
             let rate = $('#rate').val();
             $('.review-rating p').remove();
             $('#content').next('p').remove();
-            if (rate == 0){             
+            if (rate == 0){
                 $('.review-rating').append('<p class="position-absolute text-danger m-0" style="left: 150px; font-size: 14px">Vui lòng đánh giá sản phẩm.</p>');
                 return false;
             }
