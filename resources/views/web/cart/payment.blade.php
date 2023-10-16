@@ -4,7 +4,8 @@
     <main>
 
         <div class="container">
-            <form action="" method="post" id="layoutForm" name="layoutForm">
+            <form action="{{ route('order') }}" method="post" id="layoutForm" name="layoutForm">
+                @csrf
                 <div class="layout-page-payment mt-4 mb-5">
                     <div class="layout-form">
                         <div class="layout-title bg-white">
@@ -29,44 +30,42 @@
 
                             <div class="form-box">
                                 <label for="name">Họ và tên <span>*</span></label>
-                                <input type="text" class="form-control" placeholder="" name="name" id="name">
+                                <input type="text" class="form-control" value="{{ old('name') }}" placeholder="" name="name" id="name" required>
                             </div>
 
                             <div class="form-box">
                                 <label for="tel">Số điện thoại nhận hàng <span>*</span></label>
-                                <input type="text" class="form-control" placeholder="" name="tel" id="tel">
+                                <input type="text" class="form-control" value="{{ old('tel') }}" placeholder="" name="tel" id="tel" required>
                             </div>
 
                             <div class="form-box">
                                 <label for="city">Tỉnh thành <span>*</span></label>
-                                <select name="city" id="city" class="selec2-box form-control">
+                                <select name="city" id="city" class="selec2-box form-control" onchange="loaddistrict(this.value)" required>
                                     <option value="0" selected hidden disabled>Chọn Tỉnh/ Thành phố</option>
-                                    <option value="1">Hà Nội</option>
-                                    <option value="1">Hồ Chí Minh</option>
+                                    @forelse($list_city as $item)
+                                    <option value="{{ $item->code }}">{{ $item->name }}</option>
+                                    @empty
+                                    @endforelse
                                 </select>
                             </div>
 
                             <div class="form-box">
                                 <label for="district">Quận huyện <span>*</span></label>
-                                <select name="district" id="district" class="selec2-box form-control">
+                                <select name="district" id="district" class="selec2-box form-control" onchange="loadward(this.value)" required>
                                     <option value="0" selected hidden disabled>Chọn Quận/ Huyện</option>
-                                    <option value="1">Hà Nội</option>
-                                    <option value="1">Hồ Chí Minh</option>
                                 </select>
                             </div>
 
                             <div class="form-box">
                                 <label for="ward">Phường xã <span>*</span></label>
-                                <select name="ward" id="ward" class="selec2-box form-control">
+                                <select name="ward" id="ward" class="selec2-box form-control" required>
                                     <option value="0" selected hidden disabled>Chọn Phường/ Xã</option>
-                                    <option value="1">Hà Nội</option>
-                                    <option value="1">Hồ Chí Minh</option>
                                 </select>
                             </div>
 
                             <div class="form-box">
                                 <label for="address">Địa chỉ chi tiết <span>*</span></label>
-                                <input type="text" class="form-control" placeholder="" name="address" id="address">
+                                <input type="text" class="form-control" value="{{ old('address') }}" placeholder="" name="address" id="address" required>
                             </div>
 
                             <div class="form-box">
@@ -94,7 +93,7 @@
                                     Chuyển khoản: Tên tài khoản: Phạm Tiến Lợi - Vietcombank : 103878062018 TP Hà Nội - Hội sở
                                 </label>
                             </div>
-                            <img src="/images/payment-coco.jpg" alt="payment" class="img-fluid" width="300">
+                            <img src="{{ asset('images/payment-coco.jpg') }}" alt="payment" class="img-fluid" width="300">
                         </div>
                     </div>
 
@@ -144,9 +143,9 @@
                                     <div class="fw-bold text-uppercase text-danger">5892 coco coin</div>
                                 </div>
 
-                                <a href="{{ route('orderProductSuccess',['id' => 1]) }}" title="Đặt hàng" class="submit-layoutForm d-flex align-items-center justify-content-center text-white text-uppercase">
+                                <button type="submit" title="Đặt hàng" class="btn submit-layoutForm d-flex align-items-center justify-content-center text-white text-uppercase">
                                     Đặt hàng
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -250,6 +249,56 @@
             flashMessageBox.querySelector('.toast-body').innerHTML = message;
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(flashMessageBox);
             toastBootstrap.show()
+        }
+
+        function loaddistrict(city_id) {
+            $.ajax({
+                type: 'post',
+                url: '{{ route('loadDistrict') }}',
+                dataType: 'JSON',
+                data: {
+                    city_id: city_id,
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function (data) {
+                    let option = ''
+                    option += `<option data-id="0" value="0">Chọn Quận/Huyện</option>`;
+                    data.district.forEach(item => {
+                        option += `<option value="${item.code}">${item.name}</option>`
+                    });
+
+                    $("#district").html(option);
+                    return true;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+            return false;
+        }
+
+        function loadward(district_id) {
+            $.ajax({
+                type: 'post',
+                url: '{{ route('loadWard') }}',
+                dataType: 'JSON',
+                data: {
+                    district_id: district_id,
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function (data) {
+                    let option = ''
+                    option += `<option data-id="0" value="0">Chọn Phường/ Xã</option>`;
+                    data.ward.forEach(item => {
+                        option += `<option value="${item.code}">${item.name}</option>`
+                    });
+
+                    $("#ward").html(option);
+                    return true;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+            return false;
         }
     </script>
 @endsection

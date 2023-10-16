@@ -61,6 +61,9 @@ Route::group(['namespace' => 'Web'], function (){
     Route::post('/order', 'ProductController@order')->name('order');
     Route::get('dat-hang-thanh-cong/{id}', 'ProductController@success')->name('orderProductSuccess');
     Route::get('/thong-tin/{slug}', 'PageController@index')->name('detailPage');
+    Route::post('/load-district', 'ProductController@load_district')->name('loadDistrict');
+    Route::post('/load-ward', 'ProductController@load_ward')->name('loadWard');
+    Route::get('/search', 'ProductController@search')->name('search');
 });
 
 //Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
