@@ -130,6 +130,20 @@
                     <div class="editor"></div>
                 </div>
             </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>@lang('form.article.products')</label>
+                    @if ($errors->has('products'))
+                        <span class="help-block text-danger">
+                            <strong>{{ $errors->first('products') }}</strong>
+                        </span>
+                    @endif
+                    <div class="input-group mb-3">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon1"><i class="fa fa-search"></i></button>
+                        <input type="text" class="form-control" placeholder="" name="search_product" id="search_product" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-sm-5">
@@ -175,18 +189,6 @@
     <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
     <script>
         CKEDITOR.replace( 'content' );
-        {{--InlineEditor--}}
-        {{--    .create( document.querySelector( '#content' ),{--}}
-        {{--        ckfinder: {--}}
-        {{--            uploadUrl: '{!! asset('ckfinder/core/connector/php/connector.php').'?command=QuickUpload&type=Images&responseType=json' !!}',--}}
-        {{--            options: {--}}
-        {{--                resourceType: 'Images'--}}
-        {{--            }--}}
-        {{--        },--}}
-        {{--        mediaEmbed: {previewsInData: true}--}}
-        {{--    } )--}}
-        {{--    .catch( error => {--}}
-        {{--        console.error( error );--}}
-        {{--    } );--}}
+
     </script>
 @endsection
