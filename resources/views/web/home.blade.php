@@ -236,7 +236,7 @@
             <div class="section-banner-middle mb-5">
                 @forelse($subBanner2 as $item)
                 <a class="" href="">
-                    <img alt="{{ $item->title }}" src="{{ asset($item->image_url) }}" class="img-fluid">
+                    <img alt="{{ $item->title }}" src="{{ asset(replace_image($item->image_url)) }}" class="img-fluid">
                 </a>
                 @empty
                 @endforelse
@@ -253,7 +253,7 @@
                     @forelse($articles as $item)
                     <a href="{{ route('detailArticle',['slug'=>$item->slug,'id'=>$item->id]) }}" class="article-item" title="{{ $item->title }}">
                         <div class="article-img">
-                            <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="img-fluid">
+                            <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid">
                         </div>
                         <div class="article-title">
                             <span>

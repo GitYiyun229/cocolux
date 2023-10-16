@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\DataTables\ArticleDataTable;
 use App\DataTables\Scopes\ArticleDataTableScope;
@@ -115,7 +116,12 @@ class ArticleController extends Controller
     {
         $article = $this->articleRepository->getOneById($id);
         $categories = $this->articleCategoryRepository->getAll();
-        return view('admin.article.update', compact('article','categories'));
+        $products = array();
+        if ($article->products){
+            $products = Product::select('id','title','slug','sku','image')->whereIn('id',explode(',',$article->products))->get();
+        }
+
+        return view('admin.article.update', compact('article','categories','products'));
     }
 
     /**
