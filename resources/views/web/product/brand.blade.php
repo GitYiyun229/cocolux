@@ -22,7 +22,7 @@
             </nav>
 
             <div class="layout-page-products-list mb-5">
-                <form action="{{ route('catProduct',['slug' => $cat->slug,'id' =>$cat->id]) }}" id="form_filter" method="get">
+                <form action="" id="form_filter" method="get">
                     <div class="layout-main mb-5 bg-white">
                         <div class="layout-filter">
                             <div class="layout-title text-uppercase fw-bold">
@@ -58,7 +58,7 @@
                         </div>
                         <div class="layout-list">
                             <div class="layout-title text-uppercase fw-bold">
-                                <h1>{{ $cat->title }} ({{ $products->total() }} KẾT QUẢ)</h1>
+                                <h1>{{ $brand->name }} ({{ $products->total() }} KẾT QUẢ)</h1>
                             </div>
 
                             <div class="layout-card">
@@ -66,7 +66,7 @@
                                     <div class="card-title">Lọc theo</div>
                                     <div class="card-items">
                                         <span class="card-item card-filter active">
-                                            Danh mục: {{ $cat->title }}
+                                            Thương hiệu: {{ $brand->name }}
                                         </span>
                                         @forelse($attributes as $attribute)
                                             @if(request($attribute->code))
@@ -133,7 +133,7 @@
 
                 <div class="layout-bottom mb-5 bg-white">
                     <div class="layout-article less">
-                        {!! replace_image($cat->content) !!}
+                        {!! replace_image($brand->content) !!}
                     </div>
                     <div class="layout-btn-toggle d-flex align-items-center justify-content-center">
                         <button class="btn-more-less">
