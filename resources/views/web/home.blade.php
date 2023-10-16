@@ -10,7 +10,7 @@
                         @forelse($slider as $item)
                         <div>
                             <a href="{!! $item->url !!}">
-                                <img src="{{ asset($item->image_url) }}" alt="{{ $item->content }}" class="img-fluid">
+                                <img src="{{ asset(replace_image($item->image_url)) }}" alt="{{ $item->content }}" class="img-fluid">
                             </a>
                         </div>
                         @empty
@@ -20,13 +20,13 @@
                 <div class="banner-wrap">
                     @forelse($subBanner as $item)
                     <a href="{!! $item->url !!}">
-                        <img src="{{ asset($item->image_url) }}" alt="{{ $item->content }}" class="img-fluid">
+                        <img src="{{ asset(replace_image($item->image_url)) }}" alt="{{ $item->content }}" class="img-fluid">
                     </a>
                     @empty
                     @endforelse
                 </div>
             </div>
-            
+
             <div class="section-categories-mobile d-grid d-lg-none mb-4">
                 <a href="" class="item-category d-flex flex-column align-items-center text-center text-uppercase" data-bs-toggle="modal" data-bs-target="#categoriesModal">
                     <div class="section-icon">
@@ -39,7 +39,7 @@
                 </a>
                 @forelse($cat_products as $item)
                 <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}" class="item-category d-flex flex-column align-items-center text-center text-uppercase">
-                    <img src="{{ asset($item->logo) }}" alt="{{ $item->title }}" class="img-fluid" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
+                    <img src="{{ asset(replace_image($item->logo)) }}" alt="{{ $item->title }}" class="img-fluid" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
                     {{ $item->title }}
                 </a>
                 @empty
@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                             @endif
-                            
+
                             @empty
                             @endforelse
                         </div>
@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="slide-template bg-white mb-4">
                 <div class="slide-top">
                     <a href="" class="slide-title">
@@ -172,7 +172,7 @@
                     <div class="slide-template-slick">
                         @forelse($attribute_brand as $item)
                         <a href="" class="brand-template">
-                            <img src="{{ asset($item->image) }}" alt="{{ $item->name }}" class="img-fluid">
+                            <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->name }}" class="img-fluid">
                             <div class="title">{{ $item->name }}</div>
                         </a>
                         @empty
@@ -201,7 +201,7 @@
                     <div class="section-main bg-white">
                         <div class="section-poster">
                             <a href="">
-                                <img src="{{ $cat->image }}" alt="" class="img-fluid">
+                                <img src="{{ asset(replace_image($cat->image)) }}" alt="" class="img-fluid">
                             </a>
                         </div>
                         <div class="section-content">
@@ -289,7 +289,7 @@
             dots: true,
             infinite: true,
             autoplay: true,
-           
+
         });
 
         $('.slide-template-slick').slick({
@@ -339,14 +339,14 @@
                 } else {
                     element.html(`
                         <span>Còn ${a} ngày</span>
-                        
+
                         <span>${s}</span>
                         :
                         <span>${o}</span>
                         :
                         <span>${e}</span>
                     `);
-                }                
+                }
 
                 if (t < 0) {
                     clearInterval(n), element.html("Đã hết khuyến mại")
