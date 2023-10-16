@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="detail-content">
-                            {!! $article->content !!}
+                            {!! replace_image($article->content) !!}
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                                 <div class="news-main">
                                     <p class="news-title fw-bold">{{ $item->title }}</p>
                                     <div class="news-time">
-                                        <img src="./images/ic-datetime.svg" alt="datetime" class="img-fluid">
+                                        <img src="{{ asset('images/ic-datetime.svg') }}" alt="datetime" class="img-fluid">
                                         21/09/2023 09:45:38
                                     </div>
                                     <div class="news-summary">
