@@ -45,7 +45,7 @@ class ArticleController extends Controller
         $article = $this->articleRepository->paginate(12,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1]);
         $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
         $product_hots = Product::where(['active' => 1, 'is_hot' => 1])
-            ->select('id','title','image','brand','hot_deal')
+            ->select('id','title','image','brand','hot_deal','slug','sku')
             ->with(['productOption' => function($query){
                 $query->where(['is_default' => 1,'active' => 1])->select('id', 'title', 'parent_id','price','slug','images');
             }])->limit(5)->get();
@@ -69,7 +69,7 @@ class ArticleController extends Controller
         $article = $this->articleRepository->paginate(12,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1,'category_id'=>$id]);
         $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
         $product_hots = Product::where(['active' => 1, 'is_hot' => 1])
-            ->select('id','title','image','brand','hot_deal')
+            ->select('id','title','image','brand','hot_deal','slug','sku')
             ->with(['productOption' => function($query){
                 $query->where(['is_default' => 1,'active' => 1])->select('id', 'title', 'parent_id','price','slug','images');
             }])->limit(5)->get();
@@ -102,7 +102,7 @@ class ArticleController extends Controller
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
         $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
         $product_hots = Product::where(['active' => 1, 'is_hot' => 1])
-            ->select('id','title','image','brand','hot_deal')
+            ->select('id','title','image','brand','hot_deal','slug','sku')
             ->with(['productOption' => function($query){
                 $query->where(['is_default' => 1,'active' => 1])->select('id', 'title', 'parent_id','price','slug','images');
             }])->limit(5)->get();

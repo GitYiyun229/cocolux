@@ -268,13 +268,18 @@ class ProductController extends Controller
     }
 
     public function detail ($slug,$sku){
-        $product = ProductOptions::where(['sku' => $sku])->with(['product'])->first();
+        $product = ProductOptions::where(['sku' => $sku])->with(['product' => function($query){
+            $query->select('id','category_id','sku','slug','title','attributes');
+        }])->first();
         $list_image = json_decode($product->images);
         $attribute_value = json_decode($product->product->attributes);
         $stocks = json_decode($product->stocks);
         $product_root = Product::where(['id' => $product->parent_id])->select('id','slug','title','image','brand','description','attributes')->with(['category'])->first();
         $list_product_parent = ProductOptions::where(['parent_id' => $product->parent_id])->get();
-        $products = $this->productRepository->getList(['active' => 1,'is_hot' => 1],['id','title','slug','image','price','category_id','sku'], 3,['category']);
+        $products = Product::select('id','title','slug','image','price','category_id','sku')
+            ->where(['active' => 1,'category_id' => $product->product->category_id])
+            ->with(['category'])
+            ->limit(3)->orderBy('id', 'DESC')->get();
 
         SEOTools::setTitle($product->seo_title?$product->seo_title:$product->title);
         SEOTools::setDescription($product->seo_description?$product->seo_description:$product->description);
