@@ -43,7 +43,7 @@
                     <div class="products-hot layout-box bg-white">
                         <p class="mb-0 text-center text-uppercase fw-bold layout-title text-red">Sản phẩm hot</p>
                         @forelse($product_hots as $item)
-                            <a href="" class="product-template">
+                            <a href="{{ route('detailProduct',['slug' => $item->slug, 'sku' => $item->sku]) }}" class="product-template">
                                 <div class="product-discount">
                                     <span class="pe-1">5%</span>
                                 </div>

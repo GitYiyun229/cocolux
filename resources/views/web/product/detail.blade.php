@@ -42,7 +42,7 @@
 
                                 <div class="detail-flash text-uppercase fw-bold mb-1 d-none">
                                     <div class="flash-title d-flex align-items-center">
-                                        <img src="/images/hot_icon.svg" alt="flash sale" class="img-fluid">
+                                        <img src="{{ asset('images/hot_icon.svg') }}" alt="flash sale" class="img-fluid">
                                         flash sale
                                     </div>
                                     <div class="flash-time d-flex align-items-center">
@@ -332,7 +332,7 @@
                                 <span class="pe-1">5%</span>
                             </div>
                             <div class="product-thumbnail">
-                                <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="img-fluid">
+                                <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid">
                             </div>
                             <div class="product-price">
                                 <div class="public-price">{{ format_money($item->productOption->first()->price) }}</div>
