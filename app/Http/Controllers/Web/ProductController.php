@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\BookTable;
+use App\Models\City;
+use App\Models\Districts;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -12,6 +14,7 @@ use App\Models\ProductOptions;
 use App\Models\ProductsCategories;
 use App\Models\Promotions;
 use App\Models\Setting;
+use App\Models\Wards;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
@@ -135,6 +138,131 @@ class ProductController extends Controller
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($cat->seo_keyword?$cat->seo_keyword:$cat->title);
+
+        return view('web.product.cat',compact('cat','cats','products','attributes','sorts','countArray'));
+    }
+
+
+    public function search(Request $request){
+        $keyword = $request->input('keyword');
+        $id = $request->input('categories');
+        if ($id){
+            $cat = $this->productCategoryRepository->getOneById($id);
+            $cats = ProductsCategories::where(['active' => 1,'parent_id' => $id])->orWhere(['id' => $id])->select('id','title','slug','parent_id')->get();
+        }else{
+            $cat = null;
+            $cats = ProductsCategories::where(['active' => 1,'parent_id' => null])->select('id','title','slug','parent_id')->get();
+        }
+
+        $attributes = Attribute::where(['active' => 1,'type' => 'select'])->select('id','name','code')->with(['attributeValue'=>function($query){
+            $query->select('id', 'name', 'attribute_id','slug');
+        }])->get();
+
+        $list_id_request = array();
+        $list_id = array();
+        foreach ($attributes as $item){
+            if ($request->input($item->code)) {
+                $list_id_request[] = $item->id.':'.$request->input($item->code);
+            }
+            foreach ($item->attributeValue as $value){
+                $list_id[] = $item->id.':'.$value->id;
+            }
+        }
+
+        $sorts = [
+            1 => 'Nổi bật',
+            2 => 'Bán chạy',
+            3 => 'Hàng mới',
+            4 => 'Giá cao tới thấp',
+            5 => 'Giá thấp tới cao'
+        ];
+
+        $columnToSort = 'product_options.id';
+        $orderDirection = 'desc';
+
+        foreach ($sorts as $k => $item){
+            if ($request->input('sort')) {
+                if ($request->input('sort') == 1){
+                    $columnToSort = 'products.is_home';
+                    $orderDirection = 'desc';
+                }elseif ($request->input('sort') == 2){
+                    $columnToSort = 'products.is_hot';
+                    $orderDirection = 'desc';
+                }elseif ($request->input('sort') == 3){
+                    $columnToSort = 'products.is_new';
+                    $orderDirection = 'desc';
+                }elseif ($request->input('sort') == 4){
+                    $columnToSort = 'product_options.price';
+                    $orderDirection = 'desc';
+                }elseif ($request->input('sort') == 5){
+                    $columnToSort = 'product_options.price';
+                    $orderDirection = 'asc';
+                }else{
+                    $columnToSort = 'product_options.id';
+                    $orderDirection = 'desc';
+                }
+            }
+        }
+
+        $products = ProductOptions::with(['product' => function ($query) {
+            $query->select('id', 'is_new', 'brand','slug','attribute_path');
+        }])->whereHas('product', function ($query) use ($id,$list_id_request,$keyword) {
+            $query->where('active', 1);
+            if ($id){
+                $query->where('category_path', 'LIKE', '%'.$id.'%');
+            }
+            if ($keyword){
+                $query->where('title', 'LIKE', '%'.$keyword.'%');
+            }
+            if ($list_id_request){
+                foreach ($list_id_request as $item){
+                    $query->where('attribute_path','like', '%'.$item.'%');
+                }
+            }
+        })
+            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.slug','product_options.images')
+            ->addSelect('products.title as product_name')
+            ->join('products', 'product_options.parent_id', '=', 'products.id')
+            ->orderBy($columnToSort, $orderDirection)
+            ->paginate(30);
+
+        $total_products = ProductOptions::with(['product' => function ($query) {
+            $query->select('id', 'is_new', 'brand','slug','attribute_path');
+        }])->whereHas('product', function ($query) use ($id,$list_id_request) {
+            $query->where('active', 1);
+            if ($id){
+                $query->where('category_path', 'LIKE', '%'.$id.'%');
+            }
+            if ($list_id_request){
+                foreach ($list_id_request as $item){
+                    $query->where('attribute_path','like', '%'.$item.'%');
+                }
+            }
+        })
+            ->select('id', 'parent_id')
+            ->get()->pluck('attribute_path')->toArray();
+
+        $countArray = [];
+
+        foreach ($list_id as $needle) {
+            $count = 0;
+            foreach ($total_products as $haystack) {
+                $count += substr_count($haystack, $needle);
+            }
+            $countArray[$needle] = $count;
+        }
+
+        $currentUrl = url()->full();
+        $products->setPath($currentUrl);
+
+//        SEOTools::setTitle($cat->seo_title?$cat->seo_title:$cat->title);
+//        SEOTools::setDescription($cat->seo_description?$cat->seo_description:$cat->description);
+//        SEOTools::addImages($cat->image?asset($cat->image):null);
+//        SEOTools::setCanonical(url()->current());
+//        SEOTools::opengraph()->setUrl(url()->current());
+//        SEOTools::opengraph()->addProperty('type', 'articles');
+//        SEOTools::twitter()->setSite('cocolux.com');
+//        SEOMeta::setKeywords($cat->seo_keyword?$cat->seo_keyword:$cat->title);
 
         return view('web.product.cat',compact('cat','cats','products','attributes','sorts','countArray'));
     }
@@ -368,7 +496,29 @@ class ProductController extends Controller
             $total_price = $total_price + $product->price * $quantity;
         }
 
-        return view('web.cart.payment', compact('cart','cartItems','total_price'));
+        $list_city = City::all();
+
+        return view('web.cart.payment', compact('cart','cartItems','total_price','list_city'));
+    }
+
+    public function load_district(Request $request)
+    {
+        $city_id = $request->input('city_id');
+        $districts = Districts::where('city_code', $city_id)->get()->toArray();
+        $result = array();
+        $result['error'] = false;
+        $result['district'] = $districts;
+        return json_encode($result);
+    }
+
+    public function load_ward(Request $request)
+    {
+        $district_id = $request->input('district_id');
+        $ward = Wards::where('district_code', $district_id)->get()->toArray();
+        $result = array();
+        $result['error'] = false;
+        $result['ward'] = $ward;
+        return json_encode($result);
     }
 
     public function order (CreateOrder $req){
@@ -379,7 +529,7 @@ class ProductController extends Controller
 
             $cart = Session::get('cart', []);
             foreach ($cart as $productId => $item) {
-                $product = $this->productRepository->getOneById($productId);
+                $product = ProductOptions::findOrFail($productId);
                 if (empty($product)){
                     unset($cart[$productId]);
                     Session::flash('danger', 'Có sản phẩm không còn tồn tại');
@@ -395,6 +545,7 @@ class ProductController extends Controller
                 ]);
             }
             DB::commit();
+            Session::forget('cart');
             Session::flash('success', trans('message.create_order_success'));
             return redirect()->route('orderProductSuccess',['id'=>$order->id]);
         } catch (\Exception $ex) {
