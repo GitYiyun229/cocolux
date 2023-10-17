@@ -168,6 +168,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('/edit/{id}', 'ArticleController@edit')->name('edit')->middleware('permission:edit_article');
         Route::post('/update/{id}', 'ArticleController@update')->name('update')->middleware('permission:edit_article');
         Route::post('/destroy/{id}', 'ArticleController@destroy')->name('destroy')->middleware('permission:delete_article');
+        Route::post('/search', 'ArticleController@search')->name('search')->middleware('permission:edit_article');
     });
 
     Route::group(['prefix' => 'product-category', 'as' => 'product-category.', 'middleware' => ['permission:view_product_categories']], function () {

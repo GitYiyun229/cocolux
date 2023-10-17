@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductOptions;
 use Illuminate\Http\Request;
 use App\DataTables\ArticleDataTable;
 use App\DataTables\Scopes\ArticleDataTableScope;
@@ -118,9 +119,12 @@ class ArticleController extends Controller
         $categories = $this->articleCategoryRepository->getAll();
         $products = array();
         if ($article->products){
-            $products = Product::select('id','title','slug','sku','image')->whereIn('id',explode(',',$article->products))->get();
+            if ($article->updated_at < '2023-10-17'){
+                $products = Product::select('id','title','slug','sku','image','price')->whereIn('id',explode(',',$article->products))->get();
+            }else{
+                $products = ProductOptions::select('id','title','slug','sku','images','price')->whereIn('id',explode(',',$article->products))->get();
+            }
         }
-
         return view('admin.article.update', compact('article','categories','products'));
     }
 
@@ -187,5 +191,30 @@ class ArticleController extends Controller
             'status' => true,
             'message' => trans('message.delete_article_success')
         ];
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $products = ProductOptions::with(['product' => function ($query) {
+            $query->select('id', 'is_new','sku','brand','slug','attribute_path');
+        }])->whereHas('product', function ($query) use ($keyword) {
+            $query->where('product_options.active', 1);
+            if ($keyword){
+                $query->where('product_options.title', 'LIKE', '%'.$keyword.'%')
+                ->Orwhere('product_options.slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
+                ->Orwhere('product_options.sku', 'LIKE', '%'.$keyword.'%');
+            }
+        })
+            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.slug','product_options.images')
+            ->addSelect('products.title as product_name')
+            ->join('products', 'product_options.parent_id', '=', 'products.id')
+            ->orderBy('product_options.id', 'DESC')
+            ->limit(30)->get()->toArray();
+
+        $result = array();
+        $result['error'] = false;
+        $result['data'] = $products;
+        return response()->json($result);
     }
 }

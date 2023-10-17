@@ -139,10 +139,40 @@
                         </span>
                     @endif
                     <div class="input-group mb-3">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon1"><i class="fa fa-search"></i></button>
-                        <input type="text" class="form-control" placeholder="" name="search_product" id="search_product" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        <input type="text" class="form-control" placeholder="" name="search_product" id="search_product">
                     </div>
                 </div>
+                <div class="selection"></div>
+                <table class="table table-bordered mt-2" id="list_products">
+                    <thead class="thead-light">
+                        <tr>
+                            <th style="width: 100px;">Mã SP</th>
+                            <th style="width: 280px;">Tên sản phẩm</th>
+                            <th style="width: 100px;">Giá</th>
+                            <th style="width: 100px;">Mã nhúng bài viết</th>
+                            <th style="width: 50px;">#</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        @if(!empty($products))
+                            @forelse($products as $k => $item)
+                                <tr>
+                                    <td>{{ $item->sku }}</td>
+                                    <td>{{ $item->title }}</td>
+                                    <td>{{ format_money($item->price) }}</td>
+                                    <td>
+                                        <div class="border border-warning rounded btn copy-btn" data-clipboard-text="product-option-{{ $item->id }}">
+                                            product-option-{{ $item->id }}
+                                        </div>
+                                    </td>
+                                    <td><button type="button" onclick="deleteCell('list_products',{{ $k+1 }})" class="btn btn-danger">Xóa</button></td>
+                                </tr>
+                            @empty
+                            @endforelse
+                        @endif
+                    </tbody>
+                </table>
+                <input type="hidden" name="products_add" id="products_add" value="@if($article->products) {{ $article->products }} @endif">
             </div>
         </div>
     </div>
@@ -183,12 +213,161 @@
         </div>
     </div>
 </div>
+@section('link')
+    @parent
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.min.css">
+@endsection
+
 @section('script')
     @parent
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
     <script>
         CKEDITOR.replace( 'content' );
+        const autoCompleteJS = new autoComplete({
+            selector: "#search_product",
+            placeHolder: "Tìm sản phẩm...",
+            data: {
+                src: async (query) => {
+                    try {
+                        // Fetch Data from external Source
+                        const response = await fetch(`{{ route('admin.article.search') }}`,{
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                keyword: query,
+                                _token: $('meta[name="csrf-token"]').attr("content")
+                            })
+                        });
+                        // Data should be an array of `Objects` or `Strings`
+                        const data = await response.json();
+                        return data.data;
+                    } catch (error) {
+                        return error;
+                    }
+                },
+                keys: ["title","sku",'slug']
+            },
+            resultsList: {
+                element: (list, data) => {
+                    const info = document.createElement("p");
+                    if (data.results.length > 0) {
+                        // info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
+                    } else {
+                        info.innerHTML = `Found <strong>${data.matches.length}</strong> matching results for <strong>"${data.query}"</strong>`;
+                    }
+                    list.prepend(info);
+                },
+                noResults: true,
+                maxResults: 30,
+                tabSelect: true
+            },
+            resultItem: {
+                element: (item, data) => {
+                    // Modify Results Item Style
+                    item.style = "display: flex; justify-content: space-between;";
+                    // Modify Results Item Content
+                    item.innerHTML = `
+                      <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                        ${data.value.title}
+                      </span>
+                      <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+                        ${data.key}
+                      </span>`;
+                },
+                highlight: true,
+            },
+            diacritics: true,
+            events: {
+                input: {
+                    click: () => {
+                        if (autoCompleteJS.input.value.length) autoCompleteJS.start();
+                    },
+                }
+            }
+        });
+        autoCompleteJS.input.addEventListener("selection", function (event) {
+            const feedback = event.detail;
+            const selectedData  = feedback.selection.value;
 
+            const newRow = document.createElement('tr');
+
+            // Create table data (td) elements for each column
+            const skuCell = document.createElement('td');
+            skuCell.textContent = selectedData['sku'];
+
+            const titleCell = document.createElement('td');
+            titleCell.textContent = selectedData['title'];
+
+            const priceCell = document.createElement('td');
+            priceCell.textContent = formatMoney(selectedData['price']);
+
+            const codeAddCell = document.createElement('td');
+            const codeButton = document.createElement('div');
+            codeButton.textContent = 'product-option-'+selectedData['id'];
+            codeButton.classList.add('border', 'border-warning','rounded','btn','copy-btn');
+            codeButton.setAttribute("data-clipboard-text", 'product-option-'+selectedData['id']);
+            codeAddCell.appendChild(codeButton);
+
+            const deleteButtonCell = document.createElement('td');
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Xóa';
+            deleteButton.classList.add('btn', 'btn-danger');
+            // Add a click event listener to the delete button
+            deleteButton.addEventListener('click', function () {
+                // Remove the entire row when the delete button is clicked
+                newRow.remove();
+            });
+
+            // Append the delete button to the deleteButtonCell
+            deleteButtonCell.appendChild(deleteButton);
+
+
+            // Append the cells to the row
+            newRow.appendChild(skuCell);
+            newRow.appendChild(titleCell);
+            newRow.appendChild(priceCell);
+            newRow.appendChild(codeAddCell);
+            newRow.appendChild(deleteButtonCell);
+
+            // Get the table body where you want to add the row
+            const tableBody = document.getElementById('table-body');
+
+            // Append the new row to the table
+            tableBody.appendChild(newRow);
+
+            var productsAddInput = document.getElementById('products_add');
+            var currentProductIds = productsAddInput.value;
+            var currentProductIdsArray = currentProductIds.split(',');
+            currentProductIdsArray.push(selectedData['id']);
+            productsAddInput.value = currentProductIdsArray.join(',');
+        });
+
+        $('#table-body').on("click",".copy-btn", function(){
+            value = $(this).data('clipboard-text');
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val(value).select();
+            document.execCommand("copy");
+            $temp.remove();
+        })
+
+        function formatMoney(price, current = 'đ', text = 'Liên hệ') {
+            if (!price) {
+                return text;
+            }
+            return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        }
+
+        function deleteCell(tableId, rowIndex) {
+            var table = document.getElementById(tableId);
+
+            if (table) {
+                table.deleteRow(rowIndex);
+            }
+        }
     </script>
 @endsection
