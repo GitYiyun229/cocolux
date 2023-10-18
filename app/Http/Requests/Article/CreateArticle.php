@@ -33,6 +33,7 @@ class CreateArticle extends FormRequest
             'description' => 'required',
             'ordering' => 'nullable',
             'image' => 'nullable',
+            'products_add' => 'nullable',
             'seo_title' => 'nullable',
             'seo_keyword' => 'nullable',
             'seo_description' => 'nullable',
