@@ -86,7 +86,7 @@
                 <div class="form-group">
                     <label>@lang('form.article.image')</label> <span class="text-danger">*</span>
                     <div class="input-group">
-                        @include('admin.components.buttons.image',['src' => isset($article->image) ? $article->image : old('image'),'name' => 'image'])
+                        @include('admin.components.buttons.image',['src' => isset($article->image) ? $article->image_change_url : old('image'),'name' => 'image'])
                         @if ($errors->has('image'))
                             <span class="help-block text-danger">
                                 <strong>{{ $errors->first('image') }}</strong>
@@ -121,7 +121,7 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <label>@lang('form.content')</label> <span class="text-danger">*</span>
-                    <textarea id="content" name="content" class="form-control" rows="10" >{{ isset($article->content) ? $article->content : old('content') }}</textarea>
+                    <textarea id="content" name="content" class="form-control" rows="10" >{{ isset($article->content) ? replace_image($article->content) : old('content') }}</textarea>
                     @if ($errors->has('content'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('content') }}</strong>
@@ -165,14 +165,14 @@
                                             product-option-{{ $item->id }}
                                         </div>
                                     </td>
-                                    <td><button type="button" onclick="deleteCell('list_products',{{ $k+1 }})" class="btn btn-danger">Xóa</button></td>
+                                    <td><button type="button" onclick="deleteCell('list_products',{{ $k+1 }},{{ $item->id }})" class="btn btn-danger">Xóa</button></td>
                                 </tr>
                             @empty
                             @endforelse
                         @endif
                     </tbody>
                 </table>
-                <input type="hidden" name="products_add" id="products_add" value="@if($article->products) {{ $article->products }} @endif">
+                <input type="hidden" name="products_add" id="products_add" value="@if($article->products){{ $article->products }}@endif">
             </div>
         </div>
     </div>
@@ -232,6 +232,7 @@
                 src: async (query) => {
                     try {
                         // Fetch Data from external Source
+                        const product_ids = $('#products_add').val();
                         const response = await fetch(`{{ route('admin.article.search') }}`,{
                             method: "POST",
                             headers: {
@@ -239,6 +240,7 @@
                             },
                             body: JSON.stringify({
                                 keyword: query,
+                                product_ids: product_ids,
                                 _token: $('meta[name="csrf-token"]').attr("content")
                             })
                         });
@@ -316,15 +318,23 @@
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'Xóa';
             deleteButton.classList.add('btn', 'btn-danger');
+            deleteButton.setAttribute("data-id",selectedData['id']);
             // Add a click event listener to the delete button
-            deleteButton.addEventListener('click', function () {
+            deleteButton.addEventListener('click', function (q) {
+                var id_product = $(this).data('id');
+                var product_ids = document.getElementById('products_add').value;
+                var myArray = product_ids.split(',');
+
+                var newArray = myArray.filter(function(item) {
+                    return item != id_product;
+                });
+                document.getElementById('products_add').value = newArray;
                 // Remove the entire row when the delete button is clicked
                 newRow.remove();
             });
 
             // Append the delete button to the deleteButtonCell
             deleteButtonCell.appendChild(deleteButton);
-
 
             // Append the cells to the row
             newRow.appendChild(skuCell);
@@ -341,8 +351,13 @@
 
             var productsAddInput = document.getElementById('products_add');
             var currentProductIds = productsAddInput.value;
-            var currentProductIdsArray = currentProductIds.split(',');
-            currentProductIdsArray.push(selectedData['id']);
+            if(currentProductIds){
+                var currentProductIdsArray = currentProductIds.split(',');
+                currentProductIdsArray.push(selectedData['id']);
+            }else{
+                var currentProductIdsArray = [selectedData['id']];
+            }
+
             productsAddInput.value = currentProductIdsArray.join(',');
         });
 
@@ -362,12 +377,19 @@
             return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
         }
 
-        function deleteCell(tableId, rowIndex) {
+        function deleteCell(tableId, rowIndex, id_product) {
             var table = document.getElementById(tableId);
 
             if (table) {
                 table.deleteRow(rowIndex);
             }
+            var product_ids = document.getElementById('products_add').value;
+            var myArray = product_ids.split(',');
+
+            var newArray = myArray.filter(function(item) {
+                return item != id_product;
+            });
+            document.getElementById('products_add').value = newArray;
         }
     </script>
 @endsection

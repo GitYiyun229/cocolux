@@ -79,9 +79,6 @@ class ArticleCategoryDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('title')->title(trans('form.article_category.title')),
-            Column::make('image')->title(trans('form.article_category.image'))->render([
-                'renderImage(data)'
-            ]),
             Column::make('active')->title(trans('form.article.active'))->render([
                 'renderLabelActive(data)'
             ]),

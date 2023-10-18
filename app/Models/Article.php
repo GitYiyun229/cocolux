@@ -19,7 +19,7 @@ class Article extends Model
         'image_change_url'
     ];
 
-//    protected $guarded = ['id'];
+    protected $guarded = ['id'];
 
     public function category()
     {

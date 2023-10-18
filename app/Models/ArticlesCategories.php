@@ -11,9 +11,6 @@ class ArticlesCategories extends Model
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 
-    const TYPE_PROMOTION = 1;
-    const TYPE_ARTICLE = 0;
-
     protected $guarded = ['id', '_lft', '_rgt'];
 
     public function articles()

@@ -75,8 +75,7 @@ class ArticleController extends Controller
                 $image_root = $data['image'];
                 $data['image'] = urldecode($image_root);
             }
-            $category = $this->articleCategoryRepository->getOneById($data['category_id']);
-            $data['type'] = $category->type;
+            $data['products'] = $data['products_add'];
             $model = $this->articleRepository->create($data);
             if (!empty($data['image'])){
                 $this->articleRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'article');
@@ -120,7 +119,9 @@ class ArticleController extends Controller
         $products = array();
         if ($article->products){
             if ($article->updated_at < '2023-10-17'){
-                $products = Product::select('id','title','slug','sku','image','price')->whereIn('id',explode(',',$article->products))->get();
+                $products = ProductOptions::select('id','title','slug','sku','images','price')->whereIn('parent_id',explode(',',$article->products))->get();
+                $article_products = ProductOptions::select('id')->whereIn('parent_id',explode(',',$article->products))->pluck('id')->toArray();
+                $article->products = implode(',',$article_products);
             }else{
                 $products = ProductOptions::select('id','title','slug','sku','images','price')->whereIn('id',explode(',',$article->products))->get();
             }
@@ -149,8 +150,7 @@ class ArticleController extends Controller
             if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             }
-            $category = $this->articleCategoryRepository->getOneById($data['category_id']);
-            $data['type'] = $category->type;
+            $data['products'] = $data['products_add'];
             $article->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_article_success'));
@@ -196,14 +196,18 @@ class ArticleController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->input('keyword');
+        $product_ids = $request->input('product_ids');
         $products = ProductOptions::with(['product' => function ($query) {
             $query->select('id', 'is_new','sku','brand','slug','attribute_path');
-        }])->whereHas('product', function ($query) use ($keyword) {
+        }])->whereHas('product', function ($query) use ($keyword,$product_ids) {
             $query->where('product_options.active', 1);
             if ($keyword){
                 $query->where('product_options.title', 'LIKE', '%'.$keyword.'%')
                 ->Orwhere('product_options.slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
                 ->Orwhere('product_options.sku', 'LIKE', '%'.$keyword.'%');
+            }
+            if ($product_ids){
+                $query->whereNotIn('id', explode(',',$product_ids));
             }
         })
             ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.slug','product_options.images')
