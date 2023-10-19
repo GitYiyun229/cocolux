@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Slide;
+namespace App\Http\Requests\Banner;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSlide extends FormRequest
+class CreateBanner extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,12 @@ class UpdateSlide extends FormRequest
     {
         return [
             'title' => 'required',
-            'active' => 'required',
-            'ordering' => 'nullable',
-            'mobile_url' => 'nullable',
-            'image_url' => 'nullable',
+            'image_url' => 'required',
+            'mobile_url' => 'required',
+            'type' => 'required',
             'url' => 'nullable',
             'content' => 'nullable',
+            'active' => 'required',
         ];
     }
 }

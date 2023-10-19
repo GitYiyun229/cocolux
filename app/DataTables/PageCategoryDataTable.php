@@ -2,14 +2,15 @@
 
 namespace App\DataTables;
 
-use App\Models\Order;
+use App\Models\PageCategories;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class OrderDataTable extends DataTable
+class PageCategoryDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,16 +22,27 @@ class OrderDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'orderdatatable.action');
+            ->editColumn('created_at', function ($q) {
+                return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
+            })
+            ->editColumn('updated_at', function ($q) {
+                return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
+            })
+            ->addColumn('action', function ($q){
+                $urlEdit = route('admin.page-category.edit', $q->id);
+                $urlDelete = route('admin.page-category.destroy', $q->id);
+                $lowerModelName = strtolower(class_basename(new PageCategories()));
+                return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+            });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Order $model
+     * @param \App\Models\PageCategory $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Order $model)
+    public function query(PageCategories $model)
     {
         return $model->newQuery();
     }
@@ -43,11 +55,11 @@ class OrderDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('order-table')
+                    ->setTableId('page-category-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0)
                     ->buttons(
                         Button::make('create'),
                         Button::make('export'),
@@ -67,11 +79,6 @@ class OrderDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('name'),
-            Column::make('tel'),
-            Column::make('city_name'),
-            Column::make('district_name'),
-            Column::make('address'),
-            Column::make('note'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')
@@ -89,6 +96,6 @@ class OrderDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Order_' . date('YmdHis');
+        return 'PageCategory_' . date('YmdHis');
     }
 }

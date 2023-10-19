@@ -4,29 +4,12 @@
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
-                    <label>@lang('form.store.title')</label> <span class="text-danger">*</span>
-                    <input type="text" class="form-control" name="title" value="{{ isset($store) ? $store->title : old('title') }}" required>
-                    @if ($errors->has('title'))
+                    <label>@lang('form.store.name')</label> <span class="text-danger">*</span>
+                    <input type="text" class="form-control" name="name" value="{{ isset($store) ? $store->name : old('name') }}" required>
+                    @if ($errors->has('name'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('title') }}</strong>
+                    <strong>{{ $errors->first('name') }}</strong>
                 </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <!-- text input -->
-                <div class="form-group">
-                    <label>@lang('form.store.city_id')</label>
-                    <select name="city_id" id="city_id" class="form-control">
-                        @forelse($cities as $city)
-                            <option value="{{ $city->id }}" {{ isset($store) ? $store->city_id == $city->id ? 'selected': '' : old('city_id') }}>{{ $city->name }}</option>
-                        @empty
-                        @endforelse
-                    </select>
-                    @if ($errors->has('city_id'))
-                        <span class="help-block text-danger">
-                            <strong>{{ $errors->first('city_id') }}</strong>
-                        </span>
                     @endif
                 </div>
             </div>
@@ -57,23 +40,11 @@
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
-                    <label>@lang('form.store.latitude')</label>
-                    <input type="text" class="form-control" name="latitude" value="{{ isset($store) ? $store->latitude : old('latitude') }}">
-                    @if ($errors->has('latitude'))
+                    <label>@lang('form.store.email')</label>
+                    <input type="text" class="form-control" name="email" value="{{ isset($store) ? $store->email : old('email') }}">
+                    @if ($errors->has('email'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('latitude') }}</strong>
-                </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <!-- text input -->
-                <div class="form-group">
-                    <label>@lang('form.store.longitude')</label>
-                    <input type="text" class="form-control" name="longitude" value="{{ isset($store) ? $store->longitude : old('longitude') }}">
-                    @if ($errors->has('longitude'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('longitude') }}</strong>
+                    <strong>{{ $errors->first('email') }}</strong>
                 </span>
                     @endif
                 </div>
@@ -97,6 +68,19 @@
                     <strong>{{ $errors->first('active') }}</strong>
                 </span>
                     @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>@lang('form.slider.image')</label>
+                    <div class="input-group">
+                        @include('admin.components.buttons.image',['src' => isset($store->image) ? $store->image : old('image'),'name' => 'image'])
+                        @if ($errors->has('image'))
+                            <span class="help-block text-danger">
+                        <strong>{{ $errors->first('image') }}</strong>
+                    </span>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
