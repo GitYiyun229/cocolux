@@ -78,6 +78,16 @@ class PermissionSeeder extends Seeder
             ['name' => 'edit_article', 'display_name' => 'Sửa tin tức', 'guard_name' => 'web'],
             ['name' => 'delete_article', 'display_name' => 'Xóa tin tức', 'guard_name' => 'web'],
 
+            ['name' => 'view_attribute', 'display_name' => 'Xem danh thuộc tính group', 'guard_name' => 'web'],
+            ['name' => 'create_attribute', 'display_name' => 'Thêm mới danh thuộc tính group', 'guard_name' => 'web'],
+            ['name' => 'edit_attribute', 'display_name' => 'Sửa danh thuộc tính group', 'guard_name' => 'web'],
+            ['name' => 'delete_attribute', 'display_name' => 'Xóa danh thuộc tính group', 'guard_name' => 'web'],
+
+            ['name' => 'view_attribute_value', 'display_name' => 'Xem danh sách thuộc tính', 'guard_name' => 'web'],
+            ['name' => 'create_attribute_value', 'display_name' => 'Thêm mới thuộc tính', 'guard_name' => 'web'],
+            ['name' => 'edit_attribute_value', 'display_name' => 'Sửa thuộc tính', 'guard_name' => 'web'],
+            ['name' => 'delete_attribute_value', 'display_name' => 'Xóa thuộc tính', 'guard_name' => 'web'],
+
             ['name' => 'view_discount', 'display_name' => 'Xem danh sách ưu đãi', 'guard_name' => 'web'],
             ['name' => 'create_discount', 'display_name' => 'Thêm mới ưu đãi', 'guard_name' => 'web'],
             ['name' => 'edit_discount', 'display_name' => 'Sửa ưu đãi', 'guard_name' => 'web'],

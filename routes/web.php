@@ -171,6 +171,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::post('/search', 'ArticleController@search')->name('search')->middleware('permission:edit_article');
     });
 
+    Route::group(['prefix' => 'attribute', 'as' => 'attribute.', 'middleware' => ['permission:view_attribute']], function () {
+        Route::get('', 'AttributeController@index')->name('index');
+        Route::get('/sort', 'AttributeController@sort')->name('sort')->middleware('permission:create_attribute');
+        Route::get('/create', 'AttributeController@create')->name('create')->middleware('permission:create_attribute');
+        Route::post('/store', 'AttributeController@store')->name('store')->middleware('permission:create_attribute');
+        Route::get('/edit/{id}', 'AttributeController@edit')->name('edit')->middleware('permission:edit_attribute');
+        Route::post('/update/{id}', 'AttributeController@update')->name('update')->middleware('permission:edit_attribute');
+        Route::post('/destroy/{id}', 'AttributeController@destroy')->name('destroy')->middleware('permission:delete_attribute');
+    });
+
+    Route::group(['prefix' => 'attribute-value', 'as' => 'attribute-value.', 'middleware' => ['permission:view_attribute_value']], function () {
+        Route::get('', 'AttributeValueController@index')->name('index');
+        Route::get('/create', 'AttributeValueController@create')->name('create')->middleware('permission:create_attribute_value');
+        Route::post('/store', 'AttributeValueController@store')->name('store')->middleware('permission:create_attribute_value');
+        Route::get('/edit/{id}', 'AttributeValueController@edit')->name('edit')->middleware('permission:edit_attribute_value');
+        Route::post('/update/{id}', 'AttributeValueController@update')->name('update')->middleware('permission:edit_attribute_value');
+        Route::post('/destroy/{id}', 'AttributeValueController@destroy')->name('destroy')->middleware('permission:delete_attribute_value');
+    });
+
     Route::group(['prefix' => 'product-category', 'as' => 'product-category.', 'middleware' => ['permission:view_product_categories']], function () {
         Route::get('', 'ProductsCategoriesController@index')->name('index');
         Route::get('/create', 'ProductsCategoriesController@create')->name('create')->middleware('permission:create_product_categories');

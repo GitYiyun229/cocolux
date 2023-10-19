@@ -91,6 +91,35 @@
                         </ul>
                     </li>
                 @endcan
+                @can('view_attribute')
+                    <li class="nav-item @if (request()->is('admin/attribute*')) menu-open @endif">
+                        <a href="#" class="nav-link @if (request()->is('admin/attribute*')) active @endif">
+                            <i class="fas fa-newspaper"></i>
+                            <p>
+                                @lang('form.attribute.')
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.attribute.index') }}" class="nav-link @if (request()->is('admin/attribute*')) active @endif">
+                                    <i class="nav-icon fas fa-layer-group"></i>
+                                    <p>
+                                        @lang('form.attribute.')
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.attribute-value.index') }}" class="nav-link @if (request()->is('admin/attribute-value*')) active @endif">
+                                    <i class="nav-icon fas fa-newspaper"></i>
+                                    <p>
+                                        @lang('form.attribute-value.')
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endcan
                 @can('view_product')
                     <li class="nav-item @if (request()->is('admin/product*')) menu-open @endif">
                         <a href="#" class="nav-link @if (request()->is('admin/product*')) active @endif">
