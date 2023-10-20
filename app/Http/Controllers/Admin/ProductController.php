@@ -113,7 +113,8 @@ class ProductController extends Controller
     {
         $categories = $this->productCategoryResponstory->getAll();
         $product = $this->productResponstory->getOneById($id);
-        return view('admin.product.update', compact('product','categories'));
+        $attribute_value = json_decode($product->attributes);
+        return view('admin.product.update', compact('product','categories','attribute_value'));
     }
 
     /**

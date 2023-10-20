@@ -51,8 +51,6 @@ class PermissionSeeder extends Seeder
             ['name' => 'edit_role', 'display_name' => 'Sửa thông tin phân quyền', 'guard_name' => 'web'],
             ['name' => 'delete_role', 'display_name' => 'Xóa phân quyền', 'guard_name' => 'web'],
 
-            ['name' => 'view_contact', 'display_name' => 'Xem danh sách liên hệ', 'guard_name' => 'web'],
-
             ['name' => 'view_menu_categories', 'display_name' => 'Xem danh sách nhóm menu', 'guard_name' => 'web'],
             ['name' => 'create_menu_categories', 'display_name' => 'Thêm mới nhóm menu', 'guard_name' => 'web'],
             ['name' => 'edit_menu_categories', 'display_name' => 'Sửa nhóm menu', 'guard_name' => 'web'],
@@ -78,10 +76,20 @@ class PermissionSeeder extends Seeder
             ['name' => 'edit_article', 'display_name' => 'Sửa tin tức', 'guard_name' => 'web'],
             ['name' => 'delete_article', 'display_name' => 'Xóa tin tức', 'guard_name' => 'web'],
 
-            ['name' => 'view_discount', 'display_name' => 'Xem danh sách ưu đãi', 'guard_name' => 'web'],
-            ['name' => 'create_discount', 'display_name' => 'Thêm mới ưu đãi', 'guard_name' => 'web'],
-            ['name' => 'edit_discount', 'display_name' => 'Sửa ưu đãi', 'guard_name' => 'web'],
-            ['name' => 'delete_discount', 'display_name' => 'Xóa ưu đãi', 'guard_name' => 'web'],
+            ['name' => 'view_attribute', 'display_name' => 'Xem danh thuộc tính group', 'guard_name' => 'web'],
+            ['name' => 'create_attribute', 'display_name' => 'Thêm mới danh thuộc tính group', 'guard_name' => 'web'],
+            ['name' => 'edit_attribute', 'display_name' => 'Sửa danh thuộc tính group', 'guard_name' => 'web'],
+            ['name' => 'delete_attribute', 'display_name' => 'Xóa danh thuộc tính group', 'guard_name' => 'web'],
+
+            ['name' => 'view_attribute_value', 'display_name' => 'Xem danh sách thuộc tính', 'guard_name' => 'web'],
+            ['name' => 'create_attribute_value', 'display_name' => 'Thêm mới thuộc tính', 'guard_name' => 'web'],
+            ['name' => 'edit_attribute_value', 'display_name' => 'Sửa thuộc tính', 'guard_name' => 'web'],
+            ['name' => 'delete_attribute_value', 'display_name' => 'Xóa thuộc tính', 'guard_name' => 'web'],
+
+            ['name' => 'view_banner', 'display_name' => 'Xem danh sách Banner', 'guard_name' => 'web'],
+            ['name' => 'create_banner', 'display_name' => 'Thêm mới Banner', 'guard_name' => 'web'],
+            ['name' => 'edit_banner', 'display_name' => 'Sửa Banner', 'guard_name' => 'web'],
+            ['name' => 'delete_banner', 'display_name' => 'Xóa Banner', 'guard_name' => 'web'],
 
             ['name' => 'view_product_categories', 'display_name' => 'Xem danh mục sản phẩm', 'guard_name' => 'web'],
             ['name' => 'create_product_categories', 'display_name' => 'Thêm mới danh mục sản phẩm', 'guard_name' => 'web'],
@@ -98,6 +106,11 @@ class PermissionSeeder extends Seeder
             ['name' => 'edit_product_orders', 'display_name' => 'Sửa đặt hàng', 'guard_name' => 'web'],
             ['name' => 'delete_product_orders', 'display_name' => 'Xóa đặt hàng', 'guard_name' => 'web'],
 
+            ['name' => 'view_page_categories', 'display_name' => 'Xem danh mục page', 'guard_name' => 'web'],
+            ['name' => 'create_page_categories', 'display_name' => 'Thêm mới danh mục page', 'guard_name' => 'web'],
+            ['name' => 'edit_page_categories', 'display_name' => 'Sửa danh mục page', 'guard_name' => 'web'],
+            ['name' => 'delete_page_categories', 'display_name' => 'Xóa danh mục page', 'guard_name' => 'web'],
+
             ['name' => 'view_page', 'display_name' => 'Xem danh sách pages', 'guard_name' => 'web'],
             ['name' => 'create_page', 'display_name' => 'Thêm mới pages', 'guard_name' => 'web'],
             ['name' => 'edit_page', 'display_name' => 'Sửa pages', 'guard_name' => 'web'],
@@ -112,6 +125,13 @@ class PermissionSeeder extends Seeder
             ['name' => 'create_store', 'display_name' => 'Thêm mới cửa hàng', 'guard_name' => 'web'],
             ['name' => 'edit_store', 'display_name' => 'Sửa cửa hàng', 'guard_name' => 'web'],
             ['name' => 'delete_store', 'display_name' => 'Xóa cửa hàng', 'guard_name' => 'web'],
+
+            ['name' => 'view_discount', 'display_name' => 'Xem danh sách ưu đãi', 'guard_name' => 'web'],
+            ['name' => 'create_discount', 'display_name' => 'Thêm mới ưu đãi', 'guard_name' => 'web'],
+            ['name' => 'edit_discount', 'display_name' => 'Sửa ưu đãi', 'guard_name' => 'web'],
+            ['name' => 'delete_discount', 'display_name' => 'Xóa ưu đãi', 'guard_name' => 'web'],
+
+            ['name' => 'view_contact', 'display_name' => 'Xem danh sách liên hệ', 'guard_name' => 'web'],
 
         ];
     }

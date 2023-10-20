@@ -66,10 +66,10 @@ class OrderDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('full_name'),
-            Column::make('gender'),
-            Column::make('email'),
-            Column::make('phone'),
+            Column::make('name'),
+            Column::make('tel'),
+            Column::make('city_name'),
+            Column::make('district_name'),
             Column::make('address'),
             Column::make('note'),
             Column::make('created_at'),
