@@ -39,7 +39,7 @@ class ProductController extends Controller
     public function cat(Request $request, $slug,$id){
         $cat = $this->productCategoryRepository->getOneById($id);
         $cats = ProductsCategories::where(['active' => 1,'parent_id' => $id])->orWhere(['id' => $id])->select('id','title','slug','parent_id')->get();
-        $attributes = Attribute::where(['active' => 1,'type' => 'select'])->select('id','name','code')->with(['attributeValue'=>function($query){
+        $attributes = Attribute::where(['active' => 1,'type' => 'select'])->whereIn('id',  explode(',',$cat->attribute_id))->select('id','name','code')->with(['attributeValue'=>function($query){
             $query->select('id', 'name', 'attribute_id','slug');
         }])->get();
 

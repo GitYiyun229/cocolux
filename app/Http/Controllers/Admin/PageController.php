@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\PageCategories;
 use Illuminate\Http\Request;
 use App\DataTables\PageDataTable;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +43,8 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view('admin.page.create');
+        $categories = PageCategories::all();
+        return view('admin.page.create',compact('categories'));
     }
 
     /**
@@ -61,10 +63,6 @@ class PageController extends Controller
             if (!empty($data['image'])){
                 $image_root = $data['image'];
                 $data['image'] = urldecode($image_root);
-            }
-            if (!empty($data['image_title'])){
-                $image_title = $data['image_title'];
-                $data['image_title'] = urldecode($image_title);
             }
             $model = $this->pageRepository->create($data);
             if (!empty($data['image'])){
@@ -105,7 +103,8 @@ class PageController extends Controller
     public function edit($id)
     {
         $page = $this->pageRepository->getOneById($id);
-        return view('admin.page.update', compact('page'));
+        $categories = PageCategories::all();
+        return view('admin.page.update', compact('page','categories'));
     }
 
     /**
@@ -125,9 +124,6 @@ class PageController extends Controller
             if (!empty($data['image']) && $data_root->image != $data['image']){
                 $this->pageRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'page');
                 $data['image'] = $this->pageRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'page');
-            }
-            if (!empty($data['image_title']) && $data_root->image_title != $data['image_title']){
-                $data['image_title'] = rawurldecode($data['image_title']);
             }
             if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
