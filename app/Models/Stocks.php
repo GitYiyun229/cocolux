@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Stocks extends Model
 {
-//    use HasFactory;
-protected $guarded = ['id'];
+    //    use HasFactory;
+    protected $guarded = ['id'];
 }

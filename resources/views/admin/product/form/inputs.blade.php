@@ -149,17 +149,24 @@
                     </div>
                 </div>
             </div>
-            @if(!empty($attribute_value))
+            @if(!empty($attribute))
                 <div class="col-sm-12">
                     <div class="row">
-                        @forelse($attribute_value as $item)
-                            @if($item->value->type == 'select')
+                        @forelse($attribute as $item)
+                            @if($item->type == 'select')
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>{{ $item->name }}</label>
-                                        @if ($errors->has(\Str::slug($item->name, '-')))
+                                        <select name="{{ $item->code }}" id="{{ $item->code }}" class="form-control">
+                                            <option value="" selected>--{{ $item->name }}--</option>
+                                            @forelse($item->attributeValue as $key => $val)
+                                                <option value="{{ $val->id }}" {{ isset($item->content) && $item->content['id'] == $val->id ? 'selected' : old($item->code) == $val->id ? 'selected' : '' }}>{{ $val->name }}</option>
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                        @if ($errors->has($item->code))
                                             <span class="help-block text-danger">
-                                         <strong>{{ $errors->first(\Str::slug($item->name, '-')) }}</strong>
+                                         <strong>{{ $errors->first($item->code) }}</strong>
                                         </span>
                                         @endif
                                     </div>
@@ -170,6 +177,37 @@
                     </div>
                 </div>
             @endif
+            <div class="div-list-products">
+                <table class="table table-bordered mt-2" id="list_products">
+                    <thead class="thead-light">
+                    <tr>
+                        <th style="width: 280px;">Tên sản phẩm</th>
+                        <th style="width: 100px;">SKU</th>
+                        <th style="width: 100px;">Giá vốn</th>
+                        <th style="width: 100px;">Giá bán</th>
+                        <th style="width: 50px;">#</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    @if(!empty($product_option))
+                        @forelse($product_option as $k => $item)
+                            <tr>
+                                <td>{{ $item->title }}</td>
+                                <td>{{ $item->sku }}</td>
+                                <td>{{ format_money($item->original_price) }}</td>
+                                <td>
+                                    {{ format_money($item->price) }}
+                                </td>
+                                <td>
+                                    <button type="button" onclick="editProductOption({{ $item->id }})" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                        @empty
+                        @endforelse
+                    @endif
+                    </tbody>
+                </table>
+            </div>
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
@@ -229,20 +267,20 @@
                     @endif
                 </div>
             </div>
-            @if(!empty($attribute_value))
-            @forelse($attribute_value as $item)
-                    @if($item->value->type == 'ckeditor')
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>{{ $item->name }}</label>
-                                <textarea id="{{ \Str::slug($item->name, '-') }}" name="{{ \Str::slug($item->name, '-') }}" class="form-control" rows="10" >{{ isset($item->value->name) ? $item->value->name : old(\Str::slug($item->name, '-')) }}</textarea>
-                                @if ($errors->has(\Str::slug($item->name, '-')))
-                                    <span class="help-block text-danger">
-                                     <strong>{{ $errors->first(\Str::slug($item->name, '-')) }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+            @if(!empty($attribute))
+            @forelse($attribute as $item)
+                @if($item->type == 'ckeditor')
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>{{ $item->name }}</label>
+                            <textarea id="{{ $item->code }}" name="{{ $item->code }}" class="form-control" rows="10" >{{ isset($item->content) ? $item->content['content'] : old($item->code) }}</textarea>
+                            @if ($errors->has($item->code))
+                                <span class="help-block text-danger">
+                                 <strong>{{ $errors->first($item->code) }}</strong>
+                                </span>
+                            @endif
                         </div>
+                    </div>
                 @endif
             @empty
             @endforelse
@@ -286,19 +324,45 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="form-product-option"></div>
+        </div>
+    </div>
+</div>
+
 @section('script')
     @parent
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
     <script>
         CKEDITOR.replace( 'description' );
-        @if(!empty($attribute_value))
-        @forelse($attribute_value as $item)
-        @if($item->value->type == 'ckeditor')
-            CKEDITOR.replace("{{ \Str::slug($item->name, '-') }}");
+        @if(!empty($attribute))
+        @forelse($attribute as $item)
+        @if($item->type == 'ckeditor')
+            CKEDITOR.replace("{{ $item->code }}");
         @endif
         @empty
         @endforelse
         @endif
+    </script>
+    <script>
+        function editProductOption(id_product) {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.product-option.edit') }}",
+                data: {id: id_product, _token: $('meta[name="csrf-token"]').attr("content")},
+                success: function(data) {
+                    $("#form-product-option").html(data);
+                }
+            });
+        }
     </script>
 @endsection

@@ -231,6 +231,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::post('/destroy/{id}', 'ProductController@destroy')->name('destroy')->middleware('permission:delete_product');
     });
 
+    Route::group(['prefix' => 'product-option', 'as' => 'product-option.', 'middleware' => ['permission:view_product']], function () {
+        Route::get('', 'ProductOptionController@index')->name('index');
+        Route::get('/create', 'ProductOptionController@create')->name('create')->middleware('permission:create_product');
+        Route::post('/store', 'ProductOptionController@store')->name('store')->middleware('permission:create_product');
+        Route::post('/edit', 'ProductOptionController@edit')->name('edit')->middleware('permission:edit_product');
+        Route::post('/update/{id}', 'ProductOptionController@update')->name('update')->middleware('permission:edit_product');
+        Route::post('/destroy/{id}', 'ProductOptionController@destroy')->name('destroy')->middleware('permission:delete_product');
+    });
+
     Route::group(['prefix' => 'order-product', 'as' => 'order-product.', 'middleware' => ['permission:view_product_orders']], function () {
         Route::get('', 'OrderController@index')->name('index');
         Route::get('/create', 'OrderController@create')->name('create')->middleware('permission:create_product_orders');
