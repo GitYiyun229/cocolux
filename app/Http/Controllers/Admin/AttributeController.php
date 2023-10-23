@@ -133,4 +133,18 @@ class AttributeController extends Controller
             ];
         }
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $attribute = Attribute::findOrFail($id);
+        $attribute->update(['active' => !$attribute->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_attribute_success')
+        ];
+    }
 }

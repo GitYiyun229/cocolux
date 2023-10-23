@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
 use App\Models\Product;
 use App\Models\ProductOptions;
 use Illuminate\Http\Request;
@@ -220,5 +221,19 @@ class ArticleController extends Controller
         $result['error'] = false;
         $result['data'] = $products;
         return response()->json($result);
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $article = Article::findOrFail($id);
+        $article->update(['active' => !$article->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_article_success')
+        ];
     }
 }

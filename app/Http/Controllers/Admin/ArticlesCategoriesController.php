@@ -175,4 +175,18 @@ class ArticlesCategoriesController extends Controller
         $this->articleCategoryRepository->updateTreeRebuild('id', $data);
         return response()->json($data);
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $article_category = ArticlesCategories::findOrFail($id);
+        $article_category->update(['active' => !$article_category->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_article_category_success')
+        ];
+    }
 }

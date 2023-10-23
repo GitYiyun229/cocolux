@@ -85,4 +85,17 @@ class PageCategoriesController extends Controller
     {
         //
     }
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $page_category = PageCategories::findOrFail($id);
+        $page_category->update(['active' => !$page_category->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_page_category_success')
+        ];
+    }
 }

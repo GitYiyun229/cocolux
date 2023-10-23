@@ -22,6 +22,15 @@ class PageCategoryDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('active', function ($q) {
+                $url = route('admin.page-category.changeActive', $q->id);
+                $status = $q->active == PageCategories::STATUS_ACTIVE ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'banner',
+                    'status' => $status,
+                ])->render();
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -33,7 +42,7 @@ class PageCategoryDataTable extends DataTable
                 $urlDelete = route('admin.page-category.destroy', $q->id);
                 $lowerModelName = strtolower(class_basename(new PageCategories()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-            });
+            })->rawColumns(['active','action']);
     }
 
     /**
@@ -79,6 +88,7 @@ class PageCategoryDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('name'),
+            Column::make('active')->title(trans('form.page_category.active')),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')
