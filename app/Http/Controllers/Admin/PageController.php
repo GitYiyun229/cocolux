@@ -168,4 +168,18 @@ class PageController extends Controller
             'message' => trans('message.delete_page_success')
         ];
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $page = Page::findOrFail($id);
+        $page->update(['active' => !$page->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_page_success')
+        ];
+    }
 }

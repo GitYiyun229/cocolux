@@ -22,6 +22,15 @@ class ArticleCategoryDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('active', function ($q) {
+                $url = route('admin.article-category.changeActive', $q->id);
+                $status = $q->active == ArticlesCategories::STATUS_ACTIVE ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'banner',
+                    'status' => $status,
+                ])->render();
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -33,7 +42,7 @@ class ArticleCategoryDataTable extends DataTable
                 $urlDelete = route('admin.article-category.destroy', $q->id);
                 $lowerModelName = strtolower(class_basename(new ArticlesCategories()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-            });
+            })->rawColumns(['active','action']);
     }
 
     /**
@@ -79,9 +88,7 @@ class ArticleCategoryDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('title')->title(trans('form.article_category.title')),
-            Column::make('active')->title(trans('form.article.active'))->render([
-                'renderLabelActive(data)'
-            ]),
+            Column::make('active')->title(trans('form.article.active')),
             Column::make('created_at')->title(trans('form.created_at')),
             Column::make('updated_at')->title(trans('form.updated_at')),
             Column::computed('action')

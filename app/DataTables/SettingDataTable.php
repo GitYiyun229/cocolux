@@ -22,6 +22,15 @@ class SettingDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('active', function ($q) {
+                $url = route('admin.setting.changeActive', $q->id);
+                $status = $q->active == Setting::STATUS_ACTIVE ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'banner',
+                    'status' => $status,
+                ])->render();
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -40,7 +49,7 @@ class SettingDataTable extends DataTable
                 $lowerModelName = strtolower(class_basename(new Setting()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
             })
-            ->rawColumns(['display', 'action']);
+            ->rawColumns(['display', 'action','active']);
     }
 
     /**
@@ -87,7 +96,7 @@ class SettingDataTable extends DataTable
             Column::make('id'),
             Column::make('name'),
             Column::make('key'),
-//            Column::make('value'),
+            Column::make('active'),
             Column::make('description'),
             Column::make('display'),
             Column::make('created_at'),

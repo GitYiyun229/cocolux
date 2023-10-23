@@ -54,7 +54,7 @@
                 <div class="form-group">
                     <label>@lang('form.attribute-value.category')</label> <span class="text-danger">*</span>
                     <select name="attribute_id" id="attribute_id" class="form-control" required>
-                        <option value="" hidden>@lang('form.attribute_value.attribute_id')</option>
+                        <option value="" selected>--@lang('form.attribute-value.category')--</option>
                         @forelse($categories as $key => $category)
                             <option value="{{ $category['id'] }}" {{ isset($attribute_value->attribute_id) && $attribute_value->attribute_id == $category['id'] ? 'selected' : old('attribute_id') == $category['id'] ? 'selected' : '' }}>{{ $category['name'] }}</option>
                         @empty
