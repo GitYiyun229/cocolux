@@ -54,16 +54,18 @@ class ProductOptionController extends Controller
             }
             $total_stock = $request->input('stock');
             $parent_id = $request->input('parent_id');
-
+            $is_default = $request->input('is_default');
             $data['sku'] = $request->input('sku');
             $data['barcode'] = $request->input('barcode');
             $data['title'] = $request->input('name');
             $data['price'] = $request->input('price');
             $data['normal_price'] = $request->input('normal_price');
-//            $data['stock'] = $request->input('stock');
             $data['active'] = $request->input('active');
-            $data['is_default'] = $request->input('is_default');
+            $data['is_default'] = $is_default;
             $data['parent_id'] = $parent_id;
+            if ($is_default){
+                ProductOptions::where('parent_id', $parent_id)->update(['is_default' => 0]);
+            }
             $product_option = ProductOptions::create($data);
 
             foreach ($total_stock as $item){
@@ -135,6 +137,7 @@ class ProductOptionController extends Controller
                 if (!empty($result)) {
                     $values = [];
                     foreach ($result as $value) {
+                        $values['id_stock'] = $value['id'];
                         $values['total_quantity'] = $value['total_quantity'];
                         $values['total_order_quantity'] = $value['total_order_quantity'];
                     }
@@ -166,21 +169,36 @@ class ProductOptionController extends Controller
             }
             $total_stock = $request->input('stock');
             $parent_id = $request->input('parent_id');
+            $is_default = $request->input('is_default');
             $data['sku'] = $request->input('sku');
             $data['barcode'] = $request->input('barcode');
             $data['title'] = $request->input('name');
             $data['price'] = $request->input('price');
             $data['normal_price'] = $request->input('normal_price');
             $data['active'] = $request->input('active');
-            $data['is_default'] = $request->input('is_default');
+            $data['is_default'] = $is_default;
             $data['parent_id'] = $parent_id;
+            if ($is_default){
+                ProductOptions::where('parent_id', $parent_id)->where('id','!=',$id)->update(['is_default' => 0]);
+            }
             foreach ($total_stock as $item){
                 $id_store = explode(':',$item);
-                if ($id_store[1]){
-                    $stock = Stocks::where(['store_id' => $id_store[0],'product_id' => $parent_id, 'product_option_id' => $id])->first();
+                if ($id_store[2]){
+                    $stock = Stocks::findOrFail($id_store[2]);
                     if ($stock) {
                         $data['total_quantity'] = $id_store[1];
                         $stock->update($data);
+                    }
+                }else{
+                    if ($id_store[1]){
+                        $store = Store::findOrFail($id_store[0]);
+                        $data['store_id'] = $id_store[0];
+                        $data['store_name'] = $store->name;
+                        $data['product_id'] = $parent_id;
+                        $data['product_option_id'] = $id;
+                        $data['total_quantity'] = $id_store[1];
+                        $data['total_order_quantity'] = 0;
+                        Stocks::create($data);
                     }
                 }
             }
@@ -210,8 +228,23 @@ class ProductOptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->input('id');
+        $data = ProductOptions::findOrFail($id);
+        if ($data){
+            ProductOptions::destroy($id);
+            Stocks::where('product_option_id', $id)->delete();
+            return [
+                'status' => true,
+                'message' => trans('message.delete_product_option_success')
+            ];
+        }else{
+            return [
+                'status' => false,
+                'message' => trans('message.delete_product_option_error')
+            ];
+        }
+
     }
 }
