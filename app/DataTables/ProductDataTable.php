@@ -27,7 +27,34 @@ class ProductDataTable extends DataTable
                 $status = $q->active == Product::STATUS_ACTIVE ? 'checked' : null;
                 return view('admin.components.buttons.change_status', [
                     'url' => $url,
-                    'lowerModelName' => 'banner',
+                    'lowerModelName' => 'product',
+                    'status' => $status,
+                ])->render();
+            })
+            ->editColumn('is_home', function ($q) {
+                $url = route('admin.product.changeIsHome', $q->id);
+                $status = $q->is_home == Product::IS_HOME ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'product',
+                    'status' => $status,
+                ])->render();
+            })
+            ->editColumn('is_new', function ($q) {
+                $url = route('admin.product.changeIsNew', $q->id);
+                $status = $q->is_new == Product::IS_NEW ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'product',
+                    'status' => $status,
+                ])->render();
+            })
+            ->editColumn('is_hot', function ($q) {
+                $url = route('admin.product.changeIsHot', $q->id);
+                $status = $q->is_hot == Product::IS_HOT ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'product',
                     'status' => $status,
                 ])->render();
             })
@@ -42,7 +69,7 @@ class ProductDataTable extends DataTable
                 $urlDelete = route('admin.product.destroy', $q->id);
                 $lowerModelName = strtolower(class_basename(new Product()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-            })->rawColumns(['active','action']);
+            })->rawColumns(['active','action','is_home','is_hot','is_new']);
     }
 
     /**
@@ -88,7 +115,13 @@ class ProductDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('title'),
+            Column::make('image')->title(trans('form.product.image'))->render([
+                'renderImage(data)'
+            ]),
             Column::make('active'),
+            Column::make('is_home'),
+            Column::make('is_hot'),
+            Column::make('is_new'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

@@ -9,6 +9,15 @@ class ProductOptions extends Model
 {
 //    use HasFactory;
 
+
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+
+    const IS_DEFAULT = 1;
+    const IS_NOT_DEFAULT = 0;
+
+    protected $guarded = ['id'];
+
     protected $appends = [
         'is_home',
         'is_hot',

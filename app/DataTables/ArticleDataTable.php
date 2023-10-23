@@ -27,7 +27,16 @@ class ArticleDataTable extends DataTable
                 $status = $q->active == Article::STATUS_ACTIVE ? 'checked' : null;
                 return view('admin.components.buttons.change_status', [
                     'url' => $url,
-                    'lowerModelName' => 'banner',
+                    'lowerModelName' => 'article',
+                    'status' => $status,
+                ])->render();
+            })
+            ->editColumn('is_home', function ($q) {
+                $url = route('admin.article.changeIsHome', $q->id);
+                $status = $q->is_home == Article::IS_HOME ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'article',
                     'status' => $status,
                 ])->render();
             })
@@ -45,7 +54,7 @@ class ArticleDataTable extends DataTable
                 $urlDelete = route('admin.article.destroy', $q->id);
                 $lowerModelName = strtolower(class_basename(new Article()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-             })->rawColumns(['active','action']);
+             })->rawColumns(['active','action','is_home']);
     }
 
     /**
@@ -96,9 +105,7 @@ class ArticleDataTable extends DataTable
             ]),
             Column::make('category_id')->title(trans('form.article_category.')),
             Column::make('active')->title(trans('form.article.active')),
-            Column::make('is_home')->title(trans('form.home_page'))->render([
-                'renderLabelShowHomeOrder(data)'
-            ]),
+            Column::make('is_home')->title(trans('form.home_page')),
             Column::make('created_at')->title(trans('form.created_at')),
             Column::make('updated_at')->title(trans('form.updated_at')),
             Column::computed('action')

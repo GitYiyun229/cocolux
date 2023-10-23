@@ -27,7 +27,7 @@ class SettingDataTable extends DataTable
                 $status = $q->active == Setting::STATUS_ACTIVE ? 'checked' : null;
                 return view('admin.components.buttons.change_status', [
                     'url' => $url,
-                    'lowerModelName' => 'banner',
+                    'lowerModelName' => 'setting',
                     'status' => $status,
                 ])->render();
             })
