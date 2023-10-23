@@ -59,6 +59,10 @@ return [
         'inactive' => 'Không hoạt động',
         'is_home' => 'Hiển thị trang chủ',
         'is_not_home' => 'Ẩn trang chủ',
+        'is_hot' => 'Hot',
+        'is_not_hot' => 'Not Hot',
+        'is_new' => 'Hàng mới',
+        'is_not_new' => 'Not new',
     ],
     'created_at' => 'Ngày tạo',
     'updated_at' => 'Ngày sửa',
@@ -125,9 +129,13 @@ return [
         'slug' => 'Link',
         'image' => 'Hình ảnh',
         'content_include' => 'Nội dung',
+        'normal_price' => 'Giá gốc',
         'price' => 'Giá',
         'is_home' => 'Hiển thị trang chủ',
+        'is_hot' => 'Sản phẩm hot',
+        'is_new' => 'Sản phẩm mới',
         'active' => 'Trạng thái',
+        'video_url' => 'Link video',
         'category' => 'Danh mục sản phẩm',
         'date' => 'Ngày',
         'create' => 'Tạo mới',
@@ -153,6 +161,7 @@ return [
         'manage' => 'Cấu hình',
         'value' => 'Giá trị'
     ],
+
     'contact' => [
         '' => 'Liên hệ',
         'title' => 'Tiêu đề',
@@ -161,6 +170,7 @@ return [
         'phone' => 'Số điện thoại',
         'content' => 'Mô tả'
     ],
+
     'order-product' => [
         '' => 'Đơn hàng',
         'full_name' => 'Họ và tên',
@@ -169,6 +179,34 @@ return [
         'phone' => 'Số điện thoại',
         'address' => 'Địa chỉ',
         'note' => 'Ghi chú',
+    ],
+
+    'attribute' => [
+        '' => 'Danh mục Thuộc tính',
+        'name' => 'Tên thuộc tính',
+        'code' => 'Mã thuộc tính',
+        'active' => 'Kích hoạt',
+        'type' => 'Loại',
+    ],
+
+    'attribute-value' => [
+        '' => 'Thuộc tính chi tiết',
+        'name' => 'Tên thuộc tính',
+        'slug' => 'Link',
+        'code' => 'Mã thuộc tính',
+        'active' => 'Kích hoạt',
+        'category' => 'Danh mục thuộc tính',
+        'update' => 'Update',
+        'create' => 'Tạo mới',
+    ],
+
+    'page_category' => [
+        '' => 'Nhóm Trang',
+        'name' => 'Tiêu đề',
+        'slug' => 'Link',
+        'active' => 'Trạng thái',
+        'update' => 'Update',
+        'create' => 'Tạo mới',
     ],
 
     'page' => [
@@ -181,34 +219,46 @@ return [
         'content' => 'Nội dung',
         'is_home' => 'Hiển thị trang chủ',
         'active' => 'Trạng thái',
+        'update' => 'Update',
+        'create' => 'Tạo mới',
     ],
-    'book_table' => [
-        '' => 'Đặt bàn',
+
+    'banner' => [
+        '' => 'Banner',
         'title' => 'Tiêu đề',
-        'full_name' => 'Họ và tên',
-        'email' => 'Email',
-        'phone' => 'Số điện thoại',
-        'store_id' => 'Cửa hàng đặt bàn',
-        'book_time' => 'Ngày đặt bàn',
-        'book_hour' => 'Giờ đặt bàn',
-        'number_customers' => 'Số lượng khách',
-        'note' => 'Ghi chú',
+        'image' => 'Hình ảnh',
+        'url' => 'Link',
+        'image_url' => 'Ảnh trên PC',
+        'mobile_url' => 'Ảnh trên mobile',
+        'content' => 'Nội dung',
+        'update' => 'Update',
+        'create' => 'Tạo mới',
     ],
     'slider' => [
         '' => 'Slide',
         'title' => 'Tiêu đề',
-        'image' => 'Hình ảnh',
-        'ordering' => 'Thứ tự',
-        'active' => 'Trạng thái'
+        'url' => 'Link',
+        'image_url' => 'Ảnh trên PC',
+        'mobile_url' => 'Ảnh trên mobile',
+        'content' => 'Nội dung',
+        'active' => 'Trạng thái',
+        'update' => 'Update',
+        'create' => 'Tạo mới',
+        'ordering' => 'Thứ tự'
     ],
     'store' => [
-        '' => 'Hệ thống cửa hàng',
-        'title' => 'Tiêu đề',
+        '' => 'Hệ thống cửa hàng/kho',
+        'name' => 'Tiêu đề',
         'phone' => 'Số điện thoại',
+        'address' => 'Địa chỉ',
+        'email' => 'Địa chỉ mail',
+        'image' => 'Hình ảnh',
         'latitude' => 'Vĩ độ',
         'longitude' => 'Kinh độ',
         'city_id' => 'Tỉnh/Thành phố',
         'active' => 'Trạng thái',
+        'update' => 'Update',
+        'create' => 'Tạo mới',
         'ordering' => 'Thứ tự'
     ],
 

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\Scopes\ProductDataTableScope;
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
 use App\Models\Product;
+use App\Models\ProductOptions;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProductInterface;
 use App\Repositories\Contracts\ProductCategoryInterface;
@@ -53,7 +55,13 @@ class ProductController extends Controller
     public function create()
     {
         $categories = $this->productCategoryResponstory->getAll();
-        return view('admin.product.create', compact('categories'));
+        $attribute = Attribute::select('id','code','name','type')->where(function($query){
+            $query->orWhere('type', 'select')
+                ->orWhere('type', 'ckeditor');
+        })->where(['active' => 1])->with(['attributeValue' => function($query){
+            $query->select('id','slug','name','attribute_id')->where('active', 1);
+        }])->get();
+        return view('admin.product.create', compact('categories','attribute'));
     }
 
     /**
@@ -113,8 +121,30 @@ class ProductController extends Controller
     {
         $categories = $this->productCategoryResponstory->getAll();
         $product = $this->productResponstory->getOneById($id);
+        $product_option = ProductOptions::where(['parent_id' => $product->id])->get();
         $attribute_value = json_decode($product->attributes);
-        return view('admin.product.update', compact('product','categories','attribute_value'));
+        $attribute = Attribute::select('id','code','name','type')->where(function($query){
+            $query->orWhere('type', 'select')
+                    ->orWhere('type', 'ckeditor');
+        })->where(['active' => 1])->with(['attributeValue' => function($query){
+            $query->select('id','slug','name','attribute_id')->where('active', 1);
+        }])->get();
+        foreach ($attribute as $item){
+            if ($attribute_value){
+                $result = array_filter($attribute_value, function ($value) use ($item) {
+                    return $value->id == $item->id;
+                });
+                if (!empty($result)) {
+                    $values = [];
+                    foreach ($result as $value) {
+                        $values['id'] = $value->value->id;
+                        $values['content'] = $value->value->name;
+                    }
+                    $item->content = $values;
+                }
+            }
+        }
+        return view('admin.product.update', compact('product','categories','attribute','product_option'));
     }
 
     /**
@@ -129,10 +159,11 @@ class ProductController extends Controller
         $data_root = $this->productResponstory->getOneById($id);
         DB::beginTransaction();
         try {
+//            $a = Request::input('product_attribute_xuat_xu');
+//            dd($a);
             $data = $req->validated();
-            $page = $this->productResponstory->getOneById($id);
             if (!empty($data['image']) && $data_root->image != $data['image']){
-                if ($data_root->image){
+                if ($data_root->image && !\Str::contains($data_root->image, 'cdn.cocolux.com')){
                     $this->productResponstory->removeImageResize($data_root->image,$this->resizeImage, $id,'product');
                 }
                 $data['image'] = $this->productResponstory->saveFileUpload($data['image'],$this->resizeImage, $id,'product');
@@ -140,7 +171,7 @@ class ProductController extends Controller
             if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             }
-            $page->update($data);
+            $data_root->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_product_success'));
             return redirect()->route('admin.product.edit', $id);

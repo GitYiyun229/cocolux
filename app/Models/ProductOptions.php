@@ -23,6 +23,11 @@ class ProductOptions extends Model
         return $this->hasOne(Product::class, 'id', 'parent_id');
     }
 
+    public function stocksAll()
+    {
+        return $this->hasMany(Stocks::class, 'product_option_id','id');
+    }
+
     public function getIsHomeAttribute()
     {
         $product = $this->product;

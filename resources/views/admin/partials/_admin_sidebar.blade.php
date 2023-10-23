@@ -55,7 +55,7 @@
                 @can('view_page')
                     <li class="nav-item @if (request()->is('admin/page*')) menu-open @endif">
                         <a href="#" class="nav-link @if (request()->is('admin/page*')) active @endif">
-                            <i class="fas fa-newspaper"></i>
+                            <i class="fas fa-pager"></i>
                             <p>
                                 @lang('form.page.')
                                 <i class="fas fa-angle-left right"></i>
@@ -113,7 +113,7 @@
                 @can('view_attribute')
                     <li class="nav-item @if (request()->is('admin/attribute*')) menu-open @endif">
                         <a href="#" class="nav-link @if (request()->is('admin/attribute*')) active @endif">
-                            <i class="fas fa-newspaper"></i>
+                            <i class="fab fa-creative-commons-by"></i>
                             <p>
                                 @lang('form.attribute.')
                                 <i class="fas fa-angle-left right"></i>
@@ -130,7 +130,7 @@
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.attribute-value.index') }}" class="nav-link @if (request()->is('admin/attribute-value*')) active @endif">
-                                    <i class="nav-icon fas fa-newspaper"></i>
+                                    <i class="nav-icon fab fa-creative-commons-by"></i>
                                     <p>
                                         @lang('form.attribute-value.')
                                     </p>
@@ -210,7 +210,7 @@
                 @can(['view_setting'])
                     <li class="nav-item">
                         <a href="{{ route('admin.setting.index') }}" class="nav-link @if (request()->is('admin/setting*')) active @endif">
-                            <i class="nav-icon fas fa-cog"></i>
+                            <i class="fas fa-cog"></i>
                             <p>
                                 @lang('form.setting.')
                             </p>
@@ -221,7 +221,7 @@
                 @can(['view_product_orders'])
                     <li class="nav-item">
                         <a href="{{ route('admin.order-product.index') }}" class="nav-link @if (request()->is('admin/order-product')) active @endif">
-                            <i class="nav-icon fas fa-scroll"></i>
+                            <i class="fas fa-scroll"></i>
                             <p>
                                 @lang('form.order-product.')
                             </p>
@@ -231,7 +231,7 @@
                 @can(['view_slider'])
                     <li class="nav-item">
                         <a href="{{ route('admin.slider.index') }}" class="nav-link @if (request()->is('admin/slider')) active @endif">
-                            <i class="nav-icon fas fa-sliders-h"></i>
+                            <i class="fas fa-sliders-h"></i>
                             <p>
                                 @lang('form.slider.')
                             </p>
@@ -241,7 +241,7 @@
                 @can(['view_store'])
                     <li class="nav-item">
                         <a href="{{ route('admin.store.index') }}" class="nav-link @if (request()->is('admin/store')) active @endif">
-                            <i class="nav-icon fas fa-store"></i>
+                            <i class="fas fa-store"></i>
                             <p>
                                 @lang('form.store.')
                             </p>
