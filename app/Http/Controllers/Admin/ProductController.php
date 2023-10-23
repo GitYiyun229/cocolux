@@ -159,10 +159,11 @@ class ProductController extends Controller
         $data_root = $this->productResponstory->getOneById($id);
         DB::beginTransaction();
         try {
+//            $a = Request::input('product_attribute_xuat_xu');
+//            dd($a);
             $data = $req->validated();
-            $page = $this->productResponstory->getOneById($id);
             if (!empty($data['image']) && $data_root->image != $data['image']){
-                if ($data_root->image){
+                if ($data_root->image && !\Str::contains($data_root->image, 'cdn.cocolux.com')){
                     $this->productResponstory->removeImageResize($data_root->image,$this->resizeImage, $id,'product');
                 }
                 $data['image'] = $this->productResponstory->saveFileUpload($data['image'],$this->resizeImage, $id,'product');
@@ -170,7 +171,7 @@ class ProductController extends Controller
             if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             }
-            $page->update($data);
+            $data_root->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_product_success'));
             return redirect()->route('admin.product.edit', $id);

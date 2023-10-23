@@ -6,7 +6,7 @@
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
-                    <label>@lang('form.attribute_value.name')</label> <span class="text-danger">*</span>
+                    <label>@lang('form.attribute-value.name')</label> <span class="text-danger">*</span>
                     <input type="text" class="form-control" name="name" value="{{ isset($attribute_value) ? $attribute_value->name : old('name') }}" required>
                     @if ($errors->has('name'))
                         <span class="help-block text-danger">
@@ -18,7 +18,7 @@
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
-                    <label>@lang('form.attribute_value.slug')</label> <span class="text-danger">(@lang('form.auto_slug'))</span>
+                    <label>@lang('form.attribute-value.slug')</label> <span class="text-danger">(@lang('form.auto_slug'))</span>
                     <input type="text" class="form-control" name="slug" value="{{ isset($attribute_value) ? $attribute_value->slug : old('slug') }}">
                     @if ($errors->has('slug'))
                         <span class="help-block text-danger">
@@ -30,7 +30,7 @@
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group clearfix">
-                    <label>@lang('form.attribute_value.active')</label> <span class="text-danger">*</span>
+                    <label>@lang('form.attribute-value.active')</label> <span class="text-danger">*</span>
                     <div class="form-group">
                         <div class="icheck-success d-inline">
                             <input class="" type="radio" id="statusRadio1" name="active" value="{{ \App\Models\AttributeValues::STATUS_ACTIVE }}" {{ (isset($attribute_value->active) && $attribute_value->active == \App\Models\AttributeValues::STATUS_ACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\AttributeValues::STATUS_ACTIVE)) ? 'checked' : '' }}  required>
@@ -52,7 +52,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label>@lang('form.attribute_value.category')</label> <span class="text-danger">*</span>
+                    <label>@lang('form.attribute-value.category')</label> <span class="text-danger">*</span>
                     <select name="attribute_id" id="attribute_id" class="form-control" required>
                         <option value="" hidden>@lang('form.attribute_value.attribute_id')</option>
                         @forelse($categories as $key => $category)

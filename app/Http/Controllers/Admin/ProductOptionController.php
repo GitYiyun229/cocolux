@@ -61,6 +61,7 @@ class ProductOptionController extends Controller
     {
         $id =  $request->input('id');
         $product_option = ProductOptions::where(['id'=>$id])->with('stocksAll')->first();
+        $images = json_decode($product_option->images);
         $stocks = !empty($product_option->stocksAll)?$product_option->stocksAll:null;
         $count_stock = 0;
         foreach ($stocks as $item){
@@ -75,14 +76,15 @@ class ProductOptionController extends Controller
                 if (!empty($result)) {
                     $values = [];
                     foreach ($result as $value) {
-                        $values['id'] = $value['id'];
-                        $values['content'] = $value['total_quantity'];
+                        $values['total_quantity'] = $value['total_quantity'];
+                        $values['total_order_quantity'] = $value['total_order_quantity'];
                     }
-                    $item->content = $values;
+                    $item->number = $values;
                 }
             }
         }
-        return view('admin.product.form.input_option', compact('product_option','stores','count_stock'));
+        $link_submit = route('admin.product-option.update',['id'=>$id]);
+        return view('admin.product.form.input_option', compact('product_option','stores','count_stock','images','link_submit'));
     }
 
     /**
@@ -92,9 +94,9 @@ class ProductOptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        dd($request->input('sku'));
     }
 
     /**

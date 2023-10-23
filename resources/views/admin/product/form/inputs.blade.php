@@ -140,7 +140,7 @@
                 <div class="form-group">
                     <label>@lang('form.product.image')</label> <span class="text-danger">*</span>
                     <div class="input-group">
-                        @include('admin.components.buttons.image',['src' => isset($product->image) ? $product->image : old('image'),'name' => 'image'])
+                        @include('admin.components.buttons.image',['src' => isset($product->image) ? replace_image($product->image) : old('image'),'name' => 'image'])
                         @if ($errors->has('image'))
                             <span class="help-block text-danger">
                                 <strong>{{ $errors->first('image') }}</strong>
@@ -352,6 +352,7 @@
         @empty
         @endforelse
         @endif
+
     </script>
     <script>
         function editProductOption(id_product) {
@@ -364,5 +365,27 @@
                 }
             });
         }
+
+        function submitFormOption(id_product) {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.product-option.update') }}",
+                data: {
+                    id: id_product,
+                    sku: $('#form-product-option #sku-product-option').val(),
+                    barcode: $('#form-product-option #barcode-product-option').val(),
+                    name: $('#form-product-option #name-product-option').val(),
+                    price: $('#form-product-option #price-product-option').val(),
+                    normal_price: $('#form-product-option #normal_price-product-option').val(),
+                    stock: $('#form-product-option #stock-product-option').val(),
+                    slug: $('#form-product-option #slug-product-option').val(),
+                    _token: $('meta[name="csrf-token"]').attr("content")
+                },
+                success: function(data) {
+                    // $("#form-product-option").html(data);
+                }
+            });
+        }
+
     </script>
 @endsection
