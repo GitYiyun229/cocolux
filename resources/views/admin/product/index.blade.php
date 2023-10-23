@@ -17,7 +17,7 @@
                 <a class="btn btn-success ml-2" href="{{ route('admin.product.index') }}"><i class="fa fa-recycle"></i> @lang('form.button.refresh')</a>
             </form>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-3 d-none">
             <a href="{{ route('admin.product.create') }}" class="btn btn-primary float-right"><i class="fa fa-plus"></i> @lang('form.button.create')</a>
         </div>
     </div>
