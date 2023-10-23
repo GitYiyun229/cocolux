@@ -185,6 +185,7 @@
                         <th >SKU</th>
                         <th >Giá vốn</th>
                         <th >Giá bán</th>
+                        <th >Mặc định</th>
                         <th style="width: 50px;">#</th>
                     </tr>
                     </thead>
@@ -197,6 +198,13 @@
                                 <td>{{ format_money($item->original_price) }}</td>
                                 <td>
                                     {{ format_money($item->price) }}
+                                </td>
+                                <td>
+                                    @if($item->is_default == 1)
+                                        <span class="badge badge-primary">MẶc định</span>
+                                    @else
+                                        <span class="badge badge-secondary">Không mẶc định</span>
+                                    @endif
                                 </td>
                                 <td>
                                     <button type="button" onclick="editProductOption({{ $item->id }})" class="btn btn-warning mb-2" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button>
@@ -369,14 +377,35 @@
         }
 
         function deleteProductOption(id_product) {
-            {{--$.ajax({--}}
-            {{--    type: "POST",--}}
-            {{--    url: "{{ route('admin.product-option.edit') }}",--}}
-            {{--    data: {id: id_product, _token: $('meta[name="csrf-token"]').attr("content")},--}}
-            {{--    success: function(data) {--}}
-            {{--        $("#form-product-option").html(data);--}}
-            {{--    }--}}
-            {{--});--}}
+            swal({
+                title: 'Xóa bản ghi?',
+                text: "Bạn có chắc chắn muốn xóa!",
+                type: "warning",
+                showCancelButton: !0,
+                confirmButtonText: "Yes!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: !0
+            }).then(function (result) {
+                if (result.value == true) {
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('admin.product-option.destroy') }}",
+                        data: {id: id_product, _token: $('meta[name="csrf-token"]').attr("content")},
+                        success: function (result) {
+                            if (result.status === true) {
+                                toastr["success"](result.message);
+                                window.location.reload();
+                            }
+
+                            if (result.status === false) {
+                                toastr["error"](result.message);
+                            }
+                        }
+                    });
+                }
+            }, function (dismiss) {
+                return false;
+            });
         }
 
         function addProductOption() {
@@ -402,7 +431,7 @@
                     price: $('#form-product-option #price-product-option').val(),
                     normal_price: $('#form-product-option #normal_price-product-option').val(),
                     stock: $('#form-product-option input[name="store[]"]').map(function(){
-                        return $(this).data('id')+':'+$(this).val();
+                        return $(this).data('id')+':'+$(this).val()+':'+$(this).data('id-stock');
                     }).get(),
                     slug: $('#form-product-option #slug-product-option').val(),
                     parent_id: $('#form-product-option #id_product_parent').val(),
