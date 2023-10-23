@@ -26,6 +26,17 @@
                 </div>
             </div>
             <div class="col-sm-6">
+                <div class="form-group">
+                    <label>@lang('form.page.category')</label> <span class="text-danger">*</span>
+                    <select name="page_cat_id" id="page_cat_id" class="form-control" required>
+                        @forelse($categories as $key => $category)
+                            <option value="{{ $category['id'] }}" {{ isset($page->page_cat_id) && $page->page_cat_id == $category['id'] ? 'selected' : old('page_cat_id') == $category['id'] ? 'selected' : '' }}>{{ $category['name'] }}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group clearfix">
                     <label>@lang('form.page.active')</label> <span class="text-danger">*</span>
@@ -54,40 +65,6 @@
                         @if ($errors->has('image'))
                             <span class="help-block text-danger">
                                 <strong>{{ $errors->first('image') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <!-- text input -->
-                <div class="form-group clearfix">
-                    <label>@lang('form.page.is_home')</label> <span class="text-danger">*</span>
-                    <div class="form-group">
-                        <div class="icheck-success d-inline">
-                            <input class="" type="radio" id="homeRadio1" name="is_home" value="{{ \App\Models\Page::IS_HOME }}" {{ (isset($page->is_home) && $page->is_home == \App\Models\Page::IS_HOME) ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\Page::IS_HOME)) ? 'checked' : '' }}  required>
-                            <label for="homeRadio1" class="custom-control-label">@lang('form.status.active')&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                        </div>
-                        <div class="icheck-danger d-inline">
-                            <input class="" type="radio" id="homeRadio2" name="is_home" value="{{ \App\Models\Page::IS_NOT_HOME }}" {{ (isset($page) && $page->is_home == \App\Models\Page::IS_NOT_HOME) ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\Page::IS_NOT_HOME)) ? 'checked' : '' }}  required>
-                            <label for="homeRadio2" class="custom-control-label">@lang('form.status.inactive')</label>
-                        </div>
-                    </div>
-                    @if ($errors->has('is_home'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('is_home') }}</strong>
-                </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label>@lang('form.page.image_title')</label> <span class="text-danger">*</span>
-                    <div class="input-group">
-                        @include('admin.components.buttons.image',['src' => isset($page->image_title) ? $page->image_title : old('image_title'),'name' => 'image_title'])
-                        @if ($errors->has('image_title'))
-                            <span class="help-block text-danger">
-                                <strong>{{ $errors->first('image_title') }}</strong>
                             </span>
                         @endif
                     </div>
@@ -163,21 +140,9 @@
 @endsection
 @section('script')
     @parent
-    <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
     <script>
-        InlineEditor
-            .create( document.querySelector( '#content' ),{
-                ckfinder: {
-                    uploadUrl: '{!! asset('ckfinder/core/connector/php/connector.php').'?command=QuickUpload&type=Images&responseType=json' !!}',
-                    options: {
-                        resourceType: 'Images'
-                    }
-                },
-                mediaEmbed: {previewsInData: true}
-            } )
-            .catch( error => {
-                console.error( error );
-            } );
+        CKEDITOR.replace( 'content' );
     </script>
 @endsection

@@ -82,7 +82,7 @@ class ArticleDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('title'),
-            Column::make('image')->title(trans('form.article.image'))->render([
+            Column::make('image_change_url')->title(trans('form.article.image'))->render([
                 'renderImage(data)'
             ]),
             Column::make('category_id')->title(trans('form.article_category.')),

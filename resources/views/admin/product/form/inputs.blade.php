@@ -29,6 +29,18 @@
             </div>
             <div class="col-sm-6">
                 <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.product.sku')</label>
+                    <input type="text" class="form-control" name="sku" value="{{ isset($product) ? $product->sku : old('sku') }}">
+                    @if ($errors->has('sku'))
+                        <span class="help-block text-danger">
+                            <strong>{{ $errors->first('sku') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
                 <div class="form-group clearfix">
                     <label>@lang('form.product.active')</label> <span class="text-danger">*</span>
                     <div class="form-group">
@@ -69,6 +81,48 @@
                     @endif
                 </div>
             </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group clearfix">
+                    <label>@lang('form.product.is_hot')</label> <span class="text-danger">*</span>
+                    <div class="form-group">
+                        <div class="icheck-success d-inline">
+                            <input class="" type="radio" id="is_hotRadio1" name="is_hot" value="{{ \App\Models\Product::IS_HOT }}" {{ (isset($product->is_hot) && $product->is_hot == \App\Models\product::IS_HOT) ? 'checked' : (old('is_hot') && (old('is_hot') == \App\Models\product::IS_HOT)) ? 'checked' : '' }}  required>
+                            <label for="is_hotRadio1" class="custom-control-label">@lang('form.status.is_hot')&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        </div>
+                        <div class="icheck-danger d-inline">
+                            <input class="" type="radio" id="is_hotRadio2" name="is_hot" value="{{ \App\Models\Product::IS_NOT_HOT }}" {{ (isset($product) && $product->is_hot == \App\Models\product::IS_NOT_HOT) ? 'checked' : (old('is_hot') && (old('is_hot') == \App\Models\product::IS_NOT_HOT)) ? 'checked' : '' }}  required>
+                            <label for="is_hotRadio2" class="custom-control-label">@lang('form.status.is_not_hot')</label>
+                        </div>
+                    </div>
+                    @if ($errors->has('is_hot'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('is_hot') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group clearfix">
+                    <label>@lang('form.product.is_new')</label> <span class="text-danger">*</span>
+                    <div class="form-group">
+                        <div class="icheck-success d-inline">
+                            <input class="" type="radio" id="is_newRadio1" name="is_new" value="{{ \App\Models\Product::IS_NEW }}" {{ (isset($product->is_new) && $product->is_new == \App\Models\product::IS_NEW) ? 'checked' : (old('is_new') && (old('is_new') == \App\Models\product::IS_NEW)) ? 'checked' : '' }}  required>
+                            <label for="is_newRadio1" class="custom-control-label">@lang('form.status.is_new')&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        </div>
+                        <div class="icheck-danger d-inline">
+                            <input class="" type="radio" id="is_newRadio2" name="is_new" value="{{ \App\Models\Product::IS_NOT_NEW }}" {{ (isset($product) && $product->is_new == \App\Models\product::IS_NOT_NEW) ? 'checked' : (old('is_new') && (old('is_new') == \App\Models\product::IS_NOT_NEW)) ? 'checked' : '' }}  required>
+                            <label for="is_newRadio2" class="custom-control-label">@lang('form.status.is_not_new')</label>
+                        </div>
+                    </div>
+                    @if ($errors->has('is_new'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('is_new') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
@@ -86,7 +140,7 @@
                 <div class="form-group">
                     <label>@lang('form.product.image')</label> <span class="text-danger">*</span>
                     <div class="input-group">
-                        @include('admin.components.buttons.image',['src' => isset($product->image) ? $product->image : old('image'),'name' => 'image'])
+                        @include('admin.components.buttons.image',['src' => isset($product->image) ? replace_image($product->image) : old('image'),'name' => 'image'])
                         @if ($errors->has('image'))
                             <span class="help-block text-danger">
                                 <strong>{{ $errors->first('image') }}</strong>
@@ -94,6 +148,65 @@
                         @endif
                     </div>
                 </div>
+            </div>
+            @if(!empty($attribute))
+                <div class="col-sm-12">
+                    <div class="row">
+                        @forelse($attribute as $item)
+                            @if($item->type == 'select')
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{ $item->name }}</label>
+                                        <select name="{{ $item->code }}" id="{{ $item->code }}" class="form-control">
+                                            <option value="" selected>--{{ $item->name }}--</option>
+                                            @forelse($item->attributeValue as $key => $val)
+                                                <option value="{{ $val->id }}" {{ isset($item->content) && $item->content['id'] == $val->id ? 'selected' : old($item->code) == $val->id ? 'selected' : '' }}>{{ $val->name }}</option>
+                                            @empty
+                                            @endforelse
+                                        </select>
+                                        @if ($errors->has($item->code))
+                                            <span class="help-block text-danger">
+                                         <strong>{{ $errors->first($item->code) }}</strong>
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+                        @empty
+                        @endforelse
+                    </div>
+                </div>
+            @endif
+            <div class="div-list-products">
+                <table class="table table-bordered mt-2" id="list_products">
+                    <thead class="thead-light">
+                    <tr>
+                        <th style="width: 280px;">Tên sản phẩm</th>
+                        <th style="width: 100px;">SKU</th>
+                        <th style="width: 100px;">Giá vốn</th>
+                        <th style="width: 100px;">Giá bán</th>
+                        <th style="width: 50px;">#</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    @if(!empty($product_option))
+                        @forelse($product_option as $k => $item)
+                            <tr>
+                                <td>{{ $item->title }}</td>
+                                <td>{{ $item->sku }}</td>
+                                <td>{{ format_money($item->original_price) }}</td>
+                                <td>
+                                    {{ format_money($item->price) }}
+                                </td>
+                                <td>
+                                    <button type="button" onclick="editProductOption({{ $item->id }})" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                        @empty
+                        @endforelse
+                    @endif
+                    </tbody>
+                </table>
             </div>
             <div class="col-sm-6">
                 <!-- text input -->
@@ -110,6 +223,18 @@
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
+                    <label>@lang('form.product.normal_price')</label>
+                    <input type="text" class="form-control" name="normal_price" value="{{ isset($product) ? $product->normal_price : old('normal_price') }}" >
+                    @if ($errors->has('normal_price'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('normal_price') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
                     <label>@lang('form.product.price')</label>
                     <input type="text" class="form-control" name="price" value="{{ isset($product) ? $product->price : old('price') }}" >
                     @if ($errors->has('price'))
@@ -119,18 +244,47 @@
                     @endif
                 </div>
             </div>
-            <div class="col-sm-12">
+            <div class="col-sm-6">
+                <!-- text input -->
                 <div class="form-group">
-                    <label>@lang('form.content_include')</label> <span class="text-danger">*</span>
-                    <textarea id="content_include" name="content_include" class="form-control" rows="10" >{{ isset($product->content_include) ? $product->content_include : old('content_include') }}</textarea>
-                    @if ($errors->has('content_include'))
+                    <label>@lang('form.product.video_url')</label>
+                    <input type="text" class="form-control" name="video_url" value="{{ isset($product) ? $product->video_url : old('video_url') }}">
+                    @if ($errors->has('video_url'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('content_include') }}</strong>
-                </span>
+                            <strong>{{ $errors->first('video_url') }}</strong>
+                        </span>
                     @endif
-                    <div class="editor"></div>
                 </div>
             </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>@lang('form.description')</label> <span class="text-danger">*</span>
+                    <textarea id="description" name="description" class="form-control" rows="10" >{{ isset($product->description) ? $product->description : old('description') }}</textarea>
+                    @if ($errors->has('description'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('description') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            @if(!empty($attribute))
+            @forelse($attribute as $item)
+                @if($item->type == 'ckeditor')
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>{{ $item->name }}</label>
+                            <textarea id="{{ $item->code }}" name="{{ $item->code }}" class="form-control" rows="10" >{{ isset($item->content) ? $item->content['content'] : old($item->code) }}</textarea>
+                            @if ($errors->has($item->code))
+                                <span class="help-block text-danger">
+                                 <strong>{{ $errors->first($item->code) }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                @endif
+            @empty
+            @endforelse
+            @endif
         </div>
     </div>
     <div class="col-sm-5">
@@ -170,23 +324,68 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="form-product-option"></div>
+        </div>
+    </div>
+</div>
+
 @section('script')
     @parent
-    <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
     <script>
-        InlineEditor
-            .create( document.querySelector( '#content_include' ),{
-                ckfinder: {
-                    uploadUrl: '{!! asset('ckfinder/core/connector/php/connector.php').'?command=QuickUpload&type=Images&responseType=json' !!}',
-                    options: {
-                        resourceType: 'Images'
-                    }
+        CKEDITOR.replace( 'description' );
+        @if(!empty($attribute))
+        @forelse($attribute as $item)
+        @if($item->type == 'ckeditor')
+            CKEDITOR.replace("{{ $item->code }}");
+        @endif
+        @empty
+        @endforelse
+        @endif
+
+    </script>
+    <script>
+        function editProductOption(id_product) {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.product-option.edit') }}",
+                data: {id: id_product, _token: $('meta[name="csrf-token"]').attr("content")},
+                success: function(data) {
+                    $("#form-product-option").html(data);
+                }
+            });
+        }
+
+        function submitFormOption(id_product) {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.product-option.update') }}",
+                data: {
+                    id: id_product,
+                    sku: $('#form-product-option #sku-product-option').val(),
+                    barcode: $('#form-product-option #barcode-product-option').val(),
+                    name: $('#form-product-option #name-product-option').val(),
+                    price: $('#form-product-option #price-product-option').val(),
+                    normal_price: $('#form-product-option #normal_price-product-option').val(),
+                    stock: $('#form-product-option #stock-product-option').val(),
+                    slug: $('#form-product-option #slug-product-option').val(),
+                    _token: $('meta[name="csrf-token"]').attr("content")
                 },
-                mediaEmbed: {previewsInData: true}
-            } )
-            .catch( error => {
-                console.error( error );
-            } );
+                success: function(data) {
+                    // $("#form-product-option").html(data);
+                }
+            });
+        }
+
     </script>
 @endsection

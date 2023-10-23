@@ -27,7 +27,10 @@ class UpdateSlide extends FormRequest
             'title' => 'required',
             'active' => 'required',
             'ordering' => 'nullable',
-            'image' => 'nullable',
+            'mobile_url' => 'nullable',
+            'image_url' => 'nullable',
+            'url' => 'nullable',
+            'content' => 'nullable',
         ];
     }
 }

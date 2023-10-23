@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PageCategories extends Model
 {
 //    use HasFactory;
-protected $guarded = ['id'];
+    protected $guarded = ['id'];
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
 }

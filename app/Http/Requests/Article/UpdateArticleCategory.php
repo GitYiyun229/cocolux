@@ -26,8 +26,6 @@ class UpdateArticleCategory extends FormRequest
         return [
             'title' => 'required',
             'slug' => 'nullable',
-            'image' => 'nullable',
-            'type' => 'required',
             'active' => 'required|numeric|integer|min:0',
             'seo_title' => 'nullable',
             'seo_keyword' => 'nullable',

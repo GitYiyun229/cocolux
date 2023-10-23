@@ -79,7 +79,7 @@ class SliderDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('title'),
-            Column::make('image')->title(trans('form.article.image'))->render([
+            Column::make('image_url')->title(trans('form.slider.image'))->render([
                 'renderImage(data)'
             ]),
             Column::make('created_at'),

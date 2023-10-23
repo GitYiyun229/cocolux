@@ -13,6 +13,12 @@ class Product extends Model
     const IS_HOME = 1;
     const IS_NOT_HOME = 0;
 
+    const IS_HOT = 1;
+    const IS_NOT_HOT = 0;
+
+    const IS_NEW = 1;
+    const IS_NOT_NEW = 0;
+
     public $resizeImage = ['lager' => [560,560],'resize'=>[370,370],'small'=>[120,90]];
 
     protected $appends = [

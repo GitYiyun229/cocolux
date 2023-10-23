@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
 use App\Models\ProductsCategories;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProductCategoryInterface;
@@ -42,7 +43,8 @@ class ProductsCategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.product-category.create');
+        $attributes = Attribute::all();
+        return view('admin.product-category.create', compact('attributes'));
     }
 
     /**
@@ -93,7 +95,16 @@ class ProductsCategoriesController extends Controller
     public function edit($id)
     {
         $product_category = $this->productCategoryRepository->getOneById($id);
-        return view('admin.product-category.update', compact('product_category'));
+        if ($product_category->attribute_id){
+
+            $attributes = Attribute::where(['active' => 1,'type' => 'select'])->whereNotIn('id', explode(',',$product_category->attribute_id))->get();
+            $attributes_choose = Attribute::select('id','name','code')->where(['active' => 1,'type' => 'select'])->whereIn('id', explode(',',$product_category->attribute_id))->get();
+        }else{
+            $attributes = Attribute::where(['active' => 1,'type' => 'select'])->get();
+            $attributes_choose = [];
+        }
+
+        return view('admin.product-category.update', compact('product_category','attributes','attributes_choose'));
     }
 
     /**

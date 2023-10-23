@@ -41,6 +41,19 @@
                 </div>
             </div>
             <div class="col-sm-6">
+                <div class="form-group">
+                    <label>@lang('form.product_category.logo')</label> <span class="text-danger">*</span>
+                    <div class="input-group">
+                        @include('admin.components.buttons.image',['src' => isset($product_category->logo) ? $product_category->logo : old('logo'),'name' => 'logo'])
+                        @if ($errors->has('logo'))
+                            <span class="help-block text-danger">
+                                <strong>{{ $errors->first('logo') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.product_category.ordering')</label>
@@ -69,6 +82,48 @@
                     @if ($errors->has('active'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('active') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group clearfix">
+                    <label>@lang('form.product_category.is_home')</label> <span class="text-danger">*</span>
+                    <div class="form-group">
+                        <div class="icheck-success d-inline">
+                            <input class="" type="radio" id="is_homeRadio1" name="is_home" value="{{ \App\Models\ProductsCategories::IS_HOME }}" {{ isset($product_category) && $product_category->is_home == \App\Models\productsCategories::IS_HOME ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\productsCategories::IS_HOME)) ? 'checked' : '' }}  required>
+                            <label for="is_homeRadio1" class="custom-control-label">@lang('form.status.is_home')&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        </div>
+                        <div class="icheck-danger d-inline">
+                            <input class="" type="radio" id="is_homeRadio2" name="is_home" value="{{ \App\Models\productsCategories::IS_NOT_HOME }}" {{ isset($product_category) && $product_category->is_home == \App\Models\productsCategories::IS_NOT_HOME ? 'checked' : (old('is_home') && (old('is_home') === \App\Models\productsCategories::IS_NOT_HOME)) ? 'checked' : '' }}  required>
+                            <label for="is_homeRadio2" class="custom-control-label">@lang('form.status.is_not_home')</label>
+                        </div>
+                    </div>
+                    @if ($errors->has('is_home'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('is_home') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group clearfix">
+                    <label>@lang('form.product_category.is_visible')</label> <span class="text-danger">*</span>
+                    <div class="form-group">
+                        <div class="icheck-success d-inline">
+                            <input class="" type="radio" id="is_visibleRadio1" name="is_visible" value="{{ \App\Models\ProductsCategories::IS_VISIBLE }}" {{ isset($product_category) && $product_category->is_visible == \App\Models\productsCategories::IS_VISIBLE ? 'checked' : (old('is_visible') && (old('is_visible') == \App\Models\productsCategories::IS_VISIBLE)) ? 'checked' : '' }}  required>
+                            <label for="is_visibleRadio1" class="custom-control-label">@lang('form.status.is_visible')&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        </div>
+                        <div class="icheck-danger d-inline">
+                            <input class="" type="radio" id="is_visibleRadio2" name="is_visible" value="{{ \App\Models\productsCategories::IS_NOT_VISIBLE }}" {{ isset($product_category) && $product_category->is_visible == \App\Models\productsCategories::IS_NOT_VISIBLE ? 'checked' : (old('is_visible') && (old('is_visible') === \App\Models\productsCategories::IS_NOT_VISIBLE)) ? 'checked' : '' }}  required>
+                            <label for="is_visibleRadio2" class="custom-control-label">@lang('form.status.is_not_visible')</label>
+                        </div>
+                    </div>
+                    @if ($errors->has('is_visible'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('is_visible') }}</strong>
                 </span>
                     @endif
                 </div>
@@ -112,8 +167,89 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label>@lang('form.content')</label> <span class="text-danger">*</span>
+            <textarea id="content" name="content" class="form-control" rows="10" >{{ isset($product_category->content) ? replace_image($product_category->content) : old('content') }}</textarea>
+            @if ($errors->has('content'))
+                <span class="help-block text-danger">
+                    <strong>{{ $errors->first('content') }}</strong>
+                </span>
+            @endif
+            <div class="editor"></div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Thuộc tính lọc</h3>
+                <ul id="sortable1" class="connectedSortable">
+                    @if(!empty($attributes))
+                    @forelse($attributes as $item)
+                        <li class="ui-state-default" data-id="{{ $item->id }}">{{ $item->name }}</li>
+                    @empty
+                    @endforelse
+                    @endif
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>Thuộc tính lọc đã chọn</h3>
+                <ul id="sortable2" class="connectedSortable">
+                    @if(!empty($attributes_choose))
+                        @forelse($attributes_choose as $item)
+                            <li class="ui-state-default" data-id="{{ $item->id }}">{{ $item->name }}</li>
+                        @empty
+                        @endforelse
+                    @endif
+                </ul>
+            </div>
+            <input type="hidden" name="attribute_id" value="{{ isset($product_category->attribute_id) ? $product_category->attribute_id : old('attribute_id') }}">
+        </div>
+    </div>
+</div>
+
+
+@section('link')
+    @parent
+    <style>
+        #sortable1, #sortable2 {
+            border: 1px solid #eee;
+            min-height: 20px;
+            list-style-type: none;
+            margin: 0;
+            padding: 5px 0 0 0;
+            float: left;
+            margin-right: 10px;
+            width: 100%;
+        }
+        #sortable1 li, #sortable2 li {
+            margin: 0 5px 5px 5px;
+            padding: 5px;
+            font-size: 1.2em;
+        }
+    </style>
+@endsection
 
 @section('script')
     @parent
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
+    <script>
+        CKEDITOR.replace( 'content' );
+    </script>
+    <script>
+        $( function() {
+            $( "#sortable1, #sortable2" ).sortable({
+                connectWith: ".connectedSortable",
+                update: function(event, ui) {
+                    var attributeIds = [];
+                    $("#sortable2 li").each(function() {
+                        attributeIds.push($(this).data("id"));
+                    });
+                    $("input[name='attribute_id']").val(attributeIds.join(','));
+                }
+            }).disableSelection();
+        } );
+    </script>
 @endsection
