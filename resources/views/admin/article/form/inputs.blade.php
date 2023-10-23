@@ -172,7 +172,7 @@
                         @endif
                     </tbody>
                 </table>
-                <input type="hidden" name="products_add" id="products_add" value="@if($article->products){{ $article->products }}@endif">
+                <input type="hidden" name="products_add" id="products_add" value="@if(!empty($article) && $article->products){{ $article->products }}@endif">
             </div>
         </div>
     </div>
