@@ -22,6 +22,15 @@ class AttributeDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('active', function ($q) {
+                $url = route('admin.attribute.changeActive', $q->id);
+                $status = $q->active == Attribute::STATUS_ACTIVE ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'banner',
+                    'status' => $status,
+                ])->render();
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -33,7 +42,7 @@ class AttributeDataTable extends DataTable
                 $urlDelete = route('admin.attribute.destroy', $q->id);
                 $lowerModelName = strtolower(class_basename(new Attribute()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-            });
+            })->rawColumns(['active','action']);
     }
 
     /**
@@ -81,7 +90,7 @@ class AttributeDataTable extends DataTable
             Column::make('id'),
             Column::make('name'),
             Column::make('code'),
-            Column::make('active'),
+            Column::make('active')->title(trans('form.attribute.active')),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

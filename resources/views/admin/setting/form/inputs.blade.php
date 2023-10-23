@@ -112,24 +112,11 @@
 @section('script')
     @parent
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('ckeditor5/ckeditor.js') }}"></script>
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
     @if($template == '3' || ($setting && $setting->type == 3))
-        <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
         <script>
-            InlineEditor
-                .create( document.querySelector( '#value' ),{
-                    ckfinder: {
-                        uploadUrl: '{!! asset('ckfinder/core/connector/php/connector.php').'?command=QuickUpload&type=Images&responseType=json' !!}',
-                        options: {
-                            resourceType: 'Images'
-                        }
-                    },
-                    mediaEmbed: {previewsInData: true}
-                } )
-                .catch( error => {
-                    console.error( error );
-                } );
+            CKEDITOR.replace( 'value' );
         </script>
     @endif
     <script>

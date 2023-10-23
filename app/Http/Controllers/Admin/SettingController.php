@@ -161,4 +161,18 @@ class SettingController extends Controller
             'message' => trans('message.delete_setting_success')
         ];
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $setting = Setting::findOrFail($id);
+        $setting->update(['active' => !$setting->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_setting_success')
+        ];
+    }
 }

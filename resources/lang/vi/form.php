@@ -63,6 +63,8 @@ return [
         'is_not_hot' => 'Not Hot',
         'is_new' => 'Hàng mới',
         'is_not_new' => 'Not new',
+        'is_visible' => 'Được truy cập',
+        'is_not_visible' => 'Không truy cập',
     ],
     'created_at' => 'Ngày tạo',
     'updated_at' => 'Ngày sửa',
@@ -150,6 +152,9 @@ return [
         'create' => 'Tạo danh mục sản phẩm',
         'update' => 'Sửa danh mục sản phẩm',
         'image' => 'Ảnh',
+        'ordering' => 'Thứ tự',
+        'is_visible' => 'Truy cập',
+        'is_home' => 'Hiển thị trang chủ',
     ],
 
     'setting' => [

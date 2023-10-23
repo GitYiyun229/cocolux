@@ -24,7 +24,7 @@ class BannerDataTable extends DataTable
             ->eloquent($query)
             ->editColumn('active', function ($q) {
                 $url = route('admin.banner.changeActive', $q->id);
-                $status = $q->active === Banners::STATUS_ACTIVE ? 'checked' : null;
+                $status = $q->active == Banners::STATUS_ACTIVE ? 'checked' : null;
                 return view('admin.components.buttons.change_status', [
                     'url' => $url,
                     'lowerModelName' => 'banner',

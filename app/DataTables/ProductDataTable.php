@@ -22,6 +22,15 @@ class ProductDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('active', function ($q) {
+                $url = route('admin.product.changeActive', $q->id);
+                $status = $q->active == Product::STATUS_ACTIVE ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'banner',
+                    'status' => $status,
+                ])->render();
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -33,7 +42,7 @@ class ProductDataTable extends DataTable
                 $urlDelete = route('admin.product.destroy', $q->id);
                 $lowerModelName = strtolower(class_basename(new Product()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-            });
+            })->rawColumns(['active','action']);
     }
 
     /**
@@ -79,6 +88,7 @@ class ProductDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('title'),
+            Column::make('active'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

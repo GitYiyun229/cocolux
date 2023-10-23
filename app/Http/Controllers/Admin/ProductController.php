@@ -213,4 +213,18 @@ class ProductController extends Controller
             'message' => trans('message.delete_product_success')
         ];
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeActive($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->update(['active' => !$product->active]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_active_product_success')
+        ];
+    }
 }

@@ -22,6 +22,15 @@ class SliderDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('active', function ($q) {
+                $url = route('admin.slider.changeActive', $q->id);
+                $status = $q->active == Sliders::STATUS_ACTIVE ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'banner',
+                    'status' => $status,
+                ])->render();
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -33,7 +42,7 @@ class SliderDataTable extends DataTable
                 $urlDelete = route('admin.slider.destroy', $q->id);
                 $lowerModelName = strtolower(class_basename(new Sliders()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-            });
+            })->rawColumns(['active','action']);
     }
 
     /**
@@ -82,6 +91,7 @@ class SliderDataTable extends DataTable
             Column::make('image_url')->title(trans('form.slider.image'))->render([
                 'renderImage(data)'
             ]),
+            Column::make('active'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')
