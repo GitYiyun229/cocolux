@@ -67,11 +67,11 @@
                     <div class="form-group">
                         <div class="icheck-success d-inline">
                             <input class="" type="radio" id="homeRadio1" name="is_home" value="{{ \App\Models\Product::IS_HOME }}" {{ (isset($product->is_home) && $product->is_home == \App\Models\product::IS_HOME) ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\product::IS_HOME)) ? 'checked' : '' }}  required>
-                            <label for="homeRadio1" class="custom-control-label">@lang('form.status.is_home')&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            <label for="homeRadio1" class="custom-control-label">Có</label>
                         </div>
                         <div class="icheck-danger d-inline">
                             <input class="" type="radio" id="homeRadio2" name="is_home" value="{{ \App\Models\Product::IS_NOT_HOME }}" {{ (isset($product) && $product->is_home == \App\Models\product::IS_NOT_HOME) ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\product::IS_NOT_HOME)) ? 'checked' : '' }}  required>
-                            <label for="homeRadio2" class="custom-control-label">@lang('form.status.is_not_home')</label>
+                            <label for="homeRadio2" class="custom-control-label">Không</label>
                         </div>
                     </div>
                     @if ($errors->has('is_home'))
@@ -88,11 +88,11 @@
                     <div class="form-group">
                         <div class="icheck-success d-inline">
                             <input class="" type="radio" id="is_hotRadio1" name="is_hot" value="{{ \App\Models\Product::IS_HOT }}" {{ (isset($product->is_hot) && $product->is_hot == \App\Models\product::IS_HOT) ? 'checked' : (old('is_hot') && (old('is_hot') == \App\Models\product::IS_HOT)) ? 'checked' : '' }}  required>
-                            <label for="is_hotRadio1" class="custom-control-label">@lang('form.status.is_hot')&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            <label for="is_hotRadio1" class="custom-control-label">Có</label>
                         </div>
                         <div class="icheck-danger d-inline">
                             <input class="" type="radio" id="is_hotRadio2" name="is_hot" value="{{ \App\Models\Product::IS_NOT_HOT }}" {{ (isset($product) && $product->is_hot == \App\Models\product::IS_NOT_HOT) ? 'checked' : (old('is_hot') && (old('is_hot') == \App\Models\product::IS_NOT_HOT)) ? 'checked' : '' }}  required>
-                            <label for="is_hotRadio2" class="custom-control-label">@lang('form.status.is_not_hot')</label>
+                            <label for="is_hotRadio2" class="custom-control-label">Không</label>
                         </div>
                     </div>
                     @if ($errors->has('is_hot'))
@@ -109,11 +109,11 @@
                     <div class="form-group">
                         <div class="icheck-success d-inline">
                             <input class="" type="radio" id="is_newRadio1" name="is_new" value="{{ \App\Models\Product::IS_NEW }}" {{ (isset($product->is_new) && $product->is_new == \App\Models\product::IS_NEW) ? 'checked' : (old('is_new') && (old('is_new') == \App\Models\product::IS_NEW)) ? 'checked' : '' }}  required>
-                            <label for="is_newRadio1" class="custom-control-label">@lang('form.status.is_new')&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            <label for="is_newRadio1" class="custom-control-label">Có</label>
                         </div>
                         <div class="icheck-danger d-inline">
                             <input class="" type="radio" id="is_newRadio2" name="is_new" value="{{ \App\Models\Product::IS_NOT_NEW }}" {{ (isset($product) && $product->is_new == \App\Models\product::IS_NOT_NEW) ? 'checked' : (old('is_new') && (old('is_new') == \App\Models\product::IS_NOT_NEW)) ? 'checked' : '' }}  required>
-                            <label for="is_newRadio2" class="custom-control-label">@lang('form.status.is_not_new')</label>
+                            <label for="is_newRadio2" class="custom-control-label">Không</label>
                         </div>
                     </div>
                     @if ($errors->has('is_new'))
