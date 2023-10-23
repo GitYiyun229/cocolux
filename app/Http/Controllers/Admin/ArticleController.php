@@ -236,4 +236,18 @@ class ArticleController extends Controller
             'message' => trans('message.change_active_article_success')
         ];
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeIsHome($id)
+    {
+        $article = Article::findOrFail($id);
+        $article->update(['is_home' => !$article->is_home]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_is_home_article_success')
+        ];
+    }
 }

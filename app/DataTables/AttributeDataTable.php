@@ -27,7 +27,7 @@ class AttributeDataTable extends DataTable
                 $status = $q->active == Attribute::STATUS_ACTIVE ? 'checked' : null;
                 return view('admin.components.buttons.change_status', [
                     'url' => $url,
-                    'lowerModelName' => 'banner',
+                    'lowerModelName' => 'attribute',
                     'status' => $status,
                 ])->render();
             })

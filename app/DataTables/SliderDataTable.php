@@ -27,7 +27,7 @@ class SliderDataTable extends DataTable
                 $status = $q->active == Sliders::STATUS_ACTIVE ? 'checked' : null;
                 return view('admin.components.buttons.change_status', [
                     'url' => $url,
-                    'lowerModelName' => 'banner',
+                    'lowerModelName' => 'slider',
                     'status' => $status,
                 ])->render();
             })

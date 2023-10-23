@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\Scopes\ProductDataTableScope;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
+use App\Models\AttributeValues;
 use App\Models\Product;
 use App\Models\ProductOptions;
 use Illuminate\Http\Request;
@@ -159,8 +160,6 @@ class ProductController extends Controller
         $data_root = $this->productResponstory->getOneById($id);
         DB::beginTransaction();
         try {
-//            $a = Request::input('product_attribute_xuat_xu');
-//            dd($a);
             $data = $req->validated();
             if (!empty($data['image']) && $data_root->image != $data['image']){
                 if ($data_root->image && !\Str::contains($data_root->image, 'cdn.cocolux.com')){
@@ -171,6 +170,44 @@ class ProductController extends Controller
             if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
             }
+            $attribute = Attribute::select('id','code','name','type')->where(function($query){
+                $query->orWhere('type', 'select')
+                    ->orWhere('type', 'ckeditor');
+            })->where(['active' => 1])->get();
+
+            $attributes = array();
+            $attribute_path = array();
+            foreach ($attribute as $item){
+                if (request($item->code)){
+                    if ($item->type == 'select'){
+                        $attribute_value = AttributeValues::select('id','name')->where(['active' => 1, 'id' => request($item->code)])->first();
+                        $value = [
+                            'id' => request($item->code),
+                            'name' => $attribute_value->name,
+                            'type' => $item->type
+                        ];
+                        $attribute_value_id = $attribute_value->id;
+                    }else{
+                        $attribute_value = AttributeValues::select('id','name')->where(['active' => 1, 'attribute_id' => $item->id])->first();
+                        $value = [
+                            'id' => $attribute_value->id,
+                            'name' => request($item->code),
+                            'type' => $item->type
+                        ];
+                        $attribute_value_id = $attribute_value->id;
+                    }
+                    $attributes[] = [
+                        'id' => $item->id,
+                        'name' => $item->name,
+                        'value' => $value,
+                    ];
+                    $attribute_path[] =  $item->id.':'.$attribute_value_id;
+                }
+            }
+            $attribute_path_st = implode(',', $attribute_path);
+            $data['attributes'] = $attributes;
+            $data['attribute_path'] = $attribute_path_st;
+
             $data_root->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_product_success'));
@@ -225,6 +262,48 @@ class ProductController extends Controller
         return [
             'status' => true,
             'message' => trans('message.change_active_product_success')
+        ];
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeIsHome($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->update(['is_home' => !$product->is_home]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_is_home_product_success')
+        ];
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeIsHot($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->update(['is_hot' => !$product->is_hot]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_is_hot_product_success')
+        ];
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeIsNew($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->update(['is_new' => !$product->is_new]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_is_new_product_success')
         ];
     }
 }
