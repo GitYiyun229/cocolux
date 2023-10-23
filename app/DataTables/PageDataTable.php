@@ -27,7 +27,7 @@ class PageDataTable extends DataTable
                 $status = $q->active == Page::STATUS_ACTIVE ? 'checked' : null;
                 return view('admin.components.buttons.change_status', [
                     'url' => $url,
-                    'lowerModelName' => 'banner',
+                    'lowerModelName' => 'page',
                     'status' => $status,
                 ])->render();
             })

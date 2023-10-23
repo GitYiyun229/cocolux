@@ -27,7 +27,7 @@ class PageCategoryDataTable extends DataTable
                 $status = $q->active == PageCategories::STATUS_ACTIVE ? 'checked' : null;
                 return view('admin.components.buttons.change_status', [
                     'url' => $url,
-                    'lowerModelName' => 'banner',
+                    'lowerModelName' => 'page-categories',
                     'status' => $status,
                 ])->render();
             })

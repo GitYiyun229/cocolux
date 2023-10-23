@@ -110,6 +110,7 @@ return [
         'is_home' => 'Hiển thị trang chủ',
         'active' => 'Trạng thái',
         'category' => 'Danh mục tin tức',
+        'products' => 'Danh sách sản phẩm',
         'date' => 'Ngày',
         'ordering' => 'Thứ tự'
     ],
@@ -129,6 +130,7 @@ return [
         '' => 'Sản phẩm',
         'title' => 'Tiêu đề',
         'slug' => 'Link',
+        'sku' => 'SKU',
         'image' => 'Hình ảnh',
         'content_include' => 'Nội dung',
         'normal_price' => 'Giá gốc',
@@ -265,17 +267,6 @@ return [
         'update' => 'Update',
         'create' => 'Tạo mới',
         'ordering' => 'Thứ tự'
-    ],
-
-    'media' => [
-        '' => 'Media',
-        '_image' => 'Hình ảnh',
-        '_video' => 'Video',
-        'image' => 'Hình ảnh',
-        'link_video' => 'Link video (youtube)',
-        'is_home' => 'Hiển thị trang chủ',
-        'ordering' => 'Thứ tự',
-        'active' => 'Trạng thái'
     ],
 
 ];

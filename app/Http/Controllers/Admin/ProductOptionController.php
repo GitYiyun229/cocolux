@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
+use App\Models\AttributeValues;
 use App\Models\ProductOptions;
+use App\Models\Stocks;
 use App\Models\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class ProductOptionController extends Controller
 {
@@ -24,9 +29,12 @@ class ProductOptionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id_parent)
     {
-        //
+        $link_submit = route('admin.product-option.store');
+        $product_parent = $id_parent;
+        $stores = Store::all();
+        return view('admin.product.form.input_option', compact('link_submit','product_parent','stores'));
     }
 
     /**
@@ -37,7 +45,57 @@ class ProductOptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            if (empty($request->input('slug'))){
+                $data['slug'] = $request->input('name')?\Str::slug($request->input('name'), '-'):'';
+            }else{
+                $data['slug'] = \Str::slug($request->input('slug'), '-');
+            }
+            $total_stock = $request->input('stock');
+            $parent_id = $request->input('parent_id');
+
+            $data['sku'] = $request->input('sku');
+            $data['barcode'] = $request->input('barcode');
+            $data['title'] = $request->input('name');
+            $data['price'] = $request->input('price');
+            $data['normal_price'] = $request->input('normal_price');
+//            $data['stock'] = $request->input('stock');
+            $data['active'] = $request->input('active');
+            $data['is_default'] = $request->input('is_default');
+            $data['parent_id'] = $parent_id;
+            $product_option = ProductOptions::create($data);
+
+            foreach ($total_stock as $item){
+                $id_store = explode(':',$item);
+                if ($id_store[1]){
+                    $store = Store::findOrFail($id_store[0]);
+                    $data['store_id'] = $id_store[0];
+                    $data['store_name'] = $store->name;
+                    $data['product_id'] = $parent_id;
+                    $data['product_option_id'] = $product_option->id;
+                    $data['total_quantity'] = $id_store[1];
+                    $data['total_order_quantity'] = 0;
+                    Stocks::create($data);
+                }
+            }
+
+            DB::commit();
+            return [
+                'status' => true,
+                'message' => 'Lưu thành công'
+            ];
+        } catch (\Exception $exception) {
+            \Log::info([
+                'message' => $exception->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            return [
+                'status' => false,
+                'message' => 'Lưu không thành công'
+            ];
+        }
     }
 
     /**
@@ -61,6 +119,7 @@ class ProductOptionController extends Controller
     {
         $id =  $request->input('id');
         $product_option = ProductOptions::where(['id'=>$id])->with('stocksAll')->first();
+        $product_parent = $product_option->parent_id;
         $images = json_decode($product_option->images);
         $stocks = !empty($product_option->stocksAll)?$product_option->stocksAll:null;
         $count_stock = 0;
@@ -83,8 +142,8 @@ class ProductOptionController extends Controller
                 }
             }
         }
-        $link_submit = route('admin.product-option.update',['id'=>$id]);
-        return view('admin.product.form.input_option', compact('product_option','stores','count_stock','images','link_submit'));
+        $link_submit = route('admin.product-option.update');
+        return view('admin.product.form.input_option', compact('product_option','stores','count_stock','images','link_submit','product_parent'));
     }
 
     /**
@@ -96,7 +155,53 @@ class ProductOptionController extends Controller
      */
     public function update(Request $request)
     {
-        dd($request->input('sku'));
+        $id = $request->input('id');
+        $data_root = ProductOptions::findOrFail($id);
+        DB::beginTransaction();
+        try {
+            if (empty($request->input('slug'))){
+                $data['slug'] = $request->input('name')?\Str::slug($request->input('name'), '-'):'';
+            }else{
+                $data['slug'] = \Str::slug($request->input('slug'), '-');
+            }
+            $total_stock = $request->input('stock');
+            $parent_id = $request->input('parent_id');
+            $data['sku'] = $request->input('sku');
+            $data['barcode'] = $request->input('barcode');
+            $data['title'] = $request->input('name');
+            $data['price'] = $request->input('price');
+            $data['normal_price'] = $request->input('normal_price');
+            $data['active'] = $request->input('active');
+            $data['is_default'] = $request->input('is_default');
+            $data['parent_id'] = $parent_id;
+            foreach ($total_stock as $item){
+                $id_store = explode(':',$item);
+                if ($id_store[1]){
+                    $stock = Stocks::where(['store_id' => $id_store[0],'product_id' => $parent_id, 'product_option_id' => $id])->first();
+                    if ($stock) {
+                        $data['total_quantity'] = $id_store[1];
+                        $stock->update($data);
+                    }
+                }
+            }
+
+            $data_root->update($data);
+            DB::commit();
+            return [
+                'status' => true,
+                'message' => 'Lưu thành công'
+            ];
+        } catch (\Exception $exception) {
+            \Log::info([
+                'message' => $exception->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            return [
+                'status' => false,
+                'message' => 'Lưu không thành công'
+            ];
+        }
     }
 
     /**

@@ -183,6 +183,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::post('/destroy/{id}', 'ArticleController@destroy')->name('destroy')->middleware('permission:delete_article');
         Route::post('/search', 'ArticleController@search')->name('search')->middleware('permission:edit_article');
         Route::post('/change-active-article/{id}', 'ArticleController@changeActive')->name('changeActive')->middleware('permission:edit_article');
+        Route::post('/change-is-home-article/{id}', 'ArticleController@changeIsHome')->name('changeIsHome')->middleware('permission:edit_article');
     });
 
     Route::group(['prefix' => 'attribute', 'as' => 'attribute.', 'middleware' => ['permission:view_attribute']], function () {
@@ -236,11 +237,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::post('/update/{id}', 'ProductController@update')->name('update')->middleware('permission:edit_product');
         Route::post('/destroy/{id}', 'ProductController@destroy')->name('destroy')->middleware('permission:delete_product');
         Route::post('/change-active-product/{id}', 'ProductController@changeActive')->name('changeActive')->middleware('permission:edit_product');
+        Route::post('/change-is-home-product/{id}', 'ProductController@changeIsHome')->name('changeIsHome')->middleware('permission:edit_product');
+        Route::post('/change-is-hot-product/{id}', 'ProductController@changeIsHot')->name('changeIsHot')->middleware('permission:edit_product');
+        Route::post('/change-is-new-product/{id}', 'ProductController@changeIsNew')->name('changeIsNew')->middleware('permission:edit_product');
     });
 
     Route::group(['prefix' => 'product-option', 'as' => 'product-option.', 'middleware' => ['permission:view_product']], function () {
         Route::get('', 'ProductOptionController@index')->name('index');
-        Route::get('/create', 'ProductOptionController@create')->name('create')->middleware('permission:create_product');
+        Route::post('/create/{id_parent}', 'ProductOptionController@create')->name('create')->middleware('permission:create_product');
         Route::post('/store', 'ProductOptionController@store')->name('store')->middleware('permission:create_product');
         Route::post('/edit', 'ProductOptionController@edit')->name('edit')->middleware('permission:edit_product');
         Route::post('/update', 'ProductOptionController@update')->name('update')->middleware('permission:edit_product');

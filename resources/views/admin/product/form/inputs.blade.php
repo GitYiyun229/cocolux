@@ -178,13 +178,13 @@
                 </div>
             @endif
             <div class="div-list-products">
-                <table class="table table-bordered mt-2" id="list_products">
+                <table class="table table-bordered mt-2 w-100" id="list_products" style="width: 100%">
                     <thead class="thead-light">
                     <tr>
-                        <th style="width: 280px;">Tên sản phẩm</th>
-                        <th style="width: 100px;">SKU</th>
-                        <th style="width: 100px;">Giá vốn</th>
-                        <th style="width: 100px;">Giá bán</th>
+                        <th >Tên sản phẩm</th>
+                        <th >SKU</th>
+                        <th >Giá vốn</th>
+                        <th >Giá bán</th>
                         <th style="width: 50px;">#</th>
                     </tr>
                     </thead>
@@ -199,7 +199,8 @@
                                     {{ format_money($item->price) }}
                                 </td>
                                 <td>
-                                    <button type="button" onclick="editProductOption({{ $item->id }})" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button>
+                                    <button type="button" onclick="editProductOption({{ $item->id }})" class="btn btn-warning mb-2" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button>
+                                    <button type="button" onclick="deleteProductOption({{ $item->id }})" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                                 </td>
                             </tr>
                         @empty
@@ -207,6 +208,7 @@
                     @endif
                     </tbody>
                 </table>
+                <button class="btn btn-warning mb-4" onclick="addProductOption()" type="button" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-plus"></i>Thêm sản phẩm phụ</button>
             </div>
             <div class="col-sm-6">
                 <!-- text input -->
@@ -366,10 +368,32 @@
             });
         }
 
+        function deleteProductOption(id_product) {
+            {{--$.ajax({--}}
+            {{--    type: "POST",--}}
+            {{--    url: "{{ route('admin.product-option.edit') }}",--}}
+            {{--    data: {id: id_product, _token: $('meta[name="csrf-token"]').attr("content")},--}}
+            {{--    success: function(data) {--}}
+            {{--        $("#form-product-option").html(data);--}}
+            {{--    }--}}
+            {{--});--}}
+        }
+
+        function addProductOption() {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.product-option.create',['id_parent' => $product->id]) }}",
+                data: {_token: $('meta[name="csrf-token"]').attr("content")},
+                success: function(data) {
+                    $("#form-product-option").html(data);
+                }
+            });
+        }
+
         function submitFormOption(id_product) {
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.product-option.update') }}",
+                url: $('#form-product-option #form_product_option').val(),
                 data: {
                     id: id_product,
                     sku: $('#form-product-option #sku-product-option').val(),
@@ -377,12 +401,24 @@
                     name: $('#form-product-option #name-product-option').val(),
                     price: $('#form-product-option #price-product-option').val(),
                     normal_price: $('#form-product-option #normal_price-product-option').val(),
-                    stock: $('#form-product-option #stock-product-option').val(),
+                    stock: $('#form-product-option input[name="store[]"]').map(function(){
+                        return $(this).data('id')+':'+$(this).val();
+                    }).get(),
                     slug: $('#form-product-option #slug-product-option').val(),
+                    parent_id: $('#form-product-option #id_product_parent').val(),
+                    active: $('#form-product-option input[name="active"]:checked').val(),
+                    is_default: $('#form-product-option input[name="is_default"]:checked').val(),
                     _token: $('meta[name="csrf-token"]').attr("content")
                 },
-                success: function(data) {
-                    // $("#form-product-option").html(data);
+                success: function(result) {
+                    if (result.status === true) {
+                        toastr["success"](result.message);
+                        window.location.reload();
+                    }
+
+                    if (result.status === false) {
+                        toastr["error"](result.message);
+                    }
                 }
             });
         }
