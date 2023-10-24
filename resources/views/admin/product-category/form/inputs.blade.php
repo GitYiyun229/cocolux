@@ -132,7 +132,7 @@
     </div>
     <div class="col-sm-6">
         <div class="card card-warning">
-            <div class="card-header">
+            <div class="card-header" style="background-color: #ccc;">
                 <h3 class="card-title">SEO</h3>
             </div>
             <div class="card-body p-3">
@@ -187,7 +187,7 @@
                 <ul id="sortable1" class="connectedSortable">
                     @if(!empty($attributes))
                     @forelse($attributes as $item)
-                        <li class="ui-state-default" data-id="{{ $item->id }}">{{ $item->name }}</li>
+                        <li class="ui-state-default li_odd_bg" data-id="{{ $item->id }}">{{ $item->name }}</li>
                     @empty
                     @endforelse
                     @endif
@@ -198,7 +198,7 @@
                 <ul id="sortable2" class="connectedSortable">
                     @if(!empty($attributes_choose))
                         @forelse($attributes_choose as $item)
-                            <li class="ui-state-default" data-id="{{ $item->id }}">{{ $item->name }}</li>
+                            <li class="ui-state-default li_odd_bg" data-id="{{ $item->id }}">{{ $item->name }}</li>
                         @empty
                         @endforelse
                     @endif
@@ -228,6 +228,14 @@
             padding: 5px;
             font-size: 1.2em;
         }
+        h3{
+            background-color: #ccc;
+            padding: 10px;
+        }
+        .li_odd_bg:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+
     </style>
 @endsection
 

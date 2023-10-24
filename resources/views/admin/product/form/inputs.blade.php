@@ -299,10 +299,10 @@
     </div>
     <div class="col-sm-5">
         <div class="card card-warning">
-            <div class="card-header">
+            <div class="card-header" style="background-color: #ccc;">
                 <h3 class="card-title">SEO</h3>
             </div>
-            <div class="card-body p-3">
+            <div class="card-body p-3" style="background-color: #f1f1f1;">
                 <div class="form-group">
                     <label>@lang('form.seo_title')</label>
                     <input type="text" class="form-control" name="seo_title" value="{{ isset($product) ? $product->seo_title : old('seo_title') }}" >
