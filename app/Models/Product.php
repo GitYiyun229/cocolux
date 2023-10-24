@@ -19,7 +19,7 @@ class Product extends Model
     const IS_NEW = 1;
     const IS_NOT_NEW = 0;
 
-    public $resizeImage = ['lager' => [560,560],'resize'=>[370,370],'small'=>[120,90]];
+    public $resizeImage = ['lager' => [600,600],'resize'=>[300,300],'small'=>[100,100]];
 
     protected $appends = [
         'image_resize',
