@@ -1,6 +1,4 @@
 <div class="row">
-{{--    đánh dấu loại tin tức--}}
-    <input type="hidden" value="0" name="type" id="type">
     <div class="col-sm-7">
         <div class="row">
             <div class="col-sm-6">
@@ -166,8 +164,8 @@
                                         </select>
                                         @if ($errors->has($item->code))
                                             <span class="help-block text-danger">
-                                         <strong>{{ $errors->first($item->code) }}</strong>
-                                        </span>
+                                                <strong>{{ $errors->first($item->code) }}</strong>
+                                            </span>
                                         @endif
                                     </div>
                                 </div>

@@ -231,7 +231,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 
     Route::group(['prefix' => 'product', 'as' => 'product.', 'middleware' => ['permission:view_product']], function () {
         Route::get('', 'ProductController@index')->name('index');
-        Route::get('/create', 'ProductController@create')->name('create')->middleware('permission:create_product');
+//        Route::get('/create', 'ProductController@create')->name('create')->middleware('permission:create_product');
         Route::post('/store', 'ProductController@store')->name('store')->middleware('permission:create_product');
         Route::get('/edit/{id}', 'ProductController@edit')->name('edit')->middleware('permission:edit_product');
         Route::post('/update/{id}', 'ProductController@update')->name('update')->middleware('permission:edit_product');
