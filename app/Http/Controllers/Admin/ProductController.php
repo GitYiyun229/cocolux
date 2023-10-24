@@ -88,7 +88,7 @@ class ProductController extends Controller
             }
             DB::commit();
             Session::flash('success', trans('message.create_product_success'));
-            return redirect()->back();
+            return redirect()->route('admin.product.edit', $model->id);
         } catch (\Exception $ex) {
             DB::rollBack();
             \Log::info([

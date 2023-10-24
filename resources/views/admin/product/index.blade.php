@@ -17,11 +17,13 @@
                 <a class="btn btn-success ml-2" href="{{ route('admin.product.index') }}"><i class="fa fa-recycle"></i> @lang('form.button.refresh')</a>
             </form>
         </div>
-        <div class="col-sm-3 d-none">
-            <a href="{{ route('admin.product.create') }}" class="btn btn-primary float-right"><i class="fa fa-plus"></i> @lang('form.button.create')</a>
+        <div class="col-sm-3">
+{{--            <a href="{{ route('admin.product.create') }}" class="btn btn-primary float-right"><i class="fa fa-plus"></i> @lang('form.button.create')</a>--}}
+            <button class="btn btn-primary mb-4 float-right" type="button" data-toggle="modal" data-target="#createProduct"><i class="fas fa-plus"></i>Thêm sản phẩm mới</button>
         </div>
     </div>
     {!! $dataTable->table(['id' => 'product-table', 'class' => 'table table-striped table-bordered table-width-auto']) !!}
+    @include('admin.product.form.new_product')
 @endsection
 
 @section('script')
