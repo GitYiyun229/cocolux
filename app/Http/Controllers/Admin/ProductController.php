@@ -88,7 +88,7 @@ class ProductController extends Controller
             }
             DB::commit();
             Session::flash('success', trans('message.create_product_success'));
-            return redirect()->back();
+            return redirect()->route('admin.product.edit', $model->id);
         } catch (\Exception $ex) {
             DB::rollBack();
             \Log::info([
@@ -165,7 +165,7 @@ class ProductController extends Controller
                 if ($data_root->image && !\Str::contains($data_root->image, 'cdn.cocolux.com')){
                     $this->productResponstory->removeImageResize($data_root->image,$this->resizeImage, $id,'product');
                 }
-                $data['image'] = $this->productResponstory->saveFileUpload($data['image'],$this->resizeImage, $id,'product');
+                $data['image'] = $this->productResponstory->saveFileUpload($data['image'],$this->resizeImage, $id,'product','resize');
             }
             if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
