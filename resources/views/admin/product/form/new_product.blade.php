@@ -39,7 +39,7 @@
                                 <!-- text input -->
                                 <div class="form-group">
                                     <label>@lang('form.product.sku')</label>
-                                    <input type="text" class="form-control" name="sku" value="{{ isset($product) ? $product->sku : old('sku') }}">
+                                    <input type="text" class="form-control" name="sku" value="{{ isset($product) ? $product->sku : old('sku') }}" required>
                                     @if ($errors->has('sku'))
                                         <span class="help-block text-danger">
                                             <strong>{{ $errors->first('sku') }}</strong>
