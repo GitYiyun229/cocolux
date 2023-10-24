@@ -269,7 +269,7 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <label>@lang('form.description')</label> <span class="text-danger">*</span>
-                    <textarea id="description" name="description" class="form-control" rows="10" >{{ isset($product->description) ? $product->description : old('description') }}</textarea>
+                    <textarea id="description" name="description" class="form-control" rows="10" >{{ isset($product->description) ? replace_image($product->description) : old('description') }}</textarea>
                     @if ($errors->has('description'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('description') }}</strong>
@@ -283,7 +283,7 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label>{{ $item->name }}</label>
-                            <textarea id="{{ $item->code }}" name="{{ $item->code }}" class="form-control" rows="10" >{{ isset($item->content) ? $item->content['content'] : old($item->code) }}</textarea>
+                            <textarea id="{{ $item->code }}" name="{{ $item->code }}" class="form-control" rows="10" >{{ isset($item->content) ? replace_image($item->content['content']) : old($item->code) }}</textarea>
                             @if ($errors->has($item->code))
                                 <span class="help-block text-danger">
                                  <strong>{{ $errors->first($item->code) }}</strong>

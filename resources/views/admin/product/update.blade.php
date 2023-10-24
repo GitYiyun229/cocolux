@@ -27,7 +27,6 @@
         @empty
         @endforelse
         @endif
-
     </script>
     <script>
         function editProductOption(id_product) {

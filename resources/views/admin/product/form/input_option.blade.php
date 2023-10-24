@@ -66,11 +66,11 @@
                         <div class="form-group">
                             <div class="icheck-success d-inline">
                                 <input class="" type="radio" id="is_defaultOptionRadio1" name="is_default" value="{{ \App\Models\ProductOptions::IS_DEFAULT }}" {{ (isset($product_option->is_default) && $product_option->is_default == \App\Models\ProductOptions::IS_DEFAULT) ? 'checked' : (old('is_default') && (old('is_default') == \App\Models\ProductOptions::IS_DEFAULT)) ? 'checked' : '' }}  required>
-                                <label for="is_defaultOptionRadio1" class="custom-control-label">Mặc định</label>
+                                <label for="is_defaultOptionRadio1" class="custom-control-label">Có</label>
                             </div>
                             <div class="icheck-danger d-inline">
                                 <input class="" type="radio" id="is_defaultOptionRadio2" name="is_default" value="{{ \App\Models\ProductOptions::IS_NOT_DEFAULT }}" {{ (isset($product_option) && $product_option->is_default == \App\Models\ProductOptions::IS_NOT_DEFAULT) ? 'checked' : (old('is_default') && (old('is_default') == \App\Models\ProductOptions::IS_NOT_DEFAULT)) ? 'checked' : '' }}  required>
-                                <label for="is_defaultOptionRadio2" class="custom-control-label">Không mặc định</label>
+                                <label for="is_defaultOptionRadio2" class="custom-control-label">Không</label>
                             </div>
                         </div>
                         @if ($errors->has('is_default'))
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <button id="ckfinder-modal" type="button" class="button-a button-a-background" style="float: left">Open Modal</button>
+                    <button id="ckfinder-modal" type="button" class="btn btn-success button-a button-a-background" style="float: left">Open Modal</button>
                     <div id="sortable-container">
                         @if(!empty($images))
                             @forelse($images as $item)
