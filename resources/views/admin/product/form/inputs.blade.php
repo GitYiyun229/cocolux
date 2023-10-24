@@ -177,47 +177,6 @@
                     </div>
                 </div>
             @endif
-            <div class="div-list-products">
-                <table class="table table-bordered mt-2 w-100" id="list_products" style="width: 100%">
-                    <thead class="thead-light">
-                    <tr>
-                        <th >Tên sản phẩm</th>
-                        <th >SKU</th>
-                        <th >Giá vốn</th>
-                        <th >Giá bán</th>
-                        <th >Mặc định</th>
-                        <th style="width: 50px;">#</th>
-                    </tr>
-                    </thead>
-                    <tbody id="table-body">
-                    @if(!empty($product_option))
-                        @forelse($product_option as $k => $item)
-                            <tr>
-                                <td>{{ $item->title }}</td>
-                                <td>{{ $item->sku }}</td>
-                                <td>{{ format_money($item->original_price) }}</td>
-                                <td>
-                                    {{ format_money($item->price) }}
-                                </td>
-                                <td>
-                                    @if($item->is_default == 1)
-                                        <span class="badge badge-primary">MẶc định</span>
-                                    @else
-                                        <span class="badge badge-secondary">Không mẶc định</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <button type="button" onclick="editProductOption({{ $item->id }})" class="btn btn-warning mb-2" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button>
-                                    <button type="button" onclick="deleteProductOption({{ $item->id }})" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                </td>
-                            </tr>
-                        @empty
-                        @endforelse
-                    @endif
-                    </tbody>
-                </table>
-                <button class="btn btn-warning mb-4" onclick="addProductOption()" type="button" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-plus"></i>Thêm sản phẩm phụ</button>
-            </div>
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
@@ -266,35 +225,47 @@
                     @endif
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <label>@lang('form.description')</label> <span class="text-danger">*</span>
-                    <textarea id="description" name="description" class="form-control" rows="10" >{{ isset($product->description) ? replace_image($product->description) : old('description') }}</textarea>
-                    @if ($errors->has('description'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('description') }}</strong>
-                </span>
+            <div class="div-list-products">
+                <table class="table table-bordered mt-2 w-100" id="list_products" style="width: 100%">
+                    <thead class="thead-light">
+                    <tr>
+                        <th >Tên sản phẩm</th>
+                        <th >SKU</th>
+                        <th >Giá vốn</th>
+                        <th >Giá bán</th>
+                        <th >Mặc định</th>
+                        <th style="width: 50px;">#</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    @if(!empty($product_option))
+                        @forelse($product_option as $k => $item)
+                            <tr>
+                                <td>{{ $item->title }}</td>
+                                <td>{{ $item->sku }}</td>
+                                <td>{{ format_money($item->original_price) }}</td>
+                                <td>
+                                    {{ format_money($item->price) }}
+                                </td>
+                                <td>
+                                    @if($item->is_default == 1)
+                                        <span class="badge badge-primary">MẶc định</span>
+                                    @else
+                                        <span class="badge badge-secondary">Không mẶc định</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <button type="button" onclick="editProductOption({{ $item->id }})" class="btn btn-warning mb-2" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-edit"></i></button>
+                                    <button type="button" onclick="deleteProductOption({{ $item->id }})" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                        @empty
+                        @endforelse
                     @endif
-                </div>
+                    </tbody>
+                </table>
+                <button class="btn btn-warning mb-4" onclick="addProductOption()" type="button" data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-plus"></i>Thêm sản phẩm phụ</button>
             </div>
-            @if(!empty($attribute))
-            @forelse($attribute as $item)
-                @if($item->type == 'ckeditor')
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label>{{ $item->name }}</label>
-                            <textarea id="{{ $item->code }}" name="{{ $item->code }}" class="form-control" rows="10" >{{ isset($item->content) ? replace_image($item->content['content']) : old($item->code) }}</textarea>
-                            @if ($errors->has($item->code))
-                                <span class="help-block text-danger">
-                                 <strong>{{ $errors->first($item->code) }}</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-                @endif
-            @empty
-            @endforelse
-            @endif
         </div>
     </div>
     <div class="col-sm-5">
@@ -333,6 +304,37 @@
             </div>
         </div>
     </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label>@lang('form.description')</label> <span class="text-danger">*</span>
+            <textarea id="description" name="description" class="form-control" rows="10" >{{ isset($product->description) ? replace_image($product->description) : old('description') }}</textarea>
+            @if ($errors->has('description'))
+                <span class="help-block text-danger">
+                    <strong>{{ $errors->first('description') }}</strong>
+                </span>
+            @endif
+        </div>
+    </div>
+    @if(!empty($attribute))
+        @forelse($attribute as $item)
+            @if($item->type == 'ckeditor')
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>{{ $item->name }}</label>
+                        <textarea id="{{ $item->code }}" name="{{ $item->code }}" class="form-control" rows="10" >{{ isset($item->content) ? replace_image($item->content['content']) : old($item->code) }}</textarea>
+                        @if ($errors->has($item->code))
+                            <span class="help-block text-danger">
+                                 <strong>{{ $errors->first($item->code) }}</strong>
+                                </span>
+                        @endif
+                    </div>
+                </div>
+            @endif
+        @empty
+        @endforelse
+    @endif
 </div>
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
