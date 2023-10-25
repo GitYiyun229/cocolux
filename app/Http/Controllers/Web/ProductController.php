@@ -213,7 +213,9 @@ class ProductController extends Controller
                 $query->where('category_path', 'LIKE', '%'.$id.'%');
             }
             if ($keyword){
-                $query->where('title', 'LIKE', '%'.$keyword.'%');
+                $query->where('title', 'LIKE', '%'.$keyword.'%')
+                    ->Orwhere('slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
+                    ->Orwhere('sku', 'LIKE', '%'.$keyword.'%');
             }
             if ($list_id_request){
                 foreach ($list_id_request as $item){
@@ -229,10 +231,15 @@ class ProductController extends Controller
 
         $total_products = ProductOptions::with(['product' => function ($query) {
             $query->select('id', 'is_new', 'brand','slug','attribute_path');
-        }])->whereHas('product', function ($query) use ($id,$list_id_request) {
+        }])->whereHas('product', function ($query) use ($id,$list_id_request,$keyword) {
             $query->where('active', 1);
             if ($id){
                 $query->where('category_path', 'LIKE', '%'.$id.'%');
+            }
+            if ($keyword){
+                $query->where('title', 'LIKE', '%'.$keyword.'%')
+                    ->Orwhere('slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
+                    ->Orwhere('sku', 'LIKE', '%'.$keyword.'%');
             }
             if ($list_id_request){
                 foreach ($list_id_request as $item){
@@ -265,7 +272,7 @@ class ProductController extends Controller
 //        SEOTools::twitter()->setSite('cocolux.com');
 //        SEOMeta::setKeywords($cat->seo_keyword?$cat->seo_keyword:$cat->title);
 
-        return view('web.product.cat',compact('cat','cats','products','attributes','sorts','countArray'));
+        return view('web.product.search',compact('cat','cats','products','attributes','sorts','countArray','keyword'));
     }
 
     public function brand(Request $request, $slug,$id){

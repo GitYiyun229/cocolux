@@ -178,6 +178,7 @@
         }
 
         function submitFormOption(id_product) {
+
             $.ajax({
                 type: "POST",
                 url: $('#form-product-option #form_product_option').val(),
