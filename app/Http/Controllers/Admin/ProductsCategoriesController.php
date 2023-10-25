@@ -150,12 +150,19 @@ class ProductsCategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $this->productCategoryRepository->delete($id);
-
-        return [
-            'status' => true,
-            'message' => trans('message.delete_product_category_success')
-        ];
+        $cat = $this->productCategoryRepository->getOneById($id,['products']); // check article exist in cat
+        if (!empty($cat->products)){
+            return [
+                'status' => false,
+                'message' => 'Vẫn có sản phẩm trong danh mục này'
+            ];
+        }else{
+            $this->productCategoryRepository->delete($id);
+            return [
+                'status' => true,
+                'message' => trans('message.delete_product_category_success')
+            ];
+        }
     }
 
     /**
