@@ -8,6 +8,7 @@ use App\Models\Attribute;
 use App\Models\AttributeValues;
 use App\Models\Product;
 use App\Models\ProductOptions;
+use App\Models\ProductsCategories;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProductInterface;
 use App\Repositories\Contracts\ProductCategoryInterface;
@@ -86,6 +87,8 @@ class ProductController extends Controller
             if (!empty($data['image'])){
                 $this->productResponstory->saveFileUpload($image_root,$this->resizeImage,$model->id,'product');
             }
+            $category = ProductsCategories::findOrFail($data['category_id']);
+            $data['category_path'] = $category->path.','.$category->id;
             DB::commit();
             Session::flash('success', trans('message.create_product_success'));
             return redirect()->route('admin.product.edit', $model->id);
@@ -207,6 +210,8 @@ class ProductController extends Controller
             $attribute_path_st = implode(',', $attribute_path);
             $data['attributes'] = $attributes;
             $data['attribute_path'] = $attribute_path_st;
+            $category = ProductsCategories::findOrFail($data['category_id']);
+            $data['category_path'] = $category->path.','.$category->id;
 
             $data_root->update($data);
             DB::commit();
