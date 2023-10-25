@@ -170,6 +170,9 @@
                 data: {_token: $('meta[name="csrf-token"]').attr("content")},
                 success: function(data) {
                     $("#form-product-option").html(data);
+                    initializeSortable();
+                    deleteImages();
+                    uploadImagesCk();
                 }
             });
         }
