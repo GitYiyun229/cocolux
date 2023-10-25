@@ -63,6 +63,9 @@ class ProductOptionController extends Controller
             $data['active'] = $request->input('active');
             $data['is_default'] = $is_default;
             $data['parent_id'] = $parent_id;
+            $sortedIds = $request->input('sortedIds');
+            $data['images'] = json_encode(explode(',',$sortedIds));
+
             if ($is_default){
                 ProductOptions::where('parent_id', $parent_id)->update(['is_default' => 0]);
             }
@@ -178,6 +181,10 @@ class ProductOptionController extends Controller
             $data['active'] = $request->input('active');
             $data['is_default'] = $is_default;
             $data['parent_id'] = $parent_id;
+            $sortedIds = $request->input('sortedIds');
+            if ($sortedIds){
+                $data['images'] = json_encode(explode(',',$sortedIds));
+            }
             if ($is_default){
                 ProductOptions::where('parent_id', $parent_id)->where('id','!=',$id)->update(['is_default' => 0]);
             }
