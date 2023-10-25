@@ -12,7 +12,7 @@ class Article extends Model
     const IS_HOME = 1;
     const IS_NOT_HOME = 0;
 
-    public $resizeImage = ['lager' => [656,440],'resize'=>[368,245],'small'=>[248,165]];
+    public $resizeImage = ['lager' => [600,600],'resize'=>[400,400],'small'=>[100,100]];
 
     protected $appends = [
         'image_resize',
