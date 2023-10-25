@@ -8,7 +8,7 @@
             @csrf
             @include('admin.product-category.form.inputs')
             <input type="hidden" name="id" value="{{ $product_category->id }}">
-            <button type="submit" class="btn btn-primary">@lang('form.button.update')</button>
+            <button type="submit" class="btn btn-primary mt-md-3">@lang('form.button.update')</button>
         </form>
     </div>
 @endsection

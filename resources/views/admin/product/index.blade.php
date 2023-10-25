@@ -25,7 +25,15 @@
     {!! $dataTable->table(['id' => 'product-table', 'class' => 'table table-striped table-bordered table-width-auto']) !!}
     @include('admin.product.form.new_product')
 @endsection
+@section('link')
+    @parent
+    <style>
+        th{
+            text-align: center;
+        }
 
+    </style>
+@endsection
 @section('script')
     @parent
     {!! $dataTable->scripts() !!}
