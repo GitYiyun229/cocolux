@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="card card-primary card-body">
-        <form action="{{ route('admin.product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.product.update', $product->id) }}" id="form-product" method="POST" enctype="multipart/form-data">
             @csrf
             @include('admin.product.form.inputs')
             <input type="hidden" name="id" value="{{ $product->id }}">
@@ -198,7 +198,8 @@
                 success: function(result) {
                     if (result.status === true) {
                         toastr["success"](result.message);
-                        window.location.reload();
+                        $("form#form-product").submit();
+                        // window.location.reload();
                     }
 
                     if (result.status === false) {
