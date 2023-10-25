@@ -382,7 +382,7 @@ class ProductController extends Controller
         $list_image = json_decode($product->images);
         $stocks = json_decode($product->stocks);
         $product_root = Product::where(['id' => $product->parent_id])->select('id','slug','title','image','brand','description','attributes')->with(['category'])->first();
-        $attribute_value = json_decode($product_root->attributes);
+        $attribute_value = !empty($product_root->attributes)?json_decode($product_root->attributes):'';
         $list_product_parent = ProductOptions::where(['parent_id' => $product->parent_id])->get();
         $products = Product::select('id','title','slug','image','price','category_id','sku')
             ->where(['active' => 1,'category_id' => $product->product->category_id])
