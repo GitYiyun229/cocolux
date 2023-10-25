@@ -84,36 +84,39 @@
                     height: 600,
                     onInit: function(finder) {
                         finder.on('files:choose', function(evt) {
-                            console.log(evt);
                             const files = evt.data.files;
-                            $.each(files, function(i, file) {
-                                console.log(file);
+                            files.forEach( function( file, i ) {
                                 const fileroot = file.getUrl();
-                                const divElement = $('<span></span>');
-                                divElement.addClass('mr-2');
-                                divElement.addClass('mb-3');
-                                divElement.css('width', '200px');
-                                divElement.html(`
-                                    <img src="${fileroot}" class="img-responsive mr-2" style="width: 200px;">
+                                const divElement = document.createElement('span');
+                                divElement.classList.add('mr-2');
+                                divElement.classList.add('mb-3');
+                                divElement.style.width = '200px';
+                                divElement.innerHTML = `
+                                    <img src="${fileroot}" class="img-responsive mr-2" style="width: 50px;">
                                     <button class="delete-btn" type="button">Xóa</button>
-                                `);
-                                sortableContainer.append(divElement);
+                                `;
+                                sortableContainer.appendChild(divElement);
                             });
                             updateSortedIdsInput();
+                            deleteImages();
                         });
 
                         finder.on('file:choose:resizedImage', function(evt) {
-                            const file = evt.data.resizedUrl;
-                            const divElement = $('<span></span>');
-                            divElement.addClass('mr-2');
-                            divElement.addClass('mb-3');
-                            divElement.css('width', '200px');
-                            divElement.html(`
-                                <img src="${file}" class="img-responsive mr-2" style="width: 200px;">
-                                <button class="delete-btn" type="button">Xóa</button>
-                            `);
-                            sortableContainer.append(divElement);
+                            const files = evt.data.resizedUrl;
+                            files.forEach( function( file, i ) {
+                                const fileroot = file.getUrl();
+                                const divElement = document.createElement('span');
+                                divElement.classList.add('mr-2');
+                                divElement.classList.add('mb-3');
+                                divElement.style.width = '200px';
+                                divElement.innerHTML = `
+                                    <img src="${fileroot}" class="img-responsive mr-2" style="width: 50px;">
+                                    <button class="delete-btn" type="button">Xóa</button>
+                                `;
+                                sortableContainer.appendChild(divElement);
+                            });
                             updateSortedIdsInput();
+                            deleteImages();
                         });
                     }
                 });
@@ -189,6 +192,7 @@
                     parent_id: $('#form-product-option #id_product_parent').val(),
                     active: $('#form-product-option input[name="active"]:checked').val(),
                     is_default: $('#form-product-option input[name="is_default"]:checked').val(),
+                    sortedIds: $('#form-product-option #sortedIdsInput').val(),
                     _token: $('meta[name="csrf-token"]').attr("content")
                 },
                 success: function(result) {

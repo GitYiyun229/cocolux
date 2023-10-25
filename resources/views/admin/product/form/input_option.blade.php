@@ -94,14 +94,14 @@
                         @if(!empty($images))
                             @forelse($images as $item)
                                 <span class="mr-2 mb-3" style="width: 200px;">
-                                        <img src="{{ asset($item) }}" class="img-responsive mr-2" style="width: 50px;">
+                                        <img src="{{ asset(replace_image($item)) }}" class="img-responsive mr-2" style="width: 50px;">
                                         <button class="delete-btn" type="button">Xóa</button>
                                     </span>
                             @empty
                             @endforelse
                         @endif
                     </div>
-                    <input type="hidden" name="sortedIds" id="sortedIdsInput" value="{{ implode(',',$images) }}">
+                    <input type="hidden" name="sortedIds" id="sortedIdsInput" value="{{ (!empty($images))?replace_image(implode(',',$images)):'' }}">
                 </div>
             </div>
         </div>
