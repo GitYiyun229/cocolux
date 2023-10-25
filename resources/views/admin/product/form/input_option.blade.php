@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <button id="ckfinder-modal" type="button" class="btn btn-success button-a button-a-background" style="float: left">Open Modal</button>
+                    <button id="ckfinder-modal" type="button" class="btn btn-success button-a button-a-background" style="float: left">UpLoad</button>
                     <div id="sortable-container">
                         @if(!empty($images))
                             @forelse($images as $item)
@@ -101,7 +101,7 @@
                             @endforelse
                         @endif
                     </div>
-                    <input type="hidden" name="sortedIds" id="sortedIdsInput" value="">
+                    <input type="hidden" name="sortedIds" id="sortedIdsInput" value="{{ implode(',',$images) }}">
                 </div>
             </div>
         </div>
