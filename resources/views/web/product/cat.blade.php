@@ -21,6 +21,8 @@
                 </ol>
             </nav>
 
+{{--            {{ Breadcrumbs::render('category', $cat) }}--}}
+
             <div class="layout-page-products-list mb-5">
                 <form action="{{ route('catProduct',['slug' => $cat->slug,'id' =>$cat->id]) }}" id="form_filter" method="get">
                     <div class="layout-main mb-5 bg-white">

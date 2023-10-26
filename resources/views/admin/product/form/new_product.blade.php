@@ -37,18 +37,6 @@
                             </div>
                             <div class="col-sm-6">
                                 <!-- text input -->
-                                <div class="form-group">
-                                    <label>@lang('form.product.sku')</label>
-                                    <input type="text" class="form-control" name="sku" value="{{ isset($product) ? $product->sku : old('sku') }}" required>
-                                    @if ($errors->has('sku'))
-                                        <span class="help-block text-danger">
-                                            <strong>{{ $errors->first('sku') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <!-- text input -->
                                 <div class="form-group clearfix">
                                     <label>@lang('form.product.active')</label> <span class="text-danger">*</span>
                                     <div class="form-group">
