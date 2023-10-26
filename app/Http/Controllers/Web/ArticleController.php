@@ -94,12 +94,8 @@ class ArticleController extends Controller
     public function detail($slug, $id)
     {
         $article = $this->articleRepository->getOneById($id,['category']);
-        if ($article->type == 0){
-            $limit = 4;
-        }else{
-            $limit = 3;
-        }
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
+        $parent_cat = ArticlesCategories::select('id','title','slug')->where(['active'=> 1,'id' => $article->category_id])->first();
         $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
         $product_hots = Product::where(['active' => 1, 'is_hot' => 1])
             ->select('id','title','image','brand','hot_deal','slug','sku')
@@ -116,6 +112,6 @@ class ArticleController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($article->seo_keyword?$article->seo_keyword:$article->title);
 
-        return view('web.article.detail', compact('article','cat_article','article_hot','product_hots'));
+        return view('web.article.detail', compact('article','cat_article','article_hot','product_hots','parent_cat'));
     }
 }

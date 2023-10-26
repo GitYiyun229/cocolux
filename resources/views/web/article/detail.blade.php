@@ -5,20 +5,7 @@
 
         <div class="container">
             <nav aria-label="breadcrumb" class="pt-3 pb-3 mb-4">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item">
-                        <a href="#">
-                            <i class="fa-solid fa-house-chimney"></i>
-                            Trang chủ
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item" aria-current="page">
-                        Review mỹ phẩm
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Review 4 thỏi son Black Rouge đỏ đất được yêu thích nhất
-                    </li>
-                </ol>
+                {{ Breadcrumbs::render('detailArticle', $parent_cat,$article) }}
             </nav>
 
             <div class="layout-page-news-list mb-5">
