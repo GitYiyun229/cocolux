@@ -88,7 +88,12 @@ class ProductController extends Controller
                 $this->productResponstory->saveFileUpload($image_root,$this->resizeImage,$model->id,'product');
             }
             $category = ProductsCategories::findOrFail($data['category_id']);
-            $data['category_path'] = $category->path.','.$category->id;
+            if ($category->path){
+                $data['category_path'] = $category->path.','.$category->id;
+            }else{
+                $data['category_path'] = $category->id;
+            }
+
             DB::commit();
             Session::flash('success', trans('message.create_product_success'));
             return redirect()->route('admin.product.edit', $model->id);
@@ -211,7 +216,12 @@ class ProductController extends Controller
             $data['attributes'] = $attributes;
             $data['attribute_path'] = $attribute_path_st;
             $category = ProductsCategories::findOrFail($data['category_id']);
-            $data['category_path'] = $category->path.','.$category->id;
+            if ($category->path){
+                $data['category_path'] = $category->path.','.$category->id;
+            }else{
+                $data['category_path'] = $category->id;
+            }
+
 
             $data_root->update($data);
             DB::commit();

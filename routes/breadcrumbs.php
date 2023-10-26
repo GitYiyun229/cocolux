@@ -2,29 +2,58 @@
 
 // Home
 Breadcrumbs::for('home', function ($trail) {
-    $trail->push('Home', route('home'), ['icon' => 'home.png']);
+    $trail->push('Trang chủ', route('home'), ['icon' => 'fa-solid fa-house-chimney']);
 });
 
-// Home > About
-Breadcrumbs::for('about', function ($trail) {
+// Home > Page
+Breadcrumbs::for('detailPage', function ($trail, $page) {
     $trail->parent('home');
-    $trail->push('About', route('about'));
+    $trail->push($page->title, route('detailPage',['slug' => $page->slug]));
 });
 
-// Home > Blog
-Breadcrumbs::for('homeArticle', function ($trail) {
+// Home > Blog[Danh-muc]
+Breadcrumbs::for('catArticle', function ($trail,$cats) {
     $trail->parent('home');
-    $trail->push('Blog', route('homeArticle'));
+    $trail->push($cats->title, route('catArticle',['slug' => $cats->slug, 'id' => $cats->id]));
 });
 
-// Home > Blog > [Category]
-Breadcrumbs::for('category', function ($trail, $category) {
-    $trail->parent('homeArticle');
-    $trail->push($category->title, route('catArticle', ['slug'=>$category->slug,'id'=>$category->id]));
+// Home > Blog[Danh-muc] > [Title]
+Breadcrumbs::for('detailArticle', function ($trail,$parent_cat,$article) {
+    $trail->parent('home');
+    if ($parent_cat->id == $article->category->id){
+        $trail->push($parent_cat->title, route('catArticle',['slug' => $parent_cat->slug, 'id' => $parent_cat->id]));
+    }else{
+        $trail->push($parent_cat->title, route('catArticle',['slug' => $parent_cat->slug, 'id' => $parent_cat->id]));
+        $trail->push($article->category->title, route('catArticle',['slug' => $article->category->slug, 'id' => $article->category->id]));
+    }
+    $trail->push($article->title, route('detailArticle',['slug' => $article->slug, 'id' => $article->id]));
 });
 
-// Home > Blog > [Category] > [Post]
-Breadcrumbs::for('post', function ($trail, $post) {
-    $trail->parent('category', $post->category);
-    $trail->push($post->title, route('post', $post->id));
+// Home > Thương hiệu
+Breadcrumbs::for('homeBrand', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Thương hiệu', route('homeBrand'));
+});
+
+// Home > Thương hiệu > Brand
+Breadcrumbs::for('detailBrand', function ($trail, $brand) {
+    $trail->parent('home');
+    $trail->push('Thương hiệu', route('homeBrand'));
+    $trail->push($brand->name, route('detailBrand',['slug' => $brand->slug, 'id' => $brand->id]));
+});
+
+// Home > Danh mục > [Category]
+Breadcrumbs::for('catProduct', function ($trail, $category) {
+    $trail->parent('home');
+    $trail->push('Danh mục', route('catProduct', ['slug'=>$category->slug,'id'=>$category->id]));
+    $trail->push($category->title, route('catProduct', ['slug'=>$category->slug,'id'=>$category->id]));
+});
+
+// Home > [Category...] > [Product]
+Breadcrumbs::for('detailProduct', function ($trail, $product,$list_cats) {
+    $trail->parent('home');
+    foreach ($list_cats as $item){
+        $trail->push($item->title, route('catProduct', ['slug'=>$item->slug,'id'=>$item->id]));
+    }
+    $trail->push($product->title, route('detailProduct', ['slug'=>$product->slug,'sku'=>$product->sku]));
 });

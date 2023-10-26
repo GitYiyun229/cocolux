@@ -150,7 +150,7 @@ class ProductsCategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $cat = $this->productCategoryRepository->getOneById($id,['products']); // check article exist in cat
+        $cat = $this->productCategoryRepository->getOneById($id,['products']); // check product exist in cat
         if (!empty($cat->products)){
             return [
                 'status' => false,

@@ -370,21 +370,21 @@ class ProductController extends Controller
         $currentUrl = url()->full();
         $products->setPath($currentUrl);
 
-        SEOTools::setTitle($brand->seo_title?$brand->seo_title:$brand->title);
-        SEOTools::setDescription($brand->seo_description?$brand->seo_description:$brand->description);
+        SEOTools::setTitle($brand->seo_title?$brand->seo_title:$brand->name);
+        SEOTools::setDescription($brand->seo_description?$brand->seo_description:'');
         SEOTools::addImages($brand->image?asset($brand->image):null);
         SEOTools::setCanonical(url()->current());
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('cocolux.com');
-        SEOMeta::setKeywords($brand->seo_keyword?$brand->seo_keyword:$brand->title);
+        SEOMeta::setKeywords($brand->seo_keyword?$brand->seo_keyword:$brand->name);
 
         return view('web.product.brand',compact('brand','cats','products','attributes','sorts','countArray'));
     }
 
     public function detail ($slug,$sku){
         $product = ProductOptions::where(['sku' => $sku])->with(['product' => function($query){
-            $query->select('id','category_id','sku','slug','title','attributes');
+            $query->select('id','category_id','sku','slug','title','attributes','category_path');
         }])->orderBy('id', 'DESC')->first();
         if (!$product) {
             abort(404);
@@ -399,6 +399,8 @@ class ProductController extends Controller
             ->with(['category'])
             ->limit(3)->orderBy('id', 'DESC')->get();
 
+        $list_cats = ProductsCategories::select('id','slug','title')->whereIn('id',explode('.',$product->product->category_path))->get();
+
         SEOTools::setTitle($product->seo_title?$product->seo_title:$product->title);
         SEOTools::setDescription($product->seo_description?$product->seo_description:$product->description);
         SEOTools::addImages($product->image?asset($product->image):null);
@@ -408,7 +410,7 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($product->seo_keyword?$product->seo_keyword:$product->title);
 
-        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root'));
+        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats'));
     }
 
     public function is_new(){
