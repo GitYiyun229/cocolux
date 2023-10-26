@@ -4,24 +4,28 @@
     <main>
 
         <div class="container">
-            @include('web.components.breadcrumb',['links' => [] ])
+            <nav aria-label="breadcrumb" class="pt-3 pb-3 mb-4">
+                {{ Breadcrumbs::render('detailProduct', $product,$list_cats) }}
+            </nav>
             <div class="layout-page-product-detail mb-5">
                 <div class="layout-left">
                     <div class="layout-box layout-padding bg-white">
                         <div class="product-detail">
                             <div class="detail-thumbnail">
                                 <div class="thumbnail-nav">
-                                    @forelse($list_image as $k => $item)
-                                    <a data-index="{{ $k }}" class="thumbnail-item thumbnail-item-{{ $k }} @if( $k== 0) active @endif" data-bs-toggle="modal" data-bs-target="#imageModal">
-                                        <img src="{{ asset(replace_image($item)) }}" alt="{{ $product->title }}" class="img-fluid">
-                                    </a>
-                                    @empty
-                                    @endforelse
+                                    @if(!empty($list_image))
+                                        @forelse($list_image as $k => $item)
+                                            <a data-index="{{ $k }}" class="thumbnail-item thumbnail-item-{{ $k }} @if( $k== 0) active @endif" data-bs-toggle="modal" data-bs-target="#imageModal">
+                                                <img src="{{ asset(replace_image($item)) }}" alt="{{ $product->title }}" class="img-fluid">
+                                            </a>
+                                        @empty
+                                        @endforelse
+                                    @endif
                                 </div>
 
                                 <div class="thumbnail-image">
                                     <a href="" data-bs-toggle="modal" data-bs-target="#imageModal">
-                                        <img src="{{ asset(replace_image($list_image[0])) }}" alt="{{ $product->title }}" class="img-fluid detail-thumbnail-image">
+                                        <img src="{{ !empty($list_image)? asset(replace_image($list_image[0])):'' }}" alt="{{ $product->title }}" class="img-fluid detail-thumbnail-image">
                                     </a>
                                     <div class="detail-share">
                                         Thêm vào danh sách yêu thích
@@ -367,7 +371,7 @@
                     <div class="modal-body">
                         <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
                         <div class="main-image position-relative">
-                            <img src="{{ asset(replace_image($list_image[0])) }}" class="img-fluid detail-thumbnail-image-modal" alt="{{ $product->image }}">
+                            <img src="{{ !empty($list_image)?asset(replace_image($list_image[0])):'' }}" class="img-fluid detail-thumbnail-image-modal" alt="{{ $product->image }}">
                             <a href="" class="btn-slide-prev position-absolute d-flex align-items-center justify-content-center text-white">
                                 <i class="fa-solid fa-chevron-left"></i>
                             </a>
@@ -378,12 +382,14 @@
                         <div class="main-right">
                             <div class="product-title fw-bold mb-2">{{ $product->title }}</div>
                             <div class="product-thumbnails">
+                                @if($list_image)
                                 @forelse($list_image as $k => $item)
                                 <a data-index="{{ $k }}" class="modal-thumbnail-item thumbnail-item-{{ $k }} @if( $k== 0) active @endif">
                                     <img src="{{ asset(replace_image($item)) }}" alt="{{ $product->title }}" class="img-fluid">
                                 </a>
                                 @empty
                                 @endforelse
+                                @endif
                             </div>
                         </div>
                     </div>

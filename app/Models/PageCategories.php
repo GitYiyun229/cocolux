@@ -11,4 +11,9 @@ class PageCategories extends Model
     protected $guarded = ['id'];
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
+
+    public function pages()
+    {
+        return $this->hasMany(Page::class, 'page_cat_id', 'id');
+    }
 }

@@ -5,24 +5,8 @@
 
         <div class="container">
             <nav aria-label="breadcrumb" class="pt-3 pb-3 mb-4">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item">
-                        <a href="#">
-                            <i class="fa-solid fa-house-chimney"></i>
-                            Trang chủ
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item" aria-current="page">
-                        Danh mục
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Trang điểm
-                    </li>
-                </ol>
+                {{ Breadcrumbs::render('catProduct', $cat) }}
             </nav>
-
-{{--            {{ Breadcrumbs::render('category', $cat) }}--}}
-
             <div class="layout-page-products-list mb-5">
                 <form action="{{ route('catProduct',['slug' => $cat->slug,'id' =>$cat->id]) }}" id="form_filter" method="get">
                     <div class="layout-main mb-5 bg-white">
