@@ -132,7 +132,7 @@ class ProductController extends Controller
                     ->orWhere('type', 'ckeditor');
         })->where(['active' => 1])->with(['attributeValue' => function($query){
             $query->select('id','slug','name','attribute_id')->where('active', 1);
-        }])->get();
+        }])->orderBy('id', 'DESC')->get();
         foreach ($attribute as $item){
             if ($attribute_value){
                 $result = array_filter($attribute_value, function ($value) use ($item) {

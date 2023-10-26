@@ -27,18 +27,6 @@
             </div>
             <div class="col-sm-6">
                 <!-- text input -->
-                <div class="form-group">
-                    <label>@lang('form.product.sku')</label>
-                    <input type="text" class="form-control" name="sku" value="{{ isset($product) ? $product->sku : old('sku') }}">
-                    @if ($errors->has('sku'))
-                        <span class="help-block text-danger">
-                            <strong>{{ $errors->first('sku') }}</strong>
-                        </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <!-- text input -->
                 <div class="form-group clearfix">
                     <label>@lang('form.product.active')</label> <span class="text-danger">*</span>
                     <div class="form-group">
@@ -187,31 +175,7 @@
                     @endif
                 </div>
             </div>
-            <div class="col-sm-6">
-                <!-- text input -->
-                <div class="form-group">
-                    <label>@lang('form.product.normal_price')</label>
-                    <input type="text" class="form-control" name="normal_price" value="{{ isset($product) ? $product->normal_price : old('normal_price') }}" >
-                    @if ($errors->has('normal_price'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('normal_price') }}</strong>
-                </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <!-- text input -->
-                <div class="form-group">
-                    <label>@lang('form.product.price')</label>
-                    <input type="text" class="form-control" name="price" value="{{ isset($product) ? $product->price : old('price') }}" >
-                    @if ($errors->has('price'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('price') }}</strong>
-                </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.product.video_url')</label>
