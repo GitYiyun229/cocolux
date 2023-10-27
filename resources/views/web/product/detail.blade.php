@@ -59,7 +59,7 @@
                                 <div class="detail-price mb-4">
                                     <div class="public-price"><span class="fw-bold">{{ format_money($product->price) }}</span>(Đã bảo gồm VAT)</div>
                                     <div class="origin-price">
-                                        <span>Giá hãng: {{ format_money($product->nomal_price) }}</span>
+                                        <span>Giá hãng: {{ format_money($product->normal_price) }}</span>
                                         <span>- Tiết kiệm được 14.400 đ</span>
                                         <span>(5%)</span>
                                     </div>
