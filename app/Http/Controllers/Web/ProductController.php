@@ -398,9 +398,10 @@ class ProductController extends Controller
         $product_root = Product::where(['id' => $product->parent_id])->select('id','slug','title','image','brand','category_id','description','attributes')->with(['category'])->first();
         $attribute_value = !empty($product_root->attributes)?json_decode($product_root->attributes):null;
         $list_product_parent = ProductOptions::where(['parent_id' => $product->parent_id])->get();
-        $products = Product::select('id','title','slug','image','price','category_id','sku')
-            ->where(['active' => 1,'category_id' => $product_root->category_id])
-            ->with(['category'])
+
+        $products = ProductOptions::select('product_options.id','product_options.title','product_options.slug','product_options.images','product_options.price','product_options.normal_price','products.category_id','product_options.sku','product_options.brand')
+            ->where(['product_options.active' => 1,'products.category_id' => $product_root->category_id])
+            ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->limit(3)->orderBy('id', 'DESC')->get();
 
         $list_cats = ProductsCategories::select('id','slug','title')->whereIn('id',explode('.',$product->product->category_path))->get();
