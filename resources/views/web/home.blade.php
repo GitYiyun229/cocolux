@@ -53,31 +53,32 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body pt-0">
-                            @forelse($cat_products as $item)
-                            <div class="d-flex gap-1 justify-content-between item-cate">
-                                <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}" class="cate-parent">
-                                    {{ $item->title }}
-                                </a>
-                                @if ($item->children)
-                                <a class="btn-collapse" data-bs-toggle="collapse" href="#collapse{{ $item->id }}" role="button" aria-expanded="false" aria-controls="collapse{{ $item->id }}"></a>
-                                @endif
-                            </div>
-
-                            @if ($item->children)
-                            <div class="collapse" id="collapse{{ $item->id }}">
-                                <div class="card border-0">
-                                    @forelse($item->children as $child)
-                                        <a href="{{ route('catProduct', ['slug' => $child->slug, 'id' => $child->id]) }}" class="cate-child">
-                                            {{ $child->title }}
-                                        </a>
-                                    @empty
-                                    @endforelse
+                            @if(!empty($cat_products))
+                                @forelse($cat_products as $item)
+                                <div class="d-flex gap-1 justify-content-between item-cate">
+                                    <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}" class="cate-parent">
+                                        {{ $item->title }}
+                                    </a>
+                                    @if ($item->children)
+                                    <a class="btn-collapse" data-bs-toggle="collapse" href="#collapse{{ $item->id }}" role="button" aria-expanded="false" aria-controls="collapse{{ $item->id }}"></a>
+                                    @endif
                                 </div>
-                            </div>
-                            @endif
 
-                            @empty
-                            @endforelse
+                                @if ($item->children)
+                                <div class="collapse" id="collapse{{ $item->id }}">
+                                    <div class="card border-0">
+                                        @forelse($item->children as $child)
+                                            <a href="{{ route('catProduct', ['slug' => $child->slug, 'id' => $child->id]) }}" class="cate-child">
+                                                {{ $child->title }}
+                                            </a>
+                                        @empty
+                                        @endforelse
+                                    </div>
+                                </div>
+                                @endif
+                                @empty
+                                @endforelse
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -97,28 +98,30 @@
                 </div>
                 <div class="slide-main">
                     <div class="slide-template-slick">
+                        @if(!empty($product_hots))
                         @forelse($product_hots as $item)
-                        <a href="{{ route('detailProduct',['slug'=>trim($item->slug), 'sku' =>$item->sku]) }}" class="product-template">
+                        <a href="{{ route('detailProduct',['slug'=>!empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
                             <div class="product-discount">
                                 <span class="pe-1">5%</span>
                             </div>
                             <div class="product-thumbnail">
-                                <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid">
+                                <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                             </div>
                             <div class="product-price">
-                                <div class="public-price">{{ format_money($item->productOption->first()->price) }}</div>
-                                <div class="origin-price">{{ format_money($item->productOption->first()->normal_price) }}</div>
+                                <div class="public-price">{{ format_money($item->price) }}</div>
+                                <div class="origin-price">{{ format_money($item->normal_price) }}</div>
                             </div>
                             <div class="product-brand">
                                 {{ $item->brand }}
                             </div>
                             <div class="product-title">
-                                {{ $item->productOption->first()->title }}
+                                {{ $item->title }}
                             </div>
                             <div class="product-progress-sale count-down" time-end="Oct 30 2023 20:00:00"></div>
                         </a>
                         @empty
                         @endforelse
+                        @endif
                     </div>
                 </div>
             </div>
@@ -134,42 +137,45 @@
                 </div>
                 <div class="slide-main">
                     <div class="slide-template-slick">
+                        @if(!empty($product_hots))
                         @forelse($product_hots as $item)
-                        <a href="{{ route('detailProduct',['slug'=>trim($item->slug), 'sku' =>$item->sku]) }}" class="product-template">
+                        <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
                             <div class="product-discount">
                                 <span class="pe-1">5%</span>
                             </div>
                             <div class="product-thumbnail">
-                                <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid">
+                                <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                             </div>
                             <div class="product-price">
-                                <div class="public-price">{{ format_money($item->productOption->first()->price) }}</div>
-                                <div class="origin-price">{{ format_money($item->productOption->first()->normal_price) }}</div>
+                                <div class="public-price">{{ format_money($item->price) }}</div>
+                                <div class="origin-price">{{ format_money($item->normal_price) }}</div>
                             </div>
                             <div class="product-brand">
                                 {{ $item->brand }}
                             </div>
                             <div class="product-title">
-                                {{ $item->productOption->first()->title }}
+                                {{ $item->title }}
                             </div>
                         </a>
                         @empty
                         @endforelse
+                        @endif
                     </div>
                 </div>
             </div>
 
             <div class="slide-template bg-white mb-5">
                 <div class="slide-top">
-                    <a href="" class="slide-title">
+                    <a href="{{ route('homeBrand') }}" class="slide-title">
                         <h3>Thương hiệu nổi bật</h3>
                     </a>
-                    <a href="" class="slide-more">
+                    <a href="{{ route('homeBrand') }}" class="slide-more">
                         Xem tất cả
                     </a>
                 </div>
                 <div class="slide-main">
                     <div class="slide-template-slick">
+                        @if(!empty($attribute_brand))
                         @forelse($attribute_brand as $item)
                         <a href="{{ route('detailBrand',['slug' => $item->slug,'id' => $item->id]) }}" class="brand-template">
                             <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->name }}" class="img-fluid">
@@ -177,26 +183,30 @@
                         </a>
                         @empty
                         @endforelse
+                        @endif
                     </div>
                 </div>
             </div>
 
             <div class="section-product-category">
+                @if(!empty($cats))
                 @forelse($cats as $cat)
                 <div class="section mb-5">
                     <div class="section-top">
                         <div class="section-menu">
-                            <a href="" class="section-title">
+                            <a href="{{ route('catProduct',['slug' => $cat->slug, 'id'=> $cat->id]) }}" class="section-title">
                                 <h2 class="text-uppercase mb-0">{{ $cat->title }}</h2>
                             </a>
                             <div class="section-sub-menu">
+                                @if(!empty($cat_sub[$cat->id]))
                                 @forelse($cat_sub[$cat->id] as $sub)
-                                <a href="" class="text-uppercase">{{ $sub->title }}</a>
+                                <a href="{{ route('catProduct',['slug' => $sub->slug, 'id'=> $sub->id]) }}" class="text-uppercase">{{ $sub->title }}</a>
                                 @empty
                                 @endforelse
+                                @endif
                             </div>
                         </div>
-                        <a href="" class="section-more text-uppercase">Xem thêm</a>
+                        <a href="{{ route('catProduct',['slug' => $cat->slug, 'id'=> $cat->id]) }}" class="section-more text-uppercase">Xem thêm</a>
                     </div>
                     <div class="section-main bg-white">
                         <div class="section-poster">
@@ -205,17 +215,18 @@
                             </a>
                         </div>
                         <div class="section-content">
+                            @if($product_cats && !empty($product_cats[$cat->id]))
                             @forelse($product_cats[$cat->id] as $item)
-                            <a href="{{ route('detailProduct',['slug'=> trim($item->slug), 'sku' => $item->sku]) }}" class="product-template">
+                            <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' => $item->sku]) }}" class="product-template">
                                 <div class="product-discount">
                                     <span class="pe-1">5%</span>
                                 </div>
                                 <div class="product-thumbnail">
-                                    <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid">
+                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                 </div>
                                 <div class="product-price">
-                                    <div class="public-price">254.600 đ</div>
-                                    <div class="origin-price">268.000 đ</div>
+                                    <div class="public-price">{{ format_money($item->price) }}</div>
+                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
                                 </div>
                                 <div class="product-brand">
                                     {{ $item->brand }}
@@ -226,30 +237,35 @@
                             </a>
                             @empty
                             @endforelse
+                            @endif
                         </div>
                     </div>
                 </div>
                 @empty
                 @endforelse
+                @endif
             </div>
 
             <div class="section-banner-middle mb-5">
+                @if(!empty($subBanner2))
                 @forelse($subBanner2 as $item)
-                <a class="" href="">
+                <a class="" href="{{ $item->url }}">
                     <img alt="{{ $item->title }}" src="{{ asset(replace_image($item->image_url)) }}" class="img-fluid">
                 </a>
                 @empty
                 @endforelse
+                @endif
             </div>
 
             <div class="section-article mb-5">
                 <div class="section-top">
-                    <a href="">
-                        <h2 class="text-uppercase">Xem tất cả</h2>
+                    <a href="{{ route('homeArticle') }}">
+                        <h2 class="text-uppercase">Tin tức & sự kiện</h2>
                     </a>
-                    <a href="" class="text-uppercase">Xem tất cả</a>
+                    <a href="{{ route('homeArticle') }}" class="text-uppercase">Xem tất cả</a>
                 </div>
                 <div class="section-main">
+                    @if(!empty($articles))
                     @forelse($articles as $item)
                     <a href="{{ route('detailArticle',['slug'=>$item->slug,'id'=>$item->id]) }}" class="article-item" title="{{ $item->title }}">
                         <div class="article-img">
@@ -263,6 +279,7 @@
                     </a>
                     @empty
                     @endforelse
+                    @endif
                 </div>
             </div>
         </div>

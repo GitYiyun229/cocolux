@@ -53,9 +53,9 @@ Breadcrumbs::for('catProduct', function ($trail, $category) {
 Breadcrumbs::for('detailProduct', function ($trail, $product,$list_cats) {
     $trail->parent('home');
     foreach ($list_cats as $item){
-        $trail->push($item->title, route('catProduct', ['slug'=>$item->slug,'id'=>$item->id]));
+        $trail->push($item->title, route('catProduct', ['slug'=>!empty($item->slug)?trim($item->slug):'','id'=>$item->id]));
     }
-    $trail->push($product->title, route('detailProduct', ['slug'=>$product->slug,'sku'=>$product->sku]));
+    $trail->push($product->title);
 });
 
 // Home > Tìm kiếm > Từ khóa: [Keyword]

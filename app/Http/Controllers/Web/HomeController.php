@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AttributeValues;
 use App\Models\Banners;
 use App\Models\Product;
+use App\Models\ProductOptions;
 use App\Models\Setting;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
@@ -53,12 +54,14 @@ class HomeController extends Controller
         $slider = Banners::where(['active' => 1, 'type' => 'home_v1_slider'])->select('id','url','image_url','mobile_url','content')->get();
         $subBanner = Banners::where(['active' => 1, 'type' => 'home_v1_sub_banner'])->select('id','url','image_url','mobile_url','content')->get(); // (2 cái ảnh nhỏ hiển thị cạnh banner)
         $subBanner2 = Banners::where(['active' => 1, 'type' => 'home_v1_primary_banner_2'])->select('id','url','image_url','mobile_url','content')->get(); // (3 ảnh hiển thị dưới cùng trên phần danh sách chi nhánh)
-        $product_hots = Product::where(['active' => 1, 'is_hot' => 1])
-            ->select('id','title','image','brand','hot_deal','sku','slug')
-            ->with(['productOption' => function($query){
-                $query->where(['is_default' => 1,'active' => 1])
-                    ->select('id','sku', 'title', 'parent_id','price','slug','images');
-            }])->limit(10)->get();
+        $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
+            ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price')
+            ->with(['product' => function($query){
+                $query->select('id','is_hot','slug');
+            }])->whereHas('product', function ($query) {
+                $query->where('is_hot', 1);
+            })->limit(10)->get();
+
         $attribute_brand = AttributeValues::where(['attribute_id' => 19,'active' => 1])->select('id','name','slug','image')->limit(15)->get(); // thương hiệu
         $cats = ProductsCategories::where(['is_home' => 1,'active' => 1,'parent_id'=>null])
             ->select('id','title','slug','image','logo')
@@ -66,10 +69,15 @@ class HomeController extends Controller
         $product_cats = array();
         $cat_sub = array();
         foreach ($cats as $item){
-            $product_cats[$item->id] = Product::where(['is_home' => 1,'active' => 1])
-                ->where('category_path', 'like', '%' . $item->id . '%')
-                ->select('id','title','slug','image','sku')
-                ->limit(10)->orderBy('id', 'ASC')->get();
+            $product_cats[$item->id] = ProductOptions::where(['is_default' => 1,'active' => 1])
+                ->whereHas('product', function ($query) use ($item) {
+                    $query->where('is_home', 1)->where('category_path', 'like', '%' . $item->id . '%');
+                })
+                ->with(['product' => function($query){
+                    $query->select('id','is_home','slug');
+                }])
+                ->select('id','title','slug','images','sku','price','parent_id','normal_price')
+                ->limit(10)->orderBy('id', 'DESC')->get();
             $cat_sub[$item->id] = ProductsCategories::where(['is_home' => 1,'active' => 1])
                 ->where('parent_id', 'like', '%' . $item->id . '%')
                 ->select('id','title','slug','image','logo')
