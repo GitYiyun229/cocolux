@@ -57,3 +57,10 @@ Breadcrumbs::for('detailProduct', function ($trail, $product,$list_cats) {
     }
     $trail->push($product->title, route('detailProduct', ['slug'=>$product->slug,'sku'=>$product->sku]));
 });
+
+// Home > Tìm kiếm > Từ khóa: [Keyword]
+Breadcrumbs::for('search', function ($trail, $keyword) {
+    $trail->parent('home');
+    $trail->push('Tìm kiếm');
+    $trail->push('Từ khóa: '.$keyword, route('search'));
+});

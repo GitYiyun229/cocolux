@@ -84,6 +84,7 @@
                     <div class="form-group d-flex align-items-center">
                         <label class="col-md-3 font-weight-bold small p-0 m-0" style="max-width: 157px;">
                             Đường dẫn (Slug)
+                            <p class="text-danger">(@lang('form.auto_slug'))</p>
                         </label>
                         <input type="text" name="slug" class="form-control" id="slug-product-option" value="{{ isset($product_option)?$product_option->slug:'' }}" >
                     </div>
