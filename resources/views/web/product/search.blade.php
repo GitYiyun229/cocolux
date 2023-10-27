@@ -5,20 +5,7 @@
 
         <div class="container">
             <nav aria-label="breadcrumb" class="pt-3 pb-3 mb-4">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item">
-                        <a href="#">
-                            <i class="fa-solid fa-house-chimney"></i>
-                            Trang chủ
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item" aria-current="page">
-                        Danh mục
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Trang điểm
-                    </li>
-                </ol>
+                {{ Breadcrumbs::render('search', $keyword) }}
             </nav>
 
             <div class="layout-page-products-list mb-5">

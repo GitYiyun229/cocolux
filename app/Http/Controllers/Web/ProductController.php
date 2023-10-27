@@ -101,6 +101,7 @@ class ProductController extends Controller
             })
             ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.slug','product_options.images')
             ->addSelect('products.title as product_name')
+            ->where('product_options.sku','!=',null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->orderBy($columnToSort, $orderDirection)
             ->paginate(30);
@@ -116,6 +117,7 @@ class ProductController extends Controller
                 }
             })
             ->select('id', 'parent_id')
+            ->where('sku','!=',null)
             ->get()->pluck('attribute_path')->toArray();
 
         $countArray = [];
@@ -225,6 +227,7 @@ class ProductController extends Controller
         })
             ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.slug','product_options.images')
             ->addSelect('products.title as product_name')
+            ->where('product_options.sku','!=',null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->orderBy($columnToSort, $orderDirection)
             ->paginate(30);
@@ -248,6 +251,7 @@ class ProductController extends Controller
             }
         })
             ->select('id', 'parent_id')
+            ->where('sku','!=',null)
             ->get()->pluck('attribute_path')->toArray();
 
         $countArray = [];
@@ -263,14 +267,13 @@ class ProductController extends Controller
         $currentUrl = url()->full();
         $products->setPath($currentUrl);
 
-//        SEOTools::setTitle($cat->seo_title?$cat->seo_title:$cat->title);
-//        SEOTools::setDescription($cat->seo_description?$cat->seo_description:$cat->description);
-//        SEOTools::addImages($cat->image?asset($cat->image):null);
-//        SEOTools::setCanonical(url()->current());
-//        SEOTools::opengraph()->setUrl(url()->current());
-//        SEOTools::opengraph()->addProperty('type', 'articles');
-//        SEOTools::twitter()->setSite('cocolux.com');
-//        SEOMeta::setKeywords($cat->seo_keyword?$cat->seo_keyword:$cat->title);
+        SEOTools::setTitle('Cocolux - Chuỗi cửa hàng mỹ phẩm chính hãng chăm sóc da');
+        SEOTools::setDescription('Tìm kiếm sản phẩm');
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('cocolux.com');
+        SEOMeta::setKeywords($keyword);
 
         return view('web.product.search',compact('cat','cats','products','attributes','sorts','countArray','keyword'));
     }
@@ -340,6 +343,7 @@ class ProductController extends Controller
         })
             ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.slug','product_options.images')
             ->addSelect('products.title as product_name')
+            ->where('product_options.sku','!=',null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->orderBy($columnToSort, $orderDirection)
             ->paginate(30);
@@ -385,7 +389,7 @@ class ProductController extends Controller
     public function detail ($slug,$sku){
         $product = ProductOptions::where(['sku' => $sku])->with(['product' => function($query){
             $query->select('id','category_id','sku','slug','title','attributes','category_path','description');
-        }])->orderBy('id', 'DESC')->first();
+        }])->where('sku','!=',null)->orderBy('id', 'DESC')->first();
         if (!$product) {
             abort(404);
         }
