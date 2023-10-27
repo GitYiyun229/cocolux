@@ -341,7 +341,7 @@
                         <h4 class="h4-title fw-bold text-center mb-0">Sản phẩm cùng thương hiệu</h4>
                         @if(!empty($products))
                         @forelse($products as $item)
-                        <a href="{{ route('detailProduct',['slug' => $item->slug, 'sku' => $item->sku]) }}" class="product-template">
+                        <a href="{{ route('detailProduct',['slug' => trim($item->slug), 'sku' => $item->sku]) }}" class="product-template">
                             <div class="product-discount">
                                 <span class="pe-1">5%</span>
                             </div>
