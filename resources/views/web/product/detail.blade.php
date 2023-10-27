@@ -229,7 +229,7 @@
                     </nav>
                     <div class="layout-box layout-padding bg-white" id="tab-des">
                         <h2 class="layout-title mb-2 fw-bold d-lg-none">Mô tả sản phẩm</h2>
-                        <div class="layout-content-text">{!! replace_image($product->description) !!}</div>
+                        <div class="layout-content-text">{!! replace_image($product->product->description) !!}</div>
                     </div>
                     @forelse($attribute_value as $k => $item)
                         @if($item->value->type == 'ckeditor')
