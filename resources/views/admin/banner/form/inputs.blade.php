@@ -86,7 +86,7 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.banner.url')</label>
-                    <input type="text" class="form-control" name="url" value="{{ isset($slider) ? $slider->url : old('url') }}" required>
+                    <input type="text" class="form-control" name="url" value="{{ isset($banner) ? $banner->url : old('url') }}" required>
                     @if ($errors->has('url'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('url') }}</strong>
@@ -97,7 +97,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label>@lang('form.banner.content')</label>
-                    <textarea class="form-control" rows="3" name="content" >{{ isset($slider) ? $slider->content : old('content') }}</textarea>
+                    <textarea class="form-control" rows="3" name="content" >{{ isset($banner) ? $banner->content : old('content') }}</textarea>
                     @if ($errors->has('content'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('content') }}</strong>
