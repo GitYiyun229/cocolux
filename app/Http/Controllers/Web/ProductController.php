@@ -102,7 +102,7 @@ class ProductController extends Controller
                     }
                 }
             })
-            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.slug','product_options.images')
+            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.normal_price','product_options.slug','product_options.images')
             ->addSelect('products.title as product_name')
             ->where('product_options.sku','!=',null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
@@ -235,7 +235,7 @@ class ProductController extends Controller
                 }
             }
         })
-            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.slug','product_options.images')
+            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.normal_price','product_options.slug','product_options.images')
             ->addSelect('products.title as product_name')
             ->where('product_options.sku','!=',null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
@@ -358,7 +358,7 @@ class ProductController extends Controller
                 }
             }
         })
-            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.slug','product_options.images')
+            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.normal_price','product_options.slug','product_options.images')
             ->addSelect('products.title as product_name')
             ->where('product_options.sku','!=',null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
@@ -422,7 +422,7 @@ class ProductController extends Controller
             }])
             ->get();
 
-        $products = ProductOptions::select('product_options.id','product_options.title','product_options.slug','product_options.images','product_options.price','product_options.normal_price','products.category_id','product_options.sku','product_options.brand')
+        $products = ProductOptions::select('product_options.id','product_options.title','product_options.slug','product_options.images','product_options.price','product_options.normal_price','product_options.normal_price','products.category_id','product_options.sku','product_options.brand')
             ->where(['product_options.active' => 1,'products.category_id' => $product_root->category_id])
             ->where('product_options.sku','!=',null)
             ->where('product_options.slug','!=',null)
