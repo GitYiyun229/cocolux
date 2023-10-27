@@ -215,9 +215,16 @@ class ProductController extends Controller
                 $query->where('category_path', 'LIKE', '%'.$id.'%');
             }
             if ($keyword){
-                $query->where('title', 'LIKE', '%'.$keyword.'%')
-                    ->Orwhere('slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
-                    ->Orwhere('sku', 'LIKE', '%'.$keyword.'%');
+                $keywords = explode(' ', $keyword);
+                $query->where(function ($query) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $query->where(function ($query) use ($keyword) {
+                            $query->where('title', 'LIKE', '%'.$keyword.'%')
+                                ->orWhere('slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
+                                ->orWhere('sku', 'LIKE', '%'.$keyword.'%');
+                        });
+                    }
+                });
             }
             if ($list_id_request){
                 foreach ($list_id_request as $item){
@@ -240,9 +247,16 @@ class ProductController extends Controller
                 $query->where('category_path', 'LIKE', '%'.$id.'%');
             }
             if ($keyword){
-                $query->where('title', 'LIKE', '%'.$keyword.'%')
-                    ->Orwhere('slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
-                    ->Orwhere('sku', 'LIKE', '%'.$keyword.'%');
+                $keywords = explode(' ', $keyword);
+                $query->where(function ($query) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $query->where(function ($query) use ($keyword) {
+                            $query->where('title', 'LIKE', '%'.$keyword.'%')
+                                ->orWhere('slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
+                                ->orWhere('sku', 'LIKE', '%'.$keyword.'%');
+                        });
+                    }
+                });
             }
             if ($list_id_request){
                 foreach ($list_id_request as $item){
