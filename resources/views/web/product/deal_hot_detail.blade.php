@@ -9,8 +9,9 @@
                     <img src="{{ $promotion->thumbnail_url }}" alt="{{ $promotion->name }}" class="img-fluid w-100">
                 </div>
                 <div class="layout-detail-main bg-white d-grid">
+                    @if(!empty($productOptions))
                     @forelse($productOptions as $item)
-                    <a href="" class="product-template">
+                    <a href="{{ route('detailProduct',['slug' => !empty($item->slug)?trim($item->slug):trim($item->product->slug),'sku' => $item->sku]) }}" class="product-template">
                         <div class="product-discount">
                             <span class="pe-1">5%</span>
                         </div>
@@ -31,6 +32,7 @@
                     </a>
                     @empty
                     @endforelse
+                    @endif
                 </div>
             </div>
         </div>

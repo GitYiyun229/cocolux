@@ -21,16 +21,20 @@
                                 <div class="filter-group">
                                     <div class="filter-group-title">Danh mục</div>
                                     <div class="filter-group-items">
+                                        @if(!empty($cats))
                                         @forelse($cats as $item)
                                             <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}" class="filter-item @if($item->parent_id) filter-item-child @endif">{{ $item->title }}</a>
                                         @empty
                                         @endforelse
+                                        @endif
                                     </div>
                                 </div>
+                                @if(!empty($attributes))
                                 @forelse($attributes as $attribute)
                                     <div class="filter-group">
                                         <div class="filter-group-title">{{ $attribute->name }}</div>
                                         <div class="filter-group-items {{ $attribute->code }}">
+                                            @if(!empty($attribute->attributeValue))
                                             @forelse($attribute->attributeValue as $item)
                                                 <span class="filter-item" data-name="{{ $attribute->code }}" data-value="{{ $item->id }}" >
                                                     <input type="hidden" name="{{ $attribute->code }}" value="{{ request($attribute->code) == $item->id ? $item->id : '' }}">
@@ -38,10 +42,12 @@
                                                 </span>
                                             @empty
                                             @endforelse
+                                            @endif
                                         </div>
                                     </div>
                                 @empty
                                 @endforelse
+                                @endif
                             </div>
                         </div>
                         <div class="layout-list">
@@ -56,16 +62,19 @@
                                         <span class="card-item card-filter active">
                                             Từ khóa: {{ $keyword }}
                                         </span>
+                                        @if(!empty($attributes))
                                         @forelse($attributes as $attribute)
                                             @if(request($attribute->code))
                                                 <span class="card-item card-filter active">
                                                     {{ $attribute->name }}:
+                                                    @if(!empty($attribute->attributeValue))
                                                     @forelse($attribute->attributeValue as $item)
                                                         @if(request($attribute->code) == $item->id)
                                                             {{ $item->name }}
                                                         @endif
                                                     @empty
                                                     @endforelse
+                                                    @endif
                                                     <div class="del-icon" data-code="{{ $attribute->code }}">
                                                         <img src="{{ asset('images/ic-delete.svg') }}" alt="del" class="img-fluid">
                                                     </div>
@@ -73,12 +82,13 @@
                                             @endif
                                         @empty
                                         @endforelse
-
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="card-group">
                                     <div class="card-title">Sắp xếp theo</div>
                                     <div class="card-items">
+                                        @if(!empty($sorts))
                                         @forelse($sorts as $k => $item)
                                         <span class="card-item card-sort {{ request('sort') == $k ? 'active' : '' }}" data-name="sort" data-value="{{ $k }}">
                                             <input type="hidden" name="sort" value="{{ request('sort') == $k ? $k : '' }}">
@@ -86,13 +96,15 @@
                                         </span>
                                         @empty
                                         @endforelse
+                                        @endif
                                     </div>
                                 </div>
                             </div>
 
                             <div class="layout-list-items mb-4">
+                                @if(!empty($products))
                                 @forelse($products as $item)
-                                    <a href="{{ route('detailProduct',['slug' => trim($item->product->slug),'sku' => $item->sku]) }}" class="product-template">
+                                    <a href="{{ route('detailProduct',['slug' => !empty($item->slug)?trim($item->slug):trim($item->product->slug),'sku' => $item->sku]) }}" class="product-template">
                                         <div class="product-discount">
                                             <span class="pe-1">5%</span>
                                         </div>
@@ -112,6 +124,7 @@
                                     </a>
                                 @empty
                                 @endforelse
+                                @endif
                             </div>
                             {{ $products->links('web.components.pagination') }}
                         </div>
