@@ -10,6 +10,24 @@
 .layout-main-detail .detail-summary {
   margin-bottom: 20px;
 }
+.layout-main-detail .toc-content {
+  display: block;
+  background-color: #f3f3f3;
+  padding: 20px;
+  margin: 0 0 20px;
+}
+.layout-main-detail .toc-content .title-toc-blog {
+  font-weight: bold;
+}
+.layout-main-detail .toc-content .my-toc-blog {
+  padding: 0;
+}
+.layout-main-detail .toc-content .my-toc-blog ul li a {
+  font-size: 14px;
+  color: #000;
+  margin-bottom: 7px;
+  display: block;
+}
 .layout-main-detail .detail-content img {
   display: block;
   max-width: 100% !important;
