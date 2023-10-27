@@ -62,7 +62,14 @@
                         <div class="detail-summary">
                             {{ $article->description }}
                         </div>
-
+                        <div class="toc-content" id="left1">
+                            <div class="title-toc-blog">
+                                Mục lục:
+                            </div>
+                            <div class="my-toc-blog">
+                                <ul id="toc"></ul>
+                            </div>
+                        </div>
                         <div class="detail-content">
                             {!! replace_image($article->content) !!}
                         </div>
@@ -106,4 +113,8 @@
 
 @section('script')
     @parent
+    <script src="{{ asset('/js/web/jquery.toc.js') }}"></script>
+    <script>
+        $("#toc").toc({content: ".layout-main .detail-content", headings: "h1,h2,h3,h4"});
+    </script>
 @endsection
