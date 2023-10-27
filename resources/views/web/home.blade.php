@@ -210,8 +210,8 @@
                     </div>
                     <div class="section-main bg-white">
                         <div class="section-poster">
-                            <a href="">
-                                <img src="{{ asset(replace_image($cat->image)) }}" alt="" class="img-fluid">
+                            <a href="{{ route('catProduct',['slug' => $cat->slug, 'id'=> $cat->id]) }}">
+                                <img src="{{ asset(replace_image($cat->banner)) }}" alt="{{ $cat->title }}" class="img-fluid">
                             </a>
                         </div>
                         <div class="section-content">

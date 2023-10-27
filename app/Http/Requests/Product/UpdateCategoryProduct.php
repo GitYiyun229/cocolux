@@ -28,6 +28,7 @@ class UpdateCategoryProduct extends FormRequest
             'slug' => 'nullable',
             'image' => 'nullable',
             'logo' => 'nullable',
+            'banner' => 'nullable',
             'ordering' => 'nullable',
             'active' => 'required|numeric|integer|min:0',
             'is_home' => 'required|numeric|integer|min:0',

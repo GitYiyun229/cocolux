@@ -54,6 +54,19 @@
                 </div>
             </div>
             <div class="col-sm-6">
+                <div class="form-group">
+                    <label>@lang('form.product_category.banner')</label> <span class="text-danger">*</span>
+                    <div class="input-group">
+                        @include('admin.components.buttons.image',['src' => isset($product_category->banner) ? $product_category->banner : old('banner'),'name' => 'banner'])
+                        @if ($errors->has('banner'))
+                            <span class="help-block text-danger">
+                                <strong>{{ $errors->first('banner') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.product_category.ordering')</label>
