@@ -214,6 +214,9 @@
 
                     <nav id="navbar-detail" class="navbar bg-white ">
                         <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-detail" href="#tab-des">Mô tả sản phẩm</a>
+                            </li>
                             @forelse($attribute_value as $k => $item)
                                 @if($item->value->type == 'ckeditor')
                                     <li class="nav-item">
@@ -224,6 +227,10 @@
                             @endforelse
                         </ul>
                     </nav>
+                    <div class="layout-box layout-padding bg-white" id="tab-des">
+                        <h2 class="layout-title mb-2 fw-bold d-lg-none">Mô tả sản phẩm</h2>
+                        <div class="layout-content-text">{!! replace_image($product->description) !!}</div>
+                    </div>
                     @forelse($attribute_value as $k => $item)
                         @if($item->value->type == 'ckeditor')
                             <div class="layout-box layout-padding bg-white" id="tab-{{ $k }}">
