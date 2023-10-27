@@ -339,6 +339,7 @@
                 <div class="layout-right">
                     <div class="layout-box bg-white">
                         <h4 class="h4-title fw-bold text-center mb-0">Sản phẩm cùng thương hiệu</h4>
+                        @if(!empty($products))
                         @forelse($products as $item)
                         <a href="{{ route('detailProduct',['slug' => $item->slug, 'sku' => $item->sku]) }}" class="product-template">
                             <div class="product-discount">
@@ -360,6 +361,7 @@
                         </a>
                         @empty
                         @endforelse
+                        @endif
 
                         <a href="/link-to-brand" class="more-brand">Xem thêm</a>
                     </div>
