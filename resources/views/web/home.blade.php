@@ -171,7 +171,7 @@
                 <div class="slide-main">
                     <div class="slide-template-slick">
                         @forelse($attribute_brand as $item)
-                        <a href="" class="brand-template">
+                        <a href="{{ route('detailBrand',['slug' => $item->slug,'id' => $item->id]) }}" class="brand-template">
                             <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->name }}" class="img-fluid">
                             <div class="title">{{ $item->name }}</div>
                         </a>
