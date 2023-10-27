@@ -68,7 +68,7 @@
                                 <div class="detail-relate mb-4">
                                     @if(!empty($list_product_parent))
                                     @forelse($list_product_parent as $item)
-                                    <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?$item->slug:$product_root->slug, 'sku' => $item->sku]) }}" class="@if ($product->id == $item->id) active @endif" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $item->title }}">
+                                    <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):trim($product_root->slug), 'sku' => $item->sku]) }}" class="@if ($product->id == $item->id) active @endif" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $item->title }}">
                                         <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                     </a>
                                     @empty
