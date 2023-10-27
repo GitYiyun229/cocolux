@@ -13,12 +13,12 @@
 
                 <div class="layout-sale-main bg-white d-grid mb-4">
                     @forelse($products as $item)
-                    <a href="" class="product-template">
+                    <a href="{{ route('detailProduct',['slug' => trim($item->slug),'sku' => $item->sku]) }}" class="product-template">
                         <div class="product-discount">
                             <span class="pe-1">5%</span>
                         </div>
                         <div class="product-thumbnail">
-                            <img src="{{ json_decode($item->images)[0] }}" alt="{{ $item->title }}" class="img-fluid">
+                            <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                         </div>
                         <div class="product-price">
                             <div class="public-price">{{ format_money($item->price) }}</div>

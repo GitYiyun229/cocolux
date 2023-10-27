@@ -38,6 +38,9 @@ class ProductController extends Controller
 
     public function cat(Request $request, $slug,$id){
         $cat = $this->productCategoryRepository->getOneById($id);
+        if (!$cat) {
+            abort(404);
+        }
         $cats = ProductsCategories::where(['active' => 1,'parent_id' => $id])->orWhere(['id' => $id])->select('id','title','slug','parent_id')->get();
         $attributes = Attribute::where(['active' => 1,'type' => 'select'])->whereIn('id',  explode(',',$cat->attribute_id))->select('id','name','code')->with(['attributeValue'=>function($query){
             $query->select('id', 'name', 'attribute_id','slug');
@@ -92,7 +95,7 @@ class ProductController extends Controller
         $products = ProductOptions::with(['product' => function ($query) {
                 $query->select('id', 'is_new', 'brand','slug','attribute_path');
             }])->whereHas('product', function ($query) use ($id,$list_id_request) {
-                $query->where('active', 1)->where('category_path', 'LIKE', '%'.$id.'%');
+                $query->select('id','title','slug','category_path','attribute_path')->where('active', 1)->where('category_path', 'LIKE', '%'.$id.'%');
                 if ($list_id_request){
                     foreach ($list_id_request as $item){
                         $query->where('attribute_path','like', '%'.$item.'%');
@@ -411,13 +414,20 @@ class ProductController extends Controller
         $stocks = json_decode($product->stocks);
         $product_root = Product::where(['id' => $product->parent_id])->select('id','slug','title','image','brand','category_id','description','attributes')->first();
         $attribute_value = !empty($product_root->attributes)?json_decode($product_root->attributes):null;
-        $list_product_parent = ProductOptions::select('id','images','title','slug','sku')->where(['parent_id' => $product->parent_id])->where('sku','!=',null)->get();
+        $list_product_parent = ProductOptions::select('id','images','title','slug','sku')
+            ->where(['parent_id' => $product->parent_id])
+            ->where('sku','!=',null)
+            ->with(['product' => function($query){
+                $query->select('id','sku','slug','title');
+            }])
+            ->get();
 
         $products = ProductOptions::select('product_options.id','product_options.title','product_options.slug','product_options.images','product_options.price','product_options.normal_price','products.category_id','product_options.sku','product_options.brand')
             ->where(['product_options.active' => 1,'products.category_id' => $product_root->category_id])
             ->where('product_options.sku','!=',null)
             ->where('product_options.slug','!=',null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
+            ->addSelect('products.slug as product_slug')
             ->limit(3)->orderBy('id', 'DESC')->get();
 
         $list_cats = ProductsCategories::select('id','slug','title')->whereIn('id',explode('.',$product->product->category_path))->get();
@@ -450,7 +460,9 @@ class ProductController extends Controller
             $query->select('id', 'is_new', 'brand');
         }])->whereHas('product', function ($query) {
             $query->where('is_new', 1);
-        })->select('id','sku', 'title', 'parent_id','price','slug','images')->paginate(30 ?? config('data.limit', 30));
+        })->select('id','sku', 'title', 'parent_id','price','slug','images')
+            ->where('sku','!=',null)
+            ->where('slug','!=',null)->paginate(30);
         return view('web.product.new',compact('products'));
     }
 
@@ -484,7 +496,12 @@ class ProductController extends Controller
 
         $promotion = Promotions::where(['type' => 'hot_deal','status' => 'starting','id' => $id])->select('id','name', 'code','thumbnail_url')->first();
         $products = Product::whereJsonContains('hot_deal->id', $id)->pluck('id');
-        $productOptions = ProductOptions::whereIn('parent_id', $products)->select('id','sku', 'title', 'parent_id','price','slug','images')->get();
+        $productOptions = ProductOptions::whereIn('parent_id', $products)
+            ->select('id','sku', 'title', 'parent_id','price','slug','images')
+            ->with(['product' => function($query){
+                $query->select('id','sku','slug','title');
+            }])
+            ->get();
         return view('web.product.deal_hot_detail',compact('promotion','products','productOptions'));
     }
 

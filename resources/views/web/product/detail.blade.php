@@ -198,6 +198,7 @@
                         <h2 class="layout-title mb-2 fw-bold">Thông tin sản phẩm</h2>
 
                         <div class="product-attribute">
+                            @if(!empty($attribute_value))
                             @forelse($attribute_value as $item)
                                 @if($item->value->type == 'select')
                                     <div class="attribute-item">
@@ -211,6 +212,7 @@
                                 @endif
                             @empty
                             @endforelse
+                            @endif
                         </div>
                     </div>
 
@@ -219,6 +221,7 @@
                             <li class="nav-item">
                                 <a class="nav-link nav-link-detail" href="#tab-des">Mô tả sản phẩm</a>
                             </li>
+                            @if(!empty($attribute_value))
                             @forelse($attribute_value as $k => $item)
                                 @if($item->value->type == 'ckeditor')
                                     <li class="nav-item">
@@ -227,12 +230,14 @@
                                 @endif
                             @empty
                             @endforelse
+                            @endif
                         </ul>
                     </nav>
                     <div class="layout-box layout-padding bg-white" id="tab-des">
                         <h2 class="layout-title mb-2 fw-bold d-lg-none">Mô tả sản phẩm</h2>
                         <div class="layout-content-text">{!! replace_image($product->product->description) !!}</div>
                     </div>
+                    @if(!empty($attribute_value))
                     @forelse($attribute_value as $k => $item)
                         @if($item->value->type == 'ckeditor')
                             <div class="layout-box layout-padding bg-white" id="tab-{{ $k }}">
@@ -242,6 +247,7 @@
                         @endif
                     @empty
                     @endforelse
+                    @endif
 
                     <div class="layout-box layout-padding bg-white">
                         <h2 class="layout-title mb-2 fw-bold">Đánh giá</h2>
@@ -341,7 +347,7 @@
                         <h4 class="h4-title fw-bold text-center mb-0">Sản phẩm cùng thương hiệu</h4>
                         @if(!empty($products))
                         @forelse($products as $item)
-                        <a href="{{ route('detailProduct',['slug' => trim($item->slug), 'sku' => $item->sku]) }}" class="product-template">
+                        <a href="{{ route('detailProduct',['slug' => !empty($item->slug)?trim($item->slug):$item->product_slug, 'sku' => $item->sku]) }}" class="product-template">
                             <div class="product-discount">
                                 <span class="pe-1">5%</span>
                             </div>
@@ -393,7 +399,7 @@
                         <div class="main-right">
                             <div class="product-title fw-bold mb-2">{{ $product->title }}</div>
                             <div class="product-thumbnails">
-                                @if($list_image)
+                                @if(!empty($list_image))
                                 @forelse($list_image as $k => $item)
                                 <a data-index="{{ $k }}" class="modal-thumbnail-item thumbnail-item-{{ $k }} @if( $k== 0) active @endif">
                                     <img src="{{ asset(replace_image($item)) }}" alt="{{ $product->title }}" class="img-fluid">
