@@ -389,13 +389,13 @@ class ProductController extends Controller
     public function detail ($slug,$sku){
         $product = ProductOptions::where(['sku' => $sku])->with(['product' => function($query){
             $query->select('id','category_id','sku','slug','title','attributes','category_path','description');
-        }])->where('sku','!=',null)->orderBy('id', 'DESC')->first();
+        }])->where('sku','!=',null)->first();
         if (!$product) {
             abort(404);
         }
         $list_image = json_decode($product->images);
         $stocks = json_decode($product->stocks);
-        $product_root = Product::where(['id' => $product->parent_id])->select('id','slug','title','image','brand','category_id','description','attributes')->with(['category'])->first();
+        $product_root = Product::where(['id' => $product->parent_id])->select('id','slug','title','image','brand','category_id','description','attributes')->first();
         $attribute_value = !empty($product_root->attributes)?json_decode($product_root->attributes):null;
         $list_product_parent = ProductOptions::select('id','images','title','slug','sku')->where(['parent_id' => $product->parent_id])->where('sku','!=',null)->get();
 
