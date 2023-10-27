@@ -401,6 +401,7 @@ class ProductController extends Controller
 
         $products = ProductOptions::select('product_options.id','product_options.title','product_options.slug','product_options.images','product_options.price','product_options.normal_price','products.category_id','product_options.sku','product_options.brand')
             ->where(['product_options.active' => 1,'products.category_id' => $product_root->category_id])
+            ->where('product_options.sku','!=',null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->limit(3)->orderBy('id', 'DESC')->get();
 
