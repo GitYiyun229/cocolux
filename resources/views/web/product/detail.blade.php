@@ -343,7 +343,7 @@
                                 <span class="pe-1">5%</span>
                             </div>
                             <div class="product-thumbnail">
-                                <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid">
+                                <img src="{{ asset(replace_image($item->image_first)) }}" alt="{{ $item->title }}" class="img-fluid">
                             </div>
                             <div class="product-price">
                                 <div class="public-price">{{ format_money($item->price) }}</div>
