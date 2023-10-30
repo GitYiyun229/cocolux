@@ -366,6 +366,10 @@ function replace_image($image){
 }
 
 function percentage_price($price, $old_price){
-    $percentageChange = (($price - $old_price) / $old_price) * 100;
-    return round($percentageChange).'%';
+    if ($old_price != 0 || $old_price != null){
+        $percentageChange = (($price - $old_price) / $old_price) * 100;
+        return round($percentageChange).'%';
+    }else{
+        return '';
+    }
 }
