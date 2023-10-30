@@ -140,6 +140,17 @@ body a:hover {
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
   border-radius: 0;
   border: none;
+  background: none;
+  color: black;
+}
+.header-main .header-main-menu form input:focus {
+  color: black;
+}
+.header-main .header-main-menu form input::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.76);
+}
+.header-main .header-main-menu form input::placeholder {
+  color: rgba(0, 0, 0, 0.76);
 }
 .header-main .header-main-menu form .form-submit {
   display: flex;
