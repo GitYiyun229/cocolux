@@ -364,3 +364,8 @@ function getCart()
 function replace_image($image){
     return str_replace('https://cdn.cocolux.com','/images/cdn_images',$image);
 }
+
+function percentage_price($price, $old_price){
+    $percentageChange = (($price - $old_price) / $old_price) * 100;
+    return round($percentageChange).'%';
+}
