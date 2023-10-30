@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use App\Models\Product;
+use App\Models\ProductOptions;
 use App\Models\Setting;
 use App\Repositories\Contracts\ArticleCategoryInterface;
 use App\Repositories\Contracts\ArticleInterface;
@@ -44,11 +45,13 @@ class ArticleController extends Controller
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
         $article = $this->articleRepository->paginate(12,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1]);
         $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
-        $product_hots = Product::where(['active' => 1, 'is_hot' => 1])
-            ->select('id','title','image','brand','hot_deal','slug','sku')
-            ->with(['productOption' => function($query){
-                $query->where(['is_default' => 1,'active' => 1])->select('id', 'title', 'parent_id','price','slug','images');
-            }])->limit(5)->get();
+        $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
+            ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price')
+            ->with(['product' => function($query){
+                $query->select('id','is_hot','slug');
+            }])->whereHas('product', function ($query) {
+                $query->where('is_hot', 1);
+            })->limit(5)->get();
         return view('web.article.home', compact('article','cat_article','product_hots','article_hot'));
     }
 
@@ -68,11 +71,13 @@ class ArticleController extends Controller
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
         $article = $this->articleRepository->paginate(12,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1,'category_id'=>$id]);
         $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
-        $product_hots = Product::where(['active' => 1, 'is_hot' => 1])
-            ->select('id','title','image','brand','hot_deal','slug','sku')
-            ->with(['productOption' => function($query){
-                $query->where(['is_default' => 1,'active' => 1])->select('id', 'title', 'parent_id','price','slug','images');
-            }])->limit(5)->get();
+        $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
+            ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price')
+            ->with(['product' => function($query){
+                $query->select('id','is_hot','slug');
+            }])->whereHas('product', function ($query) {
+                $query->where('is_hot', 1);
+            })->limit(5)->get();
 
         SEOTools::setTitle($category->seo_title?$category->seo_title:$category->title);
         SEOTools::setDescription($category->seo_description?$category->seo_description:$category->description);
@@ -97,11 +102,13 @@ class ArticleController extends Controller
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
         $parent_cat = ArticlesCategories::select('id','title','slug')->where(['active'=> 1,'id' => $article->category_id])->first();
         $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
-        $product_hots = Product::where(['active' => 1, 'is_hot' => 1])
-            ->select('id','title','image','brand','hot_deal','slug','sku')
-            ->with(['productOption' => function($query){
-                $query->where(['is_default' => 1,'active' => 1])->select('id', 'title', 'parent_id','price','slug','images');
-            }])->limit(5)->get();
+        $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
+            ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price')
+            ->with(['product' => function($query){
+                $query->select('id','is_hot','slug');
+            }])->whereHas('product', function ($query) {
+                $query->where('is_hot', 1);
+            })->limit(5)->get();
 
         SEOTools::setTitle($article->seo_title?$article->seo_title:$article->title);
         SEOTools::setDescription($article->seo_description?$article->seo_description:$article->description);
