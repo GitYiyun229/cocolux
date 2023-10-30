@@ -57,6 +57,7 @@ Route::group(['namespace' => 'Web'], function (){
     Route::get('/deal-hot', 'ProductController@deal_hot')->name('dealHotProducts');
     Route::get('/deal-hot/{id}', 'ProductController@deal_hot_detail')->name('dealHotDetailProducts');
     Route::post('/them-vao-gio-hang', 'ProductController@addToCart')->name('addToCart');
+    Route::post('/them-vao-gio-hang-ngay', 'ProductController@addToCartNow')->name('addToCartNow');
     Route::post('/update-gio-hang', 'ProductController@updateCart')->name('updateCart');
     Route::get('/checkout', 'ProductController@showCart')->name('showCart');
     Route::get('/checkout/payment', 'ProductController@payment')->name('payment');

@@ -32,167 +32,169 @@
                                     </div>
                                 </div>
                             </div>
+                            <form action="{{ route('addToCartNow') }}" method="post">
+                                @csrf
+                                <div class="detail-infomation">
+                                    <a href="" class="detail-brand fw-bold d-flex mb-1">{{ $product->product->brand }}</a>
 
-                            <div class="detail-infomation">
-                                <a href="" class="detail-brand fw-bold d-flex mb-1">{{ $product->product->brand }}</a>
+                                    <h1 class="detail-title fw-bold mb-1">{{ $product->title }}</h1>
 
-                                <h1 class="detail-title fw-bold mb-1">{{ $product->title }}</h1>
-
-                                <div class="detail-sku mb-2">
-                                    <div class="">Mã sản phẩm: {{ $product->sku }}</div> |
-                                    <div class="star-rating" style="--rating: 4.6;"></div>
-                                    <div class="review-count">0 đánh giá</div>
-                                </div>
-
-                                <div class="detail-flash text-uppercase fw-bold mb-1 d-none">
-                                    <div class="flash-title d-flex align-items-center">
-                                        <img src="{{ asset('images/hot_icon.svg') }}" alt="flash sale" class="img-fluid">
-                                        flash sale
+                                    <div class="detail-sku mb-2">
+                                        <div class="">Mã sản phẩm: {{ $product->sku }}</div> |
+                                        <div class="star-rating" style="--rating: 4.6;"></div>
+                                        <div class="review-count">0 đánh giá</div>
                                     </div>
-                                    <div class="flash-time d-flex align-items-center">
-                                        <span class="fw-normal">Kết thúc trong</span>
-                                        <!-- $time_end = date('M d Y H:i:s', strtotime($time_end)); -->
-                                        <div class="count-down d-flex align-items-center" time-end="Sep 30 2023 20:00:00"></div>
+
+                                    <div class="detail-flash text-uppercase fw-bold mb-1 d-none">
+                                        <div class="flash-title d-flex align-items-center">
+                                            <img src="{{ asset('images/hot_icon.svg') }}" alt="flash sale" class="img-fluid">
+                                            flash sale
+                                        </div>
+                                        <div class="flash-time d-flex align-items-center">
+                                            <span class="fw-normal">Kết thúc trong</span>
+                                            <!-- $time_end = date('M d Y H:i:s', strtotime($time_end)); -->
+                                            <div class="count-down d-flex align-items-center" time-end="Sep 30 2023 20:00:00"></div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="detail-price mb-4">
-                                    <div class="public-price"><span class="fw-bold">{{ format_money($product->price) }}</span>(Đã bảo gồm VAT)</div>
-                                    @if($product->price != $product->normal_price)
-                                    <div class="origin-price">
-                                        <span>Giá hãng: {{ format_money($product->normal_price) }}</span>
-                                        <span>- Tiết kiệm được {{ format_money($product->normal_price - $product->price) }}</span>
-                                        <span>({{ percentage_price($product->price, $product->normal_price) }})</span>
-                                    </div>
-                                    @endif
-                                </div>
-
-                                <div class="detail-relate mb-4">
-                                    @if(!empty($list_product_parent))
-                                    @forelse($list_product_parent as $item)
-                                    <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):trim($product_root->slug), 'sku' => $item->sku]) }}" class="@if ($product->id == $item->id) active @endif" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $item->title }}">
-                                        <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
-                                    </a>
-                                    @empty
-                                    @endforelse
-                                    @endif
-                                </div>
-
-                                <div class="detail-quantity mb-4">
-                                    <label for="quantity">Số lượng:</label>
-                                    <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="1">
-                                </div>
-
-                                <div class="detail-flash-progess mb-3 d-none">
-                                    <div class="progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 25%"></div>
-                                    </div>
-                                    <span>25%</span>
-                                </div>
-
-                                <div class="detail-button">
-                                    <div class="dropdown detail-address">
-                                        <a class="btn btn-address" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa-solid fa-circle-check"></i>
-                                            10/13 Chi nhánh còn sản phẩm
-                                        </a>
-
-                                        <div class="dropdown-menu detail-addess-box">
-                                            <div class="address-item">
-                                                <p class="address-title text-uppercase mb-1">Hà Nội</p>
-                                                <div class="address-group">
-                                                    <p class="group-title mb-1">
-                                                        <i class="fa-solid fa-circle-check"></i>
-                                                        Đống Đa
-                                                    </p>
-                                                    <div class="group-item mb-1">Tạm hết hàng tại Kho Media</div>
-                                                    <div class="group-item mb-1">Tạm hết hàng tại Kho Live</div>
-                                                    <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 14 B7 Phạm Ngọc Thạch</div>
-                                                    <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 80 Chùa Bộc</div>
-                                                </div>
-                                                <div class="address-group">
-                                                    <p class="group-title mb-1">
-                                                        <i class="fa-solid fa-circle-check"></i>
-                                                        Huyện Gia Lâm
-                                                    </p>
-                                                    <div class="group-item mb-1 mb-1"><span>Còn hàng</span> tại Cocolux Vincom Mega Mall Smart City</div>
-                                                </div>
-                                                <div class="address-group">
-                                                    <p class="group-title mb-1">
-                                                        <i class="fa-solid fa-circle-check"></i>
-                                                        Huyện Gia Lâm
-                                                    </p>
-                                                    <div class="group-item"><span>Còn hàng</span> tại Cocolux Ocean Park</div>
-                                                </div>
-                                                <div class="address-group">
-                                                    <p class="group-title mb-1">
-                                                        <i class="fa-solid fa-circle-check"></i>
-                                                        Quận Cầu Giấy
-                                                    </p>
-                                                    <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 128 Xuân Thủy</div>
-                                                    <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 65 Hồ tùng mậu</div>
-                                                    <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 136 Cầu Giấy</div>
-                                                </div>
+                                    <div class="detail-price mb-4">
+                                        <div class="public-price"><span class="fw-bold">{{ format_money($product->price) }}</span>(Đã bảo gồm VAT)</div>
+                                        @if($product->price != $product->normal_price)
+                                            <div class="origin-price">
+                                                <span>Giá hãng: {{ format_money($product->normal_price) }}</span>
+                                                <span>- Tiết kiệm được {{ format_money($product->normal_price - $product->price) }}</span>
+                                                <span>({{ percentage_price($product->price, $product->normal_price) }})</span>
                                             </div>
-                                            <div class="address-item">
-                                                <p class="address-title text-uppercase mb-1">Hồ chí minh</p>
-                                                <div class="address-group">
-                                                    <p class="group-title mb-1">
-                                                        <i class="fa-solid fa-circle-check"></i>
-                                                        Đống Đa
-                                                    </p>
-                                                    <div class="group-item mb-1">Tạm hết hàng tại Kho Media</div>
-                                                    <div class="group-item mb-1">Tạm hết hàng tại Kho Live</div>
-                                                    <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 14 B7 Phạm Ngọc Thạch</div>
-                                                    <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 80 Chùa Bộc</div>
+                                        @endif
+                                    </div>
+
+                                    <div class="detail-relate mb-4">
+                                        @if(!empty($list_product_parent))
+                                            @forelse($list_product_parent as $item)
+                                                <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):trim($product_root->slug), 'sku' => $item->sku]) }}" class="@if ($product->id == $item->id) active @endif" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{ $item->title }}">
+                                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
+                                                </a>
+                                            @empty
+                                            @endforelse
+                                        @endif
+                                    </div>
+
+                                    <div class="detail-quantity mb-4">
+                                        <label for="quantity">Số lượng:</label>
+                                        <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="1">
+                                    </div>
+
+                                    <div class="detail-flash-progess mb-3 d-none">
+                                        <div class="progress w-100" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar" style="width: 25%"></div>
+                                        </div>
+                                        <span>25%</span>
+                                    </div>
+
+                                    <div class="detail-button">
+                                        <div class="dropdown detail-address">
+                                            <a class="btn btn-address" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="fa-solid fa-circle-check"></i>
+                                                10/13 Chi nhánh còn sản phẩm
+                                            </a>
+
+                                            <div class="dropdown-menu detail-addess-box">
+                                                <div class="address-item">
+                                                    <p class="address-title text-uppercase mb-1">Hà Nội</p>
+                                                    <div class="address-group">
+                                                        <p class="group-title mb-1">
+                                                            <i class="fa-solid fa-circle-check"></i>
+                                                            Đống Đa
+                                                        </p>
+                                                        <div class="group-item mb-1">Tạm hết hàng tại Kho Media</div>
+                                                        <div class="group-item mb-1">Tạm hết hàng tại Kho Live</div>
+                                                        <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 14 B7 Phạm Ngọc Thạch</div>
+                                                        <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 80 Chùa Bộc</div>
+                                                    </div>
+                                                    <div class="address-group">
+                                                        <p class="group-title mb-1">
+                                                            <i class="fa-solid fa-circle-check"></i>
+                                                            Huyện Gia Lâm
+                                                        </p>
+                                                        <div class="group-item mb-1 mb-1"><span>Còn hàng</span> tại Cocolux Vincom Mega Mall Smart City</div>
+                                                    </div>
+                                                    <div class="address-group">
+                                                        <p class="group-title mb-1">
+                                                            <i class="fa-solid fa-circle-check"></i>
+                                                            Huyện Gia Lâm
+                                                        </p>
+                                                        <div class="group-item"><span>Còn hàng</span> tại Cocolux Ocean Park</div>
+                                                    </div>
+                                                    <div class="address-group">
+                                                        <p class="group-title mb-1">
+                                                            <i class="fa-solid fa-circle-check"></i>
+                                                            Quận Cầu Giấy
+                                                        </p>
+                                                        <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 128 Xuân Thủy</div>
+                                                        <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 65 Hồ tùng mậu</div>
+                                                        <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 136 Cầu Giấy</div>
+                                                    </div>
                                                 </div>
-                                                <div class="address-group">
-                                                    <p class="group-title mb-1">
-                                                        <i class="fa-solid fa-circle-check"></i>
-                                                        Huyện Gia Lâm
-                                                    </p>
-                                                    <div class="group-item mb-1 mb-1"><span>Còn hàng</span> tại Cocolux Vincom Mega Mall Smart City</div>
+                                                <div class="address-item">
+                                                    <p class="address-title text-uppercase mb-1">Hồ chí minh</p>
+                                                    <div class="address-group">
+                                                        <p class="group-title mb-1">
+                                                            <i class="fa-solid fa-circle-check"></i>
+                                                            Đống Đa
+                                                        </p>
+                                                        <div class="group-item mb-1">Tạm hết hàng tại Kho Media</div>
+                                                        <div class="group-item mb-1">Tạm hết hàng tại Kho Live</div>
+                                                        <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 14 B7 Phạm Ngọc Thạch</div>
+                                                        <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 80 Chùa Bộc</div>
+                                                    </div>
+                                                    <div class="address-group">
+                                                        <p class="group-title mb-1">
+                                                            <i class="fa-solid fa-circle-check"></i>
+                                                            Huyện Gia Lâm
+                                                        </p>
+                                                        <div class="group-item mb-1 mb-1"><span>Còn hàng</span> tại Cocolux Vincom Mega Mall Smart City</div>
+                                                    </div>
+                                                    <div class="address-group">
+                                                        <p class="group-title mb-1">
+                                                            <i class="fa-solid fa-circle-check"></i>
+                                                            Huyện Gia Lâm
+                                                        </p>
+                                                        <div class="group-item"><span>Còn hàng</span> tại Cocolux Ocean Park</div>
+                                                    </div>
+                                                    <div class="address-group">
+                                                        <p class="group-title mb-1">
+                                                            <i class="fa-solid fa-circle-check"></i>
+                                                            Quận Cầu Giấy
+                                                        </p>
+                                                        <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 128 Xuân Thủy</div>
+                                                        <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 65 Hồ tùng mậu</div>
+                                                        <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 136 Cầu Giấy</div>
+                                                    </div>
                                                 </div>
-                                                <div class="address-group">
-                                                    <p class="group-title mb-1">
-                                                        <i class="fa-solid fa-circle-check"></i>
-                                                        Huyện Gia Lâm
-                                                    </p>
-                                                    <div class="group-item"><span>Còn hàng</span> tại Cocolux Ocean Park</div>
-                                                </div>
-                                                <div class="address-group">
-                                                    <p class="group-title mb-1">
-                                                        <i class="fa-solid fa-circle-check"></i>
-                                                        Quận Cầu Giấy
-                                                    </p>
-                                                    <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 128 Xuân Thủy</div>
-                                                    <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 65 Hồ tùng mậu</div>
-                                                    <div class="group-item mb-1"><span>Còn hàng</span> tại Cocolux 136 Cầu Giấy</div>
-                                                </div>
-                                            </div>
-                                            <div class="contact">
+                                                <div class="contact">
                                                 <span>
                                                     <i class="fa-regular fa-clock"></i>
                                                     8:00 AM - 22:00 PM
                                                 </span>
-                                                <span>
+                                                    <span>
                                                     <i class="fa-solid fa-phone"></i>
                                                     <a href="tel:0988888825">0988888825</a>
                                                 </span>
+                                                </div>
                                             </div>
                                         </div>
+                                        <input type="hidden" name="id_product" value="{{ $product->id }}">
+                                        <button class="btn btn-add-card" type="button" onclick="order({{ $product->id }})">
+                                            <i class="fa-solid fa-cart-plus"></i>
+                                            Giỏ hàng
+                                        </button>
+                                        <button class="btn btn-buy-now" type="submit">
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                            Mua ngay
+                                        </button>
                                     </div>
-                                    <button class="btn btn-add-card" onclick="order({{ $product->id }})">
-                                        <i class="fa-solid fa-cart-plus"></i>
-                                        Giỏ hàng
-                                    </button>
-                                    <button class="btn btn-buy-now">
-                                        <i class="fa-solid fa-cart-shopping"></i>
-                                        Mua ngay
-                                    </button>
                                 </div>
-
-                            </div>
+                            </form>
                         </div>
                     </div>
 
