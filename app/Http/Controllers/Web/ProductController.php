@@ -460,7 +460,7 @@ class ProductController extends Controller
             $query->select('id', 'is_new', 'brand');
         }])->whereHas('product', function ($query) {
             $query->where('is_new', 1);
-        })->select('id','sku', 'title', 'parent_id','price','slug','images')
+        })->select('id','sku', 'title', 'parent_id','price','slug','images','normal_price')
             ->where('sku','!=',null)
             ->where('slug','!=',null)->paginate(30);
         return view('web.product.new',compact('products'));
@@ -497,7 +497,7 @@ class ProductController extends Controller
         $promotion = Promotions::where(['type' => 'hot_deal','status' => 'starting','id' => $id])->select('id','name', 'code','thumbnail_url')->first();
         $products = Product::whereJsonContains('hot_deal->id', $id)->pluck('id');
         $productOptions = ProductOptions::whereIn('parent_id', $products)
-            ->select('id','sku', 'title', 'parent_id','price','slug','images')
+            ->select('id','sku', 'title', 'parent_id','price','slug','images','normal_price')
             ->with(['product' => function($query){
                 $query->select('id','sku','slug','title');
             }])
