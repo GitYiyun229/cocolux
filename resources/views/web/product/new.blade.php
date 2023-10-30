@@ -14,15 +14,19 @@
                 <div class="layout-sale-main bg-white d-grid mb-4">
                     @forelse($products as $item)
                     <a href="{{ route('detailProduct',['slug' => trim($item->slug),'sku' => $item->sku]) }}" class="product-template">
-                        <div class="product-discount">
-                            <span class="pe-1">5%</span>
-                        </div>
+                        @if($item->price != $item->normal_price)
+                            <div class="product-discount">
+                                <span class="pe-1">{{ percentage_price($item->price, $item->normal_price) }}</span>
+                            </div>
+                        @endif
                         <div class="product-thumbnail">
                             <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                         </div>
                         <div class="product-price">
                             <div class="public-price">{{ format_money($item->price) }}</div>
-                            <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                            @if($item->price != $item->normal_price)
+                                <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                            @endif
                         </div>
                         <div class="product-brand">
                            {{ $item->brand }}
