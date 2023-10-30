@@ -114,4 +114,5 @@
 
 @section('script')
     @parent
+    <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
 @endsection

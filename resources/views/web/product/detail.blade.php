@@ -236,14 +236,14 @@
                         </ul>
                     </nav>
                     <div class="layout-box layout-padding bg-white" id="tab-des">
-                        <h2 class="layout-title mb-2 fw-bold d-lg-none">Mô tả sản phẩm</h2>
+                        <h2 class="layout-title mb-2 fw-bold">Mô tả sản phẩm</h2>
                         <div class="layout-content-text">{!! replace_image($product->product->description) !!}</div>
                     </div>
                     @if(!empty($attribute_value))
                     @forelse($attribute_value as $k => $item)
                         @if($item->value->type == 'ckeditor')
                             <div class="layout-box layout-padding bg-white" id="tab-{{ $k }}">
-                                <h2 class="layout-title mb-2 fw-bold d-lg-none">{{ $item->name }}</h2>
+                                <h2 class="layout-title mb-2 fw-bold">{{ $item->name }}</h2>
                                 <div class="layout-content-text">{!! replace_image($item->value->name) !!}</div>
                             </div>
                         @endif
@@ -251,7 +251,7 @@
                     @endforelse
                     @endif
 
-                    <div class="layout-box layout-padding bg-white">
+                    <div class="layout-box layout-padding bg-white d-none">
                         <h2 class="layout-title mb-2 fw-bold">Đánh giá</h2>
                         <p>Khách hàng đánh giá</p>
 
@@ -622,8 +622,19 @@
                     _token: $('meta[name="csrf-token"]').attr("content")
                 },
                 success: function (data) {
-                    console.log(data);
                     $("#number-added-cart").html(data.total);
+                    Swal.fire(
+                        'Thành công!',
+                        'Thêm vào giỏ hàng thành công',
+                        'success'
+                    )
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Có lỗi xảy ra, Không thành công',
+                    })
                 }
             });
         }
