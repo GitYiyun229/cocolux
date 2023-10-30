@@ -544,6 +544,39 @@ class ProductController extends Controller
         ));
     }
 
+    public function addToCartNow (Request $req){
+        $productId = $req->input('id_product');
+        $quantity = $req->input('quantity');
+        $product = ProductOptions::where(['id' => $productId])->with(['product'])->first();;
+
+        if (!$product) {
+            abort(404);
+        }
+
+        $cart = Session::get('cart', []);
+
+        if (array_key_exists($product->id, $cart)) {
+            // Sản phẩm đã tồn tại trong giỏ hàng, tăng số lượng
+            $cart[$product->id]['quantity'] = $cart[$product->id]['quantity']+$quantity;
+        } else {
+            // Sản phẩm chưa tồn tại trong giỏ hàng, thêm mới
+            $cart[$product->id] = [
+                'name' => $product->title,
+                'price' => $product->price,
+                'quantity' => $quantity,
+            ];
+        }
+
+        Session::put('cart', $cart);
+
+        $totalQuantity = 0;
+        foreach ($cart as $item) {
+            $totalQuantity += $item['quantity'];
+        }
+
+        return redirect()->route('showCart');
+    }
+
     public function showCart()
     {
         $cart = Session::get('cart', []);
@@ -561,7 +594,6 @@ class ProductController extends Controller
             // Thêm thông tin sản phẩm vào danh sách
             $cartItems[] = [
                 'product' => $product,
-                'image' => json_decode($product->images),
                 'quantity' => $quantity,
                 'subtotal' => $product->price * $quantity, // Tính tổng tiền cho mỗi sản phẩm
             ];
@@ -608,10 +640,14 @@ class ProductController extends Controller
 
             return response()->json(array(
                 'success' => true,
-                'total'   => $totalQuantity
+                'message'   => 'Cập nhật giỏ hàng thành công',
+                'total'   => $totalQuantity,
             ));
         } else {
-            // Sản phẩm không tồn tại trong giỏ hàng, xử lý lỗi
+            return response()->json(array(
+                'success' => false,
+                'message'   => 'Sản phẩm không tồn tại',
+            ));
         }
     }
 

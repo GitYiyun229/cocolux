@@ -23,7 +23,7 @@
                         @forelse($cartItems as $item)
                         <tr>
                             <td>
-                                <img src="{{ $item['image'][0] }}" alt="{{ $item['product']->title }}" class="img-fluid">
+                                <img src="{{ replace_image($item['product']->image_first) }}" alt="{{ $item['product']->title }}" class="img-fluid">
                             </td>
                             <td class="fw-bold">
                                 {{ $item['product']->title }}
@@ -32,9 +32,9 @@
                                 <div class="public-price">{{ format_money($item['product']->price) }}</div>
                             </td>
                             <td>
-                                <input type="number" min="1" name="quantity[]" class="form-control" value="{{ $item['quantity'] }}">
+                                <input type="number" min="1" name="quantity[]" id="quantity-{{ $item['product']->id }}" class="form-control number-input" data-id="{{ $item['product']->id }}" value="{{ $item['quantity'] }}">
                             </td>
-                            <td>
+                            <td id="product-price-{{ $item['product']->id }}">
                                 {{ format_money($item['subtotal']) }}
                             </td>
                             <td>
@@ -95,7 +95,7 @@
             });
         }
         $(document).ready(function(){
-            $(".number-input").focusout(function(){
+            $(".number-input").change(function(){
                 var id_prd = $(this).data('id');
                 var quantity = $('#quantity-'+id_prd).val();
                 $.ajax({
@@ -108,7 +108,7 @@
                         _token: $('meta[name="csrf-token"]').attr("content")
                     },
                     success: function (data) {
-                        $("#number-added-cart").html(data.total);
+                        window.location.reload();
                     }
                 });
             });
