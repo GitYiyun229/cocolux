@@ -42,8 +42,8 @@
 {{--    <link rel="stylesheet" href="{{ asset('/css/mmenu.css') }}">--}}
     <link rel="stylesheet" href="{{ asset('/css/web/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.min.css">
-    <link rel="stylesheet" href="{{ asset('/css/web/template.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/web/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/web/template.css') }}?ver=2.0">
+    <link rel="stylesheet" href="{{ asset('/css/web/style.css') }}?ver=2.0">
 @endsection
 
 @section('script')
