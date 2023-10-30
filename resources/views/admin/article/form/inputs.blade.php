@@ -221,8 +221,8 @@
 @section('script')
     @parent
     <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
-    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
-    <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
+    <script src="{{ asset('ckeditor/ckeditor.js') }}?v=1.0"></script>
+    <script src="{{ asset('ckfinder/ckfinder.js') }}?v=1.0"></script>
     <script>
         CKEDITOR.replace( 'content' );
         const autoCompleteJS = new autoComplete({
