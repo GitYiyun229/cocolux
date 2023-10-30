@@ -139,7 +139,7 @@
                         </span>
                     @endif
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="" name="search_product" id="search_product">
+                        <input type="text" class="form-control" placeholder="" name="search_product" autocomplete="off" id="search_product">
                     </div>
                 </div>
                 <div class="selection"></div>
