@@ -254,7 +254,7 @@
 
 @section('script')
     @parent
-    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('ckeditor/ckeditor.js') }}?v=1.0"></script>
     <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
     <script>
         CKEDITOR.replace( 'content' );
