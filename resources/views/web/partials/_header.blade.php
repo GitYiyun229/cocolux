@@ -164,7 +164,7 @@
             <a href=""><img src="{{ asset('images/smart-phone.svg') }}" alt="" class="ìm-fluid">Tải ứng dụng</a>
         </div>
         <div class="menu-item">
-            <a href="">Xu Tra cứu đơn hàng</a>
+            <a href="">Tra cứu đơn hàng</a>
         </div>
     </div>
 </div>
