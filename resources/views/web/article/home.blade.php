@@ -64,7 +64,7 @@
                                 <p class="news-title fw-bold">{{ $item->title }}</p>
                                 <div class="news-time">
                                     <img src="{{ asset('images/ic-datetime.svg') }}" alt="datetime" class="img-fluid">
-                                    21/09/2023 09:45:38
+                                    {{ $item->format_date_created }}
                                 </div>
                                 <div class="news-summary">
                                     {{ $item->description }}
@@ -88,7 +88,7 @@
                                 <p class="news-title fw-bold">{{ $item->title }}</p>
                                 <div class="news-time">
                                     <img src="{{ asset('images/ic-datetime.svg') }}" alt="datetime" class="img-fluid">
-                                    21/09/2023 09:45:38
+                                    {{ $item->format_date_created }}
                                 </div>
                                 <div class="news-summary">
                                     {{ $item->description }}
