@@ -112,7 +112,7 @@
 @section('script')
     @parent
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('ckeditor/ckeditor.js') }}?v=1.0"></script>
     <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
     @if($template == '3' || ($setting && $setting->type == 3))
         <script>
