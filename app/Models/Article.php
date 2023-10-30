@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Article extends Model
 {
@@ -16,6 +17,7 @@ class Article extends Model
 
     protected $appends = [
         'image_resize',
+        'format_date_created',
         'image_change_url'
     ];
 
@@ -41,5 +43,10 @@ class Article extends Model
     public function getImageChangeUrlAttribute()
     {
         return str_replace('https://cdn.cocolux.com','/images/cdn_images',$this->image);
+    }
+
+    public function getFormatDateCreatedAttribute(){
+        $carbonDate = Carbon::parse($this->created_at);
+        return $carbonDate->format('d/m/Y H:i:s');
     }
 }
