@@ -24,6 +24,7 @@ class ProductOptions extends Model
         'is_new',
         'brand',
         'image_first',
+        'link_product',
         'attribute_path'
     ];
 
@@ -92,5 +93,10 @@ class ProductOptions extends Model
         $images = json_decode($this->attributes['images'], true);
         $image = isset($images[0]) ? $images[0] : null;
         return str_replace('https://cdn.cocolux.com','/images/cdn_images',$image);
+    }
+
+    public function getLinkProductAttribute()
+    {
+        return route('detailProduct',['slug'=>$this->slug, 'sku'=>$this->sku]);
     }
 }
