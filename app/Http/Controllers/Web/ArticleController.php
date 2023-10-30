@@ -99,6 +99,57 @@ class ArticleController extends Controller
     public function detail($slug, $id)
     {
         $article = $this->articleRepository->getOneById($id,['category']);
+
+        preg_match_all('/product-option-(\d+)/', $article->content, $matches);
+        $productOptionIds = $matches[1];
+        if (!empty($productOptionIds)){
+            $products = ProductOptions::whereIn('id', $productOptionIds)->select('id','slug','title','price','sku','images')->where('sku','!=',null)->where('slug','!=',null)->get();
+            $productInfoMap = [];
+            foreach ($products as $product) {
+                $productInfoMap[$product->id] = [
+                    'title' => $product->title,
+                    'image' => $product->image_first,
+                    'price' => format_money($product->price),
+                    'url' => route('detailProduct',['slug' => $product->slug, 'sku' => $product->sku]),
+                ];
+            }
+            $contentWithTitles = preg_replace_callback('/product-option-(\d+)/', function ($match) use ($productInfoMap) {
+                $productId = $match[1];
+                if (isset($productInfoMap[$productId])) {
+                    $productInfo = $productInfoMap[$productId];
+                    $title = $productInfo['title'];
+                    $image = asset($productInfo['image']);
+                    $price = $productInfo['price'];
+                    $url = $productInfo['url'];
+                    return "<div class='item_block_template' style='display: flex; padding: 10px; margin: 10px 0; border: 1px solid #f3f3f3;'>
+                            <div class='item_thumb_sp' style='width: 100%; max-width: 150px; margin-right: 10px; position: relative; height: auto; padding-bottom: 20%; overflow: hidden;'>
+                                <span style='font-size:16px;'>
+                                <img alt='$title' class='img_thumb' data-was-processed='true' src='$image' style='position: absolute; width: 100%; height: 100%; max-width: 100%; max-height: 100%; bottom: 0; left: 0; object-fit: contain; transition: opacity 0.3s ease-out 0s;'>
+                                </span>
+                            </div>
+                            <div class='item_info_sp' style='width: calc(100% - 160px); display: flex; flex-direction: column; align-items: flex-start;'>
+                                <div class='sp_name' style='font-size: 16px; font-weight: 700; margin-top: 10px; margin-bottom: 10px; display: block; display: -webkit-box; overflow: hidden; text-overflow: ellipsis; -webkit-line-clamp: 3; -webkit-box-orient: vertical;'>
+                                    <span style='font-size:16px;'>$title</span>
+                                </div>
+                                <div class='sp_block_price' style='margin-bottom: 10px;'>
+                                    <span style='font-size:16px;'>
+                                        <strong class='item_giamoi' style='color: #c73030; line-height: 20px;'>$price</strong>&nbsp;
+                                    </span>
+                                </div>
+                                <div class='sp_block_muangay'>
+                                    <span style='font-size:16px;'>
+                                        <a class='btn btn-danger' href='$url'>Mua ngay </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>";
+                }
+                // Trả lại chuỗi ban đầu nếu không tìm thấy
+                return $match[0];
+            }, $article->content);
+            $article->content = $contentWithTitles;
+        }
+
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
         $parent_cat = ArticlesCategories::select('id','title','slug')->where(['active'=> 1,'id' => $article->category_id])->first();
         $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
