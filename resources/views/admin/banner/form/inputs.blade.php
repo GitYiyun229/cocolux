@@ -60,7 +60,7 @@
                 <div class="form-group">
                     <label>@lang('form.banner.image_url')</label> <span class="text-danger">*</span>
                     <div class="input-group">
-                        @include('admin.components.buttons.image',['src' => isset($banner->image_url) ? $banner->image_url : old('image_url'),'name' => 'image_url'])
+                        @include('admin.components.buttons.image',['src' => isset($banner->image_url) ? replace_image($banner->image_url) : old('image_url'),'name' => 'image_url'])
                         @if ($errors->has('image_url'))
                             <span class="help-block text-danger">
                                 <strong>{{ $errors->first('image_url') }}</strong>
@@ -73,7 +73,7 @@
                 <div class="form-group">
                     <label>@lang('form.banner.mobile_url')</label> <span class="text-danger">*</span>
                     <div class="input-group">
-                        @include('admin.components.buttons.image',['src' => isset($banner->mobile_url) ? $banner->mobile_url : old('mobile_url'),'name' => 'mobile_url'])
+                        @include('admin.components.buttons.image',['src' => isset($banner->mobile_url) ? replace_image($banner->mobile_url) : old('mobile_url'),'name' => 'mobile_url'])
                         @if ($errors->has('mobile_url'))
                             <span class="help-block text-danger">
                                 <strong>{{ $errors->first('mobile_url') }}</strong>
