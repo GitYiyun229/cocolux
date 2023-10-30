@@ -9,7 +9,7 @@
         <a href="{{ route('home') }}" title="cocolux" class="header-main-logo">
             <img src="{{ $setting['logo'] }}" alt="cocolux" class="img-fluid logo-full">
         </a>
-        <a href="" title="cocolux" class="header-main-logo-icon">
+        <a href="{{ route('home') }}" title="cocolux" class="header-main-logo-icon">
             <img src="{{ $setting['logo_scroll'] }}" alt="cocolux" class="img-fluid logo-icon">
         </a>
         <div class="header-menu">
