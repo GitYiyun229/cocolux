@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <label>@lang('form.banner.type')</label>
                     <div class="form-group clearfix ">
-                        <select name="type" class="form-control">
+                        <select name="type" class="form-control" required>
                             <option value="" hidden>@lang('form.banner.type')</option>
                             @forelse(\App\Models\Banners::GROUP as $key => $value)
                                 <option value="{{ $value }}" @if (isset($banner) && isset($banner->type) && ($banner->type == $value)) selected @elseif (old('type') == $value ) selected @endif>{{ $value }}</option>
