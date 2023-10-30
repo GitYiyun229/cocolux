@@ -368,6 +368,7 @@
             $temp.val(value).select();
             document.execCommand("copy");
             $temp.remove();
+            toastr["success"]('Copy thành công');
         })
 
         function formatMoney(price, current = 'đ', text = 'Liên hệ') {
