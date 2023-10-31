@@ -56,7 +56,7 @@
     <script src="{{ asset('js/toastr.min.js') }}"></script>
     <script src="{{ asset('js/jquery.timepicker.min.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
-    <script src="{{ asset('js/datatable-custom.js') }}"></script>
+    <script src="{{ asset('js/datatable-custom.js') }}?v=2.0"></script>
     <script src="{{ asset('js/select2.min.js') }}"></script>
     <script src="{{ asset('js/easymde.min.js') }}"></script>
 
