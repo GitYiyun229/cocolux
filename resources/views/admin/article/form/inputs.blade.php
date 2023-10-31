@@ -273,7 +273,7 @@
                     item.style = "display: flex; justify-content: space-between;";
                     // Modify Results Item Content
                     item.innerHTML = `
-                      <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                      <span style="">
                         ${data.value.title}
                       </span>
                       <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
