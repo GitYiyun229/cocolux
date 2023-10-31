@@ -309,7 +309,6 @@
 @section('script')
     @parent
     <script src="{{ asset('/js/web/slick/slick.js') }}"></script>
-    <script src="{{ asset('/js/web/slick/slick.js') }}"></script>
     <script>
         $('.banner-slick').slick({
             slidesToShow: 1,
