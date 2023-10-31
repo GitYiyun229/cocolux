@@ -81,15 +81,15 @@
                             <p class="fw-bold mb-2">Hình thức thanh toán</p>
 
                             <div class="form-check mb-5">
-                                <input class="form-check-input" type="radio" value="0" name="method" id="method0" checked>
-                                <label class="form-check-label" for="method0">
+                                <input class="form-check-input" type="radio" value="0" name="payment" id="payment0" checked>
+                                <label class="form-check-label" for="payment0">
                                     Thanh toán khi nhận hàng (COD)
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" value="1" name="method" id="method1">
-                                <label class="form-check-label" for="method1">
+                                <input class="form-check-input" type="radio" value="1" name="payment" id="payment1">
+                                <label class="form-check-label" for="payment1">
                                     Chuyển khoản: Tên tài khoản: Phạm Tiến Lợi - Vietcombank : 103878062018 TP Hà Nội - Hội sở
                                 </label>
                             </div>

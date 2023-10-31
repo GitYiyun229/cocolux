@@ -33,6 +33,7 @@ class CreateOrder extends FormRequest
             'district' => 'required',
             'ward' => 'required',
             'address' => 'required',
+            'payment' => 'required',
             'note' => 'nullable'
         ];
     }
@@ -46,6 +47,7 @@ class CreateOrder extends FormRequest
             'district.required' => 'Chọn quận huyện.',
             'ward.required' => 'Chọn phường xã.',
             'address.required' => 'Nhập địa chỉ chi tiết.',
+            'payment.required' => 'Chọn phương thức thanh toán.',
             'tel.regex' => 'Số điện thoại không hợp lệ. Vui lòng nhập số điện thoại bắt đầu bằng số 0 và có 9-10 chữ số.'
         ];
     }
