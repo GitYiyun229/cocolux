@@ -181,12 +181,15 @@ return [
 
     'order-product' => [
         '' => 'Đơn hàng',
-        'full_name' => 'Họ và tên',
-        'gender' => 'Giới tính',
-        'email' => 'Email',
-        'phone' => 'Số điện thoại',
-        'address' => 'Địa chỉ',
+        'name' => 'Họ tên',
+        'tel' => 'Số điện thoại',
+        'city_name' => 'Tỉnh/Thành phố',
+        'district_name' => 'Quận/Huyện',
+        'ward_name' => 'Xã/Phường',
+        'address' => 'Địa chỉ chi tiết',
         'note' => 'Ghi chú',
+        'coco_note' => 'Ghi chú nội bộ',
+        'update' => 'Cập nhật order',
     ],
 
     'attribute' => [
