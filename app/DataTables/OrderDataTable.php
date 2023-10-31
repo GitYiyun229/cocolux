@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Order;
+use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -21,7 +22,18 @@ class OrderDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'orderdatatable.action');
+            ->editColumn('created_at', function ($q) {
+                return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
+            })
+            ->editColumn('updated_at', function ($q) {
+                return Carbon::parse($q->updated_at)->format('H:i:s Y/m/d');
+            })
+            ->addColumn('action', function ($q) {
+                $urlEdit = route('admin.order-product.edit', $q->id);
+                $urlDelete = route('admin.order-product.destroy', $q->id);
+                $lowerModelName = strtolower(class_basename(new Order()));
+                return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+            });
     }
 
     /**
@@ -68,12 +80,15 @@ class OrderDataTable extends DataTable
             Column::make('id'),
             Column::make('name'),
             Column::make('tel'),
-            Column::make('city_name'),
-            Column::make('district_name'),
-            Column::make('address'),
+            Column::make('city_name')->title('Tỉnh/Thành phố'),
+            Column::make('district_name')->title('Quận/Huyện'),
+            Column::make('address')->title('Địa chỉ'),
             Column::make('note'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::make('status')->title('Trạng thái đơn hàng')->render([
+                'renderLabelOrderStatus(data)'
+            ]),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

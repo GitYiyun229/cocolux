@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class OrderItem extends Model
 {
 //    use HasFactory;
-protected $guarded = ['id'];
-protected $table = 'orders_items';
+    protected $guarded = ['id'];
+    protected $table = 'orders_items';
+
+    public function productOption()
+    {
+        return $this->hasOne(ProductOptions::class, 'id', 'product_id');
+    }
+
 }
