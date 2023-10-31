@@ -68,14 +68,9 @@ function renderRollCallValue(data) {
 
 function renderLabelOrderStatus(data) {
     var mapStatus = {
-        0: {text: 'Đăng tuyển', class: 'dark'},
-        1: {text: 'Chờ phỏng vấn', class: 'danger'},
-        2: {text: 'Đỗ', class: 'primary'},
-        3: {text: 'Học/làm hồ sơ', class: 'success'},
-        4: {text: 'Làm visa', class: 'warning'},
-        5: {text: 'Xuất cảnh', class: 'danger'},
-        6: {text: 'Làm việc', class: 'secondary'},
-        7: {text: 'Về nước', class: 'light'},
+        0: {text: 'Đang xử lý', class: 'dark'},
+        1: {text: 'Hoàn thành', class: 'danger'},
+        2: {text: 'Hủy', class: 'primary'},
     };
     return '<span class="badge badge-' + mapStatus[data]['class'] + '">'
         + mapStatus[data]['text'] +
