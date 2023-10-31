@@ -133,7 +133,7 @@
         @forelse($products as $k => $item)
             <tr>
                 <td>{{ $item->productOption->sku }}</td>
-                <td><a href="{{ route('detailProduct',['slug' => $item->productOption->slug,'sku'=>$item->productOption->sku]) }}" target="_blank">{{ $item->product_title }}</a></td>
+                <td><a href="{{ (!empty($item->productOption->slug) && !empty($item->productOption->sku))?route('detailProduct',['slug' => $item->productOption->slug,'sku'=>$item->productOption->sku]):'' }}" target="_blank">{{ $item->product_title }}</a></td>
                 <td>{{ format_money($item->product_price) }}</td>
                 <td>{{ $item->product_number }}</td>
             </tr>
