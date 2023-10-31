@@ -61,7 +61,7 @@ class Order extends Model
 
     public function getWardNameAttribute()
     {
-        $ward_name = $this->wards->name;
+        $ward_name = !empty($this->wards)?$this->wards->name:'';
         return $ward_name;
     }
 }
