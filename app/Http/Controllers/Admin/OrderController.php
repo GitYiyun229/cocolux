@@ -67,7 +67,14 @@ class OrderController extends Controller
         $products = OrderItem::with(['productOption' => function($query){
             $query->select('id','sku','slug','title');
         }])->where('order_id', $id)->get();
-        return view('admin.order-product.update', compact('order','products'));
+        $total_money = 0;
+        if (!empty($products)){
+            foreach ($products as $item){
+                $item_total = $item->product_number*$item->product_price;
+                $total_money = $total_money+$item_total;
+            }
+        }
+        return view('admin.order-product.update', compact('order','products','total_money'));
     }
 
     /**

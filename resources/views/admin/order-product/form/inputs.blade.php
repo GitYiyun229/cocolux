@@ -78,7 +78,7 @@
                             <input class="" type="radio" id="statusRadio1" name="payment" readonly value="{{ \App\Models\Article::STATUS_ACTIVE }}" {{ (isset($order->payment) && $order->payment == \App\Models\Article::STATUS_ACTIVE) ? 'checked' : (old('payment') && (old('payment') == \App\Models\Article::STATUS_ACTIVE)) ? 'checked' : '' }} disabled required>
                             <label for="statusRadio1" class="custom-control-label">Thanh toán khi nhận hàng&nbsp;&nbsp;&nbsp;&nbsp;</label>
                         </div>
-                        <div class="icheck-danger d-inline">
+                        <div class="icheck-success d-inline">
                             <input class="" type="radio" id="statusRadio2" name="payment" readonly value="{{ \App\Models\Article::STATUS_INACTIVE }}" {{ (isset($order) && $order->payment == \App\Models\Article::STATUS_INACTIVE) ? 'checked' : (old('payment') && (old('payment') == \App\Models\Article::STATUS_INACTIVE)) ? 'checked' : '' }} disabled required>
                             <label for="statusRadio2" class="custom-control-label">Thanh toán chuyển khoản</label>
                         </div>
@@ -142,6 +142,10 @@
     @endif
     </tbody>
 </table>
+<div class="row">
+    <div class="col-md-8 text-right text-bold">Tổng tiền: </div>
+    <div class="col-md-4">{{ format_money($total_money) }}</div>
+</div>
 @section('link')
     @parent
 @endsection
