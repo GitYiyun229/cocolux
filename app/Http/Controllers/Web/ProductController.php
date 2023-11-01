@@ -433,7 +433,7 @@ class ProductController extends Controller
             ->addSelect('products.slug as product_slug')
             ->limit(3)->orderBy('id', 'DESC')->get();
 
-        $list_cats = ProductsCategories::select('id','slug','title')->whereIn('id',explode('.',$product->product->category_path))->get();
+        $list_cats = ProductsCategories::select('id','slug','title')->whereIn('id',explode(',',$product->product->category_path))->get();
 
         SEOTools::setTitle($product->seo_title?$product->seo_title:$product->title);
         SEOTools::setDescription($product->seo_description?$product->seo_description:$product->description);
@@ -734,13 +734,13 @@ class ProductController extends Controller
         $cart = Session::get('cart', []);
         if ($city_id == 201){
             $totalQuantity = 0;
-            $price = false;
+            $price = 0;
             foreach ($cart as $item) {
                 $totalQuantity += $item['quantity'];
                 if ($item['price'] > 99000){
-                    $price = true;
+                    $price += $item['quantity'];
                 }else{
-                    $price = false;
+                    $price += 0;
                 }
             }
             if (!empty($district_id)){
@@ -749,21 +749,21 @@ class ProductController extends Controller
                     $price_ship = 15000;
                 }
             }
-            if (!empty($price) && $totalQuantity >= 2){
+            if ( $price >= 2 && $totalQuantity >= 2){
                 $price_ship = 0;
             }
         }else{
             $totalQuantity = 0;
-            $price = false;
+            $price = 0;
             foreach ($cart as $item) {
                 $totalQuantity += $item['quantity'];
                 if ($item['price'] > 99000){
-                    $price = true;
+                    $price += $item['quantity'];
                 }else{
-                    $price = false;
+                    $price += 0;
                 }
             }
-            if (!empty($price) && $totalQuantity >= 3){
+            if ($price >= 3 && $totalQuantity >= 3){
                 $price_ship = 0;
             }
         }

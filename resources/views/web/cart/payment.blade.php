@@ -105,7 +105,7 @@
                             <div class="form-detail bg-white">
                                 <div class="list-product mb-4">
                                     @forelse($cartItems as $item)
-                                    <a class="item-product">
+                                    <a class="item-product" href="{{ (!empty($item['product']->slug) && !empty($item['product']->sku))?route('detailProduct', ['slug' => $item['product']->slug,'sku'=> $item['product']->sku ]):'' }}">
                                         <img src="{{ $item['image'][0] }}" alt="{{ $item['product']->title }}" class="img-fluid">
                                         <div class="item-info">
                                             <p class="item-brand mb-0 fw-bold text-uppercase">{{ $item['product']->brand }}</p>
