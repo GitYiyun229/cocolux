@@ -86,4 +86,8 @@ class HomeController extends Controller
         return view('web.home', compact('slider','subBanner','product_hots','attribute_brand','articles','product_cats','subBanner2','cats','cat_sub'));
     }
 
+    public function registerEmail(Request $request){
+        return redirect()->back();
+    }
+
 }

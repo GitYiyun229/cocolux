@@ -707,9 +707,11 @@ class ProductController extends Controller
     {
         $city_id = $request->input('city_id');
         $districts = Districts::where('city_code', $city_id)->get()->toArray();
+        $price_ship = 20000;
         $result = array();
         $result['error'] = false;
         $result['district'] = $districts;
+        $result['price_ship'] = $price_ship;
         return json_encode($result);
     }
 
