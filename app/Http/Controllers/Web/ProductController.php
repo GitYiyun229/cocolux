@@ -707,7 +707,7 @@ class ProductController extends Controller
     {
         $city_id = $request->input('city_id');
         $districts = Districts::where('city_code', $city_id)->get()->toArray();
-        $price_ship = 20000;
+        $price_ship = $this->calculator_ship($city_id);
         $result = array();
         $result['error'] = false;
         $result['district'] = $districts;
@@ -717,12 +717,57 @@ class ProductController extends Controller
 
     public function load_ward(Request $request)
     {
+        $city_id = $request->input('city_id');
         $district_id = $request->input('district_id');
         $ward = Wards::where('district_code', $district_id)->get()->toArray();
+        $price_ship = $this->calculator_ship($city_id, $district_id);
         $result = array();
         $result['error'] = false;
         $result['ward'] = $ward;
+        $result['price_ship'] = $price_ship;
         return json_encode($result);
+    }
+
+    public function calculator_ship($city_id = null, $district_id = null){
+        $price_ship = 20000;
+        //tính ship, 201 là code hà nội
+        $cart = Session::get('cart', []);
+        if ($city_id == 201){
+            $totalQuantity = 0;
+            $price = false;
+            foreach ($cart as $item) {
+                $totalQuantity += $item['quantity'];
+                if ($item['price'] > 99000){
+                    $price = true;
+                }else{
+                    $price = false;
+                }
+            }
+            if (!empty($district_id)){
+                $districts = Districts::where('code', $district_id)->first();
+                if (\Str::contains($districts->name, 'Quận')){
+                    $price_ship = 15000;
+                }
+            }
+            if (!empty($price) && $totalQuantity >= 2){
+                $price_ship = 0;
+            }
+        }else{
+            $totalQuantity = 0;
+            $price = false;
+            foreach ($cart as $item) {
+                $totalQuantity += $item['quantity'];
+                if ($item['price'] > 99000){
+                    $price = true;
+                }else{
+                    $price = false;
+                }
+            }
+            if (!empty($price) && $totalQuantity >= 3){
+                $price_ship = 0;
+            }
+        }
+        return $price_ship;
     }
 
     public function order (CreateOrder $req){

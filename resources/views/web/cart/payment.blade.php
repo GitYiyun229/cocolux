@@ -14,7 +14,7 @@
                         </div>
 
                         <div class="form-detail bg-white mb-4">
-                            <div class="form-box">
+                            <div class="form-box d-none">
                                 <label for="">Với tài khoản</label>
                                 <div class="d-flex align-items-center justify-content-around">
                                     <a href="" class="login-facebook fw-bold d-flex align-items-center justify-content-center">
@@ -124,6 +124,7 @@
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <span>Tạm tính:</span>
                                     <span>{{ format_money($total_price) }}</span>
+                                    <input type="hidden" value="{{ $total_price }}" name="total_price" id="total_price"">
                                 </div>
 
                                 <div class="d-flex align-items-center justify-content-between mb-3">
@@ -136,7 +137,7 @@
 
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <span class="text-uppercase">Tổng cộng</span>
-                                    <span class="fw-bold text-danger">{{ format_money($total_price) }}</span>
+                                    <span class="fw-bold text-danger" id="total_price_ship">{{ format_money($total_price) }}</span>
                                 </div>
 
                                 <div class="detail-reward mb-3 text-center">
@@ -269,8 +270,10 @@
                     });
 
                     $("#district").html(option);
-                    $("#price_ship").html(data.price_ship);
+                    $("#price_ship").html(formatMoney(data.price_ship));
                     $("#price_ship_coco").val(data.price_ship);
+                    let total_price_ship = data.price_ship + parseInt($("#layoutForm #total_price").val());
+                    $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship));
                     return true;
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -285,6 +288,7 @@
                 url: '{{ route('loadWard') }}',
                 dataType: 'JSON',
                 data: {
+                    city_id: $('#layoutForm #city').val(),
                     district_id: district_id,
                     _token: "{{ csrf_token() }}",
                 },
@@ -296,6 +300,10 @@
                     });
 
                     $("#ward").html(option);
+                    $("#price_ship").html(formatMoney(data.price_ship));
+                    $("#price_ship_coco").val(data.price_ship);
+                    let total_price_ship = data.price_ship + parseInt($("#layoutForm #total_price").val());
+                    $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship));
                     return true;
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -303,5 +311,13 @@
             });
             return false;
         }
+
+        function formatMoney(price, current = 'đ', text = 'Liên hệ') {
+            if (!price) {
+                return text;
+            }
+            return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        }
+
     </script>
 @endsection
