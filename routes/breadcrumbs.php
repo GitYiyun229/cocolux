@@ -20,7 +20,7 @@ Breadcrumbs::for('catArticle', function ($trail,$cats) {
 // Home > Blog[Danh-muc] > [Title]
 Breadcrumbs::for('detailArticle', function ($trail,$parent_cat,$article) {
     $trail->parent('home');
-    if ($parent_cat->id == $article->category->id){
+    if (!empty($parent_cat->id) && $parent_cat->id == $article->category->id){
         $trail->push($parent_cat->title, route('catArticle',['slug' => $parent_cat->slug, 'id' => $parent_cat->id]));
     }else{
         $trail->push($parent_cat->title, route('catArticle',['slug' => $parent_cat->slug, 'id' => $parent_cat->id]));
