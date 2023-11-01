@@ -312,7 +312,7 @@
             return false;
         }
 
-        function formatMoney(price, current = 'đ', text = 'Liên hệ') {
+        function formatMoney(price, current = 'đ', text = '0 đ') {
             if (!price) {
                 return text;
             }
