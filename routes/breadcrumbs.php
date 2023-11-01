@@ -53,7 +53,11 @@ Breadcrumbs::for('catProduct', function ($trail, $category) {
 Breadcrumbs::for('detailProduct', function ($trail, $product,$list_cats) {
     $trail->parent('home');
     foreach ($list_cats as $item){
-        $trail->push($item->title, route('catProduct', ['slug'=>!empty($item->slug)?trim($item->slug):'','id'=>$item->id]));
+        if (!empty($item->slug) && !empty($item->id)){
+            $trail->push($item->title, route('catProduct', ['slug'=>!empty($item->slug)?trim($item->slug):'','id'=>$item->id]));
+        }else{
+            $trail->push($item->title);
+        }
     }
     $trail->push($product->title);
 });
