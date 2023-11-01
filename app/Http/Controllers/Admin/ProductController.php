@@ -171,7 +171,9 @@ class ProductController extends Controller
             $data = $req->validated();
             if (!empty($data['image']) && $data_root->image != $data['image']){
                 if ($data_root->image && !\Str::contains($data_root->image, 'cdn.cocolux.com')){
-                    $this->productResponstory->removeImageResize($data_root->image,$this->resizeImage, $id,'product');
+                    if (Storage::disk('local')->exists($data_root->image)) {
+                        $this->productResponstory->removeImageResize($data_root->image,$this->resizeImage, $id,'product');
+                    }
                 }
                 $data['image'] = $this->productResponstory->saveFileUpload($data['image'],$this->resizeImage, $id,'product','resize');
             }
