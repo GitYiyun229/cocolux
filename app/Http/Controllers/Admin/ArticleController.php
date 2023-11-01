@@ -145,7 +145,9 @@ class ArticleController extends Controller
             $data = $req->validated();
             $article = $this->articleRepository->getOneById($id);
             if (!empty($data['image']) && $data_root->image != $data['image']){
-                $this->articleRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'article');
+                if (Storage::disk('local')->exists($data_root->image)) {
+                    $this->articleRepository->removeImageResize($data_root->image, $this->resizeImage, $id, 'article');
+                }
                 $data['image'] = $this->articleRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'article');
             }
             if (empty($data['slug'])){
