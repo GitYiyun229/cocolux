@@ -7,6 +7,7 @@ use App\Models\AttributeValues;
 use App\Models\Banners;
 use App\Models\Product;
 use App\Models\ProductOptions;
+use App\Models\RegisterEmail;
 use App\Models\Setting;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
@@ -15,6 +16,7 @@ use App\Repositories\Contracts\ArticleInterface;
 use App\Repositories\Contracts\SlideInterface;
 use App\Repositories\Contracts\PageInterface;
 use App\Models\ProductsCategories;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
@@ -87,6 +89,15 @@ class HomeController extends Controller
     }
 
     public function registerEmail(Request $request){
+        $email = $request->input('footer_register');
+        $check_email = RegisterEmail::where('email',$email)->first();
+        if ($check_email){
+            Session::flash('danger', 'Email này đã đăng ký');
+            return redirect()->back();
+        }
+        $data['email'] = $email;
+        RegisterEmail::create($data);
+        Session::flash('success', 'Đăng ký email thành công, cảm ơn bạn');
         return redirect()->back();
     }
 
