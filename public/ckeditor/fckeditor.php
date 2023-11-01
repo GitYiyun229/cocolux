@@ -87,12 +87,12 @@ class FCKeditor
 		echo '<textarea rows="10" cols="10" name="'.$this->InstanceName.'" id="'.$this->InstanceName.'" >'.$this->Value.'</textarea>';
 		if($this->Type == 0)
 		echo "<script>CKEDITOR.replace( '".$this->InstanceName."',{
-			filebrowserBrowseUrl : '".URL_ROOT."libraries/ckeditor/plugins/ckfinder/ckfinder.html',
-			filebrowserImageBrowseUrl : '".URL_ROOT."libraries/ckeditor/plugins/ckfinder/ckfinder.html?type=Images&currentFolder=".$currentFolder."',
-			filebrowserFlashBrowseUrl : '".URL_ROOT."libraries/ckeditor/plugins/ckfinder/ckfinder.html?type=Flash',
-			filebrowserUploadUrl : '".URL_ROOT."libraries/ckeditor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&currentFolder=".$currentFolder."',
-			filebrowserImageUploadUrl : '".URL_ROOT."libraries/ckeditor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&currentFolder=".$currentFolder."',
-			filebrowserFlashUploadUrl : '".URL_ROOT."libraries/ckeditor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash'
+			filebrowserBrowseUrl : '/ckeditor/plugins/ckfinder/ckfinder.html',
+			filebrowserImageBrowseUrl : '/ckeditor/plugins/ckfinder/ckfinder.html?type=Images&currentFolder=".$currentFolder."',
+			filebrowserFlashBrowseUrl : '/ckeditor/plugins/ckfinder/ckfinder.html?type=Flash',
+			filebrowserUploadUrl : '/ckeditor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&currentFolder=".$currentFolder."',
+			filebrowserImageUploadUrl : '/ckeditor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&currentFolder=".$currentFolder."',
+			filebrowserFlashUploadUrl : '/ckeditor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash'
 				});</script>" ;
 		else if($this->Type == 1)
             echo "<script>
@@ -111,7 +111,7 @@ class FCKeditor
                 config.toolbarGroups = [
                     { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
                     { name: 'links', groups: [ 'links' ] },
-                ];                        
+                ];
 
                 config.wordcount = {
                     showParagraphs: false,
