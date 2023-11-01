@@ -128,7 +128,8 @@
 
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <span>Phí vận chuyển:</span>
-                                    <span>0 đ</span>
+                                    <span id="price_ship">0 đ</span>
+                                    <input type="hidden" value="0" name="price_ship_coco" id="price_ship_coco">
                                 </div>
 
                                 <hr>
@@ -268,6 +269,8 @@
                     });
 
                     $("#district").html(option);
+                    $("#price_ship").html(data.price_ship);
+                    $("#price_ship_coco").val(data.price_ship);
                     return true;
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {

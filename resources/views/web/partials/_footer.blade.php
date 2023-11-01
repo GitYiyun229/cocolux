@@ -81,9 +81,10 @@
             <div class="footer-col">
                 <p class="title">ĐĂNG KÝ NHẬN BẢN TIN</p>
                 <p>Đừng bỏ lỡ hàng ngàn sản phẩm và chương trình siêu hấp dẫn</p>
-                <form action="" method="post" name="form-footer" id="form-footer">
+                <form action="{{ route('registerEmail') }}" method="post" name="form-footer" id="form-footer">
+                    @csrf
                     <input type="text" placeholder="Vui lòng nhập email của bạn" name="footer_register" id="" autocomplete="off" class="form-control">
-                    <button type="button" class="btn btn-dark">ĐĂNG KÝ</button>
+                    <button type="submit" class="btn btn-dark">ĐĂNG KÝ</button>
                 </form>
             </div>
         </div>

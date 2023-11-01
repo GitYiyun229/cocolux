@@ -69,6 +69,7 @@ Route::group(['namespace' => 'Web'], function (){
     Route::post('/load-district', 'ProductController@load_district')->name('loadDistrict');
     Route::post('/load-ward', 'ProductController@load_ward')->name('loadWard');
     Route::get('/search', 'ProductController@search')->name('search');
+    Route::post('/register-email', 'HomeController@registerEmail')->name('registerEmail');
 });
 
 //Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
