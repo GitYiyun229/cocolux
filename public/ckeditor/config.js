@@ -8,7 +8,7 @@ CKEDITOR.editorConfig = function( config ) {
     config.language = 'vi';
     //config.uiColor = '#AADC6E';
 	//config.extraPlugins = ‘locationmap’;
-	config.locationMapPath = '../libraries/ckeditor/plugins/locationmap/';
+	config.locationMapPath = 'http://cocoluxfs.local/libraries/ckeditor/plugins/locationmap/';
 	config.filebrowserBrowseUrl      = 'http://cocoluxfs.local/ckfinder/ckfinder.html';
 	config.filebrowserImageBrowseUrl = 'http://cocoluxfs.local/ckfinder/ckfinder.html?type=Images';
 	config.filebrowserFlashBrowseUrl = 'http://cocoluxfs.local/ckfinder/ckfinder.html?type=Flash';
@@ -22,6 +22,13 @@ CKEDITOR.editorConfig = function( config ) {
     config.pasteFromWordRemoveStyle = true;
     config.removeFormatAttributes = '';
 	config.extraPlugins = 'youtube,wordcount';
-    config.height = 400
+    config.height = 400;
+    config.allowedContent = false; // khử hết định dạng word
+    config.removeButtons = 'Underline,Subscript,Superscript';
+    config.format_tags = 'div;p;h1;h2;h3;pre'; //cho phép các thẻ trong ckeditor
+    config.disallowedContent = '*[id]'; // ko chấp nhận các thuộc tính này trong style
+    config.filebrowserUploadMethod = 'form';
+    config.removeDialogTabs = 'image:advanced;link:advanced';
+    config.ignoreEmptyParagraph = false;
 
 };
