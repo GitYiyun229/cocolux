@@ -37,9 +37,34 @@
             display: block;
             max-width: 100% !important;
             height: auto !important;
+            margin: 20px 0;
         }
         video, iframe{
             max-width: 100% !important;
+        }
+        table{
+            margin: 20px auto;
+            width: 80%;
+            max-width: 100%;
+            tr{
+                td{
+                    border: 1px solid #999;
+                    padding: 6px 12px;
+                    p{
+                        span{
+                            font-family: unset !important;
+                            background-color: unset !important;
+                            font-size: unset !important;
+                        }
+                    }
+                }
+            }
+            &:nth-child(odd){
+                background-color: #f3f3f3;
+            }
+            &:first-child{
+                background-color: #ccc;
+            }
         }
     }
 }

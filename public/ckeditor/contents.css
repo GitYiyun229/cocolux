@@ -55,6 +55,12 @@ a
 {
 	color: #0782C1;
 }
+img{
+	max-width: 100%;
+}
+.autoComplete_wrapper ul li span{
+	white-space: unset !important;
+}
 
 ol,ul,dl
 {
