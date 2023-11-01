@@ -143,8 +143,12 @@
     </tbody>
 </table>
 <div class="row">
-    <div class="col-md-8 text-right text-bold">Tổng tiền: </div>
+    <div class="col-md-8 text-right text-bold">Tổng tạm tính: </div>
     <div class="col-md-4">{{ format_money($total_money) }}</div>
+    <div class="col-md-8 text-right text-bold">Phí ship: </div>
+    <div class="col-md-4">{{ $order->price_ship_coco?format_money($order->price_ship_coco):0 }}</div>
+    <div class="col-md-8 text-right text-bold">Tổng tiền: </div>
+    <div class="col-md-4">{{ format_money($total_money + $order->price_ship_coco) }}</div>
 </div>
 @section('link')
     @parent

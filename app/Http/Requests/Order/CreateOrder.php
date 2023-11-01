@@ -34,6 +34,7 @@ class CreateOrder extends FormRequest
             'ward' => 'required',
             'address' => 'required',
             'payment' => 'required',
+            'price_ship_coco' => 'nullable',
             'note' => 'nullable'
         ];
     }
