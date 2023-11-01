@@ -37,13 +37,13 @@ use Illuminate\Http\Request;
 Route::group(['namespace' => 'Web'], function (){
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/blog', 'ArticleController@index')->name('homeArticle');
-    Route::get('/thuong-hieu', 'AttributeController@attributeBrand')->name('homeBrand');
     Route::get('/chuyen-muc/{slug}-i.{id}', 'ArticleController@cat')
         ->where(['slug' => '[-a-zA-Z0-9]+', 'id' => '[0-9]+'])
         ->name('catArticle');
     Route::get('/blog/{slug}-i.{id}', 'ArticleController@detail')
         ->where(['slug' => '[-a-zA-Z0-9]+', 'id' => '[0-9]+'])
         ->name('detailArticle');
+    Route::get('/thuong-hieu', 'AttributeController@attributeBrand')->name('homeBrand');
     Route::get('/thuong-hieu/{slug}-i.{id}', 'ProductController@brand')
         ->where(['slug' => '[-a-zA-Z0-9]+', 'id' => '[0-9]+'])
         ->name('detailBrand');

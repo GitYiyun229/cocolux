@@ -35,7 +35,7 @@
                             <form action="{{ route('addToCartNow') }}" method="post">
                                 @csrf
                                 <div class="detail-infomation">
-                                    <a href="" class="detail-brand fw-bold d-flex mb-1">{{ $product->product->brand }}</a>
+                                    <a href="" class="detail-brand fw-bold d-flex mb-1">{{ $product->brand }}</a>
 
                                     <h1 class="detail-title fw-bold mb-1">{{ $product->title }}</h1>
 
