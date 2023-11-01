@@ -405,7 +405,7 @@ class ProductController extends Controller
 
     public function detail ($slug,$sku){
         $product = ProductOptions::where(['sku' => $sku])->with(['product' => function($query){
-            $query->select('id','category_id','sku','slug','title','attributes','category_path','description');
+            $query->select('id','category_id','sku','slug','title','attributes','category_path','description','brand');
         }])->where('sku','!=',null)->first();
         if (!$product) {
             abort(404);
