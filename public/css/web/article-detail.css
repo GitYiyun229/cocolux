@@ -32,9 +32,30 @@
   display: block;
   max-width: 100% !important;
   height: auto !important;
+  margin: 20px 0;
 }
 .layout-main-detail .detail-content video, .layout-main-detail .detail-content iframe {
   max-width: 100% !important;
+}
+.layout-main-detail .detail-content table {
+  margin: 20px auto;
+  width: 80%;
+  max-width: 100%;
+}
+.layout-main-detail .detail-content table tr td {
+  border: 1px solid #999;
+  padding: 6px 12px;
+}
+.layout-main-detail .detail-content table tr td p span {
+  font-family: unset !important;
+  background-color: unset !important;
+  font-size: unset !important;
+}
+.layout-main-detail .detail-content table:nth-child(odd) {
+  background-color: #f3f3f3;
+}
+.layout-main-detail .detail-content table:first-child {
+  background-color: #ccc;
 }
 
 nav[aria-label=breadcrumb] {
