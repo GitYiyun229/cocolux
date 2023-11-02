@@ -261,7 +261,7 @@ class ProductController extends Controller
         }
 
         $product_option = ProductOptions::where('parent_id',$id)->select('id')->get(); // check product exist in cat
-        if (!empty($product_option)){
+        if (count($product_option)){
             return [
                 'status' => false,
                 'message' => 'Vẫn còn sản phẩm phụ trong sản phẩm này'
