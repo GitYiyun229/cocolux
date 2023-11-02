@@ -261,7 +261,6 @@ class ProductController extends Controller
         }
 
         $product_option = ProductOptions::where('parent_id',$id)->select('id')->get(); // check product exist in cat
-        dd($product_option);
         if (!empty($product_option)){
             return [
                 'status' => false,
