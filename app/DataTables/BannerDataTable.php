@@ -83,6 +83,7 @@ class BannerDataTable extends DataTable
             Column::make('image_url')->title(trans('form.banner.image'))->render([
                 'renderImage(data)'
             ]),
+            Column::make('type')->title('Vị trí hiển thị'),
             Column::make('url')->title(trans('form.banner.url')),
             Column::make('active')->title(trans('form.article.active')),
             Column::make('created_at')->title(trans('form.created_at')),
