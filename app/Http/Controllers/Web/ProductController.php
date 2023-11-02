@@ -814,7 +814,7 @@ class ProductController extends Controller
 
 
     public function success ($id){
-//        Session::forget('cart');
+        Session::forget('cart');
 //        $order = Order::findOrFail($id);
         return view('web.cart.register_success');
     }
