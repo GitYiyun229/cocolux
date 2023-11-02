@@ -26,6 +26,7 @@ class Banners extends Model
     const HOME_POPUP = 10;
     const HOME_SUB = 11;
     const HOT_DEAL_DETAIL = 12;
+    const HOME_SLIDER = 13;
 
     const GROUP = [
         self::HOME_BANNER_0 => 'home_v1_category_home_banner_1',
@@ -41,5 +42,6 @@ class Banners extends Model
         self::HOME_PRIMARY_2 => 'home_v1_primary_banner_2',
         self::HOME_SUB => 'home_v1_sub_banner',
         self::HOT_DEAL_DETAIL => 'hot_deal_detail_banner',
+        self::HOME_SLIDER => 'home_v1_slider',
     ];
 }
