@@ -260,12 +260,19 @@ class ProductController extends Controller
             Storage::delete($array_resize_);
         }
 
-        $this->productResponstory->delete($id);
-
-        return [
-            'status' => true,
-            'message' => trans('message.delete_product_success')
-        ];
+        $product_option = ProductOptions::where('parent_id',$id)->select('id')->get(); // check product exist in cat
+        if (!empty($product_option->id)){
+            return [
+                'status' => false,
+                'message' => 'Vẫn còn sản phẩm phụ trong sản phẩm này'
+            ];
+        }else{
+            $this->productResponstory->delete($id);
+            return [
+                'status' => true,
+                'message' => trans('message.delete_product_success')
+            ];
+        }
     }
 
     /**
