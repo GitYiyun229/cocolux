@@ -86,7 +86,7 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.banner.url')</label>
-                    <input type="text" class="form-control" name="url" value="{{ isset($banner) ? $banner->url : old('url') }}" required>
+                    <input type="text" class="form-control" name="url" value="{{ isset($banner) ? $banner->url : old('url') }}" >
                     @if ($errors->has('url'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('url') }}</strong>
