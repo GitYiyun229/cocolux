@@ -28,11 +28,18 @@
   margin-bottom: 7px;
   display: block;
 }
+.layout-main-detail .detail-content p {
+  display: flex;
+  align-items: center;
+}
+.layout-main-detail .detail-content p img {
+  margin: 20px 10px !important;
+}
 .layout-main-detail .detail-content img {
   display: block;
   max-width: 100% !important;
   height: auto !important;
-  margin: 20px 0;
+  margin: 20px 0px;
 }
 .layout-main-detail .detail-content video, .layout-main-detail .detail-content iframe {
   max-width: 100% !important;

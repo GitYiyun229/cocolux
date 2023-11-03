@@ -33,11 +33,18 @@
         }
     }
     .detail-content{
+        p{
+            display: flex;
+            align-items: center;
+            img{
+                margin: 20px 10px !important;
+            }
+        }
         img{
             display: block;
             max-width: 100% !important;
             height: auto !important;
-            margin: 20px 0;
+            margin: 20px 0px;
         }
         video, iframe{
             max-width: 100% !important;
