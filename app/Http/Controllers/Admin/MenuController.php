@@ -113,9 +113,9 @@ class MenuController extends Controller
         $local = request()->query('local','vi');
         $data = $request->data;
         $this->menuRepository->updateTreeRebuild('id', $data);
-        $translations = $this->menuRepository->with(['translations']);
-        $data['lang'] = $local;
-        $translations->updateTreeRebuild('id', $data);
+//        $translations = $this->menuRepository->with(['translations']);
+//        $data['lang'] = $local;
+//        $translations->updateTreeRebuild('id', $data);
         return response()->json($data);
     }
 }

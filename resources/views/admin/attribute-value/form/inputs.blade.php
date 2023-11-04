@@ -48,6 +48,19 @@
                     @endif
                 </div>
             </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>@lang('form.attribute-value.image')</label> <span class="text-danger">*</span>
+                    <div class="input-group">
+                        @include('admin.components.buttons.image',['src' => isset($attribute_value->image) ? $attribute_value->image : old('image'),'name' => 'image'])
+                        @if ($errors->has('image'))
+                            <span class="help-block text-danger">
+                                <strong>{{ $errors->first('image') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-6">

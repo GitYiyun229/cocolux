@@ -32,7 +32,8 @@ class AttributeValueController extends Controller
      */
     public function create()
     {
-        return view('admin.attribute-value.create');
+        $categories = Attribute::all();
+        return view('admin.attribute-value.create',compact('categories'));
     }
 
     /**
@@ -46,7 +47,12 @@ class AttributeValueController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
-            AttributeValues::create($data);
+            $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['name'], '-');
+            if (!empty($data['image'])){
+                $image_root = $data['image'];
+                $data['image'] = urldecode($image_root);
+            }
+            $model = AttributeValues::create($data);
             DB::commit();
             Session::flash('success', trans('message.create_attribute_value_success'));
             return redirect()->back();
@@ -99,6 +105,9 @@ class AttributeValueController extends Controller
         try {
             $data = $req->validated();
             $attribute_value = AttributeValues::findOrFail($id);
+            if (empty($data['slug'])){
+                $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['name'], '-');
+            }
             $attribute_value->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_attribute_value_success'));

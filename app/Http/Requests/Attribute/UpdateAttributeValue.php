@@ -26,6 +26,7 @@ class UpdateAttributeValue extends FormRequest
         return [
             'name' => 'required',
             'slug' => 'nullable',
+            'image' => 'nullable',
             'attribute_id' => 'nullable',
             'content' => 'nullable',
             'active' => 'required',
