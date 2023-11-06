@@ -31,11 +31,11 @@
                     <label>@lang('form.product.active')</label> <span class="text-danger">*</span>
                     <div class="form-group">
                         <div class="icheck-success d-inline">
-                            <input class="" type="radio" id="statusRadio1" name="active" value="{{ \App\Models\Product::STATUS_ACTIVE }}" {{ (isset($product->active) && $product->active == \App\Models\product::STATUS_ACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\product::STATUS_ACTIVE)) ? 'checked' : '' }}  required>
+                            <input class="" type="radio" id="statusRadio1" name="active" value="{{ \App\Models\Product::STATUS_ACTIVE }}" {{ (isset($product->active) && $product->active == \App\Models\Product::STATUS_ACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\Product::STATUS_ACTIVE)) ? 'checked' : '' }}  required>
                             <label for="statusRadio1" class="custom-control-label">@lang('form.status.active')&nbsp;&nbsp;&nbsp;&nbsp;</label>
                         </div>
                         <div class="icheck-danger d-inline">
-                            <input class="" type="radio" id="statusRadio2" name="active" value="{{ \App\Models\Product::STATUS_INACTIVE }}" {{ (isset($product) && $product->active == \App\Models\product::STATUS_INACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\product::STATUS_INACTIVE)) ? 'checked' : '' }}  required>
+                            <input class="" type="radio" id="statusRadio2" name="active" value="{{ \App\Models\Product::STATUS_INACTIVE }}" {{ (isset($product) && $product->active == \App\Models\Product::STATUS_INACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\Product::STATUS_INACTIVE)) ? 'checked' : '' }}  required>
                             <label for="statusRadio2" class="custom-control-label">@lang('form.status.inactive')</label>
                         </div>
                     </div>
@@ -52,11 +52,11 @@
                     <label>@lang('form.product.is_home')</label> <span class="text-danger">*</span>
                     <div class="form-group">
                         <div class="icheck-success d-inline">
-                            <input class="" type="radio" id="homeRadio1" name="is_home" value="{{ \App\Models\Product::IS_HOME }}" {{ (isset($product->is_home) && $product->is_home == \App\Models\product::IS_HOME) ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\product::IS_HOME)) ? 'checked' : '' }}  required>
+                            <input class="" type="radio" id="homeRadio1" name="is_home" value="{{ \App\Models\Product::IS_HOME }}" {{ (isset($product->is_home) && $product->is_home == \App\Models\Product::IS_HOME) ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\Product::IS_HOME)) ? 'checked' : '' }}  required>
                             <label for="homeRadio1" class="custom-control-label">Có</label>
                         </div>
                         <div class="icheck-danger d-inline">
-                            <input class="" type="radio" id="homeRadio2" name="is_home" value="{{ \App\Models\Product::IS_NOT_HOME }}" {{ (isset($product) && $product->is_home == \App\Models\product::IS_NOT_HOME) ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\product::IS_NOT_HOME)) ? 'checked' : '' }}  required>
+                            <input class="" type="radio" id="homeRadio2" name="is_home" value="{{ \App\Models\Product::IS_NOT_HOME }}" {{ (isset($product) && $product->is_home == \App\Models\Product::IS_NOT_HOME) ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\Product::IS_NOT_HOME)) ? 'checked' : '' }}  required>
                             <label for="homeRadio2" class="custom-control-label">Không</label>
                         </div>
                     </div>
