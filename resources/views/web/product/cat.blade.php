@@ -159,6 +159,7 @@
 @section('script')
     @parent
     <script>
+        // khi click vào thì submit form rồi lấy thông tin từ url để tạo filter
         $('.btn-more-less').click(function() {
             $(this).toggleClass('less');
             $('.layout-article').toggleClass('less');

@@ -36,6 +36,9 @@
         p{
             display: flex;
             align-items: center;
+            strong{
+                display: contents;
+            }
             img{
                 margin: 20px 10px !important;
             }
