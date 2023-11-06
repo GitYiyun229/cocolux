@@ -20,6 +20,7 @@ class CreateAttributeValuesTable extends Migration
             $table->string('slug');
             $table->text('content');
             $table->integer('active');
+            $table->integer('is_home')->default(0);
             $table->integer('attribute_id')->unsigned();
             $table->string('attribute_code');
             $table->string('seo_title')->nullable();

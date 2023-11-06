@@ -30,6 +30,7 @@ class UpdateAttributeValue extends FormRequest
             'attribute_id' => 'nullable',
             'content' => 'nullable',
             'active' => 'required',
+            'is_home' => 'required',
         ];
     }
 }

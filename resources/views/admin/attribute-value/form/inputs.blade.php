@@ -49,6 +49,27 @@
                 </div>
             </div>
             <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group clearfix">
+                    <label>Nổi bật</label> <span class="text-danger">*</span>
+                    <div class="form-group">
+                        <div class="icheck-success d-inline">
+                            <input class="" type="radio" id="homeRadio1" name="is_home" value="{{ \App\Models\AttributeValues::IS_HOME }}" {{ (isset($attribute_value->is_home) && $attribute_value->is_home == \App\Models\AttributeValues::IS_HOME) ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\AttributeValues::IS_HOME)) ? 'checked' : '' }}  required>
+                            <label for="homeRadio1" class="custom-control-label">Có</label>
+                        </div>
+                        <div class="icheck-danger d-inline">
+                            <input class="" type="radio" id="homeRadio2" name="is_home" value="{{ \App\Models\AttributeValues::IS_NOT_HOME }}" {{ (isset($attribute_value) && $attribute_value->is_home == \App\Models\AttributeValues::IS_NOT_HOME) ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\AttributeValues::IS_NOT_HOME)) ? 'checked' : '' }}  required>
+                            <label for="homeRadio2" class="custom-control-label">Không</label>
+                        </div>
+                    </div>
+                    @if ($errors->has('is_home'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('is_home') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
                 <div class="form-group">
                     <label>@lang('form.attribute-value.image')</label> <span class="text-danger">*</span>
                     <div class="input-group">
