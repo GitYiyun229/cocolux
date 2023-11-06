@@ -64,7 +64,7 @@ class HomeController extends Controller
                 $query->where('is_hot', 1);
             })->limit(10)->get();
 
-        $attribute_brand = AttributeValues::where(['attribute_id' => 19,'active' => 1,'is_hot' => 1])->select('id','name','slug','image')->limit(15)->get(); // thương hiệu
+        $attribute_brand = AttributeValues::where(['attribute_id' => 19,'active' => 1,'is_home' => 1])->select('id','name','slug','image')->limit(15)->get(); // thương hiệu
         $cats = ProductsCategories::where(['is_home' => 1,'active' => 1,'parent_id'=>null])
             ->select('id','title','slug','image','logo','banner')
             ->limit(5)->orderBy('id', 'ASC')->get(); // danh mục
