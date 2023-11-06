@@ -118,7 +118,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('/edit/{id}', 'SettingController@edit')->name('edit')->middleware('permission:edit_setting');
         Route::post('/update/{id}', 'SettingController@update')->name('update')->middleware('permission:edit_setting');
         Route::post('/destroy/{id}', 'SettingController@destroy')->name('destroy')->middleware('permission:delete_setting');
-        Route::post('/change-active-setting/{id}', 'SettingController@changeActive')->name('changeActive')->middleware('permission:edit_setting');});
+        Route::post('/change-active-setting/{id}', 'SettingController@changeActive')->name('changeActive')->middleware('permission:edit_setting');
+    });
 
     Route::group(['prefix' => 'menu-category', 'as' => 'menu-category.', 'middleware' => ['permission:view_menu_categories']], function () {
         Route::get('', 'MenuCategoryController@index')->name('index');
