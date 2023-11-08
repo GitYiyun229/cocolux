@@ -34,6 +34,8 @@ use Illuminate\Http\Request;
 //Route::get('/save-banners-from-api', 'ApiController@saveBannersFromApi');
 //Route::get('/save-page-author-from-api', 'ApiController@savePageAuthorFromApi');
 
+Route::any('/web-hook-call-back', 'ApiNhanhController@WebHookCallBack')->name('WebHookCallBack');
+
 Route::group(['namespace' => 'Web'], function (){
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/blog', 'ArticleController@index')->name('homeArticle');
