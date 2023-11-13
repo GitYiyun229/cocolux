@@ -126,10 +126,10 @@ class PermissionSeeder extends Seeder
             ['name' => 'edit_store', 'display_name' => 'Sửa cửa hàng', 'guard_name' => 'web'],
             ['name' => 'delete_store', 'display_name' => 'Xóa cửa hàng', 'guard_name' => 'web'],
 
-            ['name' => 'view_discount', 'display_name' => 'Xem danh sách ưu đãi', 'guard_name' => 'web'],
-            ['name' => 'create_discount', 'display_name' => 'Thêm mới ưu đãi', 'guard_name' => 'web'],
-            ['name' => 'edit_discount', 'display_name' => 'Sửa ưu đãi', 'guard_name' => 'web'],
-            ['name' => 'delete_discount', 'display_name' => 'Xóa ưu đãi', 'guard_name' => 'web'],
+            ['name' => 'view_promotion', 'display_name' => 'Xem danh sách ưu đãi', 'guard_name' => 'web'],
+            ['name' => 'create_promotion', 'display_name' => 'Thêm mới ưu đãi', 'guard_name' => 'web'],
+            ['name' => 'edit_promotion', 'display_name' => 'Sửa ưu đãi', 'guard_name' => 'web'],
+            ['name' => 'delete_promotion', 'display_name' => 'Xóa ưu đãi', 'guard_name' => 'web'],
 
             ['name' => 'view_contact', 'display_name' => 'Xem danh sách liên hệ', 'guard_name' => 'web'],
 
