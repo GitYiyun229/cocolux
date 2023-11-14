@@ -50,7 +50,6 @@ class PromotionsController extends Controller
             $type = $request->input('type');
             $data = array();
             $data['name'] = $request->input('name');
-            $data['code'] = $request->input('code');
             $data['thumbnail_url'] = $request->input('thumbnail_url');
             $data['type'] = $type;
             $data['applied_start_time'] = Carbon::parse($request->input('applied_start_time'));
@@ -126,7 +125,6 @@ class PromotionsController extends Controller
             $type = $request->input('type');
             $data = array();
             $data['name'] = $request->input('name');
-            $data['code'] = $request->input('code');
             $data['thumbnail_url'] = $request->input('thumbnail_url');
             $data['type'] = $type;
             $data['applied_start_time'] = Carbon::parse($request->input('applied_start_time'));

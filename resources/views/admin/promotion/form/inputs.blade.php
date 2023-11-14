@@ -13,18 +13,6 @@
                     @endif
                 </div>
             </div>
-            <div class="col-sm-6">
-                <!-- text input -->
-                <div class="form-group">
-                    <label>@lang('form.promotion.code')</label>
-                    <input type="text" class="form-control" name="code" value="{{ isset($promotion) ? $promotion->code : old('code') }}">
-                    @if ($errors->has('code'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('code') }}</strong>
-                </span>
-                    @endif
-                </div>
-            </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
