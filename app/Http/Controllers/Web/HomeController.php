@@ -74,8 +74,11 @@ class HomeController extends Controller
 
         $promotions_id = $promotions->pluck('id')->toArray();
         $applied_stop_time = $promotions->pluck('applied_stop_time','id')->toArray();
-        $product_flash = ProductOptions::whereIn('flash_deal->id',$promotions_id)
-            ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')->get();
+        $product_flash = ProductOptions::whereIn('flash_deal->id',$promotions_id)->where('slug', '!=',null)
+            ->with(['product' => function($query){
+                $query->select('id','is_hot','slug');
+            }])
+            ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')->limit(10)->get();
 
         $attribute_brand = AttributeValues::where(['attribute_id' => 19,'active' => 1,'is_home' => 1])->select('id','name','slug','image')->limit(15)->get(); // thương hiệu
         $cats = ProductsCategories::where(['is_home' => 1,'active' => 1,'parent_id'=>null])
