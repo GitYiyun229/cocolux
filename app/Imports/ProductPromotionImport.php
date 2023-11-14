@@ -40,9 +40,9 @@ class ProductPromotionImport implements ToModel, WithHeadingRow
         ];
         if ($product) {
             if ($this->type == 'hot_deal'){
-                $product->hot_deal = json_encode($productData);
+                $product->hot_deal = $productData;
             }else{
-                $product->flash_deal = json_encode($productData);
+                $product->flash_deal = $productData;
             }
             $product->save();
         }

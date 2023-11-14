@@ -51,10 +51,21 @@ class PromotionsController extends Controller
             $data = array();
             $data['name'] = $request->input('name');
             $data['code'] = $request->input('code');
+            $data['thumbnail_url'] = $request->input('thumbnail_url');
             $data['type'] = $type;
             $data['applied_start_time'] = Carbon::parse($request->input('applied_start_time'));
             $data['applied_stop_time'] = Carbon::parse($request->input('applied_stop_time'));
             $promotion = Promotions::create($data);
+
+            if ($data['thumbnail_url']) {
+                $fileNameWithoutExtension = urldecode(pathinfo($data['thumbnail_url'], PATHINFO_FILENAME));
+                $fileName = $fileNameWithoutExtension . '.webp';
+                $thumbnail = Image::make(asset($data['thumbnail_url']))->encode('webp', 75);
+                $thumbnailPath = 'storage/promotion/' . $promotion->id . '-' . $fileName;
+                Storage::makeDirectory('public/promotion/');
+                $thumbnail->save($thumbnailPath);
+            }
+
             if($file){
                 Excel::import(new ProductPromotionImport($promotion->id, $type, $data['name']), $file);
             }
@@ -116,12 +127,23 @@ class PromotionsController extends Controller
             $data = array();
             $data['name'] = $request->input('name');
             $data['code'] = $request->input('code');
+            $data['thumbnail_url'] = $request->input('thumbnail_url');
             $data['type'] = $type;
             $data['applied_start_time'] = Carbon::parse($request->input('applied_start_time'));
             $data['applied_stop_time'] = Carbon::parse($request->input('applied_stop_time'));
 
             $promotion = Promotions::findOrFail($id);
             $promotion->update($data);
+
+            if ($data['thumbnail_url']){
+                $fileNameWithoutExtension = urldecode(pathinfo($data['thumbnail_url'], PATHINFO_FILENAME));
+                $fileName = $fileNameWithoutExtension. '.webp';
+                $thumbnail = Image::make(asset($data['thumbnail_url']))->encode('webp', 75);
+                $thumbnailPath = 'storage/promotion/' .$id.'-'. $fileName;
+                Storage::makeDirectory('public/promotion/');
+                $thumbnail->save($thumbnailPath);
+            }
+
             if ($file){
                 Excel::import(new ProductPromotionImport($id, $type, $data['name']), $file);
             }

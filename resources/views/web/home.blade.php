@@ -84,45 +84,47 @@
                 </div>
             </div>
 
-            <div class="section-flash-mobile d-block d-lg-none slide-template bg-white mb-4">
+            <div class="section-flash-mobile d-block slide-template bg-white mb-4">
                 <div class="slide-top">
                     <div class="slide-title d-flex align-items-center gap-2">
-                        <a href="" title="Flash Deal" class="d-flex align-items-center gap-2">
+                        <a href="{{ route('flashSaleProducts') }}" title="Flash Deal" class="d-flex align-items-center gap-2">
                             <img src="{{ asset('images/hot_icon.svg') }}" alt="flash deal" class="img-fluid" height="18" width="18">
                             <h2>Flash Deal</h2>
                         </a>
                         |
                         <div is-title="true" class="count-down d-flex align-items-center gap-1" time-end="Oct 30 2023 20:00:00"></div>
                     </div>
-                    <a href="" class="slide-more">Xem tất cả</a>
+                    <a href="{{ route('flashSaleProducts') }}" class="slide-more">Xem tất cả</a>
                 </div>
                 <div class="slide-main">
                     <div class="slide-template-slick">
-                        @if(!empty($product_hots))
-                        @forelse($product_hots as $item)
-                        <a href="{{ route('detailProduct',['slug'=>!empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
-                            @if($item->price != $item->normal_price)
-                                <div class="product-discount">
-                                    <span class="pe-1">{{ percentage_price($item->price, $item->normal_price) }}</span>
-                                </div>
-                            @endif
-                            <div class="product-thumbnail">
-                                <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
-                            </div>
-                            <div class="product-price">
-                                <div class="public-price">{{ format_money($item->price) }}</div>
-                                @if($item->price != $item->normal_price)
-                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
-                                @endif
-                            </div>
-                            <div class="product-brand">
-                                {{ $item->brand }}
-                            </div>
-                            <div class="product-title">
-                                {{ $item->title }}
-                            </div>
-                            <div class="product-progress-sale count-down" time-end="Oct 30 2023 20:00:00"></div>
-                        </a>
+                        @if(!empty($product_flash))
+                        @forelse($product_flash as $item)
+                                <a href="{{ route('detailProduct',['slug'=>!empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
+                                    @if($item->flash_deal->price != $item->normal_price)
+                                        <div class="product-discount">
+                                            <span class="pe-1">{{ percentage_price($item->flash_deal->price, $item->normal_price) }}</span>
+                                        </div>
+                                    @endif
+                                    <div class="product-thumbnail">
+                                        <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
+                                    </div>
+                                    <div class="product-price">
+                                        <div class="public-price">{{ format_money($item->flash_deal->price) }}</div>
+                                        @if($item->flash_deal->price != $item->normal_price)
+                                            <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="product-brand">
+                                        {{ $item->brand }}
+                                    </div>
+                                    <div class="product-title">
+                                        {{ $item->title }}
+                                    </div>
+                                    @if($applied_stop_time[$item->flash_deal->id])
+                                        <div class="product-progress-sale count-down" time-end="{{ $applied_stop_time[$item->flash_deal->id] }}"></div>
+                                    @endif
+                                </a>
                         @empty
                         @endforelse
                         @endif

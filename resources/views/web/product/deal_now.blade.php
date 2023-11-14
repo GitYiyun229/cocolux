@@ -5,13 +5,16 @@
 
         <div class="container">
             <div class="layout-page-deal-detail mb-5">
-                <div class="layout-banner mb-3">
-                    <img src="{{ $promotion_hots->thumbnail_url }}" alt="{{ $promotion_hots->name }}" class="img-fluid w-100">
+                <div class="layout-nav bg-white d-flex align-items-center mb-3">
+                    <a href="{{ route('dealHotProducts') }}" class="fw-bold text-uppercase fs-6">Hot Deals</a>
+                    <a href="{{ route('flashSaleProducts') }}" class="fw-bold text-uppercase fs-6">Flash Deal</a>
+                    <a href="{{ route('dealNowProducts') }}" class="fw-bold text-uppercase fs-6 text-danger">Đang diễn ra</a>
                 </div>
+
                 <div class="layout-detail-main bg-white d-grid">
                     @if(!empty($productOptions))
-                    @forelse($productOptions as $item)
-                            <a href="{{ route('detailProduct',['slug'=>!empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
+                        @forelse($productOptions as $item)
+                            <a href="{{ route('detailProduct',['slug'=>$item->slug, 'sku' =>$item->sku]) }}" class="product-template">
                                 @if($item->hot_deal->price != $item->normal_price)
                                     <div class="product-discount">
                                         <span class="pe-1">{{ percentage_price($item->hot_deal->price, $item->normal_price) }}</span>
@@ -32,12 +35,14 @@
                                 <div class="product-title">
                                     {{ $item->title }}
                                 </div>
-                                @if($promotion_hots->applied_stop_time)
-                                    <div class="product-progress-sale count-down" time-end="{{ $promotion_hots->applied_stop_time }}"></div>
+                                @if($applied_stop_time[$item->hot_deal->id])
+                                    <div class="product-progress-sale count-down" time-end="{{ $applied_stop_time[$item->hot_deal->id] }}"></div>
                                 @endif
                             </a>
-                    @empty
-                    @endforelse
+                        @empty
+                        @endforelse
+                    @else
+                        <p class="text-center">Không có deal khuyến mãi</p>
                     @endif
                 </div>
             </div>
