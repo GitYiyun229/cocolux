@@ -525,7 +525,9 @@ class ProductController extends Controller
 
         $promotions_id = $promotions->pluck('id')->toArray();
         $applied_stop_time = $promotions->pluck('applied_stop_time','id')->toArray();
-        $productOptions = ProductOptions::whereIn('flash_deal->id',$promotions_id)->get();
+        $productOptions = ProductOptions::whereIn('flash_deal->id',$promotions_id)->where('slug', '!=',null)->with(['product' => function($query){
+            $query->select('id','slug','brand');
+        }])->get();
         return view('web.product.flash_sale',compact('promotions','productOptions','applied_stop_time'));
     }
 

@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-
+            @if(count($product_flash))
             <div class="section-flash-mobile d-block slide-template bg-white mb-4">
                 <div class="slide-top">
                     <div class="slide-title d-flex align-items-center gap-2">
@@ -91,8 +91,8 @@
                             <img src="{{ asset('images/hot_icon.svg') }}" alt="flash deal" class="img-fluid" height="18" width="18">
                             <h2>Flash Deal</h2>
                         </a>
-                        |
-                        <div is-title="true" class="count-down d-flex align-items-center gap-1" time-end="Oct 30 2023 20:00:00"></div>
+{{--                        |--}}
+{{--                        <div is-title="true" class="count-down d-flex align-items-center gap-1" time-end="Oct 30 2023 20:00:00"></div>--}}
                     </div>
                     <a href="{{ route('flashSaleProducts') }}" class="slide-more">Xem tất cả</a>
                 </div>
@@ -131,7 +131,7 @@
                     </div>
                 </div>
             </div>
-
+            @endif
             <div class="slide-template bg-white mb-4">
                 <div class="slide-top">
                     <a href="" class="slide-title">
