@@ -38,9 +38,6 @@
 .layout-main-detail .detail-content p img {
   margin: 20px 10px !important;
 }
-.layout-main-detail .detail-content p span {
-  display: contents;
-}
 .layout-main-detail .detail-content img {
   display: block;
   max-width: 100% !important;
