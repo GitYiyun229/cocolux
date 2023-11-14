@@ -23,7 +23,7 @@ Breadcrumbs::for('detailArticle', function ($trail,$parent_cat,$article) {
     if (!empty($parent_cat->id) && $parent_cat->id == $article->category->id){
         $trail->push($parent_cat->title, route('catArticle',['slug' => $parent_cat->slug, 'id' => $parent_cat->id]));
     }else{
-        $trail->push($parent_cat->title, route('catArticle',['slug' => $parent_cat->slug, 'id' => $parent_cat->id]));
+        $trail->push(isset($parent_cat->title)?$parent_cat->title:'Danh mục', route('catArticle',['slug' => $parent_cat->slug, 'id' => $parent_cat->id]));
         $trail->push($article->category->title, route('catArticle',['slug' => $article->category->slug, 'id' => $article->category->id]));
     }
     $trail->push($article->title, route('detailArticle',['slug' => $article->slug, 'id' => $article->id]));
