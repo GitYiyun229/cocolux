@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="layout-detail-main bg-white d-grid">
-                    @if(!empty($productOptions))
+                    @if(count($productOptions))
                         @forelse($productOptions as $item)
                             <a href="{{ route('detailProduct',['slug'=>!empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
                                 @if($item->flash_deal->price != $item->normal_price)
