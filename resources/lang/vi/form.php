@@ -273,4 +273,18 @@ return [
         'ordering' => 'Thứ tự'
     ],
 
+    'promotion' => [
+        '' => 'Ưu đãi',
+        'name' => 'Tên ưu đãi',
+        'code' => 'Code',
+        'content' => 'Nội dung',
+        'thumbnail_url' => 'Hình ảnh',
+        'applied_start_time' => 'Thời gian bắt đâu',
+        'applied_stop_time' => 'Thời gian kết thúc',
+        'type' => 'Loại ưu đãi',
+        'update' => 'Update',
+        'create' => 'Tạo mới',
+        'file' => 'Import file excel sản phẩm',
+    ],
+
 ];

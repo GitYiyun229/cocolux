@@ -286,6 +286,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::post('/change-active-store/{id}', 'StoreController@changeActive')->name('changeActive')->middleware('permission:edit_store');
     });
 
+    Route::group(['prefix' => 'promotion', 'as' => 'promotion.', 'middleware' => ['permission:view_promotion']], function () {
+        Route::get('', 'PromotionsController@index')->name('index');
+        Route::get('/create', 'PromotionsController@create')->name('create')->middleware('permission:create_promotion');
+        Route::post('/store', 'PromotionsController@store')->name('store')->middleware('permission:create_promotion');
+        Route::get('/edit/{id}', 'PromotionsController@edit')->name('edit')->middleware('permission:edit_promotion');
+        Route::post('/update/{id}', 'PromotionsController@update')->name('update')->middleware('permission:edit_promotion');
+        Route::post('/destroy/{id}', 'PromotionsController@destroy')->name('destroy')->middleware('permission:delete_promotion');
+        Route::post('/change-active-promotion/{id}', 'PromotionsController@changeActive')->name('changeActive')->middleware('permission:edit_promotion');
+    });
+
 });
 
 

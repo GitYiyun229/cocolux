@@ -168,6 +168,16 @@
                         </ul>
                     </li>
                 @endcan
+                @can(['view_promotion'])
+                    <li class="nav-item">
+                        <a href="{{ route('admin.promotion.index') }}" class="nav-link @if (request()->is('admin/promotion*')) active @endif">
+                            <i class="fas fa-percent"></i>
+                            <p>
+                                @lang('form.promotion.')
+                            </p>
+                        </a>
+                    </li>
+                @endcan
                 @can(['view_banner'])
                     <li class="nav-item">
                         <a href="{{ route('admin.banner.index') }}" class="nav-link @if (request()->is('admin/banner*')) active @endif">
