@@ -18,6 +18,7 @@ use App\Models\Setting;
 use App\Models\Wards;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ProductCategoryInterface;
 use App\Repositories\Contracts\ProductInterface;
@@ -410,6 +411,25 @@ class ProductController extends Controller
         if (!$product) {
             abort(404);
         }
+
+        $flash = $product->flash_deal;
+        $deal_hot = $product->hot_deal;
+        $now = Carbon::now();
+        $flash_sale = null;
+        $hot_deal = null;
+        if ($flash){
+            $flash_sale = Promotions::where(['type' => 'flash_deal', 'id' => $flash->id])
+                ->where('applied_start_time', '<=', $now)
+                ->where('applied_stop_time', '>', $now)
+                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->first();
+        }
+
+        if ($deal_hot){
+            $hot_deal = Promotions::where(['type' => 'hot_deal', 'id' => $deal_hot->id])
+                ->where('applied_start_time', '<=', $now)
+                ->where('applied_stop_time', '>', $now)
+                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->first();
+        }
         $list_image = json_decode($product->images);
         $stocks = json_decode($product->stocks);
         $product_root = Product::where(['id' => $product->parent_id])->select('id','slug','title','image','brand','category_id','description','attributes')->first();
@@ -444,7 +464,7 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($product->seo_keyword?$product->seo_keyword:$product->title);
 
-        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats'));
+        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats','flash_sale','hot_deal'));
     }
 
     public function is_new(){
@@ -485,6 +505,76 @@ class ProductController extends Controller
         return view('web.product.deal_hot',compact('promotions'));
     }
 
+    public function flash_deal(){
+
+        $logo = Setting::where('key', 'logo')->first();
+
+        SEOTools::setTitle('Flash HOT: Tất cả Deal tại Cocolux | Cocolux.com');
+        SEOTools::setDescription('COCOLUX - Hệ thống mỹ phẩm hàng đầu Việt Nam');
+        SEOTools::addImages(asset($logo->value));
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('cocolux.com');
+
+        $now = Carbon::now();
+        $promotions = Promotions::where(['type' => 'flash_deal'])
+            ->where('applied_start_time', '<=', $now)
+            ->where('applied_stop_time', '>', $now)
+            ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->get();
+
+        $promotions_id = $promotions->pluck('id')->toArray();
+        $applied_stop_time = $promotions->pluck('applied_stop_time','id')->toArray();
+        $productOptions = ProductOptions::whereIn('flash_deal->id',$promotions_id)->get();
+        return view('web.product.flash_sale',compact('promotions','productOptions','applied_stop_time'));
+    }
+
+    public function deal_now(){
+
+        $logo = Setting::where('key', 'logo')->first();
+
+        SEOTools::setTitle('Flash HOT: Tất cả Deal tại Cocolux | Cocolux.com');
+        SEOTools::setDescription('COCOLUX - Hệ thống mỹ phẩm hàng đầu Việt Nam');
+        SEOTools::addImages(asset($logo->value));
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('cocolux.com');
+
+        $now = Carbon::now();
+
+        $promotion_flash = Promotions::where(['type' => 'flash_deal'])
+            ->where('applied_start_time', '<=', $now)
+            ->where('applied_stop_time', '>', $now)
+            ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->get();
+        $promotions_flash_id = $promotion_flash->pluck('id')->toArray();
+
+        $promotion_hots = Promotions::where(['type' => 'hot_deal'])
+            ->where('applied_start_time', '<=', $now)
+            ->where('applied_stop_time', '>', $now)
+            ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->get();
+        $promotions_hot_id = $promotion_hots->pluck('id')->toArray();
+
+        $applied_stop_time = $promotion_hots->pluck('applied_stop_time','id')->toArray();
+        $productOptions = ProductOptions::
+            select('id','sku', 'slug','title','price','normal_price','slug','images','flash_deal','hot_deal','parent_id')
+            ->with(['product' => function($query){
+                $query->select('id','slug','brand');
+            }])
+            ->where('slug', '!=',null)
+            ->where('hot_deal', '!=',null)
+            ->where(function($query) use ($promotions_hot_id, $promotions_flash_id){
+                if ($promotions_hot_id){
+                    $query->whereIn('hot_deal->id',$promotions_hot_id);
+                }
+                if ($promotions_flash_id){
+                    $query->whereNotIn('flash_deal->id',$promotions_flash_id)
+                    ->orWhereNull('flash_deal');
+                }
+            })->get();
+        return view('web.product.deal_now',compact('productOptions','applied_stop_time'));
+    }
+
     public function deal_hot_detail($id){
 
         $logo = Setting::where('key', 'logo')->first();
@@ -498,14 +588,38 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
 
         $promotion = Promotions::where(['type' => 'hot_deal','status' => 'starting','id' => $id])->select('id','name', 'code','thumbnail_url')->first();
-        $products = Product::whereJsonContains('hot_deal->id', $id)->pluck('id');
-        $productOptions = ProductOptions::whereIn('parent_id', $products)
-            ->select('id','sku', 'title', 'parent_id','price','slug','images','normal_price')
-            ->with(['product' => function($query){
-                $query->select('id','sku','slug','title');
-            }])
-            ->get();
-        return view('web.product.deal_hot_detail',compact('promotion','products','productOptions'));
+        $now = Carbon::now();
+
+        $promotion_flash = Promotions::where(['type' => 'flash_deal'])
+            ->where('applied_start_time', '<=', $now)
+            ->where('applied_stop_time', '>', $now)
+            ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->get();
+        $promotions_flash_id = $promotion_flash->pluck('id')->toArray();
+
+        $promotion_hots = Promotions::where(['type' => 'hot_deal'])
+            ->where('applied_start_time', '<=', $now)
+            ->where('applied_stop_time', '>', $now)
+            ->where(['id' => $id])
+            ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->first();
+
+        $productOptions = null;
+        if ($promotion_hots){
+            $productOptions = ProductOptions::
+            select('id','sku', 'slug','title','price','normal_price','slug','images','flash_deal','hot_deal','parent_id')
+                ->with(['product' => function($query){
+                    $query->select('id','slug','brand');
+                }])
+                ->where('slug', '!=',null)
+                ->where('hot_deal->id',$promotion_hots->id)
+                ->where(function($query) use ($promotions_flash_id){
+                    if ($promotions_flash_id){
+                        $query->whereNotIn('flash_deal->id',$promotions_flash_id)
+                            ->orWhereNull('flash_deal');
+                    }
+                })->get();
+        }
+
+        return view('web.product.deal_hot_detail',compact('productOptions','promotion_hots'));
     }
 
     public function addToCart (Request $req){

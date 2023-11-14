@@ -28,6 +28,11 @@ class ProductOptions extends Model
         'attribute_path'
     ];
 
+    protected $casts = [
+        'flash_deal' => 'object',
+        'hot_deal' => 'object',
+    ];
+
     public function product()
     {
         return $this->hasOne(Product::class, 'id', 'parent_id');
@@ -99,4 +104,5 @@ class ProductOptions extends Model
     {
         return route('detailProduct',['slug'=>$this->slug, 'sku'=>$this->sku]);
     }
+
 }

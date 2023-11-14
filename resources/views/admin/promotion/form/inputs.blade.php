@@ -47,6 +47,19 @@
                     @endif
                 </div>
             </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>@lang('form.promotion.thumbnail_url')</label> <span class="text-danger">*</span>
+                    <div class="input-group">
+                        @include('admin.components.buttons.image',['src' => isset($promotion->thumbnail_url) ? $promotion->thumbnail_url : old('thumbnail_url'),'name' => 'thumbnail_url'])
+                        @if ($errors->has('thumbnail_url'))
+                            <span class="help-block text-danger">
+                                <strong>{{ $errors->first('thumbnail_url') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
@@ -91,4 +104,5 @@
 
 @section('script')
     @parent
+    <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
 @endsection

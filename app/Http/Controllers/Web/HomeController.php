@@ -7,10 +7,12 @@ use App\Models\AttributeValues;
 use App\Models\Banners;
 use App\Models\Product;
 use App\Models\ProductOptions;
+use App\Models\Promotions;
 use App\Models\RegisterEmail;
 use App\Models\Setting;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Repositories\Contracts\ArticleInterface;
 use App\Repositories\Contracts\SlideInterface;
@@ -64,10 +66,21 @@ class HomeController extends Controller
                 $query->where('is_hot', 1);
             })->limit(10)->get();
 
+        $now = Carbon::now();
+        $promotions = Promotions::where(['type' => 'flash_deal'])
+            ->where('applied_start_time', '<=', $now)
+            ->where('applied_stop_time', '>', $now)
+            ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->get();
+
+        $promotions_id = $promotions->pluck('id')->toArray();
+        $applied_stop_time = $promotions->pluck('applied_stop_time','id')->toArray();
+        $product_flash = ProductOptions::whereIn('flash_deal->id',$promotions_id)
+            ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')->get();
+
         $attribute_brand = AttributeValues::where(['attribute_id' => 19,'active' => 1,'is_home' => 1])->select('id','name','slug','image')->limit(15)->get(); // thương hiệu
         $cats = ProductsCategories::where(['is_home' => 1,'active' => 1,'parent_id'=>null])
             ->select('id','title','slug','image','logo','banner')
-            ->limit(5)->orderBy('id', 'ASC')->get(); // danh mục
+            ->limit(5)->orderBy('id', 'ASC')->get();
         $product_cats = array();
         $cat_sub = array();
         foreach ($cats as $item){
@@ -85,7 +98,7 @@ class HomeController extends Controller
                 ->select('id','title','slug','image','logo')
                 ->limit(4)->orderBy('id', 'ASC')->get();
         }
-        return view('web.home', compact('slider','subBanner','product_hots','attribute_brand','articles','product_cats','subBanner2','cats','cat_sub'));
+        return view('web.home', compact('slider','subBanner','product_hots','attribute_brand','articles','product_cats','subBanner2','cats','cat_sub','applied_stop_time','product_flash'));
     }
 
     public function registerEmail(Request $request){

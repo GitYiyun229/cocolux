@@ -7,8 +7,8 @@
             <div class="layout-page-hot-deal mt-4 mb-4">
                 <div class="layout-nav bg-white d-flex align-items-center mb-3">
                     <a href="{{ route('dealHotProducts') }}" class="fw-bold text-uppercase fs-6 text-danger">Hot Deals</a>
-                    <a href="" class="fw-bold text-uppercase fs-6">Flash Deal</a>
-                    <a href="" class="fw-bold text-uppercase fs-6">Đang diễn ra</a>
+                    <a href="{{ route('flashSaleProducts') }}" class="fw-bold text-uppercase fs-6">Flash Deal</a>
+                    <a href="{{ route('dealNowProducts') }}" class="fw-bold text-uppercase fs-6">Đang diễn ra</a>
                 </div>
 
                 <div class="layout-main d-grid">

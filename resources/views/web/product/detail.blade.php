@@ -44,27 +44,43 @@
                                         <div class="star-rating" style="--rating: 4.6;"></div>
                                         <div class="review-count">0 đánh giá</div>
                                     </div>
-
-                                    <div class="detail-flash text-uppercase fw-bold mb-1 d-none">
+                                    @if($flash_sale)
+                                    <div class="detail-flash text-uppercase fw-bold mb-1">
                                         <div class="flash-title d-flex align-items-center">
                                             <img src="{{ asset('images/hot_icon.svg') }}" alt="flash sale" class="img-fluid">
                                             flash sale
                                         </div>
                                         <div class="flash-time d-flex align-items-center">
                                             <span class="fw-normal">Kết thúc trong</span>
-                                            <!-- $time_end = date('M d Y H:i:s', strtotime($time_end)); -->
-                                            <div class="count-down d-flex align-items-center" time-end="Sep 30 2023 20:00:00"></div>
+                                            <div class="count-down d-flex align-items-center" time-end="{{ $flash_sale->applied_stop_time }}"></div>
                                         </div>
                                     </div>
+                                    @endif
 
                                     <div class="detail-price mb-4">
-                                        <div class="public-price"><span class="fw-bold">{{ format_money($product->price) }}</span>(Đã bảo gồm VAT)</div>
-                                        @if($product->price != $product->normal_price)
+                                        @if($flash_sale)
+                                            <div class="public-price"><span class="fw-bold">{{ format_money($product->flash_deal->price) }}</span>(Đã bảo gồm VAT)</div>
                                             <div class="origin-price">
                                                 <span>Giá hãng: {{ format_money($product->normal_price) }}</span>
-                                                <span>- Tiết kiệm được {{ format_money($product->normal_price - $product->price) }}</span>
-                                                <span>({{ percentage_price($product->price, $product->normal_price) }})</span>
+                                                <span>- Tiết kiệm được {{ format_money(trim($product->flash_deal->value)) }}</span>
+                                                <span>({{ percentage_price($product->flash_deal->price, $product->normal_price) }})</span>
                                             </div>
+                                        @elseif($hot_deal)
+                                            <div class="public-price"><span class="fw-bold">{{ format_money($product->hot_deal->price) }}</span>(Đã bảo gồm VAT)</div>
+                                            <div class="origin-price">
+                                                <span>Giá hãng: {{ format_money($product->normal_price) }}</span>
+                                                <span>- Tiết kiệm được {{ format_money(trim($product->hot_deal->value)) }}</span>
+                                                <span>({{ percentage_price($product->hot_deal->price, $product->normal_price) }})</span>
+                                            </div>
+                                        @else
+                                            <div class="public-price"><span class="fw-bold">{{ format_money($product->price) }}</span>(Đã bảo gồm VAT)</div>
+                                            @if($product->price != $product->normal_price)
+                                                <div class="origin-price">
+                                                    <span>Giá hãng: {{ format_money($product->normal_price) }}</span>
+                                                    <span>- Tiết kiệm được {{ format_money($product->normal_price - $product->price) }}</span>
+                                                    <span>({{ percentage_price($product->price, $product->normal_price) }})</span>
+                                                </div>
+                                            @endif
                                         @endif
                                     </div>
 
