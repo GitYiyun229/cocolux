@@ -42,6 +42,9 @@
             img{
                 margin: 20px 10px !important;
             }
+            span{
+                display: contents;
+            }
         }
         img{
             display: block;
@@ -51,6 +54,15 @@
         }
         video, iframe{
             max-width: 100% !important;
+        }
+        figure{
+            text-align: center;
+            p{
+                display: unset;
+                span{
+                    text-align: center;
+                }
+            }
         }
         table{
             margin: 20px auto;

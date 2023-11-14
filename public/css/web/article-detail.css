@@ -38,6 +38,9 @@
 .layout-main-detail .detail-content p img {
   margin: 20px 10px !important;
 }
+.layout-main-detail .detail-content p span {
+  display: contents;
+}
 .layout-main-detail .detail-content img {
   display: block;
   max-width: 100% !important;
@@ -46,6 +49,15 @@
 }
 .layout-main-detail .detail-content video, .layout-main-detail .detail-content iframe {
   max-width: 100% !important;
+}
+.layout-main-detail .detail-content figure {
+  text-align: center;
+}
+.layout-main-detail .detail-content figure p {
+  display: unset;
+}
+.layout-main-detail .detail-content figure p span {
+  text-align: center;
 }
 .layout-main-detail .detail-content table {
   margin: 20px auto;
