@@ -44,9 +44,6 @@ class PromotionsController extends Controller
      */
     public function store(Request $request)
     {
-        $type = $request->input('type');
-        $file = $request->file('file');
-
         DB::beginTransaction();
         try {
             $file = $request->file('file');
@@ -58,7 +55,9 @@ class PromotionsController extends Controller
             $data['applied_start_time'] = Carbon::parse($request->input('applied_start_time'));
             $data['applied_stop_time'] = Carbon::parse($request->input('applied_stop_time'));
             $promotion = Promotions::create($data);
-            Excel::import(new ProductPromotionImport($promotion->id, $type, $data['name']), $file);
+            if($file){
+                Excel::import(new ProductPromotionImport($promotion->id, $type, $data['name']), $file);
+            }
             DB::commit();
             Session::flash('success', trans('message.create_promotion_success'));
             return redirect()->back();
@@ -110,13 +109,34 @@ class PromotionsController extends Controller
      */
     public function update(Request $request,$id)
     {
-        $type = $request->input('type');
-        $file = $request->file('file');
-        $id_promotion = $id;
-        $name_promotion = $request->input('name');
+        DB::beginTransaction();
+        try {
+            $file = $request->file('file');
+            $type = $request->input('type');
+            $data = array();
+            $data['name'] = $request->input('name');
+            $data['code'] = $request->input('code');
+            $data['type'] = $type;
+            $data['applied_start_time'] = Carbon::parse($request->input('applied_start_time'));
+            $data['applied_stop_time'] = Carbon::parse($request->input('applied_stop_time'));
 
-        Excel::import(new ProductPromotionImport($id_promotion, $type, $name_promotion), $file);
-        return redirect()->back()->with('success', 'Dữ liệu đã được import thành công.');
+            $promotion = Promotions::findOrFail($id);
+            $promotion->update($data);
+            if ($file){
+                Excel::import(new ProductPromotionImport($id, $type, $data['name']), $file);
+            }
+            DB::commit();
+            Session::flash('success', trans('message.update_promotion_success'));
+            return redirect()->back();
+        } catch (\Exception $exception) {
+            \Log::info([
+                'message' => $exception->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            Session::flash('danger', trans('message.update_promotion_error'));
+            return back();
+        }
     }
 
     /**
