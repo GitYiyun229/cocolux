@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\AttributeValues;
-use App\Models\BookTable;
 use App\Models\City;
 use App\Models\Districts;
 use App\Models\Order;
@@ -25,7 +24,6 @@ use App\Repositories\Contracts\ProductInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Order\CreateOrder;
-use App\Http\Requests\BookTable\CreateBookTable;
 use App\Services\DealService;
 
 class ProductController extends Controller

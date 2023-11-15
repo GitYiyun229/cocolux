@@ -19,21 +19,25 @@ use App\Repositories\Contracts\SlideInterface;
 use App\Repositories\Contracts\PageInterface;
 use App\Models\ProductsCategories;
 use Illuminate\Support\Facades\Session;
+use App\Services\DealService;
 
 class HomeController extends Controller
 {
     protected $articleRepository;
+    protected $dealService;
 
     public function __construct(
         ArticleInterface $articleRepository,
         SlideInterface $slideRepository,
-        PageInterface $pageRepository
+        PageInterface $pageRepository,
+        DealService $dealService
     )
     {
         $this->articleRepository = $articleRepository;
         $this->slideRepository = $slideRepository;
         $this->pageRepository = $pageRepository;
         $this->pageRepository = $pageRepository;
+        $this->dealService = $dealService;
     }
 
     /**
@@ -59,23 +63,21 @@ class HomeController extends Controller
         $subBanner = Banners::where(['active' => 1, 'type' => 'home_v1_sub_banner'])->select('id','url','image_url','mobile_url','content')->get(); // (2 cái ảnh nhỏ hiển thị cạnh banner)
         $subBanner2 = Banners::where(['active' => 1, 'type' => 'home_v1_primary_banner_2'])->select('id','url','image_url','mobile_url','content')->get(); // (3 ảnh hiển thị dưới cùng trên phần danh sách chi nhánh)
 
-
-        $now = Carbon::now();
-        $promotions = Promotions::where(['type' => 'flash_deal'])
-            ->where('applied_start_time', '<=', $now)
-            ->where('applied_stop_time', '>', $now)
-            ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->get();
-
-        $promotions_id = $promotions->pluck('id')->toArray();
+        $promotions = $this->dealService->isFlashSaleAvailable();
+        $promotions_flash_id = $promotions->pluck('id')->toArray();
         $applied_stop_time = $promotions->pluck('applied_stop_time','id')->toArray();
-        $product_flash = ProductOptions::whereIn('flash_deal->id',$promotions_id)->where('slug', '!=',null)
+
+        $hot_deal = $this->dealService->isHotDealAvailable();
+        $promotions_hot_id = $hot_deal->pluck('id')->toArray();
+
+        $product_flash = ProductOptions::whereIn('flash_deal->id',$promotions_flash_id)->where('slug', '!=',null)
             ->with(['product' => function($query){
                 $query->select('id','is_hot','slug');
             }])
             ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')->limit(10)->get();
 
         $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
-            ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price')
+            ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price','hot_deal','flash_deal')
             ->with(['product' => function($query){
                 $query->select('id','is_hot','slug');
             }])->whereHas('product', function ($query) {
@@ -96,14 +98,14 @@ class HomeController extends Controller
                 ->with(['product' => function($query){
                     $query->select('id','is_home','slug');
                 }])
-                ->select('id','title','slug','images','sku','price','parent_id','normal_price')
+                ->select('id','title','slug','images','sku','price','parent_id','normal_price','hot_deal','flash_deal')
                 ->limit(10)->orderBy('id', 'DESC')->get();
             $cat_sub[$item->id] = ProductsCategories::where(['is_home' => 1,'active' => 1])
                 ->where('parent_id', 'like', '%' . $item->id . '%')
                 ->select('id','title','slug','image','logo')
                 ->limit(4)->orderBy('id', 'ASC')->get();
         }
-        return view('web.home', compact('slider','subBanner','product_hots','attribute_brand','articles','product_cats','subBanner2','cats','cat_sub','applied_stop_time','product_flash'));
+        return view('web.home', compact('slider','subBanner','product_hots','attribute_brand','articles','product_cats','subBanner2','cats','cat_sub','applied_stop_time','product_flash','promotions_hot_id','promotions_flash_id'));
     }
 
     public function registerEmail(Request $request){
