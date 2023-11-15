@@ -113,7 +113,7 @@
                                             <p class="item-quantity mb-0">SL: <span class="fw-bold">{{ $item['quantity'] }}</span></p>
                                         </div>
                                         <div class="item-price fw-bold">
-                                            <div class="public-price">{{ format_money($item['product']->price) }}</div>
+                                            <div class="public-price">{{ format_money($item['price']) }}</div>
                                             <div class="origin-price">{{ format_money($item['product']->normal_price) }}</div>
                                         </div>
                                     </a>

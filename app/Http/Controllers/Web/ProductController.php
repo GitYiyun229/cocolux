@@ -694,16 +694,29 @@ class ProductController extends Controller
             Session::flash('danger', 'Chưa có sản phẩm nào trong giỏ hàng');
             return redirect()->route('home');
         }
+        $flash_sale = $this->dealService->isFlashSaleAvailable();
+        $promotions_flash_id = $flash_sale->pluck('id')->toArray();
+        $hot_deal = $this->dealService->isHotDealAvailable();
+        $promotions_hot_id = $hot_deal->pluck('id')->toArray();
+
         foreach ($cart as $productId => $item) {
             $product = ProductOptions::where(['id' => $productId])->with(['product'])->first();
+            if($product->flash_deal && in_array($product->flash_deal->id,$promotions_flash_id)){
+                $price = $product->flash_deal->price;
+            }elseif($product->hot_deal && in_array($product->hot_deal->id,$promotions_hot_id)){
+                $price = $product->hot_deal->price;
+            }else{
+                $price = $product->price;
+            }
             $quantity = $item['quantity']; // Số lượng
             // Thêm thông tin sản phẩm vào danh sách
             $cartItems[] = [
                 'product' => $product,
                 'quantity' => $quantity,
-                'subtotal' => $product->price * $quantity, // Tính tổng tiền cho mỗi sản phẩm
+                'price' => $price,
+                'subtotal' => $price * $quantity, // Tính tổng tiền cho mỗi sản phẩm
             ];
-            $total_price = $total_price + $product->price * $quantity;
+            $total_price = $total_price + $price * $quantity;
         }
 
         return view('web.cart.cart', compact('cart','cartItems','total_price'));
@@ -791,17 +804,29 @@ class ProductController extends Controller
             Session::flash('danger', 'Chưa có sản phẩm nào trong giỏ hàng');
             return redirect()->route('home');
         }
+        $flash_sale = $this->dealService->isFlashSaleAvailable();
+        $promotions_flash_id = $flash_sale->pluck('id')->toArray();
+        $hot_deal = $this->dealService->isHotDealAvailable();
+        $promotions_hot_id = $hot_deal->pluck('id')->toArray();
         foreach ($cart as $productId => $item) {
             $product = ProductOptions::where(['id' => $productId])->with(['product'])->first();
+            if($product->flash_deal && in_array($product->flash_deal->id,$promotions_flash_id)){
+                $price = $product->flash_deal->price;
+            }elseif($product->hot_deal && in_array($product->hot_deal->id,$promotions_hot_id)){
+                $price = $product->hot_deal->price;
+            }else{
+                $price = $product->price;
+            }
             $quantity = $item['quantity']; // Số lượng
             // Thêm thông tin sản phẩm vào danh sách
             $cartItems[] = [
                 'product' => $product,
                 'image' => json_decode($product->images),
                 'quantity' => $quantity,
-                'subtotal' => $product->price * $quantity, // Tính tổng tiền cho mỗi sản phẩm
+                'price' => $price,
+                'subtotal' => $price * $quantity, // Tính tổng tiền cho mỗi sản phẩm
             ];
-            $total_price = $total_price + $product->price * $quantity;
+            $total_price = $total_price + $price * $quantity;
         }
 
         $list_city = City::all();
@@ -883,8 +908,20 @@ class ProductController extends Controller
             $order = Order::create($data);
 
             $cart = Session::get('cart', []);
+            $flash_sale = $this->dealService->isFlashSaleAvailable();
+            $promotions_flash_id = $flash_sale->pluck('id')->toArray();
+            $hot_deal = $this->dealService->isHotDealAvailable();
+            $promotions_hot_id = $hot_deal->pluck('id')->toArray();
+
             foreach ($cart as $productId => $item) {
                 $product = ProductOptions::findOrFail($productId);
+                if($product->flash_deal && in_array($product->flash_deal->id,$promotions_flash_id)){
+                    $price = $product->flash_deal->price;
+                }elseif($product->hot_deal && in_array($product->hot_deal->id,$promotions_hot_id)){
+                    $price = $product->hot_deal->price;
+                }else{
+                    $price = $product->price;
+                }
                 if (empty($product)){
                     unset($cart[$productId]);
                     Session::flash('danger', 'Có sản phẩm không còn tồn tại');
@@ -896,7 +933,7 @@ class ProductController extends Controller
                     'product_id' => $productId,
                     'product_title' => $product->title,
                     'product_number' => $quantity,
-                    'product_price' => $product->price,
+                    'product_price' => $price,
                 ]);
             }
             DB::commit();
