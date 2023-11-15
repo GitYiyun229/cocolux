@@ -29,7 +29,7 @@
                                 {{ $item['product']->title }}
                             </td>
                             <td>
-                                <div class="public-price">{{ format_money($item['product']->price) }}</div>
+                                <div class="public-price">{{ format_money($item['price']) }}</div>
                             </td>
                             <td>
                                 <input type="number" min="1" name="quantity[]" id="quantity-{{ $item['product']->id }}" class="form-control number-input" data-id="{{ $item['product']->id }}" value="{{ $item['quantity'] }}">
