@@ -26,15 +26,18 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Order\CreateOrder;
 use App\Http\Requests\BookTable\CreateBookTable;
+use App\Services\DealService;
 
 class ProductController extends Controller
 {
 
-    protected $productCategoryRepository,$productRepository ;
-    public function __construct(ProductCategoryInterface $productCategoryRepository,ProductInterface $productRepository)
+    protected $productCategoryRepository,$productRepository;
+    protected $dealService;
+    public function __construct(ProductCategoryInterface $productCategoryRepository,ProductInterface $productRepository,DealService $dealService)
     {
         $this->productCategoryRepository = $productCategoryRepository;
         $this->productRepository = $productRepository;
+        $this->dealService = $dealService;
     }
 
     public function cat(Request $request, $slug,$id){
@@ -93,6 +96,9 @@ class ProductController extends Controller
             }
         }
 
+        $flash_sale = $this->dealService->isFlashSaleAvailable();
+        $hot_deal = $this->dealService->isHotDealAvailable();
+
         $products = ProductOptions::with(['product' => function ($query) {
                 $query->select('id', 'is_new', 'brand','slug','attribute_path');
             }])->whereHas('product', function ($query) use ($id,$list_id_request) {
@@ -103,7 +109,7 @@ class ProductController extends Controller
                     }
                 }
             })
-            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.normal_price','product_options.slug','product_options.images')
+            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.normal_price','product_options.slug','product_options.images','product_options.hot_deal','product_options.flash_deal')
             ->addSelect('products.title as product_name')
             ->where('product_options.sku','!=',null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
@@ -148,7 +154,6 @@ class ProductController extends Controller
 
         return view('web.product.cat',compact('cat','cats','products','attributes','sorts','countArray'));
     }
-
 
     public function search(Request $request){
         $keyword = $request->input('keyword');
@@ -414,21 +419,13 @@ class ProductController extends Controller
 
         $flash = $product->flash_deal;
         $deal_hot = $product->hot_deal;
-        $now = Carbon::now();
         $flash_sale = null;
         $hot_deal = null;
         if ($flash){
-            $flash_sale = Promotions::where(['type' => 'flash_deal', 'id' => $flash->id])
-                ->where('applied_start_time', '<=', $now)
-                ->where('applied_stop_time', '>', $now)
-                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->first();
+            $flash_sale = $this->dealService->isFlashSaleAvailable($flash->id);
         }
-
         if ($deal_hot){
-            $hot_deal = Promotions::where(['type' => 'hot_deal', 'id' => $deal_hot->id])
-                ->where('applied_start_time', '<=', $now)
-                ->where('applied_stop_time', '>', $now)
-                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->first();
+            $hot_deal = $this->dealService->isHotDealAvailable($deal_hot->id);
         }
         $list_image = json_decode($product->images);
         $stocks = json_decode($product->stocks);
@@ -501,7 +498,10 @@ class ProductController extends Controller
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('cocolux.com');
 
-        $promotions = Promotions::where(['type' => 'hot_deal','status' => 'starting'])->select('id','name', 'code','thumbnail_url')->get();
+        $now = Carbon::now();
+        $promotions = Promotions::where(['type' => 'hot_deal'])
+            ->where('applied_start_time', '<=', $now)
+            ->where('applied_stop_time', '>', $now)->select('id','name', 'code','thumbnail_url')->get();
         return view('web.product.deal_hot',compact('promotions'));
     }
 
@@ -517,11 +517,7 @@ class ProductController extends Controller
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('cocolux.com');
 
-        $now = Carbon::now();
-        $promotions = Promotions::where(['type' => 'flash_deal'])
-            ->where('applied_start_time', '<=', $now)
-            ->where('applied_stop_time', '>', $now)
-            ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->get();
+        $promotions = $this->dealService->isFlashSaleAvailable();
 
         $promotions_id = $promotions->pluck('id')->toArray();
         $applied_stop_time = $promotions->pluck('applied_stop_time','id')->toArray();
@@ -589,7 +585,6 @@ class ProductController extends Controller
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('cocolux.com');
 
-        $promotion = Promotions::where(['type' => 'hot_deal','status' => 'starting','id' => $id])->select('id','name', 'code','thumbnail_url')->first();
         $now = Carbon::now();
 
         $promotion_flash = Promotions::where(['type' => 'flash_deal'])
