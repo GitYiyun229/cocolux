@@ -105,18 +105,44 @@
                                 @if(!empty($products))
                                 @forelse($products as $item)
                                     <a href="{{ route('detailProduct',['slug' => !empty($item->slug)?trim($item->slug):trim($item->product->slug),'sku' => $item->sku]) }}" class="product-template">
-                                        @if($item->price != $item->normal_price)
-                                            <div class="product-discount">
-                                                <span class="pe-1">{{ percentage_price($item->price, $item->normal_price) }}</span>
-                                            </div>
+                                        @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
+                                            @if($item->flash_deal->price != $item->normal_price)
+                                                <div class="product-discount">
+                                                    <span class="pe-1">{{ percentage_price($item->flash_deal->price, $item->normal_price) }}</span>
+                                                </div>
+                                            @endif
+                                        @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
+                                            @if($item->hot_deal->price != $item->normal_price)
+                                                <div class="product-discount">
+                                                    <span class="pe-1">{{ percentage_price($item->hot_deal->price, $item->normal_price) }}</span>
+                                                </div>
+                                            @endif
+                                        @else
+                                            @if($item->price != $item->normal_price)
+                                                <div class="product-discount">
+                                                    <span class="pe-1">{{ percentage_price($item->price, $item->normal_price) }}</span>
+                                                </div>
+                                            @endif
                                         @endif
                                         <div class="product-thumbnail">
                                             <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                         </div>
                                         <div class="product-price">
-                                            <div class="public-price">{{ format_money($item->price) }}</div>
-                                            @if($item->price != $item->normal_price)
-                                                <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                            @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
+                                                <div class="public-price">{{ format_money($item->flash_deal->price) }}</div>
+                                                @if($item->flash_deal->price != $item->normal_price)
+                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                                @endif
+                                            @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
+                                                <div class="public-price">{{ format_money($item->hot_deal->price) }}</div>
+                                                @if($item->hot_deal->price != $item->normal_price)
+                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                                @endif
+                                            @else
+                                                <div class="public-price">{{ format_money($item->price) }}</div>
+                                                @if($item->price != $item->normal_price)
+                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                                @endif
                                             @endif
                                         </div>
                                         <div class="product-brand">

@@ -20,7 +20,7 @@
                     @endforelse
                 </div>
                 @forelse($brands as $k => $brand)
-                <div class="group-brand mb-3" id="#brand_{{ $k }}">
+                <div class="group-brand mb-3" id="brand_{{ $k }}">
                     <div class="group-title fw-bold text-uppercase">{{ $k }}</div>
                     <div class="group-item">
                         @forelse($brand as $k => $item)
