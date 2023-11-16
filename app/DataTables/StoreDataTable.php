@@ -86,6 +86,7 @@ class StoreDataTable extends DataTable
                 'renderImage(data)'
             ]),
             Column::make('active'),
+            Column::make('id_nhanh'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

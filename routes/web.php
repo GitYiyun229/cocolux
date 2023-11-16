@@ -35,6 +35,8 @@ use Illuminate\Http\Request;
 //Route::get('/save-page-author-from-api', 'ApiController@savePageAuthorFromApi');
 
 Route::any('/web-hook-call-back', 'ApiNhanhController@WebHookCallBack')->name('WebHookCallBack');
+Route::any('/get-products', 'ApiNhanhController@getProducts')->name('getProducts');
+Route::any('/get-inventory', 'ApiNhanhController@inventory')->name('inventory');
 
 Route::group(['namespace' => 'Web'], function (){
     Route::get('/', 'HomeController@index')->name('home');

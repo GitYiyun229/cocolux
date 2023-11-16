@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use App\DataTables\StoreDataTable;
@@ -38,7 +39,8 @@ class StoreController extends Controller
      */
     public function create()
     {
-        return view('admin.store.create');
+        $list_city = City::all();
+        return view('admin.store.create', compact('list_city'));
     }
 
     /**
@@ -88,7 +90,8 @@ class StoreController extends Controller
     public function edit($id)
     {
         $store = $this->storeRepository->getOneById($id);
-        return view('admin.store.update', compact('store'));
+        $list_city = City::all();
+        return view('admin.store.update', compact('store','list_city'));
     }
 
     /**

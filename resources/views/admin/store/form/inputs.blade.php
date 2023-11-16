@@ -25,6 +25,34 @@
                     @endif
                 </div>
             </div>
+            <div class="col-md-6">
+                <div class="form-box form-group">
+                    <label for="city">Tỉnh thành <span>*</span></label>
+                    <select name="province" id="province" class="selec2-box form-control" onchange="loaddistrict(this.value)" required>
+                        <option value="0" selected hidden disabled>Chọn Tỉnh/ Thành phố</option>
+                        @forelse($list_city as $item)
+                            <option value="{{ $item->code }}">{{ $item->name }}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-box form-group">
+                    <label for="district">Quận huyện <span>*</span></label>
+                    <select name="district" id="district" class="selec2-box form-control" onchange="loadward(this.value)" required>
+                        <option value="0" selected hidden disabled>Chọn Quận/ Huyện</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-box form-group">
+                    <label for="ward">Phường xã <span>*</span></label>
+                    <select name="ward" id="ward" class="selec2-box form-control" required>
+                        <option value="0" selected hidden disabled>Chọn Phường/ Xã</option>
+                    </select>
+                </div>
+            </div>
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
@@ -45,6 +73,18 @@
                     @if ($errors->has('email'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('email') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>Id Kho trên Nhanh</label>
+                    <input type="text" class="form-control" name="id_nhanh" value="{{ isset($store) ? $store->id_nhanh : old('id_nhanh') }}">
+                    @if ($errors->has('id_nhanh'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('id_nhanh') }}</strong>
                 </span>
                     @endif
                 </div>
@@ -83,6 +123,30 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.store.latitude')</label>
+                    <input type="text" class="form-control" name="latitude" value="{{ isset($store) ? $store->latitude : old('latitude') }}">
+                    @if ($errors->has('latitude'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('latitude') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.store.longitude')</label>
+                    <input type="text" class="form-control" name="longitude" value="{{ isset($store) ? $store->longitude : old('longitude') }}">
+                    @if ($errors->has('longitude'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('longitude') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-sm-5">
@@ -91,4 +155,64 @@
 </div>
 @section('script')
     @parent
+    <script>
+        function loaddistrict(city_id) {
+            $.ajax({
+                type: 'post',
+                url: '{{ route('loadDistrict') }}',
+                dataType: 'JSON',
+                data: {
+                    city_id: city_id,
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function (data) {
+                    let option = ''
+                    option += `<option data-id="0" value="0">Chọn Quận/Huyện</option>`;
+                    data.district.forEach(item => {
+                        option += `<option value="${item.code}">${item.name}</option>`
+                    });
+
+                    $("#district").html(option);
+                    $("#price_ship").html(formatMoney(data.price_ship));
+                    $("#price_ship_coco").val(data.price_ship);
+                    let total_price_ship = data.price_ship + parseInt($("#layoutForm #total_price").val());
+                    $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship));
+                    return true;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+            return false;
+        }
+
+        function loadward(district_id) {
+            $.ajax({
+                type: 'post',
+                url: '{{ route('loadWard') }}',
+                dataType: 'JSON',
+                data: {
+                    city_id: $('#layoutForm #city').val(),
+                    district_id: district_id,
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function (data) {
+                    let option = ''
+                    option += `<option data-id="0" value="0">Chọn Phường/ Xã</option>`;
+                    data.ward.forEach(item => {
+                        option += `<option value="${item.code}">${item.name}</option>`
+                    });
+
+                    $("#ward").html(option);
+                    $("#price_ship").html(formatMoney(data.price_ship));
+                    $("#price_ship_coco").val(data.price_ship);
+                    let total_price_ship = data.price_ship + parseInt($("#layoutForm #total_price").val());
+                    $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship));
+                    return true;
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+            return false;
+        }
+    </script>
 @endsection

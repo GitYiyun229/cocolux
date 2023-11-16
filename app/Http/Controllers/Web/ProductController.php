@@ -14,6 +14,7 @@ use App\Models\ProductOptions;
 use App\Models\ProductsCategories;
 use App\Models\Promotions;
 use App\Models\Setting;
+use App\Models\Store;
 use App\Models\Wards;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
@@ -426,6 +427,20 @@ class ProductController extends Controller
         if (!$product) {
             abort(404);
         }
+        $stocks = (object)$product->stocks;
+        $count_store = 0;
+        $id_stores = array();
+        foreach ($stocks as $item){
+            if ($item->total_quantity){
+                $id_stores[] = $item->id;
+                $count_store++;
+            }
+        }
+        $stores = Store::with(['cities','districts','wards'])->whereIn('id', $id_stores)->get()
+            ->groupBy([
+                'cities.name',
+                'districts.name',
+            ]);
 
         $flash = $product->flash_deal;
         $deal_hot = $product->hot_deal;
@@ -438,7 +453,6 @@ class ProductController extends Controller
             $hot_deal = $this->dealService->isHotDealAvailable($deal_hot->id);
         }
         $list_image = json_decode($product->images);
-        $stocks = json_decode($product->stocks);
         $product_root = Product::where(['id' => $product->parent_id])->select('id','slug','title','image','brand','category_id','description','attributes')->first();
         if (!$product_root) {
             abort(404);
@@ -471,7 +485,7 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($product->seo_keyword?$product->seo_keyword:$product->title);
 
-        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats','flash_sale','hot_deal'));
+        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats','flash_sale','hot_deal','stores','count_store'));
     }
 
     public function is_new(){
