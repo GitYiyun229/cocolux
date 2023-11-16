@@ -31,6 +31,7 @@ class ProductOptions extends Model
     protected $casts = [
         'flash_deal' => 'object',
         'hot_deal' => 'object',
+        'stocks' => 'object',
     ];
 
     public function product()

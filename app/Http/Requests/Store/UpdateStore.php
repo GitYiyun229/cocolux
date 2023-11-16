@@ -24,14 +24,18 @@ class UpdateStore extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
+            'name' => 'required',
             'phone' => 'nullable',
+            'email' => 'nullable',
             'address' => 'nullable',
+            'image' => 'nullable',
+            'id_nhanh' => 'nullable',
             'latitude' => 'nullable',
             'longitude' => 'nullable',
-            'city_id' => 'nullable',
+            'province' => 'nullable',
+            'district' => 'nullable',
+            'ward' => 'nullable',
             'active' => 'nullable',
-            'ordering' => 'nullable',
         ];
     }
 }

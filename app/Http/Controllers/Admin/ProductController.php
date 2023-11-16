@@ -224,7 +224,6 @@ class ProductController extends Controller
                 $data['category_path'] = $category->id;
             }
 
-
             $data_root->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_product_success'));
