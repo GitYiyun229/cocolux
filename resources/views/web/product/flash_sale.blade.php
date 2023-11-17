@@ -11,7 +11,7 @@
                     <a href="{{ route('dealNowProducts') }}" class="fw-bold text-uppercase fs-6">Đang diễn ra</a>
                 </div>
 
-                <div class="layout-detail-main bg-white d-grid">
+                <div class="layout-detail-main bg-white d-grid mb-4">
                     @if(count($productOptions))
                         @forelse($productOptions as $item)
                             <a href="{{ route('detailProduct',['slug'=>!empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
@@ -45,6 +45,8 @@
                         <p class="text-center">Không có deal khuyến mãi</p>
                     @endif
                 </div>
+
+                {{ $productOptions->links('web.components.pagination') }}
             </div>
         </div>
 
