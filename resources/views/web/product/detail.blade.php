@@ -114,6 +114,7 @@
                                                 {{ $count_store }}/13 Chi nhánh còn sản phẩm
                                             </a>
 
+                                            @if($stores)
                                             <div class="dropdown-menu detail-addess-box">
                                                 @forelse($stores as $cityName => $cityStore)
                                                 <div class="address-item">
@@ -146,6 +147,7 @@
                                                     </span>
                                                 </div>
                                             </div>
+                                            @endif
                                         </div>
                                         <input type="hidden" name="id_product" value="{{ $product->id }}">
                                         <button class="btn btn-add-card" type="button" onclick="order({{ $product->id }})">

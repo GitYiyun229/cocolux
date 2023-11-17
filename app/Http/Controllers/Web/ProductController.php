@@ -427,20 +427,25 @@ class ProductController extends Controller
         if (!$product) {
             abort(404);
         }
-        $stocks = (object)$product->stocks;
-        $count_store = 0;
-        $id_stores = array();
-        foreach ($stocks as $item){
-            if ($item->total_quantity){
-                $id_stores[] = $item->id;
-                $count_store++;
+        if ($product->stocks){
+            $stocks = (object)$product->stocks;
+            $count_store = 0;
+            $id_stores = array();
+            foreach ($stocks as $item){
+                if ($item->total_quantity){
+                    $id_stores[] = $item->id;
+                    $count_store++;
+                }
             }
+            $stores = Store::with(['cities','districts','wards'])->whereIn('id', $id_stores)->get()
+                ->groupBy([
+                    'cities.name',
+                    'districts.name',
+                ]);
+        }else{
+            $count_store = 13;
+            $stores = null;
         }
-        $stores = Store::with(['cities','districts','wards'])->whereIn('id', $id_stores)->get()
-            ->groupBy([
-                'cities.name',
-                'districts.name',
-            ]);
 
         $flash = $product->flash_deal;
         $deal_hot = $product->hot_deal;
