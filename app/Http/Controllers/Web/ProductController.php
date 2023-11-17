@@ -549,7 +549,7 @@ class ProductController extends Controller
         $applied_stop_time = $promotions->pluck('applied_stop_time','id')->toArray();
         $productOptions = ProductOptions::whereIn('flash_deal->id',$promotions_id)->where('slug', '!=',null)->with(['product' => function($query){
             $query->select('id','slug','brand');
-        }])->get();
+        }])->paginate(30);
         return view('web.product.flash_sale',compact('promotions','productOptions','applied_stop_time'));
     }
 
@@ -589,7 +589,7 @@ class ProductController extends Controller
                             ->orWhereNull('flash_deal');
                     });
                 }
-            })->get();
+            })->paginate(30);
         return view('web.product.deal_now',compact('productOptions','applied_stop_time'));
     }
 
