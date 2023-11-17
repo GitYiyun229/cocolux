@@ -7,7 +7,7 @@
             <div class="layout-page-deal-detail mb-5">
                 <div class="layout-banner mb-3">
                     @if(!empty($promotion_hots->thumbnail_url))
-                    <img src="{{ asset(replace_image($promotion_hots->thumbnail_url)) }}" alt="{{ $promotion_hots->name }}" class="img-fluid w-100">
+                    <img src="{{ asset($promotion_hots->thumbnail_url) }}" alt="{{ $promotion_hots->name }}" class="img-fluid w-100">
                     @endif
                 </div>
                 <div class="layout-detail-main bg-white d-grid mb-4">
