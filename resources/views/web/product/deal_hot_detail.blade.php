@@ -10,7 +10,7 @@
                     <img src="{{ asset(replace_image($promotion_hots->thumbnail_url)) }}" alt="{{ $promotion_hots->name }}" class="img-fluid w-100">
                     @endif
                 </div>
-                <div class="layout-detail-main bg-white d-grid">
+                <div class="layout-detail-main bg-white d-grid mb-4">
                     @if(!empty($productOptions))
                     @forelse($productOptions as $item)
                             <a href="{{ route('detailProduct',['slug'=>!empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
@@ -42,6 +42,7 @@
                     @endforelse
                     @endif
                 </div>
+                {{ $productOptions->links('web.components.pagination') }}
             </div>
         </div>
 
