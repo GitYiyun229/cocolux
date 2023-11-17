@@ -427,7 +427,7 @@ class ProductController extends Controller
         if (!$product) {
             abort(404);
         }
-        if ($product->stocks){
+        if (isset($product->stocks)){
             $stocks = (object)$product->stocks;
             $count_store = 0;
             $id_stores = array();
