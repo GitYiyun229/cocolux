@@ -32,12 +32,12 @@ class DealService
             $hot_deal = Promotions::where(['type' => 'hot_deal', 'id' => $hot_id])
                 ->where('applied_start_time', '<=', $now)
                 ->where('applied_stop_time', '>', $now)
-                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->first();
+                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->orderBy('id','DESC')->first();
         }else{
             $hot_deal = Promotions::where(['type' => 'hot_deal'])
                 ->where('applied_start_time', '<=', $now)
                 ->where('applied_stop_time', '>', $now)
-                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->get();
+                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->orderBy('id','DESC')->get();
         }
 
         return $hot_deal;

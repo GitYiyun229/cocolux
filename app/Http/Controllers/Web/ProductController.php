@@ -584,8 +584,10 @@ class ProductController extends Controller
                     $query->whereIn('hot_deal->id',$promotions_hot_id);
                 }
                 if ($promotions_flash_id){
-                    $query->whereNotIn('flash_deal->id',$promotions_flash_id)
-                    ->orWhereNull('flash_deal');
+                    $query->where(function ($subQuery) use ($promotions_flash_id) {
+                        $subQuery->whereJsonDoesntContain('flash_deal->id', $promotions_flash_id)
+                            ->orWhereNull('flash_deal');
+                    });
                 }
             })->get();
         return view('web.product.deal_now',compact('productOptions','applied_stop_time'));
@@ -611,7 +613,7 @@ class ProductController extends Controller
         $productOptions = null;
         if ($promotion_hots){
             $productOptions = ProductOptions::
-            select('id','sku', 'slug','title','price','normal_price','slug','images','flash_deal','hot_deal','parent_id')
+            select('id','sku', 'slug','title','price','normal_price','images','flash_deal','hot_deal','parent_id')
                 ->with(['product' => function($query){
                     $query->select('id','slug','brand');
                 }])
@@ -619,8 +621,10 @@ class ProductController extends Controller
                 ->where('hot_deal->id',$promotion_hots->id)
                 ->where(function($query) use ($promotions_flash_id){
                     if ($promotions_flash_id){
-                        $query->whereNotIn('flash_deal->id',$promotions_flash_id)
-                            ->orWhereNull('flash_deal');
+                        $query->where(function ($subQuery) use ($promotions_flash_id) {
+                            $subQuery->whereJsonDoesntContain('flash_deal->id', $promotions_flash_id)
+                                ->orWhereNull('flash_deal');
+                        });
                     }
                 })->get();
         }
