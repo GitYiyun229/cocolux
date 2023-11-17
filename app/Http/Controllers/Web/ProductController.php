@@ -444,6 +444,7 @@ class ProductController extends Controller
                 ]);
         }else{
             $count_store = 13;
+            $stocks = null;
             $stores = null;
         }
 
