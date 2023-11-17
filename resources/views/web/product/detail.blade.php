@@ -62,14 +62,14 @@
                                             <div class="public-price"><span class="fw-bold">{{ format_money($product->flash_deal->price) }}</span>(Đã bảo gồm VAT)</div>
                                             <div class="origin-price">
                                                 <span>Giá hãng: {{ format_money($product->normal_price) }}</span>
-                                                <span>- Tiết kiệm được {{ format_money(trim($product->flash_deal->value)) }}</span>
+                                                <span>- Tiết kiệm được {{ format_money(trim($product->normal_price) - trim($product->flash_deal->value)) }}</span>
                                                 <span>({{ percentage_price($product->flash_deal->price, $product->normal_price) }})</span>
                                             </div>
                                         @elseif($hot_deal)
                                             <div class="public-price"><span class="fw-bold">{{ format_money($product->hot_deal->price) }}</span>(Đã bảo gồm VAT)</div>
                                             <div class="origin-price">
                                                 <span>Giá hãng: {{ format_money($product->normal_price) }}</span>
-                                                <span>- Tiết kiệm được {{ format_money(trim($product->hot_deal->value)) }}</span>
+                                                <span>- Tiết kiệm được {{ format_money(trim($product->normal_price) - trim($product->hot_deal->value)) }}</span>
                                                 <span>({{ percentage_price($product->hot_deal->price, $product->normal_price) }})</span>
                                             </div>
                                         @else
