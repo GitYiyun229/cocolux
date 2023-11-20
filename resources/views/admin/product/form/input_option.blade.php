@@ -114,7 +114,6 @@
                     <th style="width: 50px;">STT</th>
                     <th style="width: 280px;">Chi nhánh</th>
                     <th style="width: 100px;">Tổng tồn</th>
-                    <th style="width: 100px;">Khách đặt</th>
                     <th style="width: 200px;">Trạng thái</th>
                 </tr>
                 </thead>
@@ -124,8 +123,7 @@
                         <tr>
                             <td>{{ $k+1 }}</td>
                             <td>{{ $item->name }}</td>
-                            <td><input type="text" name="store[]" data-id="{{ !empty($item->id)?$item->id:0 }}" data-id-stock="{{ !empty($item->number)?$item->number['id_stock']:0 }}" value="{{ !empty($item->number)?$item->number['total_quantity']:0 }}"></td>
-                            <td>{{ !empty($item->number)?$item->number['total_order_quantity']:0 }}</td>
+                            <td><input type="text" name="store[]" data-id="{{ !empty($item->id)?$item->id:0 }}" data-id-stock="{{ !empty($item->number)?$item->number['id_stock']:0 }}" value="{{ !empty($item->number)?$item->number['total_quantity']:0 }}" class="form-control"></td>
                             <td>
                                 @if($item->active == 1)
                                     Đang hoạt động

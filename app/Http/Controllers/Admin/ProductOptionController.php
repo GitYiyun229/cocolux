@@ -209,28 +209,42 @@ class ProductOptionController extends Controller
             if ($is_default){
                 ProductOptions::where('parent_id', $parent_id)->where('id','!=',$id)->update(['is_default' => 0]);
             }
+            $stock_product = array();
             foreach ($total_stock as $item){
                 $id_store = explode(':',$item);
                 if ($id_store[2]){
                     $stock = Stocks::findOrFail($id_store[2]);
                     if ($stock) {
-                        $data['total_quantity'] = $id_store[1];
-                        $stock->update($data);
+                        $data2['total_quantity'] = $id_store[1];
+                        $stock->update($data2);
                     }
+                    $stock_product[] = [
+                        'id' => $id_store[0],
+                        'name' => $stock->store_name,
+                        'product_option_id' => $id,
+                        'total_quantity' => $id_store[1]
+                    ];
                 }else{
-                    if ($id_store[1]){
+                    if ($id_store[1] && empty($id_store[2])){
                         $store = Store::findOrFail($id_store[0]);
-                        $data['store_id'] = $id_store[0];
-                        $data['store_name'] = $store->name;
-                        $data['product_id'] = $parent_id;
-                        $data['product_option_id'] = $id;
-                        $data['total_quantity'] = $id_store[1];
-                        $data['total_order_quantity'] = 0;
-                        Stocks::create($data);
+                        $data3['store_id'] = $id_store[0];
+                        $data3['store_name'] = $store->name;
+                        $data3['product_id'] = $parent_id;
+                        $data3['product_option_id'] = $id;
+                        $data3['total_quantity'] = $id_store[1];
+                        $data3['total_order_quantity'] = 0;
+                        $stock_item = Stocks::create($data3);
+
+                        $stock_product[] = [
+                            'id' => $id_store[0],
+                            'name' => $stock_item->store_name,
+                            'product_option_id' => $id,
+                            'total_quantity' => $id_store[1]
+                        ];
                     }
                 }
             }
-
+            $data['stocks'] = $stock_product;
             $data_root->update($data);
             DB::commit();
             return [
