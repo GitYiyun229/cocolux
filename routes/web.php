@@ -55,7 +55,7 @@ Route::group(['namespace' => 'Web'], function (){
         ->where(['slug' => '[-a-zA-Z0-9]+', 'id' => '[0-9]+'])
         ->name('catProduct');
     Route::get('/{slug}-i.{sku}', 'ProductController@detail')
-        ->where(['slug' => '[-a-zA-Z0-9]+', 'sku' => '[-a-zA-Z0-9]+'])
+        ->where(['slug' => '[-a-zA-Z0-9.]+', 'sku' => '[-a-zA-Z0-9]+'])
         ->name('detailProduct');
     Route::get('/hang-moi-ve', 'ProductController@is_new')->name('newProducts');
     Route::get('/deal-hot', 'ProductController@deal_hot')->name('dealHotProducts');
