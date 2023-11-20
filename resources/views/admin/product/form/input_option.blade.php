@@ -14,8 +14,9 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group d-flex align-items-center">
-                        <label class="col-md-4 font-weight-bold small p-0 m-0"> Mã hàng: </label>
+                        <label class="col-md-4 font-weight-bold small p-0 m-0"> Mã hàng sku: </label>
                         <input type="text" name="sku" class="form-control" id="sku-product-option" value="{{ isset($product_option)?$product_option->sku:'' }}">
+                        <button type="button" class="btn btn-warning" onclick="checkSku()">Check</button>
                     </div>
                     <div class="form-group d-flex align-items-center">
                         <label class="col-md-4 font-weight-bold small p-0 m-0"> Barcode: </label>

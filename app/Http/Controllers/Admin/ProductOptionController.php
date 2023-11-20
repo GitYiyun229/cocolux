@@ -45,63 +45,72 @@ class ProductOptionController extends Controller
      */
     public function store(Request $request)
     {
-        DB::beginTransaction();
-        try {
-            if (empty($request->input('slug'))){
-                $data['slug'] = $request->input('name')?\Str::slug($request->input('name'), '-'):'';
-            }else{
-                $data['slug'] = \Str::slug($request->input('slug'), '-');
-            }
-            $total_stock = $request->input('stock');
-            $parent_id = $request->input('parent_id');
-            $is_default = $request->input('is_default');
-            $data['sku'] = $request->input('sku');
-            $data['barcode'] = $request->input('barcode');
-            $data['title'] = $request->input('name');
-            $data['price'] = $request->input('price');
-            $data['normal_price'] = $request->input('normal_price');
-            $data['active'] = $request->input('active');
-            $data['is_default'] = $is_default;
-            $data['parent_id'] = $parent_id;
-            $sortedIds = $request->input('sortedIds');
-            if (!empty($sortedIds)){
-                $data['images'] = json_encode(explode(',',$sortedIds));
-            }
-
-            if ($is_default){
-                ProductOptions::where('parent_id', $parent_id)->update(['is_default' => 0]);
-            }
-            $product_option = ProductOptions::create($data);
-
-            foreach ($total_stock as $item){
-                $id_store = explode(':',$item);
-                if ($id_store[1]){
-                    $store = Store::findOrFail($id_store[0]);
-                    $data['store_id'] = $id_store[0];
-                    $data['store_name'] = $store->name;
-                    $data['product_id'] = $parent_id;
-                    $data['product_option_id'] = $product_option->id;
-                    $data['total_quantity'] = $id_store[1];
-                    $data['total_order_quantity'] = 0;
-                    Stocks::create($data);
-                }
-            }
-
-            DB::commit();
-            return [
-                'status' => true,
-                'message' => 'Lưu thành công'
-            ];
-        } catch (\Exception $exception) {
-            \Log::info([
-                'message' => $exception->getMessage(),
-                'line' => __LINE__,
-                'method' => __METHOD__
-            ]);
+        $sku = $request->input('sku');
+        $product_option = ProductOptions::where('sku', $sku)->get();
+        if (count($product_option)){
             return [
                 'status' => false,
-                'message' => 'Lưu không thành công'
+                'message' => 'Mã này đã tồn tại'
             ];
+        }else{
+            DB::beginTransaction();
+            try {
+                if (empty($request->input('slug'))){
+                    $data['slug'] = $request->input('name')?\Str::slug($request->input('name'), '-'):'';
+                }else{
+                    $data['slug'] = \Str::slug($request->input('slug'), '-');
+                }
+                $total_stock = $request->input('stock');
+                $parent_id = $request->input('parent_id');
+                $is_default = $request->input('is_default');
+                $data['sku'] = $sku;
+                $data['barcode'] = $request->input('barcode');
+                $data['title'] = $request->input('name');
+                $data['price'] = $request->input('price');
+                $data['normal_price'] = $request->input('normal_price');
+                $data['active'] = $request->input('active');
+                $data['is_default'] = $is_default;
+                $data['parent_id'] = $parent_id;
+                $sortedIds = $request->input('sortedIds');
+                if (!empty($sortedIds)){
+                    $data['images'] = json_encode(explode(',',$sortedIds));
+                }
+
+                if ($is_default){
+                    ProductOptions::where('parent_id', $parent_id)->update(['is_default' => 0]);
+                }
+                $product_option = ProductOptions::create($data);
+
+                foreach ($total_stock as $item){
+                    $id_store = explode(':',$item);
+                    if ($id_store[1]){
+                        $store = Store::findOrFail($id_store[0]);
+                        $data['store_id'] = $id_store[0];
+                        $data['store_name'] = $store->name;
+                        $data['product_id'] = $parent_id;
+                        $data['product_option_id'] = $product_option->id;
+                        $data['total_quantity'] = $id_store[1];
+                        $data['total_order_quantity'] = 0;
+                        Stocks::create($data);
+                    }
+                }
+
+                DB::commit();
+                return [
+                    'status' => true,
+                    'message' => 'Lưu thành công'
+                ];
+            } catch (\Exception $exception) {
+                \Log::info([
+                    'message' => $exception->getMessage(),
+                    'line' => __LINE__,
+                    'method' => __METHOD__
+                ]);
+                return [
+                    'status' => false,
+                    'message' => 'Lưu không thành công'
+                ];
+            }
         }
     }
 
@@ -172,10 +181,20 @@ class ProductOptionController extends Controller
             }else{
                 $data['slug'] = \Str::slug($request->input('slug'), '-');
             }
+            $sku = $request->input('sku');
+            if ($sku != $data_root->sku){
+                $product_option = ProductOptions::where('sku', $sku)->select('id')->get();
+                if (count($product_option)){
+                    return [
+                        'status' => false,
+                        'message' => 'Mã này đã tồn tại'
+                    ];
+                }
+            }
             $total_stock = $request->input('stock');
             $parent_id = $request->input('parent_id');
             $is_default = $request->input('is_default');
-            $data['sku'] = $request->input('sku');
+            $data['sku'] = $sku;
             $data['barcode'] = $request->input('barcode');
             $data['title'] = $request->input('name');
             $data['price'] = $request->input('price');
@@ -255,5 +274,26 @@ class ProductOptionController extends Controller
             ];
         }
 
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function checkSku(Request $request)
+    {
+        $sku = $request->input('sku');
+        $product_option = ProductOptions::where('sku', $sku)->get();
+        if (count($product_option)){
+            return [
+                'status' => false,
+                'message' => 'Mã này đã tồn tại'
+            ];
+        }else{
+            return [
+                'status' => true,
+                'message' => "Mã này có thể sử dụng"
+            ];
+        }
     }
 }

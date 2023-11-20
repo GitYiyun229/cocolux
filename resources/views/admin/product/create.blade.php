@@ -84,6 +84,27 @@
             });
         }
 
+        function checkSku() {
+            var sku = $('#form-product-option #sku-product-option').val();
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.product-option.checkSku') }}",
+                data: {
+                    sku: sku,
+                    _token: $('meta[name="csrf-token"]').attr("content")
+                },
+                success: function (result) {
+                    if (result.status === true) {
+                        toastr["success"](result.message);
+                    }
+
+                    if (result.status === false) {
+                        toastr["error"](result.message);
+                    }
+                }
+            });
+        }
+
         function submitFormOption(id_product) {
             $.ajax({
                 type: "POST",
