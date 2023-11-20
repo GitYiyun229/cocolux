@@ -177,6 +177,32 @@
             });
         }
 
+        function checkSku() {
+            var sku = $('#form-product-option #sku-product-option').val();
+            if(sku){
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('admin.product-option.checkSku') }}",
+                    data: {
+                        sku: sku,
+                        _token: $('meta[name="csrf-token"]').attr("content")
+                    },
+                    success: function (result) {
+                        if (result.status === true) {
+                            toastr["success"](result.message);
+                        }
+
+                        if (result.status === false) {
+                            toastr["error"](result.message);
+                        }
+                    }
+                });
+            }else{
+                toastr["error"]("Bạn cần nhập mã sku");
+            }
+
+        }
+
         function submitFormOption(id_product) {
 
             $.ajax({
