@@ -117,11 +117,11 @@ class ProductDataTable extends DataTable
             Column::make('title')->title('Tên sản phẩm'),
             Column::make('image')->title(trans('form.product.image'))->render([
                 'renderImage(data)'
-            ]),
-            Column::make('active')->title('Kích hoạt'),
-            Column::make('is_home')->title('Hiển thị trang chủ'),
-            Column::make('is_hot')->title('SP Hot'),
-            Column::make('is_new')->title('SP Mới'),
+            ])->searchable(false),
+            Column::make('active')->title('Kích hoạt')->searchable(false),
+            Column::make('is_home')->title('Hiển thị trang chủ')->searchable(false),
+            Column::make('is_hot')->title('SP Hot')->searchable(false),
+            Column::make('is_new')->title('SP Mới')->searchable(false),
             Column::make('created_at')->title('Thời gian tạo'),
             Column::make('updated_at')->title('Thời gian sửa'),
             Column::computed('action')
