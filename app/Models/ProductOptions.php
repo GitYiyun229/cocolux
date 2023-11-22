@@ -103,7 +103,12 @@ class ProductOptions extends Model
 
     public function getLinkProductAttribute()
     {
-        return route('detailProduct',['slug'=>$this->slug, 'sku'=>$this->sku]);
+        if ($this->slug && $this->sku){
+            return route('detailProduct',['slug'=>$this->slug, 'sku'=>$this->sku]);
+        }else{
+            return null;
+        }
+
     }
 
 }

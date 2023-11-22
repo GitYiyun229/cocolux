@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Models\Product;
 use Carbon\Carbon;
+use Illuminate\Support\Optional;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -58,6 +59,10 @@ class ProductDataTable extends DataTable
                     'status' => $status,
                 ])->render();
             })
+            ->addColumn('productOption', function ($q) {
+                $skus = $q->productOption->pluck('sku')->toArray();
+                return implode(', ', $skus);
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -80,7 +85,10 @@ class ProductDataTable extends DataTable
      */
     public function query(Product $model)
     {
-        return $model->newQuery()->with('category');
+        return $model->newQuery()->with([
+            'category',
+            'productOption:id,parent_id,sku,images,slug'
+        ]);
     }
 
     /**
@@ -118,6 +126,7 @@ class ProductDataTable extends DataTable
             Column::make('image')->title(trans('form.product.image'))->render([
                 'renderImage(data)'
             ])->searchable(false),
+            Column::make('productOption','productOption.sku')->title('Mã'),
             Column::make('active')->title('Kích hoạt')->searchable(false),
             Column::make('is_home')->title('Hiển thị trang chủ')->searchable(false),
             Column::make('is_hot')->title('SP Hot')->searchable(false),
