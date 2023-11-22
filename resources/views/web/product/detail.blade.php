@@ -355,8 +355,10 @@
                         @empty
                         @endforelse
                         @endif
+                        @if($brand)
+                            <a href="{{ route('detailBrand',['slug'=>$brand->slug,'id'=>$brand->id]) }}" class="more-brand">Xem thêm</a>
+                        @endif
 
-                        <a href="/link-to-brand" class="more-brand">Xem thêm</a>
                     </div>
                 </div>
             </div>
