@@ -21,6 +21,7 @@ class CreateArticlesTable extends Migration
             $table->text('description')->nullable();
             $table->text('content')->nullable();
             $table->tinyInteger('is_home')->default(0)->nullable();
+            $table->tinyInteger('has_toc')->default(1)->nullable();
             $table->tinyInteger('is_highlight')->default(0)->nullable();
             $table->tinyInteger('active')->default(0)->comment('0: Không hoạt động; 1: Hoạt động');
             $table->integer('category_id')->unsigned()->nullable();

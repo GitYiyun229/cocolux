@@ -72,6 +72,27 @@
         </div>
         <div class="row">
             <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group clearfix">
+                    <label>Mục lục</label> <span class="text-danger">*</span>
+                    <div class="form-group">
+                        <div class="icheck-success d-inline">
+                            <input class="" type="radio" id="tocRadio1" name="has_toc" value="{{ \App\Models\Article::IS_HOME }}" {{ (isset($article->has_toc) && $article->has_toc == \App\Models\Article::HAS_TOC) ? 'checked' : (old('has_toc') && (old('has_toc') == \App\Models\Article::HAS_TOC)) ? 'checked' : '' }}  required>
+                            <label for="tocRadio1" class="custom-control-label">Có&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                        </div>
+                        <div class="icheck-danger d-inline">
+                            <input class="" type="radio" id="tocRadio2" name="has_toc" value="{{ \App\Models\Article::IS_NOT_HOME }}" {{ (isset($article) && $article->has_toc == \App\Models\Article::NOT_HAS_TOC) ? 'checked' : (old('has_toc') && (old('has_toc') == \App\Models\Article::NOT_HAS_TOC)) ? 'checked' : '' }}  required>
+                            <label for="tocRadio2" class="custom-control-label">Không</label>
+                        </div>
+                    </div>
+                    @if ($errors->has('is_home'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('is_home') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
                 <div class="form-group">
                     <label>@lang('form.article.category')</label> <span class="text-danger">*</span>
                     <select name="category_id" id="category_id" class="form-control" required>
