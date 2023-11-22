@@ -119,6 +119,8 @@
     @parent
     <script src="{{ asset('/js/web/jquery.toc.js') }}"></script>
     <script>
-        $("#toc").toc({content: ".layout-main .detail-content", headings: "h1,h2,h3,h4"});
+        $(document).ready(function ($) {
+            $("#toc").toc({content: ".layout-main .detail-content", headings: "h1,h2,h3,h4"});
+        });
     </script>
 @endsection
