@@ -27,6 +27,11 @@
                     @endif
                 </div>
             </div>
+            @if ($article)
+            <div class="col-md-12 mb-3">
+                <b>Link: </b> <a target="_blank" href="{{ route('detailArticle',['slug'=>$article->slug,'id'=>$article->id]) }}">{{ route('detailArticle',['slug'=>$article->slug,'id'=>$article->id]) }}</a>
+            </div>
+            @endif
             <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group clearfix">
