@@ -559,6 +559,38 @@ class ProductController extends Controller
         return view('web.product.flash_sale',compact('promotions','productOptions','applied_stop_time'));
     }
 
+    public function item_hot(){
+
+        $logo = Setting::where('key', 'logo')->first();
+
+        SEOTools::setTitle('Sản phẩm hot | Cocolux.com');
+        SEOTools::setDescription('COCOLUX - Hệ thống mỹ phẩm hàng đầu Việt Nam');
+        SEOTools::addImages(asset($logo->value));
+        SEOTools::setCanonical(url()->current());
+        SEOTools::opengraph()->setUrl(url()->current());
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('cocolux.com');
+
+        $flash_sale = $this->dealService->isFlashSaleAvailable();
+        $promotions_flash_id = $flash_sale->pluck('id')->toArray();
+        $hot_deal = $this->dealService->isHotDealAvailable();
+        $promotions_hot_id = $hot_deal->pluck('id')->toArray();
+
+        $productOptions = ProductOptions::
+        select('id','sku', 'slug','title','price','normal_price','slug','images','flash_deal','hot_deal','parent_id')
+            ->with(['product' => function($query){
+                $query->select('id','slug','brand');
+            }])
+            ->whereHas('product', function ($query) {
+                $query->where('is_hot', 1);
+            })
+            ->where('slug', '!=',null)
+            ->where('hot_deal', '!=',null)
+            ->paginate(30);
+        return view('web.product.item_hot',compact('productOptions','promotions_flash_id','promotions_hot_id'));
+    }
+
+
     public function deal_now(){
 
         $logo = Setting::where('key', 'logo')->first();

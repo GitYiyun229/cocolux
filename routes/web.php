@@ -60,6 +60,7 @@ Route::group(['namespace' => 'Web'], function (){
     Route::get('/hang-moi-ve', 'ProductController@is_new')->name('newProducts');
     Route::get('/deal-hot', 'ProductController@deal_hot')->name('dealHotProducts');
     Route::get('/flash-sale', 'ProductController@flash_deal')->name('flashSaleProducts');
+    Route::get('/item-hot', 'ProductController@item_hot')->name('itemHotProducts');
     Route::get('/deal-now', 'ProductController@deal_now')->name('dealNowProducts');
     Route::get('/deal-hot/{id}', 'ProductController@deal_hot_detail')->name('dealHotDetailProducts');
     Route::post('/them-vao-gio-hang', 'ProductController@addToCart')->name('addToCart');

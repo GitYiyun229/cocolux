@@ -13,6 +13,9 @@ class Article extends Model
     const IS_HOME = 1;
     const IS_NOT_HOME = 0;
 
+    const HAS_TOC = 1;
+    const NOT_HAS_TOC = 0;
+
     public $resizeImage = ['lager' => [600,600],'resize'=>[400,400],'small'=>[100,100]];
 
     protected $appends = [

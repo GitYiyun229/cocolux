@@ -132,18 +132,18 @@
                 </div>
             </div>
             @endif
+            @if(!empty($product_hots))
             <div class="slide-template bg-white mb-4">
                 <div class="slide-top">
-                    <a href="" class="slide-title">
+                    <a href="{{ route('itemHotProducts') }}" class="slide-title">
                         <h2>Sản phẩm hot</h2>
                     </a>
-                    <a href="" class="slide-more">
+                    <a href="{{ route('itemHotProducts') }}" class="slide-more">
                         Xem tất cả
                     </a>
                 </div>
                 <div class="slide-main">
                     <div class="slide-template-slick">
-                        @if(!empty($product_hots))
                         @forelse($product_hots as $item)
                         <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
                             @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
@@ -195,11 +195,11 @@
                         </a>
                         @empty
                         @endforelse
-                        @endif
+
                     </div>
                 </div>
             </div>
-
+            @endif
             <div class="slide-template bg-white mb-5">
                 <div class="slide-top">
                     <a href="{{ route('homeBrand') }}" class="slide-title">

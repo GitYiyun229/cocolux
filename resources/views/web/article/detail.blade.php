@@ -66,7 +66,7 @@
                         <div class="detail-summary">
                             {{ $article->description }}
                         </div>
-                        <div class="toc-content" id="left1">
+                        <div class="toc-content @if(empty($article->has_toc)) d-none @endif" id="left1">
                             <div class="title-toc-blog">
                                 Mục lục:
                             </div>
