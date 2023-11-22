@@ -422,7 +422,7 @@ class ProductController extends Controller
 
     public function detail ($slug,$sku){
         $product = ProductOptions::where(['sku' => $sku])->with(['product' => function($query){
-            $query->select('id','category_id','sku','slug','title','attributes','category_path','description','brand');
+            $query->select('id','category_id','sku','slug','title','attributes','category_path','attribute_path','description','brand');
         }])->where('sku','!=',null)->first();
         if (!$product) {
             abort(404);
@@ -447,6 +447,21 @@ class ProductController extends Controller
             $stocks = null;
             $stores = null;
         }
+        $brand = null;
+        if ($product->attribute_path){
+            $pairs = explode(',', $product->attribute_path);
+
+            $id_brand = null;
+            foreach ($pairs as $pair) {
+                list($key, $value) = explode(':', $pair);
+
+                if ($key == '19') {
+                    $id_brand = $value;
+                    break;
+                }
+            }
+            $brand = AttributeValues::findOrFail($id_brand);
+        }
 
         $flash = $product->flash_deal;
         $deal_hot = $product->hot_deal;
@@ -463,7 +478,9 @@ class ProductController extends Controller
         if (!$product_root) {
             abort(404);
         }
-        $attribute_value = !empty($product_root->attributes)?json_decode($product_root->attributes):null;
+        $attribute_value = !empty($product_root->attributes)?$product_root->attributes:null;
+        $attribute_value = collect($attribute_value)->sortByDesc('id')->values()->all();
+
         $list_product_parent = ProductOptions::select('id','images','title','slug','sku')
             ->where(['parent_id' => $product->parent_id])
             ->where('sku','!=',null)
@@ -491,7 +508,7 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($product->seo_keyword?$product->seo_keyword:$product->title);
 
-        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats','flash_sale','hot_deal','stores','count_store'));
+        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats','flash_sale','hot_deal','stores','count_store','brand'));
     }
 
     public function is_new(){
