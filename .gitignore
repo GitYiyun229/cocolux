@@ -3,6 +3,7 @@
 /public/sitemap.xml
 /public/sitemaps
 /public/storage
+/public/danh-gia
 public/images/cdn_images
 /storage/*.key
 /vendor

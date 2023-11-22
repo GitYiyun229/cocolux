@@ -9,15 +9,18 @@ use GuzzleHttp\Client;
 class ApiNhanhController extends Controller
 {
     //Webhooks verify token: updateFromNhanh2023
-    //https://nhanh.vn/oauth?version=2.0&appId=73885&returnLink=https://cocolux.com/
-//    secret key: eyqVIKUPKAnVbNXMWGUwecQmPVhXE8HIDY9pV4oNG3aqOvRrfFq3hdYw1aEwWmFueTHujM9yIEFr3TJbHfEtKvwdYoULVRdBN9yugiwO6cAjQko7FF94KL9fhgj35bEA
-//https://cocolux.com/?accessCode=86XQSBdKUTs4Pkl4McaykE3VWNJp3jJUXc1RJ5dz1rO8DNLc8NUfVu6IokfZEUdo
+    //https://nhanh.vn/oauth?version=2.0&appId=73906&returnLink=https://cocolux.com/
+//    secret key: oRMFuDho7in3RT4Hzn3XsnpHRKDACUfsvCZOaYPWXb3Mhf9HaSPm6aq5ZI6XgHq2zWPr8yLAeqzRv3VTVKoH523esEbTnXTa4MWIFlPJSD4feeTwtFYqhQ1s7wQbYnQx
+//https://cocolux.com/?accessCode=obNqjrVX3LD1JZrPxIOtQII7rPcgsLlHeKE1IxUo3kGau0S1X5qWtglFnHRPcfG1
+//obNqjrVX3LD1JZrPxIOtQII7rPcgsLlHeKE1IxUo3kGau0S1X5qWtglFnHRPcfG1
+
     protected $linkApi = "https://open.nhanh.vn";
     protected $request_params = [
         'version' => 2.0,
-        'appId' => 73885,
+        'appId' => 73906,
         'businessId' => 157423,
-        'accessToken' => "TROS2a2WscEKpwXk3cpRWPDa2vGVTPb0EbYIDK6Vlv6QqAKXFWGVa7wRgQDbKqgUd1Xey6VEJnnPxh8jOEJ2L8fCqK6AZ9TYUmGMW2Z1Ugy7p0lY6RJoQlisj0wHsZV55kCSD0xRrCkYQVzrQjEpD2ne2hdTdh1ED",
+//        'accessToken' => "TROS2a2WscEKpwXk3cpRWPDa2vGVTPb0EbYIDK6Vlv6QqAKXFWGVa7wRgQDbKqgUd1Xey6VEJnnPxh8jOEJ2L8fCqK6AZ9TYUmGMW2Z1Ugy7p0lY6RJoQlisj0wHsZV55kCSD0xRrCkYQVzrQjEpD2ne2hdTdh1ED",
+        'accessToken' => "XGZ5UbNYrSuFHqccvHaRyUmalKXWbQnMTPKKQTmH5zWchgEFv9SRKUPAI4UIlREA0XksifCQ8KGaRq2g7XwWL1xI2DmmZhFvRUln5WItTuXTdpAH1n1hMjMI6THgwou4Jqb3L",
     ];
 
     public function WebHookCallBack(Request $request)
