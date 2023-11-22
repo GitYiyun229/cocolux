@@ -26,6 +26,10 @@ class Product extends Model
         'image_change_url'
     ];
 
+    protected $casts = [
+        'attributes' => 'object',
+    ];
+
     protected $guarded = ['id'];
 
     public function category()
