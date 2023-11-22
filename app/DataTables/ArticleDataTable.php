@@ -102,10 +102,10 @@ class ArticleDataTable extends DataTable
             Column::make('title'),
             Column::make('image_change_url')->title(trans('form.article.image'))->render([
                 'renderImage(data)'
-            ]),
-            Column::make('category_id')->title(trans('form.article_category.')),
-            Column::make('active')->title(trans('form.article.active')),
-            Column::make('is_home')->title(trans('form.home_page')),
+            ])->searchable(false),
+            Column::make('category_id')->title(trans('form.article_category.'))->searchable(false),
+            Column::make('active')->title(trans('form.article.active'))->searchable(false),
+            Column::make('is_home')->title(trans('form.home_page'))->searchable(false),
             Column::make('created_at')->title(trans('form.created_at')),
             Column::make('updated_at')->title(trans('form.updated_at')),
             Column::computed('action')
