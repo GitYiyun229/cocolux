@@ -131,7 +131,7 @@ class ProductController extends Controller
         $categories = $this->productCategoryResponstory->getAll();
         $product = $this->productResponstory->getOneById($id);
         $product_option = ProductOptions::where(['parent_id' => $product->id])->get();
-        $attribute_value = json_decode($product->attributes);
+        $attribute_value = $product->attributes;
         $attribute = Attribute::select('id','code','name','type')->where(function($query){
             $query->orWhere('type', 'select')
                     ->orWhere('type', 'ckeditor');
