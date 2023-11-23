@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductOptions;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 
 class ApiNhanhController extends Controller
 {
@@ -61,17 +63,26 @@ class ApiNhanhController extends Controller
     }
 
     public function inventory(){
-        //tài khoan Trung chua co quyen truy cập kho
         $api = "/api/store/depot";
         $client = new Client();
         $response = $client->post($this->linkApi.$api,[
             'form_params' => $this->request_params
         ]);
         $data = json_decode($response->getBody(), true);
-        $currentPage = $data['data']['currentPage'];
-        $totalPages = $data['data']['totalPages'];
-        $products = $data['data']['products'];
-        dd($products);
+        $kho_nhanh = $data['data'];
+        foreach ($kho_nhanh as $k => $item){
+            $store = Store::where('id_nhanh', $k)->get();
+            if (!count($store)){
+                $data['active'] = 1;
+                $data['name'] = $item['name'];
+                $data['id_nhanh'] = $k;
+                $data['address'] = $item['address'];
+                DB::beginTransaction();
+                Store::create($data);
+                DB::commit();
+            }
+        }
+        return true;
     }
 
     public function updateProduct($product){
