@@ -48,7 +48,7 @@ class ApiNhanhController extends Controller
 			}
 		} catch (\Exception $e) {
 			\Log::info([
-                'message' => $ex->getMessage(),
+                'message' => $e->getMessage(),
                 'line' => __LINE__,
                 'method' => __METHOD__
             ]);
