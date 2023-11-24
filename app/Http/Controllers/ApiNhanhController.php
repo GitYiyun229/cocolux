@@ -45,12 +45,13 @@ class ApiNhanhController extends Controller
                             $product = ProductOptions::where('sku',$item['code'])->first();
                             $this->updateProduct($item, $product,'inventoryChange');
                         }
+                        return response()->json(['message' => 'OK'], 200);
                     }else{
                         return response()->json(['message' => 'OK'], 200);
                     }
                 }
 				\Log::info([
-					'message' => $content,
+					'message' => $resp['event'],
 					'line' => __LINE__,
 					'method' => __METHOD__
 				]);
@@ -126,41 +127,50 @@ class ApiNhanhController extends Controller
     }
 
     public function updateProduct($resp_end, $product, $attribute = null){
-        if ($attribute == 'inventoryChange'){
-            $inventory = $resp_end;
-        }else{
-            $inventory = $resp_end['inventory'];
-        }
-
-        $stocks = array();
-        $depots = $inventory['depots'];
-        foreach ($depots as $k => $item){
-            if ($item['available']){
-                $store = Store::where('id_nhanh', $k)->first();
-                $stocks[] = [
-                  'id' => $store->id,
-                  'name' => $store->name,
-                  'product_id' => null,
-                  'product_option_id' => $product->id,
-                  'product_master_id' => null,
-                  'total_quantity' => $item['available'],
-                  'total_stock_quantity' => $item['remain'],
-                  'total_order_quantity' => $item['shipping'],
-                ];
+        try {
+            if ($attribute == 'inventoryChange'){
+                $inventory = $resp_end;
+            }else{
+                $inventory = $resp_end['inventory'];
             }
+
+            $stocks = array();
+            $depots = $inventory['depots'];
+            foreach ($depots as $k => $item){
+                if ($item['available']){
+                    $store = Store::where('id_nhanh', $k)->first();
+                    $stocks[] = [
+                      'id' => $store->id,
+                      'name' => $store->name,
+                      'product_id' => null,
+                      'product_option_id' => $product->id,
+                      'product_master_id' => null,
+                      'total_quantity' => $item['available'],
+                      'total_stock_quantity' => $item['remain'],
+                      'total_order_quantity' => $item['shipping'],
+                    ];
+                }
+            }
+            $data = array();
+            if (isset($resp_end['price'])){
+                $data['price'] = $resp_end['price'];
+            }
+            if (isset($resp_end['price']) && $product->normal_price < $resp_end['price']){
+                $data['normal_price'] = $resp_end['price'];
+            }
+            if (isset($resp_end['oldPrice'])){
+                $data['normal_price'] = $resp_end['oldPrice'];
+            }
+            $data['stocks'] = $stocks;
+            return $product->update($data);
+        } catch (\Exception $e) {
+            \Log::info([
+                'message' => $e->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            return response()->json(['message' => 'OK'], 200);
         }
-        $data = array();
-        if (isset($resp_end['price'])){
-            $data['price'] = $resp_end['price'];
-        }
-        if (isset($resp_end['price']) && $product->normal_price < $resp_end['price']){
-            $data['normal_price'] = $resp_end['price'];
-        }
-        if (isset($resp_end['oldPrice'])){
-            $data['normal_price'] = $resp_end['oldPrice'];
-        }
-        $data['stocks'] = $stocks;
-        return $product->update($data);
     }
 
 }
