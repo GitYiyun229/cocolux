@@ -30,15 +30,31 @@ class ApiNhanhController extends Controller
         try {
 			if ($request->isJson()) {
 				$jsonData = $request->json()->all();
-				$filePath = public_path('webhook/request_data.txt');
 				$content = json_encode($jsonData, JSON_PRETTY_PRINT);
-				
+                $resp = json_decode($content, true);
+                if ($resp['webhooksVerifyToken'] == 'updateFromNhanh2023' && $resp['businessId'] == 157423){
+                    if ($resp['event'] == 'productAdd'){
+                        return response()->json(['message' => 'OK'], 200);
+                    }elseif($resp['event'] == 'productUpdate'){
+                        return response()->json(['message' => 'OK'], 200);
+                    }elseif($resp['event'] == 'productDelete'){
+                        return true;
+                    }elseif($resp['event'] == 'inventoryChange'){
+                        $list_change = $resp['data'];
+                        foreach ($list_change as $item){
+                            $product = ProductOptions::where('sku',$item['code'])->first();
+                            $this->updateProduct($item, $product,'inventoryChange');
+                        }
+                    }else{
+                        return response()->json(['message' => 'OK'], 200);
+                    }
+                }
 				\Log::info([
 					'message' => $content,
 					'line' => __LINE__,
 					'method' => __METHOD__
 				]);
-				
+
 				return response()->json(['message' => 'OK'], 200);
 			} else {
 				return response()->json(['message' => 'OK'], 200);
@@ -109,8 +125,13 @@ class ApiNhanhController extends Controller
         return response()->json(['message' => 'OK'], 200);
     }
 
-    public function updateProduct($resp_end, $product){
-        $inventory = $resp_end['inventory'];
+    public function updateProduct($resp_end, $product, $attribute = null){
+        if ($attribute == 'inventoryChange'){
+            $inventory = $resp_end;
+        }else{
+            $inventory = $resp_end['inventory'];
+        }
+
         $stocks = array();
         $depots = $inventory['depots'];
         foreach ($depots as $k => $item){
@@ -129,8 +150,10 @@ class ApiNhanhController extends Controller
             }
         }
         $data = array();
-        $data['price'] = $resp_end['price'];
-        if ($product->normal_price < $resp_end['price']){
+        if ($resp_end['price']){
+            $data['price'] = $resp_end['price'];
+        }
+        if ($resp_end['price'] && $product->normal_price < $resp_end['price']){
             $data['normal_price'] = $resp_end['price'];
         }
         if ($resp_end['oldPrice']){
