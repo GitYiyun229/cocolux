@@ -32,6 +32,12 @@ class ApiNhanhController extends Controller
 				$jsonData = $request->json()->all();
 				$content = json_encode($jsonData, JSON_PRETTY_PRINT);
                 $resp = json_decode($content, true);
+                \Log::info([
+                    'message' => $resp['event'],
+                    'line' => __LINE__,
+                    'method' => __METHOD__
+                ]);
+
                 if ($resp['webhooksVerifyToken'] == 'updateFromNhanh2023' && $resp['businessId'] == 157423){
                     if ($resp['event'] == 'productAdd'){
                         return response()->json(['message' => 'OK'], 200);
@@ -52,11 +58,6 @@ class ApiNhanhController extends Controller
                         return response()->json(['message' => 'OK'], 200);
                     }
                 }
-				\Log::info([
-					'message' => $resp['event'],
-					'line' => __LINE__,
-					'method' => __METHOD__
-				]);
 
 				return response()->json(['message' => 'OK'], 200);
 			} else {
