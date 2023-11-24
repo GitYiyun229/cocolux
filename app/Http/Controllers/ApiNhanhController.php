@@ -33,14 +33,11 @@ class ApiNhanhController extends Controller
 				$filePath = public_path('webhook/request_data.txt');
 				$content = json_encode($jsonData, JSON_PRETTY_PRINT);
 				
-				// Bắt lỗi và xử lý nếu có
-				if (file_put_contents($filePath, $content) === false) {
-					\Log::info([
-						'message' => $content,
-						'line' => __LINE__,
-						'method' => __METHOD__
-					]);
-				}
+				\Log::info([
+					'message' => $content,
+					'line' => __LINE__,
+					'method' => __METHOD__
+				]);
 				
 				return response()->json(['message' => 'OK'], 200);
 			} else {
