@@ -43,7 +43,9 @@ class ApiNhanhController extends Controller
                         $list_change = $resp['data'];
                         foreach ($list_change as $item){
                             $product = ProductOptions::where('sku',$item['code'])->first();
-                            $this->updateProduct($item, $product,'inventoryChange');
+                            if ($product){
+                                $this->updateProduct($item, $product,'inventoryChange');
+                            }
                         }
                         return response()->json(['message' => 'OK'], 200);
                     }else{
