@@ -150,13 +150,13 @@ class ApiNhanhController extends Controller
             }
         }
         $data = array();
-        if ($resp_end['price']){
+        if (isset($resp_end['price'])){
             $data['price'] = $resp_end['price'];
         }
-        if ($resp_end['price'] && $product->normal_price < $resp_end['price']){
+        if (isset($resp_end['price']) && $product->normal_price < $resp_end['price']){
             $data['normal_price'] = $resp_end['price'];
         }
-        if ($resp_end['oldPrice']){
+        if (isset($resp_end['oldPrice'])){
             $data['normal_price'] = $resp_end['oldPrice'];
         }
         $data['stocks'] = $stocks;
