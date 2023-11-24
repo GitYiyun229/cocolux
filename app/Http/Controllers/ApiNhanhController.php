@@ -27,27 +27,33 @@ class ApiNhanhController extends Controller
 
     public function WebHookCallBack(Request $request)
     {
-        if ($request->isJson()) {
-            try {
-                $jsonData = $request->json()->all();
-                $filePath = public_path('webhook/request_data.txt');
-                $content = json_encode($jsonData, JSON_PRETTY_PRINT);
-                file_put_contents($filePath, $content);
-                return response()->json(['message' => 'OK'], 200);
-            } catch (\Exception $ex) {
-                $jsonData = [
-                    'message' => $ex->getMessage(),
-                    'line' => __LINE__,
-                    'method' => __METHOD__
-                ];
-                $filePath = public_path('webhook/request_data.txt');
-                $content = json_encode($jsonData, JSON_PRETTY_PRINT);
-                file_put_contents($filePath, $content);
-                return response()->json(['message' => 'OK'], 200);
-            }
-        } else {
-            return response()->json(['message' => 'OK'], 200);
-        }
+        try {
+			if ($request->isJson()) {
+				$jsonData = $request->json()->all();
+				$filePath = public_path('webhook/request_data.txt');
+				$content = json_encode($jsonData, JSON_PRETTY_PRINT);
+				
+				// Bắt lỗi và xử lý nếu có
+				if (file_put_contents($filePath, $content) === false) {
+					\Log::info([
+						'message' => $content,
+						'line' => __LINE__,
+						'method' => __METHOD__
+					]);
+				}
+				
+				return response()->json(['message' => 'OK'], 200);
+			} else {
+				return response()->json(['message' => 'OK'], 200);
+			}
+		} catch (\Exception $e) {
+			\Log::info([
+                'message' => $ex->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+			return response()->json(['message' => 'OK'], 200);
+		}
     }
 
     // lấy danh sách kho
