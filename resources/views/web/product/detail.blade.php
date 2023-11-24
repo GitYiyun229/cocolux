@@ -27,7 +27,7 @@
                                     <a href="" data-bs-toggle="modal" data-bs-target="#imageModal">
                                         <img src="{{ !empty($list_image)? asset(replace_image($list_image[0])):'' }}" alt="{{ $product->title }}" class="img-fluid detail-thumbnail-image">
                                     </a>
-                                    <div class="detail-share">
+                                    <div class="detail-share d-none">
                                         Thêm vào danh sách yêu thích
                                     </div>
                                 </div>
