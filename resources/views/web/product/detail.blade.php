@@ -113,7 +113,7 @@
                                         <div class="dropdown detail-address">
                                             <a class="btn btn-address" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="fa-solid fa-circle-check"></i>
-                                                {{ $count_store }}/13 Chi nhánh còn sản phẩm
+                                                {{ $count_store }}/17 Chi nhánh còn sản phẩm
                                             </a>
 
                                             @if($stores)
