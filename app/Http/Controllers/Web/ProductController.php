@@ -492,7 +492,10 @@ class ProductController extends Controller
         $products = ProductOptions::select('product_options.id','product_options.title','product_options.slug','product_options.images','product_options.price','product_options.normal_price','product_options.normal_price','products.category_id','product_options.sku','product_options.brand')
             ->where(['product_options.active' => 1])
             ->whereHas('product', function ($query) use ($brand) {
-                $query->where('active', 1)->where('attribute_path', 'LIKE', '%'.$brand->attribute_id.':'.$brand->id.'%');
+                $query->where('active', 1);
+                if ($brand){
+                    $query->where('attribute_path', 'LIKE', '%'.$brand->attribute_id.':'.$brand->id.'%');
+                }
             })
             ->where('product_options.sku','!=',null)
             ->where('product_options.slug','!=',null)
