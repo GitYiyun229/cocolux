@@ -27,41 +27,30 @@ class ApiNhanhController extends Controller
 
     public function WebHookCallBack(Request $request)
     {
-//        if ($request->isJson()) {
-//            $jsonData = $request->json()->all();
-//            $fileName = 'request_data.txt';
-//            $filePath = public_path('webhook/' . $fileName);
-//            $content = json_encode($jsonData, JSON_PRETTY_PRINT);
-//            file_put_contents($filePath, $content);
-//            return response()->json(['message' => 'OK'], 200);
-//        } else {
+        if ($request->isJson()) {
+            try {
+                $jsonData = $request->json()->all();
+                $filePath = public_path('webhook/request_data.txt');
+                $content = json_encode($jsonData, JSON_PRETTY_PRINT);
+                file_put_contents($filePath, $content);
+                return response()->json(['message' => 'OK'], 200);
+            } catch (\Exception $ex) {
+                $jsonData = [
+                    'message' => $ex->getMessage(),
+                    'line' => __LINE__,
+                    'method' => __METHOD__
+                ];
+                $filePath = public_path('webhook/request_data.txt');
+                $content = json_encode($jsonData, JSON_PRETTY_PRINT);
+                file_put_contents($filePath, $content);
+                return response()->json(['message' => 'OK'], 200);
+            }
+        } else {
             return response()->json(['message' => 'OK'], 200);
-//        }
-    }
-
-    public function getProducts()
-    {
-        $api = "/api/product/search";
-        $client = new Client();
-        $data = [
-            'page' => 2,
-            'icpp' => 30
-        ];
-        $this->request_params['data'] = json_encode($data);
-        $response = $client->post($this->linkApi.$api,[
-            'form_params' => $this->request_params
-        ]);
-        $data = json_decode($response->getBody(), true);
-        $currentPage = $data['data']['currentPage'];
-        $totalPages = $data['data']['totalPages'];
-        $products = $data['data']['products'];
-        dd($products);
-        foreach ($products as $product){
-            $this->updateProduct($product);
         }
-        dd($products);
     }
 
+    // lấy danh sách kho
     public function inventory(){
         $api = "/api/store/depot";
         $client = new Client();
@@ -85,19 +74,67 @@ class ApiNhanhController extends Controller
         return true;
     }
 
-    public function updateProduct($product){
-        $product_root = ProductOptions::where('sku', $product['code'])->first();
-        if ($product_root){
-            $data = array();
-            $data['price'] = $product['price'];
-            $data[''] = $product[''];
-            $data[''] = $product[''];
-            $product_root->update($data);
+    // đồng bộ sản phẩm từ sku đã nhập so sánh với code nhanh
+    public function getProducts()
+    {
+        $api = "/api/product/search";
+        $client = new Client();
+
+        $chunkSize = 200;
+        ProductOptions::orderBy('id')->chunk($chunkSize, function ($products) use ($client, $api) {
+            foreach ($products as $product) {
+                $data = [
+                    'name' => $product->sku
+                ];
+                $this->request_params['data'] = json_encode($data);
+                $response = $client->post($this->linkApi.$api,[
+                    'form_params' => $this->request_params
+                ]);
+                $first_data = json_decode($response->getBody(), true);
+                if ($first_data['code'] == 1){
+                    $resp = $first_data['data']['products'];
+                    $resp_end = array_filter($resp,function ($var) use ($product){
+                        return $var['code'] == $product->sku;
+                    });
+                    if ($resp_end){
+                        $resp_end = reset($resp_end);
+                        $this->updateProduct($resp_end, $product);
+                    }
+                }
+            }
+        });
+        return response()->json(['message' => 'OK'], 200);
+    }
+
+    public function updateProduct($resp_end, $product){
+        $inventory = $resp_end['inventory'];
+        $stocks = array();
+        $depots = $inventory['depots'];
+        foreach ($depots as $k => $item){
+            if ($item['available']){
+                $store = Store::where('id_nhanh', $k)->first();
+                $stocks[] = [
+                  'id' => $store->id,
+                  'name' => $store->name,
+                  'product_id' => null,
+                  'product_option_id' => $product->id,
+                  'product_master_id' => null,
+                  'total_quantity' => $item['available'],
+                  'total_stock_quantity' => $item['remain'],
+                  'total_order_quantity' => $item['shipping'],
+                ];
+            }
         }
-        return true;
+        $data = array();
+        $data['price'] = $resp_end['price'];
+        if ($product->normal_price < $resp_end['price']){
+            $data['normal_price'] = $resp_end['price'];
+        }
+        if ($resp_end['oldPrice']){
+            $data['normal_price'] = $resp_end['oldPrice'];
+        }
+        $data['stocks'] = $stocks;
+        return $product->update($data);
     }
 
-    public function createProduct(){
-
-    }
 }
