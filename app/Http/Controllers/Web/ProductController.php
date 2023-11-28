@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiNhanhController;
 use App\Models\Attribute;
 use App\Models\AttributeValues;
 use App\Models\City;
@@ -26,9 +27,18 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Order\CreateOrder;
 use App\Services\DealService;
+use GuzzleHttp\Client;
 
 class ProductController extends Controller
 {
+
+    protected $linkApi = "https://open.nhanh.vn";
+    protected $request_params = [
+        'version' => 2.0,
+        'appId' => 73906,
+        'businessId' => 157423,
+        'accessToken' => "XGZ5UbNYrSuFHqccvHaRyUmalKXWbQnMTPKKQTmH5zWchgEFv9SRKUPAI4UIlREA0XksifCQ8KGaRq2g7XwWL1xI2DmmZhFvRUln5WItTuXTdpAH1n1hMjMI6THgwou4Jqb3L",
+    ];
 
     protected $productCategoryRepository,$productRepository;
     protected $dealService;
@@ -984,6 +994,14 @@ class ProductController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
+            $coupon = $data['coupon'];
+
+            $response = $this->useCoupon($coupon);
+            if ($response){
+                $data['mess_coupon'] = 'Kích hoạt thành công';
+            }else{
+                $data['mess_coupon'] = 'Kích hoạt lỗi';
+            }
             $order = Order::create($data);
 
             $cart = Session::get('cart', []);
@@ -1033,7 +1051,24 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
+        public function useCoupon($coupon){
+            $api = "/api/promotion/coupon?act=use";
+            $client = new Client();
 
+            $data = [
+                'couponCode' => $coupon
+            ];
+            $this->request_params['data'] = json_encode($data);
+            $response = $client->post($this->linkApi.$api,[
+                'form_params' => $this->request_params
+            ]);
+            $data = json_decode($response->getBody(), true);
+            if ($data['code'] == 1){
+                return true;
+            }else{
+                return false;
+            }
+        }
 
     public function success ($id){
         Session::forget('cart');
