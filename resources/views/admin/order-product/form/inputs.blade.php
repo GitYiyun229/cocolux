@@ -147,8 +147,15 @@
     <div class="col-md-4">{{ format_money($total_money) }}</div>
     <div class="col-md-8 text-right text-bold">Phí ship: </div>
     <div class="col-md-4">{{ $order->price_ship_coco?format_money($order->price_ship_coco):0 }}</div>
+    @if($order->coupon && $order->price_coupon_now)
+    <div class="col-md-8 text-right text-bold">Mã giảm giá (nếu có): </div>
+    <div class="col-md-4">
+        <p style="margin-bottom: 0">(Mã áp dụng: {{ $order->coupon }})</p>
+        -{{ $order->price_coupon_now?format_money($order->price_coupon_now):0 }}
+    </div>
+    @endif
     <div class="col-md-8 text-right text-bold">Tổng tiền: </div>
-    <div class="col-md-4">{{ format_money($total_money + $order->price_ship_coco) }}</div>
+    <div class="col-md-4">{{ format_money($total_money + $order->price_ship_coco - $order->price_coupon_now) }}</div>
 </div>
 @section('link')
     @parent

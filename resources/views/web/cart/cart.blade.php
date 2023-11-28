@@ -56,7 +56,7 @@
                     <div class="item-confirm pe-4 text-end fw-bold">
                         <p class="mb-0">Tổng tiền hàng ({{ getCart() }} sản phẩm)</p>
                         <p class="mb-0 text-danger">{{ format_money($total_price) }}</p>
-                        <p class="mb-0">Nhận thêm: 5892 COCO COIN</p>
+                        <p class="mb-0 d-none">Nhận thêm: 5892 COCO COIN</p>
                     </div>
                     <div class="item-confirm">
                         <a href="{{ route('payment') }}">Tiến hành đặt hàng</a>

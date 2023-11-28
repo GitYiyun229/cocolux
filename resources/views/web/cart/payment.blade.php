@@ -10,7 +10,7 @@
                     <div class="layout-form">
                         <div class="layout-title bg-white">
                             <span class="fw-bold">Thông tin nhận hàng</span>
-                            <a href="">Đăng nhập để nhận hàng</a>
+                            <a href="" class="d-none">Đăng nhập để nhận hàng</a>
                         </div>
 
                         <div class="form-detail bg-white mb-4">
@@ -124,7 +124,7 @@
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <span>Tạm tính:</span>
                                     <span>{{ format_money($total_price) }}</span>
-                                    <input type="hidden" value="{{ $total_price }}" name="total_price" id="total_price"">
+                                    <input type="hidden" value="{{ $total_price }}" name="total_price" id="total_price">
                                 </div>
 
                                 <div class="d-flex align-items-center justify-content-between mb-3">
@@ -133,14 +133,25 @@
                                     <input type="hidden" value="0" name="price_ship_coco" id="price_ship_coco">
                                 </div>
 
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <span>Mã giảm giá:</span>
+                                    <input type="text" value="" name="coupon" id="coupon">
+                                    <button type="button" id="check_coupon" onclick="checkCoupon()" class="btn btn-warning">Check</button>
+                                </div>
+
                                 <hr>
+                                <div class="align-items-center justify-content-between mb-3" id="coupon_if_have" style="display: none">
+                                    <span>Mã giảm giá đang áp dụng:</span>
+                                    <span id="coupon_now">0 đ</span>
+                                    <input type="hidden" value="0" name="price_coupon_now" id="price_coupon_now">
+                                </div>
 
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <span class="text-uppercase">Tổng cộng</span>
                                     <span class="fw-bold text-danger" id="total_price_ship">{{ format_money($total_price) }}</span>
                                 </div>
 
-                                <div class="detail-reward mb-3 text-center">
+                                <div class="detail-reward mb-3 text-center d-none">
                                     <div>Bạn sẽ nhận được</div>
                                     <div class="fw-bold text-uppercase text-danger">5892 coco coin</div>
                                 </div>
@@ -272,7 +283,8 @@
                     $("#district").html(option);
                     $("#price_ship").html(formatMoney(data.price_ship));
                     $("#price_ship_coco").val(data.price_ship);
-                    let total_price_ship = data.price_ship + parseInt($("#layoutForm #total_price").val());
+                    var price_coupon = $("#price_coupon_now").val();
+                    let total_price_ship = (data.price_ship + parseInt($("#layoutForm #total_price").val())) - parseInt(price_coupon);
                     $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship));
                     return true;
                 },
@@ -302,7 +314,8 @@
                     $("#ward").html(option);
                     $("#price_ship").html(formatMoney(data.price_ship));
                     $("#price_ship_coco").val(data.price_ship);
-                    let total_price_ship = data.price_ship + parseInt($("#layoutForm #total_price").val());
+                    var price_coupon = $("#price_coupon_now").val();
+                    let total_price_ship = (data.price_ship + parseInt($("#layoutForm #total_price").val())) - parseInt(price_coupon);
                     $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship));
                     return true;
                 },
@@ -317,6 +330,43 @@
                 return text;
             }
             return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        }
+
+        function checkCoupon() {
+            var coupon = $('#coupon').val();
+            if(!coupon){
+                alert('Chưa nhập mã');
+            }
+            $.ajax({
+                type: 'post',
+                url: '{{ route('checkCoupon') }}',
+                dataType: 'JSON',
+                data: {
+                    coupon: $('#coupon').val(),
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function (result) {
+                    if(result.error){
+                        alert(result.message);
+                        $("#layoutForm #coupon_now").html("-"+formatMoney(0));
+                        $("#price_coupon_now").val(0);
+                        var price_ship = $("#price_ship_coco").val();
+                        let total_price_ship_coupon = (parseInt(price_ship) + parseInt($("#layoutForm #total_price").val())) - 0;
+                        $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
+                    }else{
+                        alert(result.message);
+                        $("#layoutForm #coupon_if_have").css({"display": "flex"});
+                        $("#layoutForm #coupon_now").html("-"+formatMoney(parseInt(result.data.value)));
+                        $("#price_coupon_now").val(result.data.value);
+                        var price_ship = $("#price_ship_coco").val();
+                        let total_price_ship_coupon = (parseInt(price_ship) + parseInt($("#layoutForm #total_price").val())) - parseInt(result.data.value);
+                        $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+            return false;
         }
 
     </script>
