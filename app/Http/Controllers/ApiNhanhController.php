@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductOptions;
 use App\Models\Store;
+use App\Services\DealService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class ApiNhanhController extends Controller
 {
@@ -24,6 +27,13 @@ class ApiNhanhController extends Controller
 //        'accessToken' => "TROS2a2WscEKpwXk3cpRWPDa2vGVTPb0EbYIDK6Vlv6QqAKXFWGVa7wRgQDbKqgUd1Xey6VEJnnPxh8jOEJ2L8fCqK6AZ9TYUmGMW2Z1Ugy7p0lY6RJoQlisj0wHsZV55kCSD0xRrCkYQVzrQjEpD2ne2hdTdh1ED",
         'accessToken' => "XGZ5UbNYrSuFHqccvHaRyUmalKXWbQnMTPKKQTmH5zWchgEFv9SRKUPAI4UIlREA0XksifCQ8KGaRq2g7XwWL1xI2DmmZhFvRUln5WItTuXTdpAH1n1hMjMI6THgwou4Jqb3L",
     ];
+
+    protected $dealService;
+
+    public function __construct(DealService $dealService)
+    {
+        $this->dealService = $dealService;
+    }
 
     public function WebHookCallBack(Request $request)
     {
@@ -97,7 +107,7 @@ class ApiNhanhController extends Controller
         return true;
     }
 
-    // đồng bộ sản phẩm từ sku đã nhập so sánh với code nhanh
+    // đồng bộ sản phẩm từ sku đã nhập so sánh với code nhanh, không nên chạy đang request lâu api nhanh trả về 500
     public function getProducts()
     {
         $api = "/api/product/search";
@@ -174,6 +184,80 @@ class ApiNhanhController extends Controller
             ]);
             return response()->json(['message' => 'OK'], 200);
         }
+    }
+
+    public function checkCoupon (Request $request){
+        $coupon = $request->input('coupon');
+        $api = "/api/promotion/coupon?act=check";
+        $client = new Client();
+
+        $data = [
+            'couponCode' => $coupon
+        ];
+        $this->request_params['data'] = json_encode($data);
+
+        $response = $client->post($this->linkApi.$api,[
+            'form_params' => $this->request_params
+        ]);
+        $data = json_decode($response->getBody(), true);
+        if ($data['code'] == 0){
+            return response()->json(array(
+                'error' => true,
+                'message'   => 'Mã Giảm Giá không tồn tại',
+            ));
+        }
+        $couponCode = reset($data['data']['couponCode']);
+        $now = Carbon::now();
+        if ($couponCode['status'] != 1){
+            return response()->json(array(
+                'error' => true,
+                'message'   => 'Mã Giảm Giá không tồn tại',
+            ));
+        }
+
+        if ($couponCode['endDate'] < $now){
+            return response()->json(array(
+                'error' => true,
+                'message'   => 'Mã Giảm Giá không tồn tại hoặc hết hạn',
+            ));
+        }
+
+        if ($couponCode['canUsedTimes'] == 0){
+            return response()->json(array(
+                'error' => true,
+                'message'   => 'Mã này đã hết',
+            ));
+        }
+
+        $cart = Session::get('cart', []);
+        $total_price = 0;
+        $flash_sale = $this->dealService->isFlashSaleAvailable();
+        $promotions_flash_id = $flash_sale->pluck('id')->toArray();
+        $hot_deal = $this->dealService->isHotDealAvailable();
+        $promotions_hot_id = $hot_deal->pluck('id')->toArray();
+        foreach ($cart as $productId => $item) {
+            $product = ProductOptions::where(['id' => $productId])->with(['product'])->first();
+            if($product->flash_deal && in_array($product->flash_deal->id,$promotions_flash_id)){
+                $price = $product->flash_deal->price;
+            }elseif($product->hot_deal && in_array($product->hot_deal->id,$promotions_hot_id)){
+                $price = $product->hot_deal->price;
+            }else{
+                $price = $product->price;
+            }
+            $quantity = $item['quantity']; // Số lượng
+            $total_price = $total_price + $price * $quantity;
+        }
+        if ($total_price < $couponCode['fromValue']){
+            return response()->json(array(
+                'error' => true,
+                'message'   => 'Chua đủ điều kiện áp dụng mã ( >= '.format_money($couponCode['fromValue']).').',
+            ));
+        }
+        return response()->json(array(
+            'error' => false,
+            'message'   => 'Áp dụng mã thành công',
+            'data' => $couponCode
+        ));
     }
 
 }

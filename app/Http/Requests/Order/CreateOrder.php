@@ -35,6 +35,8 @@ class CreateOrder extends FormRequest
             'address' => 'required',
             'payment' => 'required',
             'price_ship_coco' => 'nullable',
+            'coupon' => 'nullable',
+            'price_coupon_now' => 'nullable',
             'note' => 'nullable'
         ];
     }

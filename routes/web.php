@@ -37,6 +37,7 @@ use Illuminate\Http\Request;
 Route::any('/web-hook-call-back', 'ApiNhanhController@WebHookCallBack')->name('WebHookCallBack');
 Route::any('/get-products', 'ApiNhanhController@getProducts')->name('getProducts');
 Route::any('/get-inventory', 'ApiNhanhController@inventory')->name('inventory');
+Route::post('/check-coupon', 'ApiNhanhController@checkCoupon')->name('checkCoupon');
 
 Route::group(['namespace' => 'Web'], function (){
     Route::get('/', 'HomeController@index')->name('home');
