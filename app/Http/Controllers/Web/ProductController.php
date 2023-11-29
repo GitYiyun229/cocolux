@@ -234,22 +234,10 @@ class ProductController extends Controller
 
         $products = ProductOptions::with(['product' => function ($query) {
             $query->select('id', 'is_new', 'brand','slug','attribute_path');
-        }])->whereHas('product', function ($query) use ($id,$list_id_request,$keyword) {
+        }])->whereHas('product', function ($query) use ($id,$list_id_request) {
             $query->where('active', 1);
             if ($id){
                 $query->where('category_path', 'LIKE', '%'.$id.'%');
-            }
-            if ($keyword){
-                $keywords = explode(' ', $keyword);
-                $query->where(function ($query) use ($keywords) {
-                    foreach ($keywords as $keyword) {
-                        $query->where(function ($query) use ($keyword) {
-                            $query->where('title', 'LIKE', '%'.$keyword.'%')
-                                ->orWhere('slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
-                                ->orWhere('sku', 'LIKE', '%'.$keyword.'%');
-                        });
-                    }
-                });
             }
             if ($list_id_request){
                 foreach ($list_id_request as $item){
@@ -260,6 +248,20 @@ class ProductController extends Controller
             ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.normal_price','product_options.slug','product_options.images','product_options.hot_deal','product_options.flash_deal')
             ->addSelect('products.title as product_name')
             ->where('product_options.sku','!=',null)
+            ->where(function($query) use ($keyword){
+                if ($keyword){
+                    $keywords = explode(' ', $keyword);
+                    $query->where(function ($query) use ($keywords) {
+                        foreach ($keywords as $keyword) {
+                            $query->where(function ($query) use ($keyword) {
+                                $query->where('product_options.title', 'LIKE', '%'.$keyword.'%')
+                                    ->orWhere('product_options.slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
+                                    ->orWhere('product_options.sku', 'LIKE', '%'.$keyword.'%');
+                            });
+                        }
+                    });
+                }
+            })
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->orderBy($columnToSort, $orderDirection)
             ->paginate(30);
@@ -271,18 +273,6 @@ class ProductController extends Controller
             if ($id){
                 $query->where('category_path', 'LIKE', '%'.$id.'%');
             }
-            if ($keyword){
-                $keywords = explode(' ', $keyword);
-                $query->where(function ($query) use ($keywords) {
-                    foreach ($keywords as $keyword) {
-                        $query->where(function ($query) use ($keyword) {
-                            $query->where('title', 'LIKE', '%'.$keyword.'%')
-                                ->orWhere('slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
-                                ->orWhere('sku', 'LIKE', '%'.$keyword.'%');
-                        });
-                    }
-                });
-            }
             if ($list_id_request){
                 foreach ($list_id_request as $item){
                     $query->where('attribute_path','like', '%'.$item.'%');
@@ -291,6 +281,20 @@ class ProductController extends Controller
         })
             ->select('id', 'parent_id')
             ->where('sku','!=',null)
+            ->where(function($query) use ($keyword){
+                if ($keyword){
+                    $keywords = explode(' ', $keyword);
+                    $query->where(function ($query) use ($keywords) {
+                        foreach ($keywords as $keyword) {
+                            $query->where(function ($query) use ($keyword) {
+                                $query->where('title', 'LIKE', '%'.$keyword.'%')
+                                    ->orWhere('slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
+                                    ->orWhere('sku', 'LIKE', '%'.$keyword.'%');
+                            });
+                        }
+                    });
+                }
+            })
             ->get()->pluck('attribute_path')->toArray();
 
         $countArray = [];
