@@ -92,6 +92,35 @@
         }
     }
 }
+.list-product-article{
+    .slick-arrow{
+        box-shadow: 0 3px 6px rgba(0,0,0,.15);
+        width: 20px;
+        height: 20px;
+        z-index: 1;
+        border-radius: 1000%;
+        &::before{
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #000;
+            font-size: 12px;
+            opacity: 1;
+        }
+    }
+    .slick-prev{
+        left: 5px;
+        &::before{
+            content: "\f104";
+        }
+    }
+    .slick-next{
+        right: 5px;
+        &::before{
+            content: "\f105";
+
+        }
+    }
+}
 
 nav[aria-label=breadcrumb]{
     border-bottom: none;
