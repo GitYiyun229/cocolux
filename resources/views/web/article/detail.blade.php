@@ -204,7 +204,7 @@
     @parent
     <script src="{{ asset('/js/web/jquery-3.7.1.min.js') }}" data-cfasync="false"></script>
     <script src="{{ asset('/js/web/jquery.toc.js') }}" data-cfasync="false"></script>
-    <script src="{{ asset('/js/web/slick/slick.js') }}"></script>
+    <script src="{{ asset('/js/web/slick/slick.js') }}" data-cfasync="false"></script>
     <script data-cfasync="false">
         $("#toc").toc({content: ".layout-main .detail-content", headings: "h1,h2,h3,h4"});
         $('.slide-template-slick').slick({
