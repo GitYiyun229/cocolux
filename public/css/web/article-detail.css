@@ -2,6 +2,8 @@
   font-size: 16px;
   text-align: justify;
   padding: 18px 26px !important;
+  max-width: 100%;
+  overflow: hidden;
 }
 .layout-main-detail .detail-title {
   font-size: 20px;

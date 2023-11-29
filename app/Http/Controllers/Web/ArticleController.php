@@ -162,7 +162,9 @@ class ArticleController extends Controller
 
         if ($article->products){
             $id_products = explode(',',$article->products);
-            $products_choose = ProductOptions::whereIn('id', $id_products)->select('id','slug','title','price','sku','images')->where('sku','!=',null)->where('slug','!=',null)->get();
+            $products_choose = ProductOptions::whereIn('id', $id_products)
+                ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')
+                ->where('sku','!=',null)->where('slug','!=',null)->get();
         }
 
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
