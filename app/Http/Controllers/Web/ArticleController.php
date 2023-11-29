@@ -155,6 +155,7 @@ class ArticleController extends Controller
 
         $promotions = $this->dealService->isFlashSaleAvailable();
         $promotions_flash_id = $promotions->pluck('id')->toArray();
+        $applied_stop_time = $promotions->pluck('applied_stop_time','id')->toArray();
         $hot_deal = $this->dealService->isHotDealAvailable();
         $promotions_hot_id = $hot_deal->pluck('id')->toArray();
 
@@ -187,6 +188,6 @@ class ArticleController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($article->seo_keyword?$article->seo_keyword:$article->title);
 
-        return view('web.article.detail', compact('article','cat_article','article_hot','product_hots','parent_cat','products_choose','promotions_flash_id','promotions_hot_id'));
+        return view('web.article.detail', compact('article','cat_article','article_hot','product_hots','parent_cat','products_choose','promotions_flash_id','promotions_hot_id','applied_stop_time'));
     }
 }
