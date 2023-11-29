@@ -196,8 +196,8 @@
     @parent
     <link href="{{ asset('js/web/slick/slick.css') }}" rel="stylesheet">
     <link href="{{ asset('js/web/slick/slick-theme.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('/css/web/article-list.css') }}">
-    <link rel="stylesheet" href="{{ asset('/css/web/article-detail.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/web/article-list.css') }}" data-cfasync="false">
+    <link rel="stylesheet" href="{{ asset('/css/web/article-detail.css') }}" data-cfasync="false">
 @endsection
 
 @section('script')
