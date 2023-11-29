@@ -9,6 +9,7 @@ use App\Models\ProductOptions;
 use App\Models\Setting;
 use App\Repositories\Contracts\ArticleCategoryInterface;
 use App\Repositories\Contracts\ArticleInterface;
+use App\Services\DealService;
 use Illuminate\Http\Request;
 use App\Models\ArticlesCategories;
 use Artesaos\SEOTools\Facades\SEOTools;
@@ -18,11 +19,13 @@ class ArticleController extends Controller
 {
     protected $articleCategoryRepository;
     protected $articleRepository;
+    protected $dealService;
 
-    public function __construct(ArticleCategoryInterface $articleCategoryRepository, ArticleInterface $articleRepository)
+    public function __construct(ArticleCategoryInterface $articleCategoryRepository, ArticleInterface $articleRepository, DealService $dealService)
     {
         $this->articleCategoryRepository = $articleCategoryRepository;
         $this->articleRepository = $articleRepository;
+        $this->dealService = $dealService;
     }
     /**
      * Display a home of the resource.
@@ -150,6 +153,18 @@ class ArticleController extends Controller
             $article->content = $contentWithTitles;
         }
 
+        $promotions = $this->dealService->isFlashSaleAvailable();
+        $promotions_flash_id = $promotions->pluck('id')->toArray();
+        $hot_deal = $this->dealService->isHotDealAvailable();
+        $promotions_hot_id = $hot_deal->pluck('id')->toArray();
+
+        $products_choose = null;
+
+        if ($article->products){
+            $id_products = explode(',',$article->products);
+            $products_choose = ProductOptions::whereIn('id', $id_products)->select('id','slug','title','price','sku','images')->where('sku','!=',null)->where('slug','!=',null)->get();
+        }
+
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
         $parent_cat = ArticlesCategories::select('id','title','slug')->where(['active'=> 1,'id' => $article->category_id])->first();
         $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
@@ -170,6 +185,6 @@ class ArticleController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($article->seo_keyword?$article->seo_keyword:$article->title);
 
-        return view('web.article.detail', compact('article','cat_article','article_hot','product_hots','parent_cat'));
+        return view('web.article.detail', compact('article','cat_article','article_hot','product_hots','parent_cat','products_choose','promotions_flash_id','promotions_hot_id'));
     }
 }
