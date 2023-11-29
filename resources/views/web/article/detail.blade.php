@@ -30,19 +30,45 @@
                     <div class="products-hot layout-box bg-white">
                         <p class="mb-0 text-center text-uppercase fw-bold layout-title text-red">Sản phẩm hot</p>
                         @forelse($product_hots as $item)
-                            <a href="{{ route('detailProduct',['slug' => trim($item->slug), 'sku' => $item->sku]) }}" class="product-template">
-                                @if($item->price != $item->normal_price)
-                                    <div class="product-discount">
-                                        <span class="pe-1">{{ percentage_price($item->price, $item->normal_price) }}</span>
-                                    </div>
+                            <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
+                                @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
+                                    @if($item->flash_deal->price != $item->normal_price)
+                                        <div class="product-discount">
+                                            <span class="pe-1">{{ percentage_price($item->flash_deal->price, $item->normal_price) }}</span>
+                                        </div>
+                                    @endif
+                                @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
+                                    @if($item->hot_deal->price != $item->normal_price)
+                                        <div class="product-discount">
+                                            <span class="pe-1">{{ percentage_price($item->hot_deal->price, $item->normal_price) }}</span>
+                                        </div>
+                                    @endif
+                                @else
+                                    @if($item->price != $item->normal_price)
+                                        <div class="product-discount">
+                                            <span class="pe-1">{{ percentage_price($item->price, $item->normal_price) }}</span>
+                                        </div>
+                                    @endif
                                 @endif
                                 <div class="product-thumbnail">
-                                    <img src="{{ asset($item->image_first) }}" alt=" {{ $item->title }}" class="img-fluid">
+                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                 </div>
                                 <div class="product-price">
-                                    <div class="public-price">{{ format_money($item->price) }}</div>
-                                    @if($item->price != $item->normal_price)
-                                        <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                    @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
+                                        <div class="public-price">{{ format_money($item->flash_deal->price) }}</div>
+                                        @if($item->flash_deal->price != $item->normal_price)
+                                            <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                        @endif
+                                    @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
+                                        <div class="public-price">{{ format_money($item->hot_deal->price) }}</div>
+                                        @if($item->hot_deal->price != $item->normal_price)
+                                            <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                        @endif
+                                    @else
+                                        <div class="public-price">{{ format_money($item->price) }}</div>
+                                        @if($item->price != $item->normal_price)
+                                            <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                        @endif
                                     @endif
                                 </div>
                                 <div class="product-brand">
@@ -66,6 +92,63 @@
                         <div class="detail-summary">
                             {{ $article->description }}
                         </div>
+                        @if($products_choose)
+                        <div class="list-product-article">
+                            <div class="slide-template-slick">
+                                @forelse($products_choose as $item)
+                                    <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
+                                        @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
+                                            @if($item->flash_deal->price != $item->normal_price)
+                                                <div class="product-discount">
+                                                    <span class="pe-1">{{ percentage_price($item->flash_deal->price, $item->normal_price) }}</span>
+                                                </div>
+                                            @endif
+                                        @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
+                                            @if($item->hot_deal->price != $item->normal_price)
+                                                <div class="product-discount">
+                                                    <span class="pe-1">{{ percentage_price($item->hot_deal->price, $item->normal_price) }}</span>
+                                                </div>
+                                            @endif
+                                        @else
+                                            @if($item->price != $item->normal_price)
+                                                <div class="product-discount">
+                                                    <span class="pe-1">{{ percentage_price($item->price, $item->normal_price) }}</span>
+                                                </div>
+                                            @endif
+                                        @endif
+                                        <div class="product-thumbnail">
+                                            <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
+                                        </div>
+                                        <div class="product-price">
+                                            @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
+                                                <div class="public-price">{{ format_money($item->flash_deal->price) }}</div>
+                                                @if($item->flash_deal->price != $item->normal_price)
+                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                                @endif
+                                            @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
+                                                <div class="public-price">{{ format_money($item->hot_deal->price) }}</div>
+                                                @if($item->hot_deal->price != $item->normal_price)
+                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                                @endif
+                                            @else
+                                                <div class="public-price">{{ format_money($item->price) }}</div>
+                                                @if($item->price != $item->normal_price)
+                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                                @endif
+                                            @endif
+                                        </div>
+                                        <div class="product-brand">
+                                            {{ $item->brand }}
+                                        </div>
+                                        <div class="product-title">
+                                            {{ $item->title }}
+                                        </div>
+                                    </a>
+                                @empty
+                                @endforelse
+                            </div>
+                        </div>
+                        @endif
                         <div class="toc-content @if(empty($article->has_toc)) d-none @endif" id="left1">
                             <div class="title-toc-blog">
                                 Mục lục:
@@ -111,6 +194,8 @@
 
 @section('link')
     @parent
+    <link href="{{ asset('js/web/slick/slick.css') }}" rel="stylesheet">
+    <link href="{{ asset('js/web/slick/slick-theme.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/web/article-list.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/web/article-detail.css') }}">
 @endsection
@@ -119,7 +204,27 @@
     @parent
     <script src="{{ asset('/js/web/jquery-3.7.1.min.js') }}" data-cfasync="false"></script>
     <script src="{{ asset('/js/web/jquery.toc.js') }}" data-cfasync="false"></script>
+    <script src="{{ asset('/js/web/slick/slick.js') }}"></script>
     <script data-cfasync="false">
         $("#toc").toc({content: ".layout-main .detail-content", headings: "h1,h2,h3,h4"});
+    </script>
+    <script>
+        $('.slide-template-slick').slick({
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            arrows: true,
+            dots: false,
+            infinite: true,
+            autoplay: true,
+            responsive: [
+                {
+                    breakpoint: 960,
+                    settings: {
+                        slidesToShow: 2.5,
+                        slidesToScroll: 2
+                    }
+                }
+            ]
+        });
     </script>
 @endsection
