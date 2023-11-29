@@ -93,7 +93,7 @@
                             {{ $article->description }}
                         </div>
                         @if($products_choose)
-                        <div class="list-product-article">
+                        <div class="list-product-article mb-4">
                             <div class="slide-template-slick">
                                 @forelse($products_choose as $item)
                                     <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
@@ -207,8 +207,6 @@
     <script src="{{ asset('/js/web/slick/slick.js') }}"></script>
     <script data-cfasync="false">
         $("#toc").toc({content: ".layout-main .detail-content", headings: "h1,h2,h3,h4"});
-    </script>
-    <script>
         $('.slide-template-slick').slick({
             slidesToShow: 4,
             slidesToScroll: 4,
