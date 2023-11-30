@@ -354,7 +354,6 @@
                         let total_price_ship_coupon = (parseInt(price_ship) + parseInt($("#layoutForm #total_price").val())) - 0;
                         $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
                     }else{
-                        alert(result.message);
                         $("#layoutForm #coupon_if_have").css({"display": "flex"});
                         $("#layoutForm #coupon_now").html("-"+formatMoney(parseInt(result.data.value)));
                         $("#price_coupon_now").val(result.data.value);
