@@ -30,3 +30,32 @@
 .layout-page-content .layout-main video, .layout-page-content .layout-main iframe {
   max-width: 100% !important;
 }
+.layout-page-content .layout-main figure {
+  text-align: center;
+}
+.layout-page-content .layout-main figure p {
+  display: unset;
+}
+.layout-page-content .layout-main figure p span {
+  text-align: center;
+}
+.layout-page-content .layout-main table {
+  margin: 20px auto;
+  width: 80%;
+  max-width: 100%;
+}
+.layout-page-content .layout-main table tr td {
+  border: 1px solid #999;
+  padding: 6px 12px;
+}
+.layout-page-content .layout-main table tr td p span {
+  font-family: unset !important;
+  background-color: unset !important;
+  font-size: unset !important;
+}
+.layout-page-content .layout-main table:nth-child(odd) {
+  background-color: #f3f3f3;
+}
+.layout-page-content .layout-main table:first-child {
+  background-color: #ccc;
+}
