@@ -143,9 +143,6 @@
                                         <div class="product-title">
                                             {{ $item->title }}
                                         </div>
-                                        @if($item->flash_deal && $applied_stop_time[$item->flash_deal->id])
-                                            <div class="product-progress-sale count-down" time-end="{{ $applied_stop_time[$item->flash_deal->id] }}"></div>
-                                        @endif
                                     </a>
                                 @empty
                                 @endforelse
