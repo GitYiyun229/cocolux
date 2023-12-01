@@ -474,7 +474,7 @@ class ProductController extends Controller
                     break;
                 }
             }
-            $brand = AttributeValues::findOrFail($id_brand);
+            $brand = AttributeValues::where('id',$id_brand)->first();
         }
 
         $flash = $product->flash_deal;
