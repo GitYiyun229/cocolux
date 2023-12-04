@@ -119,13 +119,13 @@ class ArticleController extends Controller
         $categories = $this->articleCategoryRepository->getAll();
         $products = array();
         if ($article->products){
-            if ($article->updated_at < '2023-10-17'){
-                $products = ProductOptions::select('id','title','slug','sku','images','price')->whereIn('parent_id',explode(',',$article->products))->get();
-                $article_products = ProductOptions::select('id')->whereIn('parent_id',explode(',',$article->products))->pluck('id')->toArray();
-                $article->products = implode(',',$article_products);
-            }else{
+//            if ($article->updated_at < '2023-10-17'){
+//                $products = ProductOptions::select('id','title','slug','sku','images','price')->whereIn('parent_id',explode(',',$article->products))->get();
+//                $article_products = ProductOptions::select('id')->whereIn('parent_id',explode(',',$article->products))->pluck('id')->toArray();
+//                $article->products = implode(',',$article_products);
+//            }else{
                 $products = ProductOptions::select('id','title','slug','sku','images','price')->whereIn('id',explode(',',$article->products))->get();
-            }
+//            }
         }
         return view('admin.article.update', compact('article','categories','products'));
     }
