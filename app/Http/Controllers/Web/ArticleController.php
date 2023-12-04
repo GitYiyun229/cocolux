@@ -163,9 +163,16 @@ class ArticleController extends Controller
 
         if ($article->products){
             $id_products = explode(',',$article->products);
-            $products_choose = ProductOptions::whereIn('id', $id_products)
-                ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')
-                ->where('sku','!=',null)->where('slug','!=',null)->get();
+            if ($article->updated_at < '2023-10-17'){
+                $products_choose = ProductOptions::whereIn('parent_id', $id_products)
+                    ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')
+                    ->where('sku','!=',null)->where('slug','!=',null)->get();
+            }else{
+                $products_choose = ProductOptions::whereIn('id', $id_products)
+                    ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')
+                    ->where('sku','!=',null)->where('slug','!=',null)->get();
+            }
+
         }
 
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
