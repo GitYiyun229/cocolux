@@ -205,7 +205,7 @@
                             <tr>
                                 <td>{{ $item->title }}</td>
                                 <td>{{ $item->sku }}</td>
-                                <td>{{ format_money($item->original_price) }}</td>
+                                <td>{{ format_money($item->normal_price) }}</td>
                                 <td>
                                     {{ format_money($item->price) }}
                                 </td>
