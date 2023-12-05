@@ -500,8 +500,7 @@ class ProductController extends Controller
             ->where('sku','!=',null)
             ->with(['product' => function($query){
                 $query->select('id','sku','slug','title');
-            }])
-            ->get();
+            }])->orderBy('is_default','DESC')->get();
 
         $products = ProductOptions::select('product_options.id','product_options.title','product_options.slug','product_options.images','product_options.price','product_options.normal_price','product_options.normal_price','products.category_id','product_options.sku','product_options.brand')
             ->where(['product_options.active' => 1])
