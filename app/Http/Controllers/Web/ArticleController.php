@@ -177,7 +177,7 @@ class ArticleController extends Controller
 
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
         $parent_cat = ArticlesCategories::select('id','title','slug')->where(['active'=> 1,'id' => $article->category_id])->first();
-        $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
+        $article_in_cat = Article::where(['active' => 1, 'category_id' => $article->category_id])->limit(3)->get();
         $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
             ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price')
             ->with(['product' => function($query){
@@ -195,6 +195,6 @@ class ArticleController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($article->seo_keyword?$article->seo_keyword:$article->title);
 
-        return view('web.article.detail', compact('article','cat_article','article_hot','product_hots','parent_cat','products_choose','promotions_flash_id','promotions_hot_id'));
+        return view('web.article.detail', compact('article','cat_article','article_in_cat','product_hots','parent_cat','products_choose','promotions_flash_id','promotions_hot_id'));
     }
 }

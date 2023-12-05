@@ -166,7 +166,7 @@
                 <div class="layout-relate">
                     <div class="layout-box bg-white">
                         <p class="mb-0 pe-2 ps-2 text-uppercase fw-bold layout-title">Tin tức liên quan</p>
-                        @forelse($article_hot as $item)
+                        @forelse($article_in_cat as $item)
                             <a href="{{ route('detailArticle',['slug'=>$item->slug,'id'=>$item->id]) }}" class="news-item p-2 mb-3">
                                 <div class="news-img" title="{{ $item->title }}">
                                     <img src="{{ asset($item->image_change_url) }}" alt="{{ $item->title }}" class="img-fluid">
