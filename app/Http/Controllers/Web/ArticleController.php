@@ -73,7 +73,7 @@ class ArticleController extends Controller
         }
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
         $article = $this->articleRepository->paginate(12,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1,'category_id'=>$id]);
-        $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
+        $article_hot = Article::where(['active' => 1, 'category_id' => $id])->limit(3)->orderBy('id','DESC')->get();
         $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
             ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price')
             ->with(['product' => function($query){
@@ -177,7 +177,8 @@ class ArticleController extends Controller
 
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
         $parent_cat = ArticlesCategories::select('id','title','slug')->where(['active'=> 1,'id' => $article->category_id])->first();
-        $article_in_cat = Article::where(['active' => 1, 'category_id' => $article->category_id])->limit(3)->get();
+        $article_in_cat = Article::where(['active' => 1, 'category_id' => $article->category_id])
+            ->where('id','!=',$article->id)->limit(3)->orderBy('id','DESC')->get();
         $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
             ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price')
             ->with(['product' => function($query){
