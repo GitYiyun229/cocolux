@@ -966,40 +966,25 @@ class ProductController extends Controller
 
     public function calculator_ship($city_id = null, $district_id = null){
         $price_ship = 20000;
-        //tính ship, 201 là code hà nội
+        $total_price = 0;
+        //tính ship, 201 là code hà nội, 234 thanh hóa
         $cart = Session::get('cart', []);
-        if ($city_id == 201){
-            $totalQuantity = 0;
-            $price = 0;
-            foreach ($cart as $item) {
-                $totalQuantity += $item['quantity'];
-                if ($item['price'] > 99000){
-                    $price += $item['quantity'];
-                }else{
-                    $price += 0;
-                }
-            }
-            if (!empty($district_id)){
-                $districts = Districts::where('code', $district_id)->first();
-                if (\Str::contains($districts->name, 'Quận')){
-                    $price_ship = 15000;
-                }
-            }
-            if ( $price >= 2 && $totalQuantity >= 2){
+        foreach ($cart as $item) {
+            $total_price = $total_price + ($item['price'] * $item['quantity']);
+        }
+        if (in_array($city_id,[201,234])){
+            if ($total_price > 99000){
                 $price_ship = 0;
+            }else{
+                if (!empty($district_id)){
+                    $list_distict = [1616,1486,1492,1493,3440,1491,1542,1490,1489,1488,1485,1482,1484]; // các quận nội thành và thành phố thanh hóa
+                    if (in_array($district_id,$list_distict)) {
+                        $price_ship = 15000;
+                    }
+                }
             }
         }else{
-            $totalQuantity = 0;
-            $price = 0;
-            foreach ($cart as $item) {
-                $totalQuantity += $item['quantity'];
-                if ($item['price'] > 99000){
-                    $price += $item['quantity'];
-                }else{
-                    $price += 0;
-                }
-            }
-            if ($price >= 3 && $totalQuantity >= 3){
+            if ($total_price > 249000){
                 $price_ship = 0;
             }
         }
