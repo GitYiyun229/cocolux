@@ -137,23 +137,27 @@ class ProductOptionController extends Controller
         $product_option = ProductOptions::where(['id'=>$id])->with('stocksAll')->first();
         $product_parent = $product_option->parent_id;
         $images = json_decode($product_option->images);
-        $stocks = !empty($product_option->stocksAll)?$product_option->stocksAll:null;
+//        $stocks = !empty($product_option->stocksAll)?$product_option->stocksAll:null;
+        $stocks = !empty($product_option->stocks)?$product_option->stocks:null;
         $count_stock = 0;
-        foreach ($stocks as $item){
-            $count_stock = $count_stock + $item->total_quantity;
+        if ($stocks){
+            foreach ($stocks as $item){
+                $count_stock = $count_stock + $item->total_quantity;
+            }
         }
+
         $stores = Store::all();
         foreach ($stores as $item){
             if ($stocks){
-                $result = array_filter($stocks->toArray(), function ($value) use ($item) {
-                    return $value['store_id'] == $item->id;
+                $result = array_filter($stocks, function ($value) use ($item) {
+                    return $value->id == $item->id;
                 });
                 if (!empty($result)) {
                     $values = [];
                     foreach ($result as $value) {
-                        $values['id_stock'] = $value['id'];
-                        $values['total_quantity'] = $value['total_quantity'];
-                        $values['total_order_quantity'] = $value['total_order_quantity'];
+                        $values['id_stock'] = $value->id;
+                        $values['total_quantity'] = $value->total_quantity;
+                        $values['total_order_quantity'] = isset($value->total_order_quantity)?$value->total_order_quantity:0;
                     }
                     $item->number = $values;
                 }
@@ -213,34 +217,37 @@ class ProductOptionController extends Controller
             foreach ($total_stock as $item){
                 $id_store = explode(':',$item);
                 if ($id_store[2]){
-                    $stock = Stocks::findOrFail($id_store[2]);
+                    $stock = Stocks::find($id_store[2]);
                     if ($stock) {
                         $data2['total_quantity'] = $id_store[1];
                         $stock->update($data2);
-                    }
-                    $stock_product[] = [
-                        'id' => $id_store[0],
-                        'name' => $stock->store_name,
-                        'product_option_id' => $id,
-                        'total_quantity' => $id_store[1]
-                    ];
-                }else{
-                    if ($id_store[1] && empty($id_store[2])){
-                        $store = Store::findOrFail($id_store[0]);
-                        $data3['store_id'] = $id_store[0];
-                        $data3['store_name'] = $store->name;
-                        $data3['product_id'] = $parent_id;
-                        $data3['product_option_id'] = $id;
-                        $data3['total_quantity'] = $id_store[1];
-                        $data3['total_order_quantity'] = 0;
-                        $stock_item = Stocks::create($data3);
-
                         $stock_product[] = [
                             'id' => $id_store[0],
-                            'name' => $stock_item->store_name,
+                            'name' => $stock->store_name,
                             'product_option_id' => $id,
-                            'total_quantity' => $id_store[1]
+                            'total_quantity' => $id_store[1],
+                            'total_order_quantity' => 0
                         ];
+                    }
+                }else{
+                    if ($id_store[1] && empty($id_store[2])){
+                        $store = Store::find($id_store[0]);
+                        if ($store) {
+                            $data3['store_id'] = $id_store[0];
+                            $data3['store_name'] = $store->name;
+                            $data3['product_id'] = $parent_id;
+                            $data3['product_option_id'] = $id;
+                            $data3['total_quantity'] = $id_store[1];
+                            $data3['total_order_quantity'] = 0;
+                            $stock_item = Stocks::create($data3);
+                            $stock_product[] = [
+                                'id' => $id_store[0],
+                                'name' => $stock_item->store_name,
+                                'product_option_id' => $id,
+                                'total_quantity' => $id_store[1],
+                                'total_order_quantity' => 0
+                            ];
+                        }
                     }
                 }
             }
