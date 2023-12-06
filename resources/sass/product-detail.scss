@@ -51,10 +51,9 @@
     }
     img{
         display: block;
-        max-width: 100% !important;
+        max-width: 65% !important;
         height: auto !important;
-        margin-right: auto;
-        margin-left: auto;
+        margin: 0 auto !important;
     }
     video, iframe{
         max-width: 100% !important;
@@ -557,7 +556,7 @@
     }
     span{
         width: calc(100% - 40px);
-        font-size: 14px; 
+        font-size: 14px;
         display: -webkit-box;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -731,7 +730,7 @@
     }
     #imageModal .modal-dialog{
         height: 100%;
-        border-radius: 0;        
+        border-radius: 0;
     }
     #imageModal .btn-close{
         right: 10px;
