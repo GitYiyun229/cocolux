@@ -446,12 +446,13 @@ class ProductController extends Controller
             $count_store = 0;
             $id_stores = array();
             foreach ($stocks as $item){
-                if ($item->total_quantity){
+                $active_store = Store::with(['cities','districts','wards'])->where('id', $item->id)->where('active',1)->first();
+                if ($item->total_quantity && $active_store){
                     $id_stores[] = $item->id;
                     $count_store++;
                 }
             }
-            $stores = Store::with(['cities','districts','wards'])->whereIn('id', $id_stores)->get()
+            $stores = Store::with(['cities','districts','wards'])->whereIn('id', $id_stores)->where('active',1)->get()
                 ->groupBy([
                     'cities.name',
                     'districts.name',
