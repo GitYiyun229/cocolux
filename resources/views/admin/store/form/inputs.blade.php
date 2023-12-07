@@ -112,7 +112,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label>@lang('form.slider.image')</label>
+                    <label>Hình ảnh</label>
                     <div class="input-group">
                         @include('admin.components.buttons.image',['src' => isset($store->image) ? $store->image : old('image'),'name' => 'image'])
                         @if ($errors->has('image'))
@@ -155,6 +155,7 @@
 </div>
 @section('script')
     @parent
+    <script src="{{ asset('ckfinder/ckfinder.js') }}?v=1.0"></script>
     <script>
         function loaddistrict(city_id) {
             $.ajax({
