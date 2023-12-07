@@ -322,34 +322,56 @@
                 @endforelse
                 @endif
             </div>
+            @if(!empty($articles))
+                <div class="section-article mb-5">
+                    <div class="section-top">
+                        <a href="{{ route('homeArticle') }}">
+                            <h2 class="text-uppercase">Tin tức & sự kiện</h2>
+                        </a>
+                        <a href="{{ route('homeArticle') }}" class="text-uppercase">Xem tất cả</a>
+                    </div>
+                    <div class="section-main">
 
-            <div class="section-article mb-5">
-                <div class="section-top">
-                    <a href="{{ route('homeArticle') }}">
-                        <h2 class="text-uppercase">Tin tức & sự kiện</h2>
-                    </a>
-                    <a href="{{ route('homeArticle') }}" class="text-uppercase">Xem tất cả</a>
+                        @forelse($articles as $item)
+                        <a href="{{ route('detailArticle',['slug'=>$item->slug,'id'=>$item->id]) }}" class="article-item" title="{{ $item->title }}">
+                            <div class="article-img">
+                                <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid">
+                            </div>
+                            <div class="article-title">
+                                <span>
+                                    {{ $item->description }}
+                                </span>
+                            </div>
+                        </a>
+                        @empty
+                        @endforelse
+                    </div>
                 </div>
-                <div class="section-main">
-                    @if(!empty($articles))
-                    @forelse($articles as $item)
-                    <a href="{{ route('detailArticle',['slug'=>$item->slug,'id'=>$item->id]) }}" class="article-item" title="{{ $item->title }}">
-                        <div class="article-img">
-                            <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid">
-                        </div>
-                        <div class="article-title">
-                            <span>
-                                {{ $item->description }}
-                            </span>
-                        </div>
-                    </a>
-                    @empty
-                    @endforelse
-                    @endif
+            @endif
+            @if(!empty($stores))
+                <div class="section-store mb-5">
+                    <div class="section-top">
+                        <a href="#">
+                            <h2 class="text-uppercase">Danh sách cửa hàng</h2>
+                        </a>
+                    </div>
+                    <div class="section-store-main">
+                        @forelse($stores as $item)
+                            <div>
+                                <a class='ccs-item-store--img'>
+                                    <img src="{{ asset($item->image) }}" alt="{{ $item->name }}" class="img-fluid" />
+                                </a>
+                                <div class='ccs-item-store--text'>
+                                    <span>{{ $item->name }}</span>
+                                    <span>{{ $item->phone }}</span>
+                                </div>
+                            </div>
+                        @empty
+                        @endforelse
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
-
     </main>
 @endsection
 
@@ -371,6 +393,40 @@
             dots: true,
             infinite: true,
             autoplay: true,
+
+        });
+
+        $('.section-store-main').slick({
+            slidesToShow: 6,
+            slidesToScroll: 6,
+            dots: false,
+            arrows: false,
+            infinite: true,
+            autoplay: true,
+            speed: 500,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 6,
+                        slidesToScroll: 6,
+                    }
+                },
+                {
+                    breakpoint: 992,
+                    settings: {
+                        slidesToShow: 4,
+                        slidesToScroll: 4,
+                    }
+                },
+                {
+                    breakpoint: 767,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                    }
+                }
+            ]
 
         });
 

@@ -10,6 +10,7 @@ use App\Models\ProductOptions;
 use App\Models\Promotions;
 use App\Models\RegisterEmail;
 use App\Models\Setting;
+use App\Models\Store;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Carbon\Carbon;
@@ -59,6 +60,7 @@ class HomeController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
 
         $articles = $this->articleRepository->getList(['active' => 1,'is_home'=>1],['id','title','slug','description','image'], 4);
+        $stores = Store::where('active',1)->select('id','image','name','phone')->get();
         $slider = Banners::where(['active' => 1, 'type' => 'home_v1_slider'])->select('id','url','image_url','mobile_url','content')->get();
         $subBanner = Banners::where(['active' => 1, 'type' => 'home_v1_sub_banner'])->select('id','url','image_url','mobile_url','content')->get(); // (2 cái ảnh nhỏ hiển thị cạnh banner)
         $subBanner2 = Banners::where(['active' => 1, 'type' => 'home_v1_primary_banner_2'])->select('id','url','image_url','mobile_url','content')->get(); // (3 ảnh hiển thị dưới cùng trên phần danh sách chi nhánh)
@@ -105,7 +107,7 @@ class HomeController extends Controller
                 ->select('id','title','slug','image','logo')
                 ->limit(4)->orderBy('id', 'ASC')->get();
         }
-        return view('web.home', compact('slider','subBanner','product_hots','attribute_brand','articles','product_cats','subBanner2','cats','cat_sub','applied_stop_time','product_flash','promotions_hot_id','promotions_flash_id'));
+        return view('web.home', compact('slider','subBanner','product_hots','attribute_brand','articles','product_cats','subBanner2','cats','cat_sub','applied_stop_time','product_flash','promotions_hot_id','promotions_flash_id','stores'));
     }
 
     public function registerEmail(Request $request){
