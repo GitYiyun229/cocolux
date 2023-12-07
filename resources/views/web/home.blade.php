@@ -379,7 +379,7 @@
     @parent
     <link href="{{ asset('js/web/slick/slick.css') }}" rel="stylesheet">
     <link href="{{ asset('js/web/slick/slick-theme.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/web/home.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/web/home.css') }}?v=2.0" rel="stylesheet">
 @endsection
 
 @section('script')
