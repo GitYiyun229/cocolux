@@ -315,11 +315,6 @@
 
 .section-store{
     margin-top: 56px;
-    display: none;
-
-    @media (min-width: 1024px) {
-        display: block;
-    }
 
     .slick-list {
         margin: 0 -15px;
@@ -374,6 +369,9 @@
 
         @media (min-width: 1400px) {
             height: calc(1320px / 6 - 25px);
+        }
+        @media (max-width: 768px) {
+            height: calc(100vw / 2 - 25px);
         }
 
         > img {
