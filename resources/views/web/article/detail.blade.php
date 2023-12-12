@@ -148,6 +148,11 @@
                                 @endforelse
                             </div>
                         </div>
+                        @if($article->link_cat)
+                            <p class="text-center mb-4">
+                                <a href="{{ $article->link_cat }}" class="border rounded p-3 py-2" style="font-size: 13px">Xem thêm {{ $article->link_cat }} <i class="fa-solid fa-chevron-right"></i></a>
+                            </p>
+                        @endif
                         @endif
                         <div class="toc-content @if(empty($article->has_toc)) d-none @endif" id="left1">
                             <div class="title-toc-blog">

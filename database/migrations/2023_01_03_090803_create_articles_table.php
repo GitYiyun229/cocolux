@@ -31,6 +31,8 @@ class CreateArticlesTable extends Migration
             $table->integer('ordering')->default(0)->nullable();
             $table->string('hashtag')->nullable();
             $table->string('products')->nullable();
+            $table->string('name_cat')->nullable();
+            $table->string('link_cat')->nullable();
             $table->timestamps();
         });
     }
