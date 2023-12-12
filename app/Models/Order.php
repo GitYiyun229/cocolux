@@ -55,7 +55,7 @@ class Order extends Model
 
     public function getDistrictNameAttribute()
     {
-        $district_name = $this->districts->name;
+        $district_name = !empty($this->districts->name)?$this->districts->name:'';
         return $district_name;
     }
 
