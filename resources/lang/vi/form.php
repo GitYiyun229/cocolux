@@ -112,6 +112,8 @@ return [
         'category' => 'Danh mục tin tức',
         'products' => 'Danh sách sản phẩm',
         'date' => 'Ngày',
+        'name_cat' => 'Tên danh mục',
+        'link_cat' => 'Link đến danh mục',
         'ordering' => 'Thứ tự'
     ],
 
