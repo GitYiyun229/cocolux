@@ -200,6 +200,34 @@
                 </table>
                 <input type="hidden" name="products_add" id="products_add" value="@if(!empty($article) && $article->products){{ $article->products }}@endif">
             </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label>@lang('form.article.name_cat')</label>
+                            <input type="text" class="form-control" name="name_cat" value="{{ isset($article) ? $article->name_cat : old('name_cat') }}">
+                            @if ($errors->has('name_cat'))
+                                <span class="help-block text-danger">
+                                        <strong>{{ $errors->first('name_cat') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <!-- text input -->
+                        <div class="form-group">
+                            <label>@lang('form.article.link_cat')</label>
+                            <input type="text" class="form-control" name="link_cat" value="{{ isset($article) ? $article->link_cat : old('link_cat') }}">
+                            @if ($errors->has('link_cat'))
+                                <span class="help-block text-danger">
+                                        <strong>{{ $errors->first('link_cat') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-sm-5">

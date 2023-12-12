@@ -35,6 +35,8 @@ class UpdateArticle extends FormRequest
             'ordering' => 'nullable',
             'image' => 'nullable',
             'products_add' => 'nullable',
+            'name_cat' => 'nullable',
+            'link_cat' => 'nullable',
             'seo_title' => 'nullable',
             'seo_keyword' => 'nullable',
             'seo_description' => 'nullable',
