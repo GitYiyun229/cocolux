@@ -173,6 +173,7 @@ class ArticleController extends Controller
                     ->where('sku','!=',null)->where('slug','!=',null)->get();
             }
         }
+        $products_choose_down = null;
         if ($article->products_down){
             $id_products_down = explode(',',$article->products_down);
             $products_choose_down = ProductOptions::whereIn('id', $id_products_down)
