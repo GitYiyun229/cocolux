@@ -144,90 +144,6 @@
                     @endif
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <label>@lang('form.content')</label> <span class="text-danger">*</span>
-                    <textarea id="content" name="content" class="form-control" rows="10" >{{ isset($article->content) ? replace_image($article->content) : old('content') }}</textarea>
-                    @if ($errors->has('content'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('content') }}</strong>
-                </span>
-                    @endif
-                    <div class="editor"></div>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <label>@lang('form.article.products')</label>
-                    @if ($errors->has('products'))
-                        <span class="help-block text-danger">
-                            <strong>{{ $errors->first('products') }}</strong>
-                        </span>
-                    @endif
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="" name="search_product" autocomplete="off" id="search_product">
-                    </div>
-                </div>
-                <div class="selection"></div>
-                <table class="table table-bordered mt-2" id="list_products">
-                    <thead class="thead-light">
-                        <tr>
-                            <th style="width: 100px;">Mã SP</th>
-                            <th style="width: 280px;">Tên sản phẩm</th>
-                            <th style="width: 100px;">Giá</th>
-                            <th style="width: 100px;">Mã nhúng bài viết</th>
-                            <th style="width: 50px;">#</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-body">
-                        @if(!empty($products))
-                            @forelse($products as $k => $item)
-                                <tr>
-                                    <td>{{ $item->sku }}</td>
-                                    <td>{{ $item->title }}</td>
-                                    <td>{{ format_money($item->price) }}</td>
-                                    <td>
-                                        <div class="border border-warning rounded btn copy-btn" data-clipboard-text="product-option-{{ $item->id }}">
-                                            product-option-{{ $item->id }}
-                                        </div>
-                                    </td>
-                                    <td><button type="button" onclick="deleteCell('list_products',{{ $k+1 }},{{ $item->id }})" class="btn btn-danger">Xóa</button></td>
-                                </tr>
-                            @empty
-                            @endforelse
-                        @endif
-                    </tbody>
-                </table>
-                <input type="hidden" name="products_add" id="products_add" value="@if(!empty($article) && $article->products){{ $article->products }}@endif">
-            </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <!-- text input -->
-                        <div class="form-group">
-                            <label>@lang('form.article.name_cat')</label>
-                            <input type="text" class="form-control" name="name_cat" value="{{ isset($article) ? $article->name_cat : old('name_cat') }}">
-                            @if ($errors->has('name_cat'))
-                                <span class="help-block text-danger">
-                                        <strong>{{ $errors->first('name_cat') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <!-- text input -->
-                        <div class="form-group">
-                            <label>@lang('form.article.link_cat')</label>
-                            <input type="text" class="form-control" name="link_cat" value="{{ isset($article) ? $article->link_cat : old('link_cat') }}">
-                            @if ($errors->has('link_cat'))
-                                <span class="help-block text-danger">
-                                        <strong>{{ $errors->first('link_cat') }}</strong>
-                                    </span>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <div class="col-sm-5">
@@ -267,6 +183,129 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label>@lang('form.content')</label> <span class="text-danger">*</span>
+            <textarea id="content" name="content" class="form-control" rows="10" >{{ isset($article->content) ? replace_image($article->content) : old('content') }}</textarea>
+            @if ($errors->has('content'))
+                <span class="help-block text-danger">
+                    <strong>{{ $errors->first('content') }}</strong>
+                </span>
+            @endif
+            <div class="editor"></div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label>@lang('form.article.products')</label>
+            @if ($errors->has('products'))
+                <span class="help-block text-danger">
+                            <strong>{{ $errors->first('products') }}</strong>
+                        </span>
+            @endif
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="" name="search_product" autocomplete="off" id="search_product">
+            </div>
+        </div>
+        <div class="selection"></div>
+        <table class="table table-bordered mt-2" id="list_products">
+            <thead class="thead-light">
+            <tr>
+                <th style="width: 100px;">Mã SP</th>
+                <th style="width: 280px;">Tên sản phẩm</th>
+                <th style="width: 100px;">Giá</th>
+                <th style="width: 100px;">Vị trí(Trên/Dưới)</th>
+                <th style="width: 100px;">Mã nhúng bài viết</th>
+                <th style="width: 50px;">#</th>
+            </tr>
+            </thead>
+            <tbody id="table-body">
+            @if(!empty($products))
+                @forelse($products as $k => $item)
+                    <tr>
+                        <td>{{ $item->sku }}</td>
+                        <td>{{ $item->title }}</td>
+                        <td>{{ format_money($item->price) }}</td>
+                        <td>
+                            <div class="form-check">
+                                @if($article->products_up)
+                                    <input class="form-check-input" type="radio" onclick="upProducts({{ $item->id }})" name="productOption-{{ $item->id }}" id="productOption1-{{ $item->id }}" @if(in_array($item->id, explode(',',$article->products_up))) checked @endif>
+                                @else
+                                    @if($article->products_down)
+                                        <input class="form-check-input" type="radio" onclick="upProducts({{ $item->id }})" name="productOption-{{ $item->id }}" id="productOption1-{{ $item->id }}">
+                                    @else
+                                        <input class="form-check-input" type="radio" onclick="upProducts({{ $item->id }})" name="productOption-{{ $item->id }}" id="productOption1-{{ $item->id }}" checked>
+                                    @endif
+                                @endif
+                                <label class="form-check-label" for="productOption1-{{ $item->id }}">
+                                    Trên
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" onclick="downProducts({{ $item->id }})" name="productOption-{{ $item->id }}" id="productOption2-{{ $item->id }}" @if(in_array($item->id, explode(',',$article->products_down))) checked @endif>
+                                <label class="form-check-label" for="productOption2-{{ $item->id }}">
+                                    Dưới
+                                </label>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="border border-warning rounded btn copy-btn" data-clipboard-text="product-option-{{ $item->id }}">
+                                product-option-{{ $item->id }}
+                            </div>
+                        </td>
+                        <td><button type="button" onclick="deleteCell('list_products',{{ $k+1 }},{{ $item->id }})" class="btn btn-danger">Xóa</button></td>
+                    </tr>
+                @empty
+                @endforelse
+            @endif
+            </tbody>
+        </table>
+        <input type="hidden" name="products_add" id="products_add" value="@if(!empty($article) && $article->products){{ $article->products }}@endif">
+        <input type="hidden" name="products_up" id="products_up" value="@if(!empty($article)){{ $article->products_up?$article->products_up:($article->products_down?'':$article->products) }}@endif">
+        <input type="hidden" name="products_down" id="products_down" value="@if(!empty($article) && $article->products_down){{ $article->products_down }}@endif">
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.article.name_cat')</label>
+                    <input type="text" class="form-control" name="name_cat" value="{{ isset($article) ? $article->name_cat : old('name_cat') }}">
+                    @if ($errors->has('name_cat'))
+                        <span class="help-block text-danger">
+                                        <strong>{{ $errors->first('name_cat') }}</strong>
+                                    </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.article.link_cat')</label>
+                    <input type="text" class="form-control" name="link_cat" value="{{ isset($article) ? $article->link_cat : old('link_cat') }}">
+                    @if ($errors->has('link_cat'))
+                        <span class="help-block text-danger">
+                                        <strong>{{ $errors->first('link_cat') }}</strong>
+                                    </span>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label>Hỏi đáp</label> <span class="text-danger">*</span>
+            <textarea id="content_faq" name="content_faq" class="form-control" rows="10" >{{ isset($article->content_faq) ? replace_image($article->content_faq) : old('content_faq') }}</textarea>
+            @if ($errors->has('content_faq'))
+                <span class="help-block text-danger">
+                    <strong>{{ $errors->first('content_faq') }}</strong>
+                </span>
+            @endif
+            <div class="editor"></div>
+        </div>
+    </div>
+</div>
 @section('link')
     @parent
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.min.css">
@@ -278,6 +317,7 @@
     <script src="{{ asset('ckeditor/ckeditor.js') }}?v=1.0"></script>
     <script src="{{ asset('ckfinder/ckfinder.js') }}?v=1.0"></script>
     <script>
+        CKEDITOR.replace( 'content_faq' );
         CKEDITOR.replace( 'content' );
         const autoCompleteJS = new autoComplete({
             selector: "#search_product",
@@ -361,6 +401,92 @@
             const priceCell = document.createElement('td');
             priceCell.textContent = formatMoney(selectedData['price']);
 
+            const positionCell = document.createElement('td');
+// Tạo radio button thứ nhất
+            const radio1Div = document.createElement('div');
+            radio1Div.classList.add('form-check');
+
+            const radio1Input = document.createElement('input');
+            radio1Input.classList.add('form-check-input');
+            radio1Input.type = 'radio';
+            radio1Input.name = 'productOption-'+selectedData['id'];
+            radio1Input.id = 'productOption1-'+selectedData['id'];
+            radio1Input.checked = true;
+            radio1Input.addEventListener('click', function (q) {
+                var productsUpInput = document.getElementById('products_up').value;
+                var nameAttributeValue = $(this).attr('name');
+                const match = nameAttributeValue.match(/\d+/);
+                const id_product = match[0];
+                if(productsUpInput){
+                    var myArrayUp = productsUpInput.split(',');
+                    myArrayUp.push(id_product);
+                    document.getElementById('products_up').value = myArrayUp.join(',');
+                }else{
+                    var myArrayUp = id_product
+                    document.getElementById('products_up').value = myArrayUp;
+                }
+
+                var productsDownInput = document.getElementById('products_down').value;
+                var myArrayDown = productsDownInput.split(',');
+
+                var newArrayDown = myArrayDown.filter(function(item) {
+                    return item != id_product;
+                });
+                document.getElementById('products_down').value = newArrayDown;
+            });
+
+            const radio1Label = document.createElement('label');
+            radio1Label.classList.add('form-check-label');
+            radio1Label.htmlFor = 'productOption1-'+selectedData['id'];
+            radio1Label.textContent = 'Trên';
+
+// Gắn các phần tử con vào div và div vào td
+            radio1Div.appendChild(radio1Input);
+            radio1Div.appendChild(radio1Label);
+            positionCell.appendChild(radio1Div);
+
+// Tạo radio button thứ hai tương tự
+            const radio2Div = document.createElement('div');
+            radio2Div.classList.add('form-check');
+
+            const radio2Input = document.createElement('input');
+            radio2Input.classList.add('form-check-input');
+            radio2Input.type = 'radio';
+            radio2Input.name = 'productOption-'+selectedData['id'];
+            radio2Input.id = 'productOption2-'+selectedData['id'];
+            radio2Input.addEventListener('click', function (q) {
+                var productsDownInput = document.getElementById('products_down').value;
+                var nameAttributeValue = $(this).attr('name');
+                const match = nameAttributeValue.match(/\d+/);
+                const id_product = match[0];
+                if(productsDownInput){
+                    var myArrayDown = productsDownInput.split(',');
+                    myArrayDown.push(id_product);
+                    document.getElementById('products_down').value = myArrayDown.join(',');
+                }else{
+                    var myArrayDown = id_product
+                    document.getElementById('products_down').value = myArrayDown;
+                }
+
+                var productsUpInput = document.getElementById('products_up').value;
+                var myArrayUp = productsUpInput.split(',');
+
+                var newArrayUp = myArrayUp.filter(function(item) {
+                    return item != id_product;
+                });
+                document.getElementById('products_up').value = newArrayUp;
+            });
+
+            const radio2Label = document.createElement('label');
+            radio2Label.classList.add('form-check-label');
+            radio2Label.htmlFor = 'productOption2-'+selectedData['id'];
+            radio2Label.textContent = 'Dưới';
+
+// Gắn các phần tử con vào div và div vào td
+            radio2Div.appendChild(radio2Input);
+            radio2Div.appendChild(radio2Label);
+            positionCell.appendChild(radio2Div);
+
             const codeAddCell = document.createElement('td');
             const codeButton = document.createElement('div');
             codeButton.textContent = 'product-option-'+selectedData['id'];
@@ -373,16 +499,32 @@
             deleteButton.textContent = 'Xóa';
             deleteButton.classList.add('btn', 'btn-danger');
             deleteButton.setAttribute("data-id",selectedData['id']);
+            deleteButton.setAttribute("type",'button');
             // Add a click event listener to the delete button
             deleteButton.addEventListener('click', function (q) {
                 var id_product = $(this).data('id');
                 var product_ids = document.getElementById('products_add').value;
+                var product_up_ids = document.getElementById('products_up').value;
+                var product_down_ids = document.getElementById('products_down').value;
                 var myArray = product_ids.split(',');
+                var myArrayUp = product_up_ids.split(',');
+                var myArrayDown = product_down_ids.split(',');
 
                 var newArray = myArray.filter(function(item) {
                     return item != id_product;
                 });
                 document.getElementById('products_add').value = newArray;
+
+                var newArrayUp = myArrayUp.filter(function(item) {
+                    return item != id_product;
+                });
+                document.getElementById('products_up').value = newArrayUp;
+
+                var newArrayDown = myArrayDown.filter(function(item) {
+                    return item != id_product;
+                });
+                document.getElementById('products_down').value = newArrayDown;
+
                 // Remove the entire row when the delete button is clicked
                 newRow.remove();
             });
@@ -394,6 +536,7 @@
             newRow.appendChild(skuCell);
             newRow.appendChild(titleCell);
             newRow.appendChild(priceCell);
+            newRow.appendChild(positionCell);
             newRow.appendChild(codeAddCell);
             newRow.appendChild(deleteButtonCell);
 
@@ -404,7 +547,13 @@
             tableBody.appendChild(newRow);
 
             var productsAddInput = document.getElementById('products_add');
+            var productsUpInput = document.getElementById('products_up');
+            var productsDownInput = document.getElementById('products_down');
+
             var currentProductIds = productsAddInput.value;
+            var currentProductUpIds = productsUpInput.value;
+            var currentProducDowntIds = productsDownInput.value;
+
             if(currentProductIds){
                 var currentProductIdsArray = currentProductIds.split(',');
                 currentProductIdsArray.push(selectedData['id']);
@@ -413,6 +562,14 @@
             }
 
             productsAddInput.value = currentProductIdsArray.join(',');
+
+            if(currentProductUpIds){
+                var currentProductUpIdsArray = currentProductUpIds.split(',');
+                currentProductUpIdsArray.push(selectedData['id']);
+            }else{
+                var currentProductUpIdsArray = [selectedData['id']];
+            }
+            productsUpInput.value = currentProductUpIdsArray.join(',');
         });
 
         $('#table-body').on("click",".copy-btn", function(){
@@ -439,12 +596,64 @@
                 table.deleteRow(rowIndex);
             }
             var product_ids = document.getElementById('products_add').value;
+            var product_up_ids = document.getElementById('products_up').value;
+            var product_down_ids = document.getElementById('products_down').value;
             var myArray = product_ids.split(',');
+            var myArrayUp = product_up_ids.split(',');
+            var myArrayDown = product_down_ids.split(',');
 
             var newArray = myArray.filter(function(item) {
                 return item != id_product;
             });
             document.getElementById('products_add').value = newArray;
+
+            var newArrayUp = myArrayUp.filter(function(item) {
+                return item != id_product;
+            });
+            document.getElementById('products_up').value = newArrayUp;
+
+            var newArrayDown = myArrayDown.filter(function(item) {
+                return item != id_product;
+            });
+            document.getElementById('products_down').value = newArrayDown;
+        }
+        function upProducts(id_product) {
+            var productsUpInput = document.getElementById('products_up').value;
+            if(productsUpInput){
+                var myArrayUp = productsUpInput.split(',');
+                myArrayUp.push(id_product);
+                document.getElementById('products_up').value = myArrayUp.join(',');
+            }else{
+                var myArrayUp = id_product
+                document.getElementById('products_up').value = myArrayUp;
+            }
+
+            var productsDownInput = document.getElementById('products_down').value;
+            var myArrayDown = productsDownInput.split(',');
+
+            var newArrayDown = myArrayDown.filter(function(item) {
+                return item != id_product;
+            });
+            document.getElementById('products_down').value = newArrayDown;
+        }
+        function downProducts(id_product) {
+            var productsDownInput = document.getElementById('products_down').value;
+            if(productsDownInput){
+                var myArrayDown = productsDownInput.split(',');
+                myArrayDown.push(id_product);
+                document.getElementById('products_down').value = myArrayDown.join(',');
+            }else{
+                var myArrayDown = id_product
+                document.getElementById('products_down').value = myArrayDown;
+            }
+
+            var productsUpInput = document.getElementById('products_up').value;
+            var myArrayUp = productsUpInput.split(',');
+
+            var newArrayUp = myArrayUp.filter(function(item) {
+                return item != id_product;
+            });
+            document.getElementById('products_up').value = newArrayUp;
         }
     </script>
 @endsection
