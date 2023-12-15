@@ -161,8 +161,8 @@ class ArticleController extends Controller
 
         $products_choose = null;
 
-        if ($article->products){
-            $id_products = explode(',',$article->products);
+        if ($article->products_up){
+            $id_products = explode(',',$article->products_up);
             if ($article->updated_at < '2023-10-17'){
                 $products_choose = ProductOptions::whereIn('parent_id', $id_products)
                     ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')
@@ -172,7 +172,12 @@ class ArticleController extends Controller
                     ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')
                     ->where('sku','!=',null)->where('slug','!=',null)->get();
             }
-
+        }
+        if ($article->products_down){
+            $id_products_down = explode(',',$article->products_down);
+            $products_choose_down = ProductOptions::whereIn('id', $id_products_down)
+                ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')
+                ->where('sku','!=',null)->where('slug','!=',null)->get();
         }
 
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
@@ -196,6 +201,6 @@ class ArticleController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($article->seo_keyword?$article->seo_keyword:$article->title);
 
-        return view('web.article.detail', compact('article','cat_article','article_in_cat','product_hots','parent_cat','products_choose','promotions_flash_id','promotions_hot_id'));
+        return view('web.article.detail', compact('article','cat_article','article_in_cat','product_hots','parent_cat','products_choose','promotions_flash_id','promotions_hot_id','products_choose_down'));
     }
 }

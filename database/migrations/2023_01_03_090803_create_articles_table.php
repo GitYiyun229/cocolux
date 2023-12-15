@@ -20,6 +20,7 @@ class CreateArticlesTable extends Migration
             $table->string('image')->nullable();
             $table->text('description')->nullable();
             $table->text('content')->nullable();
+            $table->text('content_faq')->nullable();
             $table->tinyInteger('is_home')->default(0)->nullable();
             $table->tinyInteger('has_toc')->default(1)->nullable();
             $table->tinyInteger('is_highlight')->default(0)->nullable();
@@ -33,6 +34,8 @@ class CreateArticlesTable extends Migration
             $table->string('products')->nullable();
             $table->string('name_cat')->nullable();
             $table->string('link_cat')->nullable();
+            $table->string('products_up')->nullable();
+            $table->string('products_down')->nullable();
             $table->timestamps();
         });
     }
