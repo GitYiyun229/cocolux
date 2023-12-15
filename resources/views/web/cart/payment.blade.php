@@ -354,12 +354,25 @@
                         let total_price_ship_coupon = (parseInt(price_ship) + parseInt($("#layoutForm #total_price").val())) - 0;
                         $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
                     }else{
-                        $("#layoutForm #coupon_if_have").css({"display": "flex"});
-                        $("#layoutForm #coupon_now").html("-"+formatMoney(parseInt(result.data.value)));
-                        $("#price_coupon_now").val(result.data.value);
-                        var price_ship = $("#price_ship_coco").val();
-                        let total_price_ship_coupon = (parseInt(price_ship) + parseInt($("#layoutForm #total_price").val())) - parseInt(result.data.value);
-                        $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
+                        if(parseInt(result.data.valueType) == 1){
+                            $("#layoutForm #coupon_if_have").css({"display": "flex"});
+                            $("#layoutForm #coupon_now").html("-"+formatMoney(parseInt(result.data.value)));
+                            $("#price_coupon_now").val(result.data.value);
+                            var price_ship = $("#price_ship_coco").val();
+                            let total_price_ship_coupon = (parseInt(price_ship) + parseInt($("#layoutForm #total_price").val())) - parseInt(result.data.value);
+                            $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
+                        }else{
+                            $("#layoutForm #coupon_if_have").css({"display": "flex"});
+                            $("#layoutForm #coupon_now").html("-"+parseInt(result.data.value)+"%");
+                            var price_ship = $("#price_ship_coco").val();
+                            let price_total = parseInt($("#layoutForm #total_price").val());
+                            let coupon_ = parseInt(result.data.value);
+                            let price_coupon = price_total * coupon_/100;
+                            $("#price_coupon_now").val(price_coupon);
+                            let total_price_ship_coupon = (parseInt(price_ship) + parseInt($("#layoutForm #total_price").val())) - price_coupon;
+                            $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
+                        }
+
                     }
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
