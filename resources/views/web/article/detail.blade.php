@@ -165,6 +165,63 @@
                         <div class="detail-content">
                             {!! replace_image($article->content) !!}
                         </div>
+                        @if($products_choose_down)
+                        <div class="list-product-article mb-4">
+                            <div class="slide-template-slick">
+                                @forelse($products_choose_down as $item)
+                                    <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
+                                        @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
+                                            @if($item->flash_deal->price != $item->normal_price)
+                                                <div class="product-discount">
+                                                    <span class="pe-1">{{ percentage_price($item->flash_deal->price, $item->normal_price) }}</span>
+                                                </div>
+                                            @endif
+                                        @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
+                                            @if($item->hot_deal->price != $item->normal_price)
+                                                <div class="product-discount">
+                                                    <span class="pe-1">{{ percentage_price($item->hot_deal->price, $item->normal_price) }}</span>
+                                                </div>
+                                            @endif
+                                        @else
+                                            @if($item->price != $item->normal_price)
+                                                <div class="product-discount">
+                                                    <span class="pe-1">{{ percentage_price($item->price, $item->normal_price) }}</span>
+                                                </div>
+                                            @endif
+                                        @endif
+                                        <div class="product-thumbnail">
+                                            <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
+                                        </div>
+                                        <div class="product-price">
+                                            @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
+                                                <div class="public-price">{{ format_money($item->flash_deal->price) }}</div>
+                                                @if($item->flash_deal->price != $item->normal_price)
+                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                                @endif
+                                            @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
+                                                <div class="public-price">{{ format_money($item->hot_deal->price) }}</div>
+                                                @if($item->hot_deal->price != $item->normal_price)
+                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                                @endif
+                                            @else
+                                                <div class="public-price">{{ format_money($item->price) }}</div>
+                                                @if($item->price != $item->normal_price)
+                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                                @endif
+                                            @endif
+                                        </div>
+                                        <div class="product-brand">
+                                            {{ $item->brand }}
+                                        </div>
+                                        <div class="product-title">
+                                            {{ $item->title }}
+                                        </div>
+                                    </a>
+                                @empty
+                                @endforelse
+                            </div>
+                        </div>
+                        @endif
                         @if($article->content_faq)
                             <div class="faq-for-article">
                                 <div class="title-faq">
