@@ -167,7 +167,11 @@
         </div>
 
     </main>
-
+    <div id="loading-overlay">
+        <div id="loading-spinner">
+            <i class="fa fa-spinner fa-spin"></i> Loading...
+        </div>
+    </div>
 @endsection
 
 @section('link')
@@ -380,6 +384,16 @@
             });
             return false;
         }
+        $(document).ready(function() {
+            // Hiệu ứng loading khi bắt đầu thực hiện Ajax
+            $(document).ajaxStart(function() {
+                $("#loading-overlay").show();
+            });
 
+            // Hiệu ứng kết thúc khi Ajax hoàn thành
+            $(document).ajaxStop(function() {
+                $("#loading-overlay").hide();
+            });
+        });
     </script>
 @endsection
