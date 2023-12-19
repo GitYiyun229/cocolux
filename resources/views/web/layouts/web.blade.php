@@ -137,6 +137,14 @@
                 }
             }
         });
+        autoCompleteJS.init();
+
+        $('#keyword').keydown(function(event) {
+            if (event.keyCode == 13 && !event.shiftKey) {
+                event.preventDefault();
+                $('#search_product').submit();
+            }
+        });
     </script>
 
 @endsection
