@@ -127,7 +127,13 @@ class ArticleController extends Controller
                 $products = ProductOptions::select('id','title','slug','sku','images','price')->whereIn('id',explode(',',$article->products))->get();
             }
         }
-        return view('admin.article.update', compact('article','categories','products'));
+
+        $news_add = array();
+        if ($article->news_add){
+            $news_add = Article::select('id','title','slug')->whereIn('id',explode(',',$article->news_add))->limit(3)->get();
+        }
+
+        return view('admin.article.update', compact('article','categories','products','news_add'));
     }
 
     /**
@@ -224,6 +230,21 @@ class ArticleController extends Controller
         $result = array();
         $result['error'] = false;
         $result['data'] = $products;
+        return response()->json($result);
+    }
+
+    public function searchArticle(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $articles_ids = $request->input('articles_ids');
+        $articles = Article::where('title', 'LIKE', '%'.$keyword.'%')
+            ->Orwhere('slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
+            ->whereNotIn('id', explode(',',$articles_ids))
+            ->limit(30)->get()->toArray();
+
+        $result = array();
+        $result['error'] = false;
+        $result['data'] = $articles;
         return response()->json($result);
     }
 

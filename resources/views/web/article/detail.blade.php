@@ -153,6 +153,11 @@
                                 <a href="{{ $article->link_cat }}" class="border rounded p-3 py-2" style="font-size: 13px">Xem thêm {{ $article->link_cat }} <i class="fa-solid fa-chevron-right"></i></a>
                             </p>
                         @endif
+                        @if($article->banner_up)
+                            <div class="my-3">
+                                <img src="{{ asset($article->banner_up) }}" alt="{{ $article->title }}" class="img-fluid d-block mx-auto">
+                            </div>
+                        @endif
                         @endif
                         <div class="toc-content @if(empty($article->has_toc)) d-none @endif" id="left1">
                             <div class="title-toc-blog">
@@ -222,7 +227,39 @@
                             </div>
                         </div>
                         @endif
-                        @if($article->content_faq)
+                        @if($article->banner_down)
+                            <div class="my-3">
+                                <img src="{{ asset($article->banner_down) }}" alt="{{ $article->title }}" class="img-fluid d-block mx-auto">
+                            </div>
+                        @endif
+                        @if($article_add)
+                            <div class="blog-for-article">
+                                <div class="title-blog">
+                                    <span>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M5 21C4.45 21 3.97917 20.8042 3.5875 20.4125C3.19583 20.0208 3 19.55 3 19V5C3 4.45 3.19583 3.97917 3.5875 3.5875C3.97917 3.19583 4.45 3 5 3H16L21 8V19C21 19.55 20.8042 20.0208 20.4125 20.4125C20.0208 20.8042 19.55 21 19 21H5ZM5 19H19V9H15V5H5V19ZM7 17H17V15H7V17ZM7 9H12V7H7V9ZM7 13H17V11H7V13Z" fill="black"/>
+                                    </svg>
+                                    Blog cùng phong cách
+                                    </span>
+                                </div>
+                                <div class="detail-content-blog">
+                                    <div class="row">
+                                        @foreach($article_add as $article_item)
+                                        <div class="col-md-4">
+                                            <a href="{{ route('detailArticle',['slug'=>$article_item->slug,'id'=>$article_item->id]) }}" title="{{ $article_item->title }}">
+                                                <img src="{{ asset($article_item->image_change_url) }}" alt="{{ $article_item->title }}" class="img-fluid rounded">
+                                                <h4 class="my-3 title-blog-item">{{ $article_item->title }}</h4>
+                                                <div class="summary-blog d-none">
+                                                    {{ $article_item->description }}
+                                                </div>
+                                            </a>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if(!empty($article->content_faq))
                             <div class="faq-for-article">
                                 <div class="title-faq">
                                     <span>
