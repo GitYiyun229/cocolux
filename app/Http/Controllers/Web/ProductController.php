@@ -262,6 +262,7 @@ class ProductController extends Controller
                     });
                 }
             })
+            ->where('product_options.active',1)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->orderBy($columnToSort, $orderDirection)
             ->paginate(30);
@@ -295,6 +296,7 @@ class ProductController extends Controller
                     });
                 }
             })
+            ->where('active',1)
             ->get()->pluck('attribute_path')->toArray();
 
         $countArray = [];
