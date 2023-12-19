@@ -18,6 +18,8 @@ class CreateArticlesTable extends Migration
             $table->string('title');
             $table->string('slug')->default('');
             $table->string('image')->nullable();
+            $table->string('banner_up')->nullable();
+            $table->string('banner_down')->nullable();
             $table->text('description')->nullable();
             $table->text('content')->nullable();
             $table->text('content_faq')->nullable();

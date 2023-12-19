@@ -91,6 +91,46 @@
             }
         }
     }
+    .blog-for-article{
+        .title-blog{
+            color: #000;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 20px;
+            border-bottom: 1px solid #DDD;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            span{
+                position: relative;
+                &:after{
+                    content: '';
+                    background: #C73030;
+                    height: 2px;
+                    position: absolute;
+                    bottom: -12px;
+                    left: 0;
+                    width: 100%;
+                }
+            }
+        }
+        .detail-content-blog{
+            .title-blog-item{
+                font-size: 15px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 24px;
+            }
+            .summary-blog{
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+                margin-bottom: 20px;
+            }
+        }
+    }
+
     .faq-for-article{
         .title-faq{
             color: #000;
