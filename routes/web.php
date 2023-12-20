@@ -147,13 +147,15 @@ Route::group(['namespace' => 'Web'], function (){
     Route::get('/checkout/payment', 'ProductController@payment')->name('payment');
     Route::get('/xoa-san-pham/{id}', 'ProductController@removeItem')->name('removeItem');
     Route::post('/order', 'ProductController@order')->name('order');
-    Route::get('dat-hang-thanh-cong/{id}', 'ProductController@success')->name('orderProductSuccess');
+    Route::get('/dat-hang-thanh-cong/{id}', 'ProductController@success')->name('orderProductSuccess');
+    Route::get('/chi-tiet-don-hang/{id}', 'ProductController@detailOrderSuccess')->name('detailOrderSuccess');
     Route::get('/thong-tin/{slug}', 'PageController@index')->name('detailPage');
     Route::get('/hoi-dap/{slug}', 'PageController@index')->name('detailPageQa');
     Route::post('/load-district', 'ProductController@load_district')->name('loadDistrict');
     Route::post('/load-ward', 'ProductController@load_ward')->name('loadWard');
     Route::get('/search', 'ProductController@search')->name('search');
     Route::post('/register-email', 'HomeController@registerEmail')->name('registerEmail');
+    Route::post('/search-order', 'ProductController@searchOrder')->name('searchOrder');
 });
 
 //Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')

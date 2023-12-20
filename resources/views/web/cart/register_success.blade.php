@@ -14,7 +14,7 @@
                     <div class="order-info mb-3">
                         <p class="mb-2">Mã đơn hàng của bạn là:</p>
                         <a href="" title="Chi tiết đơn hàng">
-                            DH00105114
+                            {{ $maDonHang }}
                         </a>
                     </div>
 
