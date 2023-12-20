@@ -1114,7 +1114,7 @@ class ProductController extends Controller
         Session::forget('cart');
         $order = Order::findOrFail($id);
         $products = OrderItem::with(['productOption' => function($query){
-            $query->select('id','sku','slug','title');
+            $query->select('id','sku','slug','title','images');
         }])->where('order_id', $id)->get();
         $total_money = 0;
         if (!empty($products)){
