@@ -13,12 +13,12 @@
 
                     <div class="order-info mb-3">
                         <p class="mb-2">Mã đơn hàng của bạn là:</p>
-                        <a href="" title="Chi tiết đơn hàng">
+                        <a href="{{ route('detailOrderSuccess',['id' => $order->id]) }}" title="Chi tiết đơn hàng">
                             {{ $maDonHang }}
                         </a>
                     </div>
 
-                    <p>Bạn có thể xem <a href="">chi tiết đơn hàng tại đây</a></p>
+                    <p>Bạn có thể xem <a href="{{ route('detailOrderSuccess',['id' => $order->id]) }}">chi tiết đơn hàng tại đây</a></p>
 
                     <p>Để đơn hàng được xử lý nhanh chóng, Cocolux có thể không gọi điện xác nhận đơn hàng. Hệ thống tự động xử lý và nhân viên giao hàng sẽ liên hệ trực tiếp với bạn.</p>
 

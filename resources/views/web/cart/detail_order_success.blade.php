@@ -38,7 +38,7 @@
                                     <div class="row">
                                         <div class="col-md-5">
                                             <a href="{{ route('detailProduct',['slug' => $item->productOption->slug,'sku'=>$item->productOption->sku]) }}" class="ccs-cart-product--thumb" >
-                                                <img src="{{ asset($item->image_first) }}" alt="{{ $item->product_title }}" class="img-fluid" />
+                                                <img src="{{ asset($item->productOption->image_first) }}" alt="{{ $item->product_title }}" class="img-fluid" />
                                             </a>
                                         </div>
                                         <div class="col-md-7">

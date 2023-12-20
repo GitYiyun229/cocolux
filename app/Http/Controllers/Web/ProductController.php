@@ -1094,9 +1094,20 @@ class ProductController extends Controller
 
     public function searchOrder (Request $request){
         $maDonHang = $request->input('order');
-        $id = (int) substr($maDonHang, 2);
-        $order = Order::findOrFail($id);
-        return redirect()->route('detailOrderSuccess',['id'=>$order->id]);
+        if (strpos($maDonHang, 'DH') == 0) {
+            $id = (int) substr($maDonHang, 2);
+            $order = Order::where('id',$id)->first();
+            if ($order){
+                return redirect()->route('detailOrderSuccess',['id'=>$order->id]);
+            }else{
+                Session::flash('danger', 'Mã đơn hàng không tồn tại');
+                return redirect()->back();
+            }
+        }else{
+            Session::flash('danger', 'Mã đơn hàng không tồn tại');
+            return redirect()->back();
+        }
+
     }
 
     public function detailOrderSuccess ($id){
