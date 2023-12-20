@@ -767,6 +767,18 @@ class ProductController extends Controller
         }
 
         $cart = Session::get('cart', []);
+        $flash_sale = $this->dealService->isFlashSaleAvailable();
+        $promotions_flash_id = $flash_sale->pluck('id')->toArray();
+        $hot_deal = $this->dealService->isHotDealAvailable();
+        $promotions_hot_id = $hot_deal->pluck('id')->toArray();
+
+        if($product->flash_deal && in_array($product->flash_deal->id,$promotions_flash_id)){
+            $price = $product->flash_deal->price;
+        }elseif($product->hot_deal && in_array($product->hot_deal->id,$promotions_hot_id)){
+            $price = $product->hot_deal->price;
+        }else{
+            $price = $product->price;
+        }
 
         if (array_key_exists($product->id, $cart)) {
             // Sản phẩm đã tồn tại trong giỏ hàng, tăng số lượng
@@ -775,7 +787,7 @@ class ProductController extends Controller
             // Sản phẩm chưa tồn tại trong giỏ hàng, thêm mới
             $cart[$product->id] = [
                 'name' => $product->title,
-                'price' => $product->price,
+                'price' => $price,
                 'quantity' => $quantity,
             ];
         }
