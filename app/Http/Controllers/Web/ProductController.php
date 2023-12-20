@@ -1087,7 +1087,32 @@ class ProductController extends Controller
 
     public function success ($id){
         Session::forget('cart');
-//        $order = Order::findOrFail($id);
-        return view('web.cart.register_success');
+        $order = Order::findOrFail($id);
+        $maDonHang = 'DH' . str_pad($id, 8, '0', STR_PAD_LEFT);
+        return view('web.cart.register_success',compact('order','maDonHang'));
+    }
+
+    public function searchOrder (Request $request){
+        $maDonHang = $request->input('order');
+        $id = (int) substr($maDonHang, 2);
+        $order = Order::findOrFail($id);
+        return redirect()->route('detailOrderSuccess',['id'=>$order->id]);
+    }
+
+    public function detailOrderSuccess ($id){
+        Session::forget('cart');
+        $order = Order::findOrFail($id);
+        $products = OrderItem::with(['productOption' => function($query){
+            $query->select('id','sku','slug','title');
+        }])->where('order_id', $id)->get();
+        $total_money = 0;
+        if (!empty($products)){
+            foreach ($products as $item){
+                $item_total = $item->product_number*$item->product_price;
+                $total_money = $total_money+$item_total;
+            }
+        }
+        $maDonHang = 'DH' . str_pad($id, 8, '0', STR_PAD_LEFT);
+        return view('web.cart.detail_order_success',compact('order','maDonHang','products','total_money'));
     }
 }

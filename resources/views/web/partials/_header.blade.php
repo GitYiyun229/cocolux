@@ -160,11 +160,31 @@
             @empty
             @endforelse
         @endif
-        <div class="menu-item ms-auto">
+        <div class="menu-item menu-app ms-auto">
             <a href=""><img src="{{ asset('images/smart-phone.svg') }}" alt="" class="ìm-fluid">Tải ứng dụng</a>
+            <div class="menu-content">
+                <img src="{{ $setting['qr_code_appstore'] }}" alt="QR-code-appstore" class="img-fluid qr-code mb-2">
+                <div class="d-flex align-items-center justify-content-between">
+                    <a class="fw-bold text-uppercase d-flex align-items-center" href="{{ $setting['link_app_ios'] }}" target="_blank">
+                        <img src="{{ asset('images/ic-appstore-black.svg') }}" alt="cocolux" class="img-fluid">
+                        <span> App Store</span>
+                    </a>
+                    <a class="fw-bold text-uppercase d-flex align-items-center" href="{{ $setting['link_app_android'] }}" target="_blank">
+                        <img src="{{ asset('images/ic-googleplay-black.svg') }}" alt="cocolux" class="img-fluid">
+                        <span> Google Play</span>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="menu-item">
+        <div class="menu-item menu-search-order">
             <a href="">Tra cứu đơn hàng</a>
+            <div class="menu-content">
+                <form action="{{ route('searchOrder') }}" method="POST" name="search-order">
+                    @csrf
+                    <input type="text" class="form-control" placeholder="Nhập mã đơn hàng" name="order" id="order">
+                    <button class="btn" type="submit">Kiểm tra đơn hàng</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
