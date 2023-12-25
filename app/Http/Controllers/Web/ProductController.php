@@ -703,7 +703,7 @@ class ProductController extends Controller
                                 ->orWhereNull('flash_deal');
                         });
                     }
-                })->paginate(30);
+                })->orderBy('updated_at','ASC')->paginate(30);
         }
 
         return view('web.product.deal_hot_detail',compact('productOptions','promotion_hots'));
