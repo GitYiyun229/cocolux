@@ -62,21 +62,25 @@
                                     <div class="detail-price mb-4">
                                         @if($flash_sale)
                                             <div class="public-price"><span class="fw-bold">{{ format_money($product->flash_deal->price) }}</span>(Đã bảo gồm VAT)</div>
+                                            @if($product->normal_price)
                                             <div class="origin-price">
                                                 <span>Giá hãng: {{ format_money($product->normal_price) }}</span>
                                                 <span>- Tiết kiệm được {{ format_money(trim($product->normal_price) - trim($product->flash_deal->price)) }}</span>
                                                 <span>({{ percentage_price($product->flash_deal->price, $product->normal_price) }})</span>
                                             </div>
+                                            @endif
                                         @elseif($hot_deal)
                                             <div class="public-price"><span class="fw-bold">{{ format_money($product->hot_deal->price) }}</span>(Đã bảo gồm VAT)</div>
+                                            @if($product->normal_price)
                                             <div class="origin-price">
                                                 <span>Giá hãng: {{ format_money($product->normal_price) }}</span>
                                                 <span>- Tiết kiệm được {{ format_money(trim($product->normal_price) - trim($product->hot_deal->price)) }}</span>
                                                 <span>({{ percentage_price($product->hot_deal->price, $product->normal_price) }})</span>
                                             </div>
+                                            @endif
                                         @else
                                             <div class="public-price"><span class="fw-bold">{{ format_money($product->price) }}</span>(Đã bảo gồm VAT)</div>
-                                            @if($product->price != $product->normal_price)
+                                            @if($product->normal_price && $product->price != $product->normal_price)
                                                 <div class="origin-price">
                                                     <span>Giá hãng: {{ format_money($product->normal_price) }}</span>
                                                     <span>- Tiết kiệm được {{ format_money($product->normal_price - $product->price) }}</span>
@@ -331,7 +335,7 @@
                         @if(!empty($products))
                         @forelse($products as $item)
                         <a href="{{ route('detailProduct',['slug' => !empty($item->slug)?trim($item->slug):$item->product_slug, 'sku' => $item->sku]) }}" class="product-template">
-                            @if($item->price != $item->normal_price)
+                            @if($item->normal_price && $item->price != $item->normal_price)
                                 <div class="product-discount">
                                     <span class="pe-1">{{ percentage_price($item->price, $item->normal_price) }}</span>
                                 </div>
@@ -341,7 +345,7 @@
                             </div>
                             <div class="product-price">
                                 <div class="public-price">{{ format_money($item->price) }}</div>
-                                @if($item->price != $item->normal_price)
+                                @if($item->normal_price && $item->price != $item->normal_price)
                                     <div class="origin-price">{{ format_money($item->normal_price) }}</div>
                                 @endif
                             </div>
