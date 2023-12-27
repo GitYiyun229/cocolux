@@ -348,7 +348,7 @@
                     </div>
                 </div>
             @endif
-            @if(!empty($stores))
+            @if(count($stores))
                 <div class="section-store mb-5">
                     <div class="section-top">
                         <a href="#">

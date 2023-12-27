@@ -370,6 +370,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::post('/update/{id}', 'StoreController@update')->name('update')->middleware('permission:edit_store');
         Route::post('/destroy/{id}', 'StoreController@destroy')->name('destroy')->middleware('permission:delete_store');
         Route::post('/change-active-store/{id}', 'StoreController@changeActive')->name('changeActive')->middleware('permission:edit_store');
+        Route::post('/change-is-home-article/{id}', 'StoreController@changeIsHome')->name('changeIsHome')->middleware('permission:edit_store');
     });
 
     Route::group(['prefix' => 'promotion', 'as' => 'promotion.', 'middleware' => ['permission:view_promotion']], function () {

@@ -25,6 +25,7 @@ class CreateStoresTable extends Migration
             $table->json('district')->nullable();
             $table->json('ward')->nullable();
             $table->integer('active');
+            $table->tinyInteger('is_home')->default(0)->nullable();
             $table->timestamps();
         });
     }
