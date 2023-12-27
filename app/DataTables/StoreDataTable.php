@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Models\Article;
 use App\Models\Store;
 use Carbon\Carbon;
 use Yajra\DataTables\Html\Button;
@@ -31,6 +32,15 @@ class StoreDataTable extends DataTable
                     'status' => $status,
                 ])->render();
             })
+            ->editColumn('is_home', function ($q) {
+                $url = route('admin.store.changeIsHome', $q->id);
+                $status = $q->is_home == Article::IS_HOME ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'store',
+                    'status' => $status,
+                ])->render();
+            })
             ->editColumn('created_at', function ($q) {
                 return Carbon::parse($q->created_at)->format('H:i:s Y/m/d');
             })
@@ -42,7 +52,7 @@ class StoreDataTable extends DataTable
                 $urlDelete = route('admin.store.destroy', $q->id);
                 $lowerModelName = strtolower(class_basename(new Store()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-            })->rawColumns(['active','action']);
+            })->rawColumns(['active','is_home','action']);
     }
 
     /**
@@ -86,6 +96,7 @@ class StoreDataTable extends DataTable
                 'renderImage(data)'
             ]),
             Column::make('active'),
+            Column::make('is_home'),
             Column::make('id_nhanh'),
             Column::make('created_at'),
             Column::make('updated_at'),

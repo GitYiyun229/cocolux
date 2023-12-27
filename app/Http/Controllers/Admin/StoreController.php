@@ -151,4 +151,17 @@ class StoreController extends Controller
             'message' => trans('message.change_active_store_success')
         ];
     }
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeIsHome($id)
+    {
+        $store = Store::findOrFail($id);
+        $store->update(['is_home' => !$store->is_home]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_is_home_store_success')
+        ];
+    }
 }

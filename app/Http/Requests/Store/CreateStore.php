@@ -36,6 +36,7 @@ class CreateStore extends FormRequest
             'district' => 'nullable',
             'ward' => 'nullable',
             'active' => 'nullable',
+            'is_home' => 'nullable',
         ];
     }
 }
