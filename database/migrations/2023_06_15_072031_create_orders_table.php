@@ -21,7 +21,19 @@ class CreateOrdersTable extends Migration
             $table->integer('district');
             $table->integer('ward');
             $table->string('address');
-            $table->text('note');
+            $table->text('note')->nullable();
+            $table->text('coco_note')->nullable();
+            $table->integer('payment')->nullable();
+            $table->integer('status')->nullable();
+            $table->integer('price_ship_coco')->nullable();
+            $table->integer('price_coupon_now')->nullable();
+            $table->string('coupon')->nullable();
+            $table->string('mess_coupon')->nullable();
+            $table->integer('nhanh_order_id')->nullable();
+            $table->integer('shop_order_id')->nullable();
+            $table->string('message')->nullable();
+            $table->string('status_nhanh')->nullable();
+            $table->string('status_description_nhanh')->nullable();
             $table->timestamps();
         });
     }

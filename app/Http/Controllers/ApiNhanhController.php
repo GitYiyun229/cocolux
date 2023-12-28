@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Districts;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\ProductOptions;
 use App\Models\Store;
 use App\Services\DealService;
@@ -63,6 +66,9 @@ class ApiNhanhController extends Controller
                                 $this->updateProduct($item, $product,'inventoryChange');
                             }
                         }
+                        return response()->json(['message' => 'OK'], 200);
+                    }elseif($resp['event'] == 'orderUpdate'){
+                        $this->updateOrder($resp['data']);
                         return response()->json(['message' => 'OK'], 200);
                     }else{
                         return response()->json(['message' => 'OK'], 200);
@@ -175,6 +181,7 @@ class ApiNhanhController extends Controller
                 $data['normal_price'] = $resp_end['oldPrice'];
             }
             $data['stocks'] = $stocks;
+            $data['nhanhid'] = $inventory['id'];
             return $product->update($data);
         } catch (\Exception $e) {
             \Log::info([
@@ -258,6 +265,86 @@ class ApiNhanhController extends Controller
             'message'   => 'Áp dụng mã thành công',
             'data' => $couponCode
         ));
+    }
+
+    public function pushOrderNhanh ($id){
+        $order = Order::findOrFail($id);
+        $products = OrderItem::with(['productOption' => function($query){
+            $query->select('id','sku','slug','title','nhanhid');
+        }])->where('order_id', $id)->get();
+        $phone = '0'.$order->tel;
+        $payment = $order->payment == 0 ?'COD': 'thanh toán Online';
+
+        $productList = [];
+        foreach ($products as $item){
+            $detail = [
+                "id"=> $item->productOption->id,
+                "idNhanh"=> $item->productOption->nhanhid,
+                "quantity"=> $item->product_number,
+                "name"=> $item->product_title,
+                "code"=> $item->productOption->sku,
+                "type"=> "Product",
+                "price"=> $item->product_price
+            ];
+            $productList[] = $detail;
+        }
+
+        $api = "/api/order/add";
+        $client = new Client();
+
+        $data = [
+            "id" => 10,
+            "customerName" => $order->name,
+            "customerMobile" => $phone,
+            "customerAddress" => $order->address,
+            "customerCityName"=> $order->city_name,
+            "customerDistrictName"=> $order->district_name,
+            "customerWardLocationName"=> $order->ward_name,
+            "paymentMethod"=> $payment,
+            "customerShipFee"=> $order->price_ship_coco,
+            "status"=> "New",
+            "description"=> $order->note,
+            "couponCode"=> $order->coupon,
+            "productList" => $productList
+        ];
+        $this->request_params['data'] = json_encode($data);
+
+        $response = $client->post($this->linkApi.$api,[
+            'form_params' => $this->request_params
+        ]);
+        $data = json_decode($response->getBody(), true);
+        if ($data['code'] == 0){
+            $order->update([
+                'message' => 'Chưa đẩy được đơn hàng lên nhanh',
+            ]);
+        }else{
+            $nhanh_order_id = $data['data']['orderId'];
+            $order->update([
+                'nhanh_order_id' => $nhanh_order_id,
+                'message' => 'Đã đồng bộ đơn hàng lên nhanh thành công',
+            ]);
+        }
+        return true;
+    }
+
+    public function updateOrder($resp_end){
+        try {
+            $orderId = $resp_end['orderId']; // ID đơn hàng trên Nhanh.vn
+            $shopOrderId = $resp_end['shopOrderId']; // shop order ID nếu đơn được bắn từ các hệ thống khác sang Nhanh.vn
+            $order = Order::where('nhanh_order_id', $orderId)->first();
+            $data = array();
+            $data['status_nhanh'] = $resp_end['status'];
+            $data['status_description_nhanh'] = $resp_end['statusDescription'];
+            $data['shop_order_id'] = $shopOrderId;
+            return $order->update($data);
+        } catch (\Exception $e) {
+            \Log::info([
+                'message' => $e->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            return response()->json(['message' => 'OK'], 200);
+        }
     }
 
 }
