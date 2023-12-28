@@ -293,7 +293,7 @@ class ApiNhanhController extends Controller
         $client = new Client();
 
         $data = [
-            "id" => 10,
+            "id" => $id,
             "customerName" => $order->name,
             "customerMobile" => $phone,
             "customerAddress" => $order->address,
