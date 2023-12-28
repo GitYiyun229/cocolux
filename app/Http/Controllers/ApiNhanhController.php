@@ -300,6 +300,7 @@ class ApiNhanhController extends Controller
             "customerCityName"=> $order->city_name,
             "customerDistrictName"=> $order->district_name,
             "customerWardLocationName"=> $order->ward_name,
+            "moneyDiscount"=> $order->price_coupon_now,
             "paymentMethod"=> $payment,
             "customerShipFee"=> $order->price_ship_coco,
             "status"=> "New",
