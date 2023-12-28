@@ -335,6 +335,11 @@ class ApiNhanhController extends Controller
             if($order){
                 $data = array();
                 $data['status_nhanh'] = $resp_end['status'];
+                if ($resp_end['status'] == 'Success'){
+                    $data['status'] = 1;
+                }elseif ($resp_end['status'] == 'Canceled'){
+                    $data['status'] = 2;
+                }
                 $data['status_description_nhanh'] = $resp_end['statusDescription'];
                 $data['shop_order_id'] = $shopOrderId;
                 $order->update($data);
