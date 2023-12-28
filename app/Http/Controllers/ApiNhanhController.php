@@ -332,11 +332,15 @@ class ApiNhanhController extends Controller
             $orderId = $resp_end['orderId']; // ID đơn hàng trên Nhanh.vn
             $shopOrderId = $resp_end['shopOrderId']; // shop order ID nếu đơn được bắn từ các hệ thống khác sang Nhanh.vn
             $order = Order::where('nhanh_order_id', $orderId)->first();
-            $data = array();
-            $data['status_nhanh'] = $resp_end['status'];
-            $data['status_description_nhanh'] = $resp_end['statusDescription'];
-            $data['shop_order_id'] = $shopOrderId;
-            return $order->update($data);
+            if($order){
+                $data = array();
+                $data['status_nhanh'] = $resp_end['status'];
+                $data['status_description_nhanh'] = $resp_end['statusDescription'];
+                $data['shop_order_id'] = $shopOrderId;
+                $order->update($data);
+                return response()->json(['message' => 'OK'], 200);
+            }
+            return response()->json(['message' => 'OK'], 200);
         } catch (\Exception $e) {
             \Log::info([
                 'message' => $e->getMessage(),
