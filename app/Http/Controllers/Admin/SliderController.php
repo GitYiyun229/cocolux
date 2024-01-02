@@ -57,12 +57,12 @@ class SliderController extends Controller
         try {
             $data = $req->validated();
             $image_root = '';
-            if (!empty($data['image_url'])){
-                $image_root = $data['image_url'];
-                $data['image_url'] = urldecode($image_root);
+            if (!empty($data['image'])){
+                $image_root = $data['image'];
+                $data['image'] = urldecode($image_root);
             }
             $model = $this->slideRepository->create($data);
-            if (!empty($data['image_url'])){
+            if (!empty($data['image'])){
                 $this->slideRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'slider');
             }
             DB::commit();
@@ -117,9 +117,9 @@ class SliderController extends Controller
         try {
             $data = $req->validated();
             $slider = $this->slideRepository->getOneById($id);
-            if (!empty($data['image_url']) && $data_root->image_url != $data['image_url']){
-                $this->slideRepository->removeImageResize($data_root->image_url,$this->resizeImage, $id,'slider');
-                $data['image_url'] = $this->slideRepository->saveFileUpload($data['image_url'],$this->resizeImage, $id,'slider');
+            if (!empty($data['image']) && $data_root->image_url != $data['image']){
+                $this->slideRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'slider');
+                $data['image'] = $this->slideRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'slider');
             }
             $slider->update($data);
             DB::commit();

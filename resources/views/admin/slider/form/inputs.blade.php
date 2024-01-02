@@ -45,25 +45,12 @@
     </div>
     <div class="col-sm-6">
         <div class="form-group">
-            <label>@lang('form.slider.image_url')</label> <span class="text-danger">*</span>
+            <label>@lang('form.slider.image')</label> <span class="text-danger">*</span>
             <div class="input-group">
-                @include('admin.components.buttons.image',['src' => isset($slider->image_url) ? $slider->image_url : old('image_url'),'name' => 'image_url'])
-                @if ($errors->has('image_url'))
+                @include('admin.components.buttons.image',['src' => isset($slider->image) ? $slider->image : old('image'),'name' => 'image'])
+                @if ($errors->has('image'))
                     <span class="help-block text-danger">
-                        <strong>{{ $errors->first('image_url') }}</strong>
-                    </span>
-                @endif
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="form-group">
-            <label>@lang('form.slider.mobile_url')</label> <span class="text-danger">*</span>
-            <div class="input-group">
-                @include('admin.components.buttons.image',['src' => isset($slider->mobile_url) ? $slider->mobile_url : old('mobile_url'),'name' => 'mobile_url'])
-                @if ($errors->has('mobile_url'))
-                    <span class="help-block text-danger">
-                        <strong>{{ $errors->first('mobile_url') }}</strong>
+                        <strong>{{ $errors->first('image') }}</strong>
                     </span>
                 @endif
             </div>

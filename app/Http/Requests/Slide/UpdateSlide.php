@@ -27,8 +27,7 @@ class UpdateSlide extends FormRequest
             'title' => 'required',
             'active' => 'required',
             'ordering' => 'nullable',
-            'mobile_url' => 'nullable',
-            'image_url' => 'nullable',
+            'image' => 'nullable',
             'url' => 'nullable',
             'content' => 'nullable',
         ];
