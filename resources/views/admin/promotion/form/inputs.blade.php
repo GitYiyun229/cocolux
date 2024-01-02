@@ -77,15 +77,31 @@
         </div>
     </div>
     <div class="col-sm-6">
-        <!-- text input -->
-        <div class="form-group">
-            <label>@lang('form.promotion.file')</label>
-            <input type="file" class="form-control" name="file" value="{{ old('applied_start_time') }}">
-            @if ($errors->has('file'))
-                <span class="help-block text-danger">
+        <div class="row">
+            <div class="col-sm-12">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.promotion.file')</label>
+                    <input type="file" class="form-control" name="file" value="">
+                    @if ($errors->has('file'))
+                        <span class="help-block text-danger">
                     <strong>{{ $errors->first('file') }}</strong>
                 </span>
-            @endif
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>Mã sku những sản phẩm xếp trước(cách nhau bởi dấu phẩy)</label>
+                    <textarea name="sort_product" placeholder="sku1,sku2" id="sort_product" class="form-control" cols="30" rows="5">{{ isset($promotion) ? $promotion->sort_product : old('sort_product') }}</textarea>
+                    @if ($errors->has('sort_product'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('sort_product') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
 </div>

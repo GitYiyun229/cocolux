@@ -14,12 +14,12 @@ class DealService
             $flash_sale = Promotions::where(['type' => 'flash_deal', 'id' => $flash_id])
                 ->where('applied_start_time', '<=', $now)
                 ->where('applied_stop_time', '>', $now)
-                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->first();
+                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time','sort_product')->first();
         }else{
             $flash_sale = Promotions::where(['type' => 'flash_deal'])
                 ->where('applied_start_time', '<=', $now)
                 ->where('applied_stop_time', '>', $now)
-                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->get();
+                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time','sort_product')->get();
         }
 
         return $flash_sale;
@@ -32,12 +32,12 @@ class DealService
             $hot_deal = Promotions::where(['type' => 'hot_deal', 'id' => $hot_id])
                 ->where('applied_start_time', '<=', $now)
                 ->where('applied_stop_time', '>', $now)
-                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->orderBy('id','DESC')->first();
+                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time','sort_product')->orderBy('id','DESC')->first();
         }else{
             $hot_deal = Promotions::where(['type' => 'hot_deal'])
                 ->where('applied_start_time', '<=', $now)
                 ->where('applied_stop_time', '>', $now)
-                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time')->orderBy('id','DESC')->get();
+                ->select('id','name', 'code','thumbnail_url','applied_start_time','applied_stop_time','sort_product')->orderBy('id','DESC')->get();
         }
 
         return $hot_deal;

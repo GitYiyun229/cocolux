@@ -689,21 +689,22 @@ class ProductController extends Controller
 
         $productOptions = null;
         if ($promotion_hots){
-            $productOptions = ProductOptions::
-            select('id','sku', 'slug','title','price','normal_price','images','flash_deal','hot_deal','parent_id')
-                ->with(['product' => function($query){
-                    $query->select('id','slug','brand');
+            $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'images', 'flash_deal', 'hot_deal', 'parent_id')
+                ->with(['product' => function ($query) {
+                    $query->select('id', 'slug', 'brand');
                 }])
-                ->where('slug', '!=',null)
-                ->where('hot_deal->id',$promotion_hots->id)
-                ->where(function($query) use ($promotions_flash_id){
-                    if ($promotions_flash_id){
+                ->where('slug', '!=', null)
+                ->where('hot_deal->id', $promotion_hots->id)
+                ->where(function ($query) use ($promotions_flash_id) {
+                    if ($promotions_flash_id) {
                         $query->where(function ($subQuery) use ($promotions_flash_id) {
                             $subQuery->whereJsonDoesntContain('flash_deal->id', $promotions_flash_id)
                                 ->orWhereNull('flash_deal');
                         });
                     }
-                })->orderBy('updated_at','DESC')->paginate(30);
+                })
+                ->orderByRaw("FIELD(sku, $promotion_hots->sort_product)")
+                ->paginate(30);
         }
 
         return view('web.product.deal_hot_detail',compact('productOptions','promotion_hots'));

@@ -75,9 +75,10 @@ class HomeController extends Controller
 
         $product_flash = ProductOptions::whereIn('flash_deal->id',$promotions_flash_id)->where('slug', '!=',null)
             ->with(['product' => function($query){
-                $query->select('id','is_hot','slug');
-            }])
-            ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')->limit(10)->get();
+                $query->select('id','is_hot','slug','ordering')->orderBy('ordering', 'ASC');
+            }])->whereHas('product', function ($query) {
+                $query->where('is_hot', 1);
+            })->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')->limit(10)->get();
 
         $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
             ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price','hot_deal','flash_deal')
@@ -99,10 +100,10 @@ class HomeController extends Controller
                     $query->where('is_home', 1)->where('category_path', 'like', '%' . $item->id . '%');
                 })
                 ->with(['product' => function($query){
-                    $query->select('id','is_home','slug');
+                    $query->select('id','is_home','slug','ordering')->orderBy('ordering', 'ASC');
                 }])
                 ->select('id','title','slug','images','sku','price','parent_id','normal_price','hot_deal','flash_deal')
-                ->limit(10)->orderBy('id', 'DESC')->get();
+                ->limit(10)->get();
             $cat_sub[$item->id] = ProductsCategories::where(['is_home' => 1,'active' => 1])
                 ->where('parent_id', 'like', '%' . $item->id . '%')
                 ->select('id','title','slug','image','logo')
