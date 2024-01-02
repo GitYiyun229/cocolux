@@ -96,6 +96,18 @@
                     </select>
                 </div>
             </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.attribute-value.ordering')</label>
+                    <input type="text" class="form-control" name="ordering" value="{{ isset($attribute_value) ? $attribute_value->ordering : old('ordering') }}" >
+                    @if ($errors->has('ordering'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('ordering') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
             <div class="col-sm-12">
                 <div class="form-group">
                     <label>@lang('form.content')</label> <span class="text-danger">*</span>

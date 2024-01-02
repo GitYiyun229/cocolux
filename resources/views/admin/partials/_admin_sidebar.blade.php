@@ -120,7 +120,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            <li class="nav-item">
+                            <li class="nav-item d-none">
                                 <a href="{{ route('admin.attribute.index') }}" class="nav-link @if (request()->is('admin/attribute*')) active @endif">
                                     <i class="nav-icon fas fa-layer-group"></i>
                                     <p>

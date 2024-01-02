@@ -4,7 +4,22 @@
 
 @section('content')
     <div class="row mb-3">
-        <a href="{{ route('admin.attribute-value.create') }}" class="btn btn-primary float-right"><i class="fa fa-plus"></i> @lang('form.button.create')</a>
+        <div class="col-sm-9">
+            <form action="{{ route('admin.attribute-value.index') }}" method="GET" class="form-inline">
+                <select name="category" class="form-control">
+                    <option value="">@lang('form.attribute-value.category')</option>
+                    @forelse($categories as $key => $category)
+                        <option value="{{ $category['id'] }}" @if (isset($data['category']) && $data['category'] ==  $category['id']) selected @endif>{{ $category['name'] }}</option>
+                    @empty
+                    @endforelse
+                </select>
+                <button type="submit" class="btn btn-primary ml-3"><i class="fa fa-search"></i> @lang('form.button.search')</button>
+                <a class="btn btn-success ml-2" href="{{ route('admin.attribute-value.index') }}"><i class="fa fa-recycle"></i> @lang('form.button.refresh')</a>
+            </form>
+        </div>
+        <div class="col-sm-3">
+            <a href="{{ route('admin.attribute-value.create') }}" class="btn btn-primary float-right"><i class="fa fa-plus"></i> @lang('form.button.create')</a>
+        </div>
     </div>
     {!! $dataTable->table(['id' => 'attribute-value-table', 'class' => 'table table-striped table-bordered table-width-auto']) !!}
 @endsection

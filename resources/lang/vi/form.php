@@ -207,6 +207,7 @@ return [
         'name' => 'Tên thuộc tính',
         'slug' => 'Link',
         'code' => 'Mã thuộc tính',
+        'ordering' => 'Thứ tự',
         'active' => 'Kích hoạt',
         'category' => 'Danh mục thuộc tính',
         'update' => 'Update',
