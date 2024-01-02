@@ -99,10 +99,10 @@ class HomeController extends Controller
                     $query->where('is_home', 1)->where('category_path', 'like', '%' . $item->id . '%');
                 })
                 ->with(['product' => function($query){
-                    $query->select('id','is_home','slug');
+                    $query->select('id','is_home','slug')->orderBy('ordering', 'ASC');
                 }])
                 ->select('id','title','slug','images','sku','price','parent_id','normal_price','hot_deal','flash_deal')
-                ->limit(10)->orderBy('id', 'DESC')->get();
+                ->limit(10)->get();
             $cat_sub[$item->id] = ProductsCategories::where(['is_home' => 1,'active' => 1])
                 ->where('parent_id', 'like', '%' . $item->id . '%')
                 ->select('id','title','slug','image','logo')
