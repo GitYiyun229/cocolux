@@ -5,7 +5,7 @@ namespace League\Flysystem;
 use RuntimeException;
 use SplFileInfo;
 
-class NotSupportedException extends RuntimeException
+class NotSupportedException extends RuntimeException implements FilesystemException
 {
     /**
      * Create a new exception for a link.
@@ -18,7 +18,7 @@ class NotSupportedException extends RuntimeException
     {
         $message = 'Links are not supported, encountered link at ';
 
-        return new static($message.$file->getPathname());
+        return new static($message . $file->getPathname());
     }
 
     /**

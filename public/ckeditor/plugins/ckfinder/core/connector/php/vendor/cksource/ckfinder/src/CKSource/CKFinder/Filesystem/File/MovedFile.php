@@ -3,8 +3,8 @@
 /*
  * CKFinder
  * ========
- * http://cksource.com/ckfinder
- * Copyright (C) 2007-2016, CKSource - Frederico Knabben. All rights reserved.
+ * https://ckeditor.com/ckfinder/
+ * Copyright (c) 2007-2021, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -41,9 +41,9 @@ class MovedFile extends CopiedFile
     /**
      * Moves the current file.
      *
-     * @return bool `true` if the file was moved successfully.
-     *
      * @throws \Exception
+     *
+     * @return bool `true` if the file was moved successfully
      */
     public function doMove()
     {

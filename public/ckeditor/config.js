@@ -1,34 +1,47 @@
-/**
- * @license Copyright (c) 2003-2017, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.md or http://ckeditor.com/license
+﻿/**
+ * @license Copyright (c) 2003-2022, CKSource Holding sp. z o.o. All rights reserved.
+ * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
  */
 
 CKEDITOR.editorConfig = function( config ) {
-    //Define changes to default configuration here. For example:
-    config.language = 'vi';
-    //config.uiColor = '#AADC6E';
-	//config.extraPlugins = ‘locationmap’;
-	config.locationMapPath = '/ckeditor/plugins/locationmap/';
+	// Define changes to default configuration here.
+	// For complete reference see:
+	// https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
+
+	// The toolbar groups arrangement, optimized for two toolbar rows.
+	config.toolbarGroups = [
+		{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+		{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
+		{ name: 'links' },
+		{ name: 'insert' },
+		{ name: 'forms' },
+		{ name: 'tools' },
+		{ name: 'document',	   groups: [ 'mode', 'document', 'doctools' ] },
+		{ name: 'others' },
+		'/',
+		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+		{ name: 'styles' },
+		{ name: 'colors' },
+		{ name: 'about' }
+	];
+
+	config.language = 'vi';
 	config.filebrowserBrowseUrl      = '/ckfinder/ckfinder.html';
 	config.filebrowserImageBrowseUrl = '/ckfinder/ckfinder.html?type=Images';
 	config.filebrowserFlashBrowseUrl = '/ckfinder/ckfinder.html?type=Flash';
 	config.filebrowserUploadUrl      = '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files';
 	config.filebrowserImageUploadUrl = '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images';
 	config.filebrowserFlashUploadUrl = '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash';
+	config.extraPlugins = 'youtube,pastefromgdocs,pastefromword,collapsibleItem,wenzgmap,html5video,colorbutton,justify,btgrid';
 
-    config.htmlEncodeOutput = false;
-    config.entities = false;
-    config.allowedContent=true;
-    config.pasteFromWordRemoveStyle = true;
-    config.removeFormatAttributes = '';
-	config.extraPlugins = 'youtube,wordcount,collapsibleItem';
-    config.height = 400;
-	config.allowedContent = false; // khử hết định dạng word
+	config.height = 800;
+	config.extraPlugins = 'youtube';
+    config.extraPlugins = 'youtube,pastefromgdocs,pastefromword,collapsibleItem,html5video,colorbutton,justify,btgrid';
+    config.allowedContent = false;
 	config.removeButtons = 'Underline,Subscript,Superscript';
-	config.format_tags = 'div;p;h1;h2;h3;pre'; //cho phép các thẻ trong ckeditor
-	config.disallowedContent = '*[id]'; // ko chấp nhận các thuộc tính này trong style
-	config.filebrowserUploadMethod = 'form';
+	config.format_tags = 'p;h1;h2;h3;pre';
+	config.disallowedContent = 'p[clas*];*{text*};p*{color*}*;div[clas*];div[class*];*[dir]';
+	config.extraAllowedContent = 'iframe[*]';
 	config.removeDialogTabs = 'image:advanced;link:advanced';
-    config.ignoreEmptyParagraph = false;
-
 };
