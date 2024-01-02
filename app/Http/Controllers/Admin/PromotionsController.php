@@ -48,10 +48,12 @@ class PromotionsController extends Controller
         try {
             $file = $request->file('file');
             $type = $request->input('type');
+            $sort_product = $request->input('sort_product');
             $data = array();
             $data['name'] = $request->input('name');
             $data['thumbnail_url'] = $request->input('thumbnail_url');
             $data['type'] = $type;
+            $data['sort_product'] = $sort_product;
             $data['applied_start_time'] = Carbon::parse($request->input('applied_start_time'));
             $data['applied_stop_time'] = Carbon::parse($request->input('applied_stop_time'));
             $promotion = Promotions::create($data);
@@ -123,10 +125,12 @@ class PromotionsController extends Controller
         try {
             $file = $request->file('file');
             $type = $request->input('type');
+            $sort_product = $request->input('sort_product');
             $data = array();
             $data['name'] = $request->input('name');
             $data['thumbnail_url'] = $request->input('thumbnail_url');
             $data['type'] = $type;
+            $data['sort_product'] = $sort_product;
             $data['applied_start_time'] = Carbon::parse($request->input('applied_start_time'));
             $data['applied_stop_time'] = Carbon::parse($request->input('applied_stop_time'));
 

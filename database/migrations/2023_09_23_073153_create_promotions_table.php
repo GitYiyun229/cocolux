@@ -24,6 +24,7 @@ class CreatePromotionsTable extends Migration
             $table->timestamp('applied_start_time')->nullable();
             $table->string('type')->nullable();
             $table->string('status')->nullable();
+            $table->text('sort_product')->nullable();
             $table->timestamps();
         });
     }

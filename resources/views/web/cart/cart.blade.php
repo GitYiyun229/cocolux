@@ -43,11 +43,11 @@
                         </tr>
                         @empty
                         @endforelse
-                        <tr>
-                            <td colspan="6">
-                                <i class="fa-solid fa-truck-fast me-2"></i> Miễn phí vận chuyển toàn quốc cho đơn hàng từ 3 sản phẩm (99k/SP)
-                            </td>
-                        </tr>
+{{--                        <tr>--}}
+{{--                            <td colspan="6">--}}
+{{--                                <i class="fa-solid fa-truck-fast me-2"></i> Miễn phí vận chuyển toàn quốc cho đơn hàng từ 3 sản phẩm (99k/SP)--}}
+{{--                            </td>--}}
+{{--                        </tr>--}}
                         </tbody>
                     </table>
                 </div>
