@@ -702,9 +702,11 @@ class ProductController extends Controller
                                 ->orWhereNull('flash_deal');
                         });
                     }
-                })
-                ->orderByRaw("FIELD(sku, $promotion_hots->sort_product)")
-                ->paginate(30);
+                });
+            if (!empty($promotion_hots->sort_product)) {
+                $productOptions = $productOptions->orderByRaw("FIELD(sku, $promotion_hots->sort_product)");
+            }
+            $productOptions = $productOptions->paginate(30);
         }
 
         return view('web.product.deal_hot_detail',compact('productOptions','promotion_hots'));
