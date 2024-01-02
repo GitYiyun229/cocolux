@@ -88,9 +88,11 @@ class SliderDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('title'),
-            Column::make('image_url')->title(trans('form.slider.image'))->render([
+            Column::make('image')->title(trans('form.banner.image'))->render([
                 'renderImage(data)'
             ]),
+            Column::make('url')->title(trans('form.banner.url')),
+            Column::make('ordering')->title('Sắp xếp'),
             Column::make('active'),
             Column::make('created_at'),
             Column::make('updated_at'),
