@@ -92,7 +92,7 @@ class SliderDataTable extends DataTable
                 'renderImage(data)'
             ]),
             Column::make('url')->title(trans('form.banner.url')),
-            Column::make('ordering')->title('Sắp xếp'),
+            Column::make('ordering')->title('Thứ tự'),
             Column::make('active'),
             Column::make('created_at'),
             Column::make('updated_at'),

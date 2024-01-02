@@ -27,8 +27,7 @@ class CreateSlide extends FormRequest
             'title' => 'required',
             'active' => 'required',
             'ordering' => 'nullable',
-            'image_url' => 'nullable',
-            'mobile_url' => 'nullable',
+            'image' => 'nullable',
             'url' => 'nullable',
             'content' => 'nullable',
         ];
