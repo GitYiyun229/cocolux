@@ -35,7 +35,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.filebrowserFlashUploadUrl = '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash';
 	config.extraPlugins = 'youtube,pastefromgdocs,pastefromword,collapsibleItem,wenzgmap,html5video,colorbutton,justify,btgrid';
 
-	config.height = 800;
+	config.height = 400;
 	config.extraPlugins = 'youtube';
     config.extraPlugins = 'youtube,pastefromgdocs,pastefromword,collapsibleItem,html5video,colorbutton,justify,btgrid';
     config.allowedContent = false;
