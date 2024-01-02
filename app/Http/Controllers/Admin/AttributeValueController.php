@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\Scopes\AttributeValueDataTableScope;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\AttributeValues;
@@ -22,7 +23,13 @@ class AttributeValueController extends Controller
      */
     public function index(AttributeValueDataTable $dataTable)
     {
-        return $dataTable->render('admin.attribute-value.index');
+        $data = request()->all();
+        $categories = Attribute::all();
+        if ($categories->count() == 0){
+            Session::flash('danger', 'Chưa có danh mục nào');
+            return redirect()->route('admin.attribute.index');
+        }
+        return $dataTable->addScope(new AttributeValueDataTableScope())->render('admin.attribute-value.index', compact('data','categories'));
     }
 
     /**
@@ -150,6 +157,19 @@ class AttributeValueController extends Controller
         return [
             'status' => true,
             'message' => trans('message.change_active_attribute_value_success')
+        ];
+    }
+    /**
+     * @param $id
+     * @return array
+     */
+    public function changeIsHome($id)
+    {
+        $attribute_value = AttributeValues::findOrFail($id);
+        $attribute_value->update(['is_home' => !$attribute_value->is_home]);
+        return [
+            'status' => true,
+            'message' => trans('message.change_is_home_attribute_value_success')
         ];
     }
 }

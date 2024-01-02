@@ -296,6 +296,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::post('/update/{id}', 'AttributeValueController@update')->name('update')->middleware('permission:edit_attribute_value');
         Route::post('/destroy/{id}', 'AttributeValueController@destroy')->name('destroy')->middleware('permission:delete_attribute_value');
         Route::post('/change-active-attribute-value/{id}', 'AttributeValueController@changeActive')->name('changeActive')->middleware('permission:edit_attribute_value');
+        Route::post('/change-is-home-attribute-value/{id}', 'AttributeValueController@changeIsHome')->name('changeIsHome')->middleware('permission:edit_attribute_value');
     });
 
     Route::group(['prefix' => 'banner', 'as' => 'banner.', 'middleware' => ['permission:view_banner']], function () {

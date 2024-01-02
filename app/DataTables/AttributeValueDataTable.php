@@ -23,8 +23,17 @@ class AttributeValueDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('active', function ($q) {
-                $url = route('admin.attribute.changeActive', $q->id);
+                $url = route('admin.attribute-value.changeActive', $q->id);
                 $status = $q->active == AttributeValues::STATUS_ACTIVE ? 'checked' : null;
+                return view('admin.components.buttons.change_status', [
+                    'url' => $url,
+                    'lowerModelName' => 'attribute-values',
+                    'status' => $status,
+                ])->render();
+            })
+            ->editColumn('is_home', function ($q) {
+                $url = route('admin.attribute-value.changeIsHome', $q->id);
+                $status = $q->is_home == AttributeValues::IS_HOME ? 'checked' : null;
                 return view('admin.components.buttons.change_status', [
                     'url' => $url,
                     'lowerModelName' => 'attribute-values',
@@ -42,7 +51,7 @@ class AttributeValueDataTable extends DataTable
                 $urlDelete = route('admin.attribute-value.destroy', $q->id);
                 $lowerModelName = strtolower(class_basename(new AttributeValues()));
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
-            })->rawColumns(['active','action']);
+            })->rawColumns(['active','is_home','action']);
     }
 
     /**
@@ -89,6 +98,8 @@ class AttributeValueDataTable extends DataTable
             Column::make('id'),
             Column::make('name'),
             Column::make('active'),
+            Column::make('is_home')->title('Nổi bật')->searchable(false),
+            Column::make('ordering')->title('Thứ tự'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')

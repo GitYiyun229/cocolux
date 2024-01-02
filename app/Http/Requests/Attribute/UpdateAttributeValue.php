@@ -28,6 +28,7 @@ class UpdateAttributeValue extends FormRequest
             'slug' => 'nullable',
             'image' => 'nullable',
             'attribute_id' => 'nullable',
+            'ordering' => 'nullable',
             'content' => 'nullable',
             'active' => 'required',
             'is_home' => 'required',
