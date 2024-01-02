@@ -10,7 +10,7 @@
                         @forelse($slider as $item)
                         <div>
                             <a href="{!! $item->url !!}">
-                                <img src="{{ asset(replace_image($item->image_url)) }}" alt="{{ $item->content }}" class="img-fluid">
+                                <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->content }}" class="img-fluid">
                             </a>
                         </div>
                         @empty
