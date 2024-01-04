@@ -73,7 +73,7 @@ class HomeController extends Controller
         $hot_deal = $this->dealService->isHotDealAvailable();
         $promotions_hot_id = $hot_deal->pluck('id')->toArray();
 
-        $product_flash = ProductOptions::whereIn('flash_deal->id',$promotions_flash_id)->where('slug', '!=',null)
+        $product_flash = ProductOptions::where(['active' => 1, 'is_default' => 1])->whereIn('flash_deal->id',$promotions_flash_id)->where('slug', '!=',null)
             ->with(['product' => function($query){
                 $query->select('id','is_hot','slug','ordering')->orderBy('ordering', 'ASC');
             }])->whereHas('product', function ($query) {
