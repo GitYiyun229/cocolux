@@ -267,6 +267,39 @@ class ApiNhanhController extends Controller
         ));
     }
 
+    public function listCoupons (){
+        $api = "/api/promotion/coupon?act=list";
+        $client = new Client();
+
+        $data = [
+            'page' => 4
+        ];
+        $this->request_params['data'] = json_encode($data);
+
+        $response = $client->post($this->linkApi.$api,[
+            'form_params' => $this->request_params
+        ]);
+        $data = json_decode($response->getBody(), true);
+        if ($data['code'] == 0){
+            return response()->json(array(
+                'error' => true,
+                'message'   => 'Chưa lấy được mã giảm giá',
+            ));
+        }
+        $total_page = $data['data']['totalPages'];
+        $page = $data['data']['page'];
+        $result = $data['data']['result'];
+        $list_coupon = array();
+        foreach ($result as $item){
+            if ($item['status'] == 1 && count($item['depotIds']) == 0){
+                $list_coupon[] = $item;
+            }
+        }
+        dd($list_coupon);
+        $now = Carbon::now();
+
+    }
+
     public function pushOrderNhanh ($id){
         $order = Order::findOrFail($id);
         $products = OrderItem::with(['productOption' => function($query){
