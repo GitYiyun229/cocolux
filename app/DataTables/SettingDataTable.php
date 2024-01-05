@@ -37,7 +37,7 @@ class SettingDataTable extends DataTable
             ->addColumn('display', function ($q) {
                 if ($q->type == 2) {
                     return '<img src="' . asset($q->value) . '" width="200px" >';
-                } elseif ($q->type == 3) {
+                } elseif ($q->type == 3 || $q->type == 1) {
                     return '<span class="text-red">Nội dung editor</span>';
                 } else {
                     return $q->value;
