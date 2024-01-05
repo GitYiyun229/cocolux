@@ -77,6 +77,17 @@ class ProductController extends Controller
         return redirect()->to($url_redirect);
     }
 
+    public function cancalOrder()
+    {
+        getRequirement::setKey($this->apiKey, $this->apiSecret);
+        $data = [
+            'id' => 141127
+        ];
+        $webhook = new Connect();
+        $a = $webhook->cancelOrder($data);
+        return redirect()->route('home');
+    }
+
     public function getListPayment()
     {
         getRequirement::setKey($this->apiKey, $this->apiSecret);
