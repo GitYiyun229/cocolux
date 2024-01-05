@@ -28,9 +28,17 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Order\CreateOrder;
 use App\Services\DealService;
 use GuzzleHttp\Client;
+use BaoKim\BaokimSdk\Connect;
+use BaoKim\BaokimSdk\getRequirement;
+use BaoKim\BaokimSdk\Webhook;
 
 class ProductController extends Controller
 {
+
+    protected $merchantId = 40002;
+    protected $apiKey = 'a18ff78e7a9e44f38de372e093d87ca1';
+    protected $apiSecret = '9623ac03057e433f95d86cf4f3bef5cc';
+    protected $apiUrl = 'https://dev-api.baokim.vn';
 
     protected $linkApi = "https://open.nhanh.vn";
     protected $request_params = [
@@ -47,6 +55,46 @@ class ProductController extends Controller
         $this->productCategoryRepository = $productCategoryRepository;
         $this->productRepository = $productRepository;
         $this->dealService = $dealService;
+    }
+
+    public function orderSend(Request $request)
+    {
+        getRequirement::setKey($this->apiKey, $this->apiSecret);
+        $webhook = new Connect();
+        $data = [
+            'mrc_order_id' => 'PAY'.time(),
+            'total_amount' => 12000,
+            'description' => 'Đơn hàng từ cocolux.com',
+            'url_success' => route('orderProductSuccess',['id'=>10]),
+            "merchant_id" => $this->merchantId, //baokim cung cap
+//            "url_detail" => route('thanh-toan-that-bai'),
+            'webhooks' => route('verifyWebhook'), //nhan thông tin thanh toan
+            'customer_phone' => '0888888888',
+            'customer_name' => 'Tên khach hàng',
+        ];
+        $response = $webhook->createOrder($data);
+        $url_redirect = $response['data']['paymentUrl'];
+        return redirect()->to($url_redirect);
+    }
+
+    public function getListPayment()
+    {
+        getRequirement::setKey($this->apiKey, $this->apiSecret);
+        $data = [];
+        $webhook = new Connect();
+        $a = $webhook->getBpmList($data);
+        dd($a);
+    }
+
+    public function verifyWebhook(Request $request)
+    {
+        $webhook = new Webhook($this->apiSecret);
+        $webhook->verify($request->getContent());
+        $array_success = [
+            'err_code' => 0,
+            'message' => "sucess"
+        ];
+        return json_encode($array_success);
     }
 
     public function cat(Request $request, $slug,$id){
