@@ -90,7 +90,7 @@
                         </h1>
 
                         <div class="detail-summary">
-                            {{ $article->description }}
+                            {!! $article->description !!}
                         </div>
                         @if($products_choose)
                         <div class="list-product-article mb-4">
