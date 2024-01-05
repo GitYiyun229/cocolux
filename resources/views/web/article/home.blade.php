@@ -67,7 +67,7 @@
                                     {{ $item->format_date_created }}
                                 </div>
                                 <div class="news-summary">
-                                    {{ $item->description }}
+                                    {!! $item->description !!}
                                 </div>
                             </div>
                         </a>
@@ -91,7 +91,7 @@
                                     {{ $item->format_date_created }}
                                 </div>
                                 <div class="news-summary">
-                                    {{ $item->description }}
+                                    {!! $item->description !!}
                                 </div>
                             </div>
                         </a>

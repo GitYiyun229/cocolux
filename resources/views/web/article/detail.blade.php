@@ -250,7 +250,7 @@
                                                 <img src="{{ asset($article_item->image_change_url) }}" alt="{{ $article_item->title }}" class="img-fluid rounded">
                                                 <h4 class="my-3 title-blog-item">{{ $article_item->title }}</h4>
                                                 <div class="summary-blog d-none">
-                                                    {{ $article_item->description }}
+                                                    {!! $article_item->description !!}
                                                 </div>
                                             </a>
                                         </div>
@@ -300,7 +300,7 @@
                                         {{ $item->format_date_created }}
                                     </div>
                                     <div class="news-summary">
-                                        {{ $item->description }}
+                                        {!! $item->description !!}
                                     </div>
                                 </div>
                             </a>
