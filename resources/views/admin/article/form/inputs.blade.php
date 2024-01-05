@@ -136,7 +136,7 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <label>@lang('form.description')</label> <span class="text-danger">*</span>
-                    <textarea class="form-control" rows="3" name="description" required >{{ isset($article) ? $article->description : old('description') }}</textarea>
+                    <textarea class="form-control" rows="3" id="description" name="description" required >{{ isset($article) ? $article->description : old('description') }}</textarea>
                     @if ($errors->has('description'))
                         <span class="help-block text-danger">
                             <strong>{{ $errors->first('description') }}</strong>
@@ -372,6 +372,7 @@
     <script>
         CKEDITOR.replace( 'content_faq' );
         CKEDITOR.replace( 'content' );
+        CKEDITOR.replace( 'description' );
         const autoCompleteJS = new autoComplete({
             selector: "#search_product",
             placeHolder: "Tìm sản phẩm...",
