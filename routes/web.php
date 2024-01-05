@@ -38,7 +38,7 @@ Route::any('/web-hook-call-back', 'ApiNhanhController@WebHookCallBack')->name('W
 Route::any('/get-products', 'ApiNhanhController@getProducts')->name('getProducts');
 Route::any('/get-inventory', 'ApiNhanhController@inventory')->name('inventory');
 Route::post('/check-coupon', 'ApiNhanhController@checkCoupon')->name('checkCoupon');
-Route::get('/list-coupons', 'ApiNhanhController@listCoupons')->name('listCoupons');
+//Route::get('/list-coupons', 'ApiNhanhController@listCoupons')->name('listCoupons');
 
 Route::redirect('/danh-muc/trang-diem-makeup-i.1', '/danh-muc/trang-diem-makeup-i.83', 301);
 Route::redirect('/danh-muc/kem-lot-makeup-primer-i.9', '/danh-muc/kem-lot-i.85', 301);
