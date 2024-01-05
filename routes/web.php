@@ -161,6 +161,7 @@ Route::group(['namespace' => 'Web'], function (){
     Route::get('/order-test', 'ProductController@orderSend')->name('orderSend');
     Route::get('/get-list-payment', 'ProductController@getListPayment')->name('getListPayment');
     Route::get('/verifyWebhook', 'ProductController@verifyWebhook')->name('verifyWebhook');
+    Route::get('/huy-don-hang', 'ProductController@cancalOrder')->name('cancalOrder');
 });
 
 //Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
