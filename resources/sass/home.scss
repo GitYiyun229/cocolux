@@ -47,7 +47,95 @@
         z-index: 1;
     }
 }
+.list-coupon{
+    margin-bottom: 30px;
+    h2{
+        color: #000;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 20px;
+        margin-bottom: 20px;
+    }
+    .slide-main-coupon{
+        .slide-template-slick-coupon{
+            .item-coupon{
+                background: url("../images/coupon-s.png") no-repeat left center;
+                background-size: cover;
+                .box-coupon-right{
+                    border-left: 1px dotted #ddd;
+                }
 
+                .box-coupon{
+                    padding: 10px;
+                    .sub-title-coupon{
+                        color: #000;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 20px;
+                        margin-bottom: 2px;
+                    }
+                    .voucher-detail{
+                        color: #707070;
+                        font-size: 12px;
+                        p{
+                            font-size: 11px;
+                            margin-bottom: 4px;
+                        }
+                    }
+                    .progress{
+                        height: 4px;
+                    }
+                    .btn-call-modal{
+                        color: #C73030;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: normal;
+                    }
+                    button{
+                        color: #FFF;
+                        font-size: 13px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 20px;
+                    }
+                }
+                .box-coupon-left{
+                    padding-left: 20px;
+                }
+            }
+        }
+        .slick-arrow{
+            box-shadow: 0 3px 6px rgba(0,0,0,.15);
+            width: 20px;
+            height: 20px;
+            z-index: 1;
+            border-radius: 1000%;
+            &::before{
+                font-family: "Font Awesome 6 Free";
+                font-weight: 900;
+                color: #000;
+                font-size: 12px;
+                opacity: 1;
+            }
+        }
+        .slick-prev{
+            left: 5px;
+            &::before{
+                content: "\f104";
+            }
+        }
+        .slick-next{
+            right: 5px;
+            &::before{
+                content: "\f105";
+
+            }
+        }
+    }
+}
 .slide-template{
     .slide-top{
         display: flex;
@@ -567,5 +655,84 @@
     }
     .slide-template .slide-more{
         font-size: 14px;
+    }
+}
+#info-coupon-detail{
+.modal-header{
+    .modal-title{
+        color: #000;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px;
+    }
+}
+    .modal-body{
+        .box1{
+            color:#707070;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 20px;
+            b{
+                display: block;
+                color: #000;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 20px;
+            }
+        }
+        .box2{
+            color: #000;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .coupon-here{
+                color: #000;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: bold;
+                line-height: 20px;
+            }
+        }
+        .box3{
+            color: #707070;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 20px;
+            p{
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 20px;
+                margin-bottom: 5px;
+                color: #000;
+            }
+        }
+        .box4{
+            color: #707070;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 20px;
+            .detail-coupon{
+                color: #000;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 20px;
+            }
+        }
+    }
+    .modal-footer{
+        button{
+            width: 100%;
+        }
     }
 }

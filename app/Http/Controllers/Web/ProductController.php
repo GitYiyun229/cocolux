@@ -1055,6 +1055,7 @@ class ProductController extends Controller
             Session::forget('cart');
             Session::flash('success', trans('message.create_order_success'));
             app('App\Http\Controllers\ApiNhanhController')->pushOrderNhanh($order->id);
+            app('App\Http\Controllers\ApiNhanhController')->listCoupons();
             return redirect()->route('orderProductSuccess',['id'=>$order->id]);
         } catch (\Exception $ex) {
             DB::rollBack();

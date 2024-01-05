@@ -6,6 +6,7 @@ use App\Models\Districts;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ProductOptions;
+use App\Models\Setting;
 use App\Models\Store;
 use App\Services\DealService;
 use Carbon\Carbon;
@@ -267,12 +268,13 @@ class ApiNhanhController extends Controller
         ));
     }
 
-    public function listCoupons (){
+    public function callApiListCoupon($page = 1)
+    {
         $api = "/api/promotion/coupon?act=list";
         $client = new Client();
 
         $data = [
-            'page' => 4
+            'page' => $page
         ];
         $this->request_params['data'] = json_encode($data);
 
@@ -286,18 +288,72 @@ class ApiNhanhController extends Controller
                 'message'   => 'Chưa lấy được mã giảm giá',
             ));
         }
+        return $data;
+    }
+
+    public function getCouponFirst ($batchId){
+        $api = "/api/promotion/coupon?act=codes";
+        $client = new Client();
+
+        $data = [
+            'batchId' => $batchId
+        ];
+        $this->request_params['data'] = json_encode($data);
+
+        $response = $client->post($this->linkApi.$api,[
+            'form_params' => $this->request_params
+        ]);
+        $data = json_decode($response->getBody(), true);
+        $result_first = $data['data']['result']['0'];
+        return $result_first;
+    }
+
+    public function listCoupons (){
+        $data = $this->callApiListCoupon();
+
         $total_page = $data['data']['totalPages'];
         $page = $data['data']['page'];
         $result = $data['data']['result'];
+        $now = Carbon::now();
         $list_coupon = array();
         foreach ($result as $item){
-            if ($item['status'] == 1 && count($item['depotIds']) == 0){
+            if ($item['status'] == 1 && count($item['depotIds']) == 0 && $item['startDate'] < $now && $item['endDate'] > $now){
+                $a = Carbon::createFromFormat('Y-m-d', $item['endDate']);
+                $item['remainingDays'] = $now->diffInDays($a);
+                $first_coupon = $this->getCouponFirst($item['id']);
+                $item['first_coupon'] = $first_coupon;
+                $progressbar = ($item['first_coupon']['usedTimes']/$item['first_coupon']['canUsedTimes'])*100;
+                $item['progressbar'] = $progressbar;
                 $list_coupon[] = $item;
             }
         }
-        dd($list_coupon);
-        $now = Carbon::now();
+        if ($total_page != $page){
+            for ($page = 2; $page <= $total_page; $page++) {
+                $data2 = $this->callApiListCoupon($page);
+                $result2 = $data2['data']['result'];
+                foreach ($result2 as $item){
+                    if ($item['status'] == 1 && count($item['depotIds']) == 0 && $item['startDate'] < $now && $item['endDate'] > $now){
+                        $a = Carbon::createFromFormat('Y-m-d', $item['endDate']);
+                        $item['remainingDays'] = $now->diffInDays($a);
+                        $first_coupon = $this->getCouponFirst($item['id']);
+                        $item['first_coupon'] = $first_coupon;
+                        $progressbar = ($item['first_coupon']['usedTimes']/$item['first_coupon']['canUsedTimes'])*100;
+                        $item['progressbar'] = $progressbar;
+                        $list_coupon[] = $item;
+                    }
+                }
+            }
+        }
+        $list_coupon_new = json_encode($list_coupon);
+        $setting = Setting::findOrFail(19);
+        $setting->update([
+            'value' => $list_coupon_new,
+        ]);
 
+        return response()->json(array(
+            'error' => false,
+            'message'   => 'Update mã giảm giá thành công',
+        ));
     }
 
     public function pushOrderNhanh ($id){
