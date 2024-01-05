@@ -1,3 +1,36 @@
-.total-brand{font-size:18px}.alphabet-brand{background:#fff;border-bottom:1px solid #d4d4d4;border-top:1px solid #d4d4d4;display:flex;gap:30px;overflow-x:auto;padding:10px;position:sticky;top:60px;transition:all .3s ease;z-index:9}.alphabet-brand .alphabet-brand-item,.group-title{font-size:22px}.group-title{border-bottom:1px solid #d4d4d4;margin-bottom:10px;padding:10px}.group-item{grid-gap:10px;display:grid;grid-template-columns:repeat(6,1fr)}.group-item .brand-template{background:#fff}
+.total-brand {
+  font-size: 18px;
+}
 
-/*# sourceMappingURL=brand-list.css.map*/
+.alphabet-brand {
+  position: sticky;
+  top: 60px;
+  z-index: 9;
+  background: #fff;
+  padding: 10px;
+  gap: 30px;
+  display: flex;
+  overflow-x: auto;
+  border-top: 1px solid #d4d4d4;
+  border-bottom: 1px solid #d4d4d4;
+  transition: all 0.3s ease;
+}
+.alphabet-brand .alphabet-brand-item {
+  font-size: 22px;
+}
+
+.group-title {
+  padding: 10px;
+  font-size: 22px;
+  border-bottom: 1px solid #d4d4d4;
+  margin-bottom: 10px;
+}
+
+.group-item {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 10px;
+}
+.group-item .brand-template {
+  background: #fff;
+}

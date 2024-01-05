@@ -115,6 +115,7 @@ class SettingController extends Controller
      */
     public function update($id, UpdateSetting $req)
     {
+        DB::beginTransaction();
         try {
             $data = $req->validated();
             $setting = $this->settingRepository->getOneById($id);

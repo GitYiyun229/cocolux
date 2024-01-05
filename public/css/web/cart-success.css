@@ -1,3 +1,62 @@
-.layout-page-payment-success{grid-gap:20px;align-items:center;display:grid;font-size:14px;grid-template-columns:1fr 3fr;padding:20px 30px}.layout-page-payment-success a,.layout-page-payment-success a:hover{color:#4688f1}.layout-page-payment-success .continue{align-items:center;background:#c73030;border-radius:5px;color:#fff;display:flex;font-size:14px;font-weight:700;gap:10px;height:50px;justify-content:center;margin:auto;padding:0 12px;width:-moz-fit-content;width:fit-content}.layout-page-payment-success .continue:hover{color:#fff;opacity:.6}.layout-title{color:#c73030;font-size:20px}.order-info a{border:1px dashed #bebebe;color:#707070;display:inline-block;font-size:20px;font-weight:700;padding:5px 18px}.order-info a:hover{color:#0abb87}@media (max-width:960px){.layout-page-payment-success{grid-template-columns:1fr}.layout-image img{display:block;margin:auto;width:200px}}
+.layout-page-payment-success {
+  padding: 20px 30px;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-gap: 20px;
+  align-items: center;
+  font-size: 14px;
+}
+.layout-page-payment-success a {
+  color: #4688f1;
+}
+.layout-page-payment-success a:hover {
+  color: #4688f1;
+}
+.layout-page-payment-success .continue {
+  color: #fff;
+  background: #c73030;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  padding: 0 12px;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
+  border-radius: 5px;
+  height: 50px;
+  font-weight: 700;
+  font-size: 14px;
+}
+.layout-page-payment-success .continue:hover {
+  color: #fff;
+  opacity: 0.6;
+}
 
-/*# sourceMappingURL=cart-success.css.map*/
+.layout-title {
+  font-size: 20px;
+  color: #c73030;
+}
+
+.order-info a {
+  display: inline-block;
+  padding: 5px 18px;
+  border: 1px dashed #bebebe;
+  color: #707070;
+  font-size: 20px;
+  font-weight: 700;
+}
+.order-info a:hover {
+  color: #0abb87;
+}
+
+@media (max-width: 960px) {
+  .layout-page-payment-success {
+    grid-template-columns: 1fr;
+  }
+  .layout-image img {
+    width: 200px;
+    display: block;
+    margin: auto;
+  }
+}

@@ -50,6 +50,14 @@ class HomeController extends Controller
     public function index()
     {
         $logo = Setting::where('key', 'logo')->first();
+        $coupon_nhanh = Setting::where('key', 'coupon_nhanh')->where('active', 1)->first();
+        if ($coupon_nhanh){
+            $list_coupon = $coupon_nhanh->value;
+            $list_coupon = json_decode($list_coupon, true);
+        }else{
+            $list_coupon = null;
+        }
+
 
         SEOTools::setTitle('Hệ Thống Bán Lẻ Mỹ Phẩm Chính Hãng - Cocolux');
         SEOTools::setDescription('Cocolux.com - Cung cấp +10000 mỹ phẩm chính hãng với +450 thương hiệu mỹ phẩm nổi tiếng & chất lượng | Giá cực tốt | Freeship HN trong 2h | Flash sale hấp dẫn');
@@ -109,7 +117,8 @@ class HomeController extends Controller
                 ->select('id','title','slug','image','logo')
                 ->limit(4)->orderBy('id', 'ASC')->get();
         }
-        return view('web.home', compact('slider','subBanner','product_hots','attribute_brand','articles','product_cats','subBanner2','cats','cat_sub','applied_stop_time','product_flash','promotions_hot_id','promotions_flash_id','stores'));
+
+        return view('web.home', compact('slider','subBanner','product_hots','attribute_brand','articles','product_cats','subBanner2','cats','cat_sub','applied_stop_time','product_flash','promotions_hot_id','promotions_flash_id','stores','list_coupon'));
     }
 
     public function registerEmail(Request $request){

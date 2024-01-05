@@ -47,7 +47,7 @@ class SettingDataTable extends DataTable
                 $urlEdit = route('admin.setting.edit', $q->id);
                 $urlDelete = route('admin.setting.destroy', $q->id);
                 $lowerModelName = strtolower(class_basename(new Setting()));
-                return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
+                return view('admin.components.buttons.edit', compact('urlEdit'))->render();
             })
             ->rawColumns(['display', 'action','active']);
     }
