@@ -100,6 +100,11 @@ class ProductController extends Controller
     public function verifyWebhook(Request $request)
     {
         $webhook = new Webhook($this->apiSecret);
+        \Log::info([
+            'message' => $request->getContent(),
+            'line' => __LINE__,
+            'method' => __METHOD__
+        ]);
         $webhook->verify($request->getContent());
         $array_success = [
             'err_code' => 0,

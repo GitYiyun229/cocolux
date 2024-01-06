@@ -114,36 +114,27 @@ class ApiNhanhController extends Controller
         return true;
     }
 
-    // đồng bộ sản phẩm từ sku đã nhập so sánh với code nhanh, không nên chạy đang request lâu api nhanh trả về 500
-    public function getProducts()
+    // tim san pham
+    public function searchProducts($sku)
     {
         $api = "/api/product/search";
         $client = new Client();
 
-        $chunkSize = 200;
-        ProductOptions::orderBy('id')->chunk($chunkSize, function ($products) use ($client, $api) {
-            foreach ($products as $product) {
-                $data = [
-                    'name' => $product->sku
-                ];
-                $this->request_params['data'] = json_encode($data);
-                $response = $client->post($this->linkApi.$api,[
-                    'form_params' => $this->request_params
-                ]);
-                $first_data = json_decode($response->getBody(), true);
-                if ($first_data['code'] == 1){
-                    $resp = $first_data['data']['products'];
-                    $resp_end = array_filter($resp,function ($var) use ($product){
-                        return $var['code'] == $product->sku;
-                    });
-                    if ($resp_end){
-                        $resp_end = reset($resp_end);
-                        $this->updateProduct($resp_end, $product);
-                    }
-                }
-            }
-        });
-        return response()->json(['message' => 'OK'], 200);
+        $data = [
+            'name' => $sku
+        ];
+        $this->request_params['data'] = json_encode($data);
+
+        $response = $client->post($this->linkApi.$api,[
+            'form_params' => $this->request_params
+        ]);
+        $data = json_decode($response->getBody(), true);
+        if ($data['code'] == 1){
+            return end($data['data']['products']);
+        }else{
+            return null;
+        }
+
     }
 
     public function updateProduct($resp_end, $product, $attribute = null){
@@ -359,16 +350,17 @@ class ApiNhanhController extends Controller
     public function pushOrderNhanh ($id){
         $order = Order::findOrFail($id);
         $products = OrderItem::with(['productOption' => function($query){
-            $query->select('id','sku','slug','title','nhanhid');
+            $query->select('id','sku','slug','title');
         }])->where('order_id', $id)->get();
         $phone = '0'.$order->tel;
         $payment = $order->payment == 0 ?'COD': 'thanh toán Online';
 
         $productList = [];
         foreach ($products as $item){
+            $idNhanh = $this->searchProducts($item->productOption->sku);
             $detail = [
                 "id"=> $item->productOption->id,
-                "idNhanh"=> $item->productOption->nhanhid,
+                "idNhanh"=> $idNhanh['idNhanh']?$idNhanh['idNhanh']:'',
                 "quantity"=> $item->product_number,
                 "name"=> $item->product_title,
                 "code"=> $item->productOption->sku,
