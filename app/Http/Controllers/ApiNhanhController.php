@@ -150,16 +150,18 @@ class ApiNhanhController extends Controller
             foreach ($depots as $k => $item){
                 if ($item['available']){
                     $store = Store::where('id_nhanh', $k)->first();
-                    $stocks[] = [
-                      'id' => $store->id,
-                      'name' => $store->name,
-                      'product_id' => null,
-                      'product_option_id' => $product->id,
-                      'product_master_id' => null,
-                      'total_quantity' => $item['available'],
-                      'total_stock_quantity' => $item['remain'],
-                      'total_order_quantity' => $item['shipping'],
-                    ];
+                    if ($store){
+                        $stocks[] = [
+                            'id' => $store->id,
+                            'name' => $store->name,
+                            'product_id' => null,
+                            'product_option_id' => $product->id,
+                            'product_master_id' => null,
+                            'total_quantity' => $item['available'],
+                            'total_stock_quantity' => $item['remain'],
+                            'total_order_quantity' => $item['shipping'],
+                        ];
+                    }
                 }
             }
             $data = array();
@@ -173,11 +175,12 @@ class ApiNhanhController extends Controller
                 $data['normal_price'] = $resp_end['oldPrice'];
             }
             $data['stocks'] = $stocks;
-            $data['nhanhid'] = $inventory['id'];
+            $data['nhanhid'] = $resp_end['id'];
             return $product->update($data);
         } catch (\Exception $e) {
             \Log::info([
                 'message' => $e->getMessage(),
+                'id' => $resp_end['id'],
                 'data' => json_encode($resp_end),
                 'line' => __LINE__,
                 'method' => __METHOD__
