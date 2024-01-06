@@ -57,20 +57,37 @@ class ProductController extends Controller
         $this->dealService = $dealService;
     }
 
-    public function orderSend(Request $request)
+
+    // thanh toan bao kim
+    public function orderSendBK()
     {
+        $orderId = 1873;
+        $order = Order::where('id',$orderId)->with(['orderItems'])->first();
+        $maDonHang = 'DH' . str_pad($orderId, 8, '0', STR_PAD_LEFT);
+
+        $total_money = 0;
+        if (!empty($order->orderItems)){
+            $products = $order->orderItems;
+            foreach ($products as $item){
+                $item_total = $item->product_number*$item->product_price;
+                $total_money = $total_money+$item_total;
+            }
+        }
+        $total_money_after = $total_money + $order->price_ship_coco - $order->price_coupon_now;
+//        $link_webhook = route('verifyWebhook').','.route('home');
+
         getRequirement::setKey($this->apiKey, $this->apiSecret);
         $webhook = new Connect();
         $data = [
-            'mrc_order_id' => 'PAY'.time(),
-            'total_amount' => 12000,
+            'mrc_order_id' => $maDonHang,
+            'total_amount' => $total_money_after,
             'description' => 'Đơn hàng từ cocolux.com',
-            'url_success' => route('orderProductSuccess',['id'=>10]),
+            'url_success' => route('orderProductSuccess',['id'=>$maDonHang]),
             "merchant_id" => $this->merchantId, //baokim cung cap
-//            "url_detail" => route('thanh-toan-that-bai'),
-            'webhooks' => route('verifyWebhook'), //nhan thông tin thanh toan
-            'customer_phone' => '0888888888',
-            'customer_name' => 'Tên khach hàng',
+            "url_detail" => route('home'),
+            'webhooks' => route('verifyWebhook'), //nhan thông tin thanh toan post
+            'customer_phone' => $order->tell,
+            'customer_name' => $order->name,
         ];
         $response = $webhook->createOrder($data);
         if ($response && $response['data']){
@@ -79,7 +96,7 @@ class ProductController extends Controller
         }
     }
 
-    public function cancalOrder($id)
+    public function cancelOrder($id)
     {
         getRequirement::setKey($this->apiKey, $this->apiSecret);
         $data = [
@@ -88,6 +105,17 @@ class ProductController extends Controller
         $webhook = new Connect();
         $a = $webhook->cancelOrder($data);
         return redirect()->route('home');
+    }
+
+    public function checkOrder()
+    {
+        getRequirement::setKey($this->apiKey, $this->apiSecret);
+        $data = [
+            'id' => 141191,
+            'mrc_order_id' => 'PAY1704527227'
+        ];
+        $webhook = new Connect();
+        return $webhook->checkOrder($data);
     }
 
     public function verifyWebhook(Request $request)
@@ -105,6 +133,8 @@ class ProductController extends Controller
         ];
         return json_encode($array_success);
     }
+
+    //end thanh toan bao kim
 
     public function cat(Request $request, $slug,$id){
         $cat = $this->productCategoryRepository->getOneById($id);
@@ -1070,6 +1100,7 @@ class ProductController extends Controller
         try {
             $data = $req->validated();
             $coupon = $data['coupon'];
+            $method_payment = $data['payment'];
 
             $response = $this->useCoupon($coupon);
             if ($response){
@@ -1110,9 +1141,10 @@ class ProductController extends Controller
             }
             DB::commit();
             Session::forget('cart');
+            if ($method_payment == 2){
+                $this->orderSendBK($order->id);
+            }
             Session::flash('success', trans('message.create_order_success'));
-            app('App\Http\Controllers\ApiNhanhController')->pushOrderNhanh($order->id);
-//            app('App\Http\Controllers\ApiNhanhController')->listCoupons();
             return redirect()->route('orderProductSuccess',['id'=>$order->id]);
         } catch (\Exception $ex) {
             DB::rollBack();
@@ -1151,6 +1183,7 @@ class ProductController extends Controller
         Session::forget('cart');
         $order = Order::findOrFail($id);
         $maDonHang = 'DH' . str_pad($id, 8, '0', STR_PAD_LEFT);
+        app('App\Http\Controllers\ApiNhanhController')->pushOrderNhanh($order->id);
         return view('web.cart.register_success',compact('order','maDonHang'));
     }
 
