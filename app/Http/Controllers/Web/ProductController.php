@@ -73,8 +73,10 @@ class ProductController extends Controller
             'customer_name' => 'Tên khach hàng',
         ];
         $response = $webhook->createOrder($data);
-        $url_redirect = $response['data']['paymentUrl'];
-        return redirect()->to($url_redirect);
+        if ($response && $response['data']){
+            $url_redirect = $response['data']['paymentUrl'];
+            return redirect()->to($url_redirect);
+        }
     }
 
     public function cancalOrder($id)
