@@ -35,7 +35,7 @@ use Illuminate\Http\Request;
 //Route::get('/save-page-author-from-api', 'ApiController@savePageAuthorFromApi');
 
 Route::any('/web-hook-call-back', 'ApiNhanhController@WebHookCallBack')->name('WebHookCallBack');
-Route::any('/get-products', 'ApiNhanhController@getProducts')->name('getProducts');
+Route::any('/get-products', 'ApiNhanhController@searchProducts')->name('searchProducts');
 Route::any('/get-inventory', 'ApiNhanhController@inventory')->name('inventory');
 Route::post('/check-coupon', 'ApiNhanhController@checkCoupon')->name('checkCoupon');
 //Route::get('/list-coupons', 'ApiNhanhController@listCoupons')->name('listCoupons');
