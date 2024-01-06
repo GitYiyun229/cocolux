@@ -127,7 +127,8 @@ class ProductController extends Controller
             'line' => __LINE__,
             'method' => __METHOD__
         ]);
-		
+        $webhookData = json_decode($request->getContent(), true);
+
         $webhook = new Webhook($this->apiSecret);
         $webhook->verify($request->getContent());
         $array_success = [
@@ -1187,7 +1188,7 @@ class ProductController extends Controller
         Session::forget('cart');
         $order = Order::findOrFail($id);
         $maDonHang = 'DH' . str_pad($id, 8, '0', STR_PAD_LEFT);
-        
+
         return view('web.cart.register_success',compact('order','maDonHang'));
     }
 
