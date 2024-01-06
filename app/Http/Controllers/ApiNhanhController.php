@@ -360,7 +360,7 @@ class ApiNhanhController extends Controller
             $idNhanh = $this->searchProducts($item->productOption->sku);
             $detail = [
                 "id"=> $item->productOption->id,
-                "idNhanh"=> $idNhanh['idNhanh']?$idNhanh['idNhanh']:'',
+                "idNhanh"=> isset($idNhanh['idNhanh'])?$idNhanh['idNhanh']:'',
                 "quantity"=> $item->product_number,
                 "name"=> $item->product_title,
                 "code"=> $item->productOption->sku,
