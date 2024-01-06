@@ -90,15 +90,6 @@ class ProductController extends Controller
         return redirect()->route('home');
     }
 
-    public function getListPayment()
-    {
-        getRequirement::setKey($this->apiKey, $this->apiSecret);
-        $data = [];
-        $webhook = new Connect();
-        $a = $webhook->getBpmList($data);
-        dd($a);
-    }
-
     public function verifyWebhook(Request $request)
     {
         $webhook = new Webhook($this->apiSecret);

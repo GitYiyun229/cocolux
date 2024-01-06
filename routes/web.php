@@ -159,8 +159,7 @@ Route::group(['namespace' => 'Web'], function (){
     Route::post('/search-order', 'ProductController@searchOrder')->name('searchOrder');
 
     Route::get('/order-test', 'ProductController@orderSend')->name('orderSend');
-    Route::get('/get-list-payment', 'ProductController@getListPayment')->name('getListPayment');
-    Route::get('/verifyWebhook', 'ProductController@verifyWebhook')->name('verifyWebhook');
+    Route::post('/verifyWebhook', 'ProductController@verifyWebhook')->name('verifyWebhook');
     Route::get('/huy-don-hang/{id}', 'ProductController@cancalOrder')->name('cancalOrder');
 });
 
