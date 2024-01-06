@@ -180,8 +180,6 @@ class ApiNhanhController extends Controller
         } catch (\Exception $e) {
             \Log::info([
                 'message' => $e->getMessage(),
-                'id' => $resp_end['id'],
-                'data' => json_encode($resp_end),
                 'line' => __LINE__,
                 'method' => __METHOD__
             ]);

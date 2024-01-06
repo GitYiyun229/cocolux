@@ -158,9 +158,10 @@ Route::group(['namespace' => 'Web'], function (){
     Route::post('/register-email', 'HomeController@registerEmail')->name('registerEmail');
     Route::post('/search-order', 'ProductController@searchOrder')->name('searchOrder');
 
-    Route::get('/order-test', 'ProductController@orderSend')->name('orderSend');
+    Route::get('/order-test', 'ProductController@orderSendBK')->name('orderSendBK');
     Route::post('/verifyWebhook', 'ProductController@verifyWebhook')->name('verifyWebhook');
-    Route::get('/huy-don-hang/{id}', 'ProductController@cancalOrder')->name('cancalOrder');
+    Route::get('/huy-don-hang/{id}', 'ProductController@cancelOrder')->name('cancelOrder');
+    Route::get('/kiem-tra-don-hang', 'ProductController@checkOrder')->name('checkOrder');
 });
 
 //Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
