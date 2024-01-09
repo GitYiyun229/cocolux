@@ -101,8 +101,8 @@ class ProductController extends Controller
                 'line' => __LINE__,
                 'method' => __METHOD__
             ]);
-            $url_redirect = $response['data']['paymentUrl'];
-            return redirect()->to($url_redirect);
+//            $url_redirect = $response['data']['paymentUrl'];
+            return redirect()->to($response['data']['paymentUrl']);
         }else{
 			 Session::flash('danger', 'Thanh toán không thành công, đơn hàng đã ghi nhận');
 			return redirect()->route('orderProductSuccess',['id'=>$orderId]);
