@@ -1180,9 +1180,10 @@ class ProductController extends Controller
             Session::forget('cart');
             if ($method_payment == 2){
                 $this->orderSendBK($order->id);
+            }else{
+                Session::flash('success', trans('message.create_order_success'));
+                return redirect()->route('orderProductSuccess',['id'=>$order->id]);
             }
-            Session::flash('success', trans('message.create_order_success'));
-            return redirect()->route('orderProductSuccess',['id'=>$order->id]);
         } catch (\Exception $ex) {
             DB::rollBack();
             \Log::info([
