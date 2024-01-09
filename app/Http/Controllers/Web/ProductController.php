@@ -94,7 +94,7 @@ class ProductController extends Controller
             'line' => __LINE__,
             'method' => __METHOD__
         ]);
-        if ($response && $response['responseMessage']){
+        if ($response && !$response['responseMessage']){
             \Log::info([
                 'message' => $response['data']['paymentUrl'],
                 'data' => json_encode($response['data']),
