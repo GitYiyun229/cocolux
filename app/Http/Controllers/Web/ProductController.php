@@ -145,7 +145,7 @@ class ProductController extends Controller
         $check_ok = $webhook->verify($request->getContent());
         if(isset($check_ok)){
             $id = (int) substr($webhookData['order']['mrc_order_id'],11);
-            $total_amount = (int) substr($webhookData['txn']['total_amount']);
+            $total_amount = $webhookData['txn']['total_amount'];
             $order = Order::findOrFail($id);
             $order->update([
                 'baokim_message' => 'Đã thanh toán thành công qua Bảo Kim',
