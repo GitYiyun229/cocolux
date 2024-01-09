@@ -89,6 +89,11 @@ class ProductController extends Controller
             'customer_phone' => '0888888888',
         ];
         $response = $webhook->createOrder($data);
+        \Log::info([
+            'message' => json_encode($response),
+            'line' => __LINE__,
+            'method' => __METHOD__
+        ]);
         if ($response && $response['responseMessage'] == ''){
             $url_redirect = $response['data']['paymentUrl'];
             return redirect()->to($url_redirect);
