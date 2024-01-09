@@ -87,6 +87,13 @@
                                 </label>
                             </div>
 
+                            <div class="form-check mb-5">
+                                <input class="form-check-input" type="radio" value="2" name="payment" id="payment2">
+                                <label class="form-check-label d-flex align-items-center" for="payment2">
+                                    Thanh toán qua cổng Bảo Kim
+                                </label>
+                            </div>
+
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" value="1" name="payment" id="payment1">
                                 <label class="form-check-label" for="payment1">
