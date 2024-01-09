@@ -161,7 +161,8 @@ Route::group(['namespace' => 'Web'], function (){
     Route::get('/order-test', 'ProductController@orderSendBK')->name('orderSendBK');
     Route::post('/verifyWebhook', 'ProductController@verifyWebhook')->name('verifyWebhook');
     Route::get('/huy-don-hang/{id}', 'ProductController@cancelOrder')->name('cancelOrder');
-    Route::get('/kiem-tra-don-hang', 'ProductController@checkOrder')->name('checkOrder');
+    Route::get('/kiem-tra-don-hang/{baokimID}/{orderId}', 'ProductController@checkOrder')->name('checkOrder');
+    Route::any('/thanh-toan-khong-thanh-cong/{orderId}', 'ProductController@orderPayBaoKimNotSuccess')->name('orderPayBaoKimNotSuccess');
 });
 
 //Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
