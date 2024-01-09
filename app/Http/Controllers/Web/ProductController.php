@@ -94,7 +94,7 @@ class ProductController extends Controller
             'line' => __LINE__,
             'method' => __METHOD__
         ]);
-        if ($response && $response['responseMessage'] == ''){
+        if ($response && $response['responseMessage']){
             $url_redirect = $response['data']['paymentUrl'];
             return redirect()->to($url_redirect);
         }else{
