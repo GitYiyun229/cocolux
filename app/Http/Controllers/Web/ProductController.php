@@ -95,6 +95,12 @@ class ProductController extends Controller
             'method' => __METHOD__
         ]);
         if ($response && $response['responseMessage']){
+            \Log::info([
+                'message' => $response['data']['paymentUrl'],
+                'data' => json_encode($response['data']),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
             $url_redirect = $response['data']['paymentUrl'];
             return redirect()->to($url_redirect);
         }else{
