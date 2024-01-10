@@ -61,46 +61,50 @@ class ProductController extends Controller
     // thanh toan bao kim
     public function orderSendBK($orderId)
     {
-//        $orderId = 871;
         $order = Order::where('id',$orderId)->with(['orderItems'])->first();
-        $maDonHang = 'DH_BK_TEST_' . str_pad($orderId, 8, '0', STR_PAD_LEFT);
+        if ($order){
+            $maDonHang = 'DH_BK_' . str_pad($orderId, 8, '0', STR_PAD_LEFT);
 
-        $total_money = 0;
-        if (!empty($order->orderItems)){
-            $products = $order->orderItems;
-            foreach ($products as $item){
-                $item_total = $item->product_number*$item->product_price;
-                $total_money = $total_money+$item_total;
+            $total_money = 0;
+            if (!empty($order->orderItems)){
+                $products = $order->orderItems;
+                foreach ($products as $item){
+                    $item_total = $item->product_number*$item->product_price;
+                    $total_money = $total_money+$item_total;
+                }
             }
-        }
-        $total_money_after = $total_money + $order->price_ship_coco - $order->price_coupon_now;
+            $total_money_after = $total_money + $order->price_ship_coco - $order->price_coupon_now;
 //        $link_webhook = route('verifyWebhook').','.route('home');
 
-        getRequirement::setKey($this->apiKey, $this->apiSecret);
-        $webhook = new Connect();
-        $data = [
-            'mrc_order_id' => $maDonHang,
-            'total_amount' => $total_money_after,
-            'description' => 'Đơn hàng từ cocolux.com',
-            'url_success' => route('orderProductSuccess',['id'=>$orderId]),
-            "merchant_id" => $this->merchantId, //baokim cung cap
-            "url_detail" => route('orderProductSuccess',['id'=>$orderId]),
-            'webhooks' => route('verifyWebhook'), //nhan thông tin thanh toan post
-            'customer_phone' => '0'.$order->tel,
-        ];
-        $response = $webhook->createOrder($data);
-        \Log::info([
-            'message' => json_encode($response),
-            'line' => __LINE__,
-            'method' => __METHOD__
-        ]);
-        if ($response && !$response['responseMessage']){
-            $url_redirect = $response['data']['paymentUrl'];
-            return redirect()->away($url_redirect);
+            getRequirement::setKey($this->apiKey, $this->apiSecret);
+            $webhook = new Connect();
+            $data = [
+                'mrc_order_id' => $maDonHang,
+                'total_amount' => $total_money_after,
+                'description' => 'Đơn hàng từ cocolux.com',
+                'url_success' => route('orderProductSuccess',['id'=>$orderId]),
+                "merchant_id" => $this->merchantId, //baokim cung cap
+                "url_detail" => route('orderProductSuccess',['id'=>$orderId]),
+                'webhooks' => route('verifyWebhook'), //nhan thông tin thanh toan post
+                'customer_phone' => '0'.$order->tel,
+            ];
+            $response = $webhook->createOrder($data);
+            \Log::info([
+                'message' => json_encode($response),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            if ($response && !$response['responseMessage']){
+                $url_redirect = $response['data']['paymentUrl'];
+                return redirect($url_redirect);
+            }else{
+                Session::flash('danger', 'Thanh toán không thành công, đơn hàng đã ghi nhận');
+                return redirect()->route('orderProductSuccess',['id'=>$orderId]);
+            }
         }else{
-			 Session::flash('danger', 'Thanh toán không thành công, đơn hàng đã ghi nhận');
-			return redirect()->route('orderProductSuccess',['id'=>$orderId]);
-		}
+            Session::flash('danger', 'Thanh toán không thành công, đơn hàng đã ghi nhận');
+            return redirect()->route('orderProductSuccess',['id'=>$orderId]);
+        }
     }
 
     public function cancelOrder($id)
@@ -117,7 +121,7 @@ class ProductController extends Controller
     public function checkOrder($baokimId,$orderId)
     {
         getRequirement::setKey($this->apiKey, $this->apiSecret);
-        $maDonHang = 'DH_BK_TEST_' . str_pad($orderId, 8, '0', STR_PAD_LEFT);
+        $maDonHang = 'DH_BK_' . str_pad($orderId, 8, '0', STR_PAD_LEFT);
         $data = [
             'id' => $baokimId,
             'mrc_order_id' => $maDonHang
@@ -138,7 +142,7 @@ class ProductController extends Controller
         $webhook = new Webhook($this->apiSecret);
         $check_ok = $webhook->verify($request->getContent());
         if(isset($check_ok)){
-            $id = (int) substr($webhookData['order']['mrc_order_id'],11);
+            $id = (int) substr($webhookData['order']['mrc_order_id'],6);
             $total_amount = $webhookData['txn']['total_amount'];
             $order = Order::findOrFail($id);
             $order->update([
@@ -1177,7 +1181,7 @@ class ProductController extends Controller
             DB::commit();
             Session::forget('cart');
             if ($method_payment == 2){
-                $this->orderSendBK($order->id);
+                return redirect()->route('orderSendBK',['orderId'=>$order->id]);
             }else{
                 Session::flash('success', trans('message.create_order_success'));
                 return redirect()->route('orderProductSuccess',['id'=>$order->id]);
