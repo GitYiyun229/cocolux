@@ -96,7 +96,7 @@ class ProductController extends Controller
         ]);
         if ($response && !$response['responseMessage']){
             $url_redirect = $response['data']['paymentUrl'];
-            return redirect($url_redirect);
+            return redirect()->away($url_redirect);
         }else{
 			 Session::flash('danger', 'Thanh toán không thành công, đơn hàng đã ghi nhận');
 			return redirect()->route('orderProductSuccess',['id'=>$orderId]);
