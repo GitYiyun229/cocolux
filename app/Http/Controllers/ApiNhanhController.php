@@ -164,19 +164,23 @@ class ApiNhanhController extends Controller
                     }
                 }
             }
-            $data = array();
-            if (isset($resp_end['price'])){
-                $data['price'] = $resp_end['price'];
+            $product_nhanh = $this->searchProducts($item['code']);
+            if ($product_nhanh){
+                $data = array();
+                if (isset($product_nhanh['price'])){
+                    $data['price'] = $product_nhanh['price'];
+                }
+                if (isset($product_nhanh['price']) && $product->normal_price < $product_nhanh['price']){
+                    $data['normal_price'] = $product_nhanh['price'];
+                }
+                if (isset($product_nhanh['oldPrice'])){
+                    $data['normal_price'] = $product_nhanh['oldPrice'];
+                }
+                $data['stocks'] = $stocks;
+                $data['nhanhid'] = $product_nhanh['idNhanh'];
+                return $product->update($data);
             }
-            if (isset($resp_end['price']) && $product->normal_price < $resp_end['price']){
-                $data['normal_price'] = $resp_end['price'];
-            }
-            if (isset($resp_end['oldPrice'])){
-                $data['normal_price'] = $resp_end['oldPrice'];
-            }
-            $data['stocks'] = $stocks;
-            $data['nhanhid'] = $resp_end['id'];
-            return $product->update($data);
+            return response()->json(['message' => 'OK'], 200);
         } catch (\Exception $e) {
             \Log::info([
                 'message' => $e->getMessage(),
