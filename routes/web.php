@@ -159,7 +159,7 @@ Route::group(['namespace' => 'Web'], function (){
     Route::post('/search-product', 'HomeController@search')->name('searchAjax');
     Route::post('/search-order', 'ProductController@searchOrder')->name('searchOrder');
 
-    Route::get('/order-test', 'ProductController@orderSendBK')->name('orderSendBK');
+    Route::get('/order-test/{orderId}', 'ProductController@orderSendBK')->name('orderSendBK');
     Route::post('/verifyWebhook', 'ProductController@verifyWebhook')->name('verifyWebhook');
     Route::get('/huy-don-hang/{id}', 'ProductController@cancelOrder')->name('cancelOrder');
     Route::get('/kiem-tra-don-hang/{baokimID}/{orderId}', 'ProductController@checkOrder')->name('checkOrder');
