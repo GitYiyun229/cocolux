@@ -74,8 +74,6 @@ class ProductController extends Controller
                 }
             }
             $total_money_after = $total_money + $order->price_ship_coco - $order->price_coupon_now;
-//        $link_webhook = route('verifyWebhook').','.route('home');
-
             getRequirement::setKey($this->apiKey, $this->apiSecret);
             $webhook = new Connect();
             $data = [
@@ -89,11 +87,12 @@ class ProductController extends Controller
                 'customer_phone' => '0'.$order->tel,
             ];
             $response = $webhook->createOrder($data);
-            \Log::info([
-                'message' => json_encode($response),
-                'line' => __LINE__,
-                'method' => __METHOD__
+            $order->update([
+                'baokim_message' => 'Thanh toán qua Bảo Kim, Chưa thành công',
+                'baokim_id' => $response['data']['order_id'],
+                'baokim_hook' => $response['data']['paymentUrl']
             ]);
+
             if ($response && !$response['responseMessage']){
                 $url_redirect = $response['data']['paymentUrl'];
                 return redirect($url_redirect);
