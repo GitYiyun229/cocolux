@@ -96,7 +96,7 @@ class ProductController extends Controller
         ]);
         if ($response && !$response['responseMessage']){
             $url_redirect = $response['data']['paymentUrl'];
-            return redirect()->to($url_redirect);
+            return redirect($url_redirect);
         }else{
 			 Session::flash('danger', 'Thanh toán không thành công, đơn hàng đã ghi nhận');
 			return redirect()->route('orderProductSuccess',['id'=>$orderId]);
@@ -1046,7 +1046,6 @@ class ProductController extends Controller
         $cartItems = [];
         $total_price = 0;
         if (!$cart){
-            Session::flash('danger', 'Chưa có sản phẩm nào trong giỏ hàng');
             return redirect()->route('home');
         }
         $flash_sale = $this->dealService->isFlashSaleAvailable();
