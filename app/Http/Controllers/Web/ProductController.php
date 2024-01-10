@@ -86,7 +86,7 @@ class ProductController extends Controller
             "merchant_id" => $this->merchantId, //baokim cung cap
             "url_detail" => route('orderProductSuccess',['id'=>$orderId]),
             'webhooks' => route('verifyWebhook'), //nhan thông tin thanh toan post
-            'customer_phone' => '0888888888',
+            'customer_phone' => '0'.$order->tel,
         ];
         $response = $webhook->createOrder($data);
         \Log::info([
@@ -95,14 +95,8 @@ class ProductController extends Controller
             'method' => __METHOD__
         ]);
         if ($response && !$response['responseMessage']){
-            \Log::info([
-                'message' => $response['data']['paymentUrl'],
-                'data' => json_encode($response['data']),
-                'line' => __LINE__,
-                'method' => __METHOD__
-            ]);
-//            $url_redirect = $response['data']['paymentUrl'];
-            return redirect()->to($response['data']['paymentUrl']);
+            $url_redirect = $response['data']['paymentUrl'];
+            return redirect()->to($url_redirect);
         }else{
 			 Session::flash('danger', 'Thanh toán không thành công, đơn hàng đã ghi nhận');
 			return redirect()->route('orderProductSuccess',['id'=>$orderId]);
@@ -629,7 +623,12 @@ class ProductController extends Controller
                 $query->select('id','sku','slug','title');
             }])->orderBy('is_default','DESC')->get();
 
-        $products = ProductOptions::select('product_options.id','product_options.title','product_options.slug','product_options.images','product_options.price','product_options.normal_price','product_options.normal_price','products.category_id','product_options.sku','product_options.brand')
+        $flash_sale_all = $this->dealService->isFlashSaleAvailable();
+        $promotions_flash_id = $flash_sale_all->pluck('id')->toArray();
+        $hot_deal_all = $this->dealService->isHotDealAvailable();
+        $promotions_hot_id = $hot_deal_all->pluck('id')->toArray();
+
+        $products = ProductOptions::select('product_options.id','product_options.title','product_options.slug','product_options.images','product_options.price','product_options.normal_price','product_options.normal_price','products.category_id','product_options.sku','product_options.brand','product_options.hot_deal','product_options.flash_deal')
             ->where(['product_options.active' => 1])
             ->whereHas('product', function ($query) use ($brand) {
                 $query->where('active', 1);
@@ -654,7 +653,7 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($product->seo_keyword?$product->seo_keyword:$product->title);
 
-        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats','flash_sale','hot_deal','stores','count_store','brand'));
+        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats','flash_sale','hot_deal','stores','count_store','brand','promotions_hot_id','promotions_flash_id'));
     }
 
     public function is_new(){
@@ -1224,7 +1223,6 @@ class ProductController extends Controller
             app('App\Http\Controllers\ApiNhanhController')->pushOrderNhanh($order->id);
         }
         $maDonHang = 'DH' . str_pad($id, 8, '0', STR_PAD_LEFT);
-
         return view('web.cart.register_success',compact('order','maDonHang'));
     }
 

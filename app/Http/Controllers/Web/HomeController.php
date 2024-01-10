@@ -134,4 +134,35 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $product_ids = $request->input('product_ids');
+        $products = ProductOptions::with(['product' => function ($query) {
+            $query->select('id', 'is_new','sku','brand','slug','attribute_path');
+        }])->whereHas('product', function ($query) use ($keyword,$product_ids) {
+            $query->where('product_options.active', 1);
+            if ($keyword){
+                $query->where('product_options.title', 'LIKE', '%'.$keyword.'%')
+                    ->Orwhere('product_options.slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
+                    ->Orwhere('product_options.sku', 'LIKE', '%'.$keyword.'%');
+            }
+            if ($product_ids){
+                $query->whereNotIn('id', explode(',',$product_ids));
+            }
+        })
+            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.normal_price','product_options.slug','product_options.images')
+            ->addSelect('products.title as product_name')
+            ->join('products', 'product_options.parent_id', '=', 'products.id')
+            ->orderBy('product_options.id', 'DESC')
+            ->where('product_options.sku','!=',null)
+            ->where('product_options.slug','!=',null)
+            ->limit(30)->get()->toArray();
+
+        $result = array();
+        $result['error'] = false;
+        $result['data'] = $products;
+        return response()->json($result);
+    }
+
 }

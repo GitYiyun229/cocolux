@@ -82,7 +82,7 @@
                     try {
                         // Fetch Data from external Source
                         const product_ids = $('#products_add').val();
-                        const response = await fetch(`{{ route('admin.article.search') }}`,{
+                        const response = await fetch(`{{ route('searchAjax') }}`,{
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
