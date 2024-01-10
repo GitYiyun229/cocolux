@@ -164,7 +164,7 @@ class ApiNhanhController extends Controller
                     }
                 }
             }
-            $product_nhanh = $this->searchProducts($item['code']);
+            $product_nhanh = $this->searchProducts($inventory['code']);
             if ($product_nhanh){
                 $data = array();
                 if (isset($product_nhanh['price'])){
