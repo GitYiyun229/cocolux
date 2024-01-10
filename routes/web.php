@@ -156,6 +156,7 @@ Route::group(['namespace' => 'Web'], function (){
     Route::post('/load-ward', 'ProductController@load_ward')->name('loadWard');
     Route::get('/search', 'ProductController@search')->name('search');
     Route::post('/register-email', 'HomeController@registerEmail')->name('registerEmail');
+    Route::post('/search-product', 'HomeController@search')->name('searchAjax');
     Route::post('/search-order', 'ProductController@searchOrder')->name('searchOrder');
 
     Route::get('/order-test', 'ProductController@orderSendBK')->name('orderSendBK');
