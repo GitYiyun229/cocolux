@@ -8,6 +8,8 @@ use App\Models\OrderItem;
 use App\Models\ProductOptions;
 use App\Models\Setting;
 use App\Models\Store;
+use App\Models\Voucher;
+use App\Models\VoucherItem;
 use App\Services\DealService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -314,38 +316,125 @@ class ApiNhanhController extends Controller
         $now = Carbon::now();
         $list_coupon = array();
         foreach ($result as $item){
-            if ($item['status'] == 1 && count($item['depotIds']) == 0 && $item['startDate'] < $now && $item['endDate'] > $now){
-                $a = Carbon::createFromFormat('Y-m-d', $item['endDate']);
-                $item['remainingDays'] = $now->diffInDays($a);
-                $first_coupon = $this->getCouponFirst($item['id']);
-                $item['first_coupon'] = $first_coupon;
-                $progressbar = ($item['first_coupon']['usedTimes']/$item['first_coupon']['canUsedTimes'])*100;
-                $item['progressbar'] = $progressbar;
-                $list_coupon[] = $item;
+            $check_voucher = Voucher::where('id_nhanh',$item['id'])->first();
+            $req = array();
+            $couponReq = array();
+            $req['name'] = $item['name'];
+            $req['description'] = $item['description'];
+            if (count($item['depotIds'])){
+                $req['depot_ids'] = json_encode($item['depotIds']);
             }
+            $req['start_date'] = $item['startDate'];
+            $req['end_date'] = $item['endDate'];
+            if (!empty($item['fromValue'])){
+                $req['from_value'] = $item['fromValue'];
+            }
+            $req['number_of_codes'] = $item['numberOfCodes'];
+            $req['total_used_time'] = $item['totalUsedTime'];
+            $req['total_assign'] = $item['totalAssign'];
+            $req['value_type'] = $item['valueType'];
+            if($item['value']){
+                $req['value'] = $item['value'];
+            }
+            if ($item['valueMax']){
+                $req['value_max'] = $item['valueMax'];
+            }
+            $req['status'] = $item['status'];
+            $req['id_nhanh'] = $item['id'];
+            $first_coupon = $this->getCouponFirst($item['id']);
+            if ($check_voucher){
+                $cat = $check_voucher->update($req);
+                $check_voucher_item = VoucherItem::where('id_nhanh',$check_voucher->id)->first();
+                if ($check_voucher_item){
+
+                }
+            }else{
+                $cat = Voucher::create($req);
+                $couponReq['code'] = $first_coupon['code'];
+                $couponReq['voucher_id'] = $cat->id;
+                $couponReq['value'] = $first_coupon['value'];
+                $couponReq['value_type'] = $first_coupon['valueType'];
+                $couponReq['value_max'] = $first_coupon['valueMax'];
+                $couponReq['can_used_times'] = $first_coupon['canUsedTimes'];
+                $couponReq['used_times'] = $first_coupon['usedTimes'];
+                $couponReq['status'] = $first_coupon['status'];
+                VoucherItem::create($couponReq);
+            }
+
+//            if ($item['status'] == 1 && count($item['depotIds']) == 0 && $item['startDate'] < $now && $item['endDate'] > $now){
+//                $a = Carbon::createFromFormat('Y-m-d', $item['endDate']);
+//                $item['remainingDays'] = $now->diffInDays($a);
+//                $first_coupon = $this->getCouponFirst($item['id']);
+//                $item['first_coupon'] = $first_coupon;
+//                $progressbar = ($item['first_coupon']['usedTimes']/$item['first_coupon']['canUsedTimes'])*100;
+//                $item['progressbar'] = $progressbar;
+//                $list_coupon[] = $item;
+//            }
         }
         if ($total_page != $page){
             for ($page = 2; $page <= $total_page; $page++) {
                 $data2 = $this->callApiListCoupon($page);
                 $result2 = $data2['data']['result'];
                 foreach ($result2 as $item){
-                    if ($item['status'] == 1 && count($item['depotIds']) == 0 && $item['startDate'] < $now && $item['endDate'] > $now){
-                        $a = Carbon::createFromFormat('Y-m-d', $item['endDate']);
-                        $item['remainingDays'] = $now->diffInDays($a);
-                        $first_coupon = $this->getCouponFirst($item['id']);
-                        $item['first_coupon'] = $first_coupon;
-                        $progressbar = ($item['first_coupon']['usedTimes']/$item['first_coupon']['canUsedTimes'])*100;
-                        $item['progressbar'] = $progressbar;
-                        $list_coupon[] = $item;
+                    $check_voucher = Voucher::where('id_nhanh',$item['id'])->first();
+                    $req = array();
+                    $couponReq = array();
+                    $req['name'] = $item['name'];
+                    $req['description'] = $item['description'];
+                    if (count($item['depotIds'])){
+                        $req['depot_ids'] = json_encode($item['depotIds']);
                     }
+                    $req['start_date'] = $item['startDate'];
+                    $req['end_date'] = $item['endDate'];
+                    if (!empty($item['fromValue'])){
+                        $req['from_value'] = $item['fromValue'];
+                    }
+                    $req['number_of_codes'] = $item['numberOfCodes'];
+                    $req['total_used_time'] = $item['totalUsedTime'];
+                    $req['total_assign'] = $item['totalAssign'];
+                    $req['value_type'] = $item['valueType'];
+                    if($item['value']){
+                        $req['value'] = $item['value'];
+                    }
+                    if ($item['valueMax']){
+                        $req['value_max'] = $item['valueMax'];
+                    }
+                    $req['status'] = $item['status'];
+                    $req['id_nhanh'] = $item['id'];
+                    if ($check_voucher){
+                        $cat = $check_voucher->update($req);
+                    }else{
+                        $cat = Voucher::create($req);
+                    }
+
+                    $first_coupon = $this->getCouponFirst($item['id']);
+                    $couponReq['code'] = $first_coupon['code'];
+                    $couponReq['voucher_id'] = $cat->id;
+                    $couponReq['value'] = $first_coupon['value'];
+                    $couponReq['value_type'] = $first_coupon['valueType'];
+                    $couponReq['value_max'] = $first_coupon['valueMax'];
+                    $couponReq['can_used_times'] = $first_coupon['canUsedTimes'];
+                    $couponReq['used_times'] = $first_coupon['usedTimes'];
+                    $couponReq['status'] = $first_coupon['status'];
+                    VoucherItem::create($couponReq);
+
+//                    if ($item['status'] == 1 && count($item['depotIds']) == 0 && $item['startDate'] < $now && $item['endDate'] > $now){
+//                        $a = Carbon::createFromFormat('Y-m-d', $item['endDate']);
+//                        $item['remainingDays'] = $now->diffInDays($a);
+//                        $first_coupon = $this->getCouponFirst($item['id']);
+//                        $item['first_coupon'] = $first_coupon;
+//                        $progressbar = ($item['first_coupon']['usedTimes']/$item['first_coupon']['canUsedTimes'])*100;
+//                        $item['progressbar'] = $progressbar;
+//                        $list_coupon[] = $item;
+//                    }
                 }
             }
         }
-        $list_coupon_new = json_encode($list_coupon);
-        $setting = Setting::findOrFail(19);
-        $setting->update([
-            'value' => $list_coupon_new,
-        ]);
+//        $list_coupon_new = json_encode($list_coupon);
+//        $setting = Setting::findOrFail(19);
+//        $setting->update([
+//            'value' => $list_coupon_new,
+//        ]);
 
         return response()->json(array(
             'error' => false,
