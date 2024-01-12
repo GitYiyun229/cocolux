@@ -392,6 +392,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::post('/change-active-promotion/{id}', 'PromotionsController@changeActive')->name('changeActive')->middleware('permission:edit_promotion');
     });
 
+    Route::group(['prefix' => 'voucher', 'as' => 'voucher.', 'middleware' => ['permission:view_voucher']], function () {
+        Route::get('', 'VoucherController@index')->name('index');
+        Route::get('/create', 'VoucherController@create')->name('create')->middleware('permission:create_voucher');
+        Route::post('/store', 'VoucherController@store')->name('store')->middleware('permission:create_voucher');
+        Route::get('/edit/{id}', 'VoucherController@edit')->name('edit')->middleware('permission:edit_voucher');
+        Route::post('/update/{id}', 'VoucherController@update')->name('update')->middleware('permission:edit_voucher');
+        Route::post('/destroy/{id}', 'VoucherController@destroy')->name('destroy')->middleware('permission:delete_voucher');
+        Route::post('/change-active-voucher/{id}', 'VoucherController@changeActive')->name('changeActive')->middleware('permission:edit_voucher');
+    });
+
 });
 
 

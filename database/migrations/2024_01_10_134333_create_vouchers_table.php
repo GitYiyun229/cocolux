@@ -25,9 +25,10 @@ class CreateVouchersTable extends Migration
             $table->integer('total_used_time')->nullable();
             $table->integer('total_assign')->nullable();
             $table->integer('value_type')->nullable();
-            $table->integer('value')->nullable();
-            $table->integer('value_max')->nullable();
+            $table->string('value')->nullable();
+            $table->string('value_max')->nullable();
             $table->integer('status')->nullable();
+            $table->integer('active')->nullable()->default(0);
             $table->integer('id_nhanh')->nullable();
             $table->timestamps();
         });

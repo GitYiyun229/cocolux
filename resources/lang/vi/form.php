@@ -290,4 +290,20 @@ return [
         'file' => 'Import file excel sản phẩm',
     ],
 
+    'voucher' => [
+        '' => 'Mã giảm giá',
+        'name' => 'Tên Mã giảm giá',
+        'description' => 'Mô tả',
+        'start_date' => 'Ngày bắt đầu',
+        'end_date' => 'Ngày kết thúc',
+        'from_value' => 'Giá trị từ',
+        'number_of_codes' => 'Số coupon',
+        'total_used_time' => 'Số lần có thể sử dụng',
+        'total_assign' => 'Số lần đã sử dụng',
+        'value' => 'Giá trị',
+        'value_max' => 'Giá trị tối đa',
+        'update' => 'Update',
+        'create' => 'Tạo mới',
+    ],
+
 ];

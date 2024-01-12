@@ -133,6 +133,11 @@ class PermissionSeeder extends Seeder
 
             ['name' => 'view_contact', 'display_name' => 'Xem danh sách liên hệ', 'guard_name' => 'web'],
 
+            ['name' => 'view_voucher', 'display_name' => 'Xem danh sách mã giảm giá', 'guard_name' => 'web'],
+            ['name' => 'create_voucher', 'display_name' => 'Thêm mới mã giảm giá', 'guard_name' => 'web'],
+            ['name' => 'edit_voucher', 'display_name' => 'Sửa mã giảm giá', 'guard_name' => 'web'],
+            ['name' => 'delete_voucher', 'display_name' => 'Xóa mã giảm giá', 'guard_name' => 'web'],
+
         ];
     }
 }
