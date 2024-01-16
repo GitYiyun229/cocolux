@@ -126,13 +126,14 @@ T9++jUv/hjVAU6mWlvwHYaH1uqki1iw/BEA9EeAj8g==
                     'line' => __LINE__,
                     'method' => __METHOD__
                 ]);
-                $signature = '200|Success|COCOLUX2024011500000006|963336008712535|AffTransDebt';
+                $signature = '200|Success|PARTNERCODE58b480bcb05126f7f789|'.$resp['AccNo'].'|'.$resp['AffTransDebt'];
                 $signature = base64_encode($signature);
                 $requestData = [
-                    "ResponseCode"=>200,"ResponseMessage"=>"Success",
+                    "ResponseCode"=>200,
+                    "ResponseMessage"=>"Success",
                     "ReferenceId"=>"PARTNERCODE58b480bcb05126f7f789",
-                    "AccNo"=>"900300001223",
-                    "AffTransDebt"=>9500000,
+                    "AccNo"=>$resp['AccNo'],
+                    "AffTransDebt"=>$resp['AffTransDebt'],
                     "Signature"=>$signature
                 ];
                 return json_encode($requestData);
