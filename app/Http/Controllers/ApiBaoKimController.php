@@ -136,6 +136,11 @@ T9++jUv/hjVAU6mWlvwHYaH1uqki1iw/BEA9EeAj8g==
             ];
             return json_encode($requestData);
         } catch (\Exception $e) {
+            \Log::info([
+                'message' => $e->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
             return response()->json(array(
                 'error' => true,
                 'message'   => 'Lỗi không có phản hồi',
