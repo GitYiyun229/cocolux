@@ -15,5 +15,6 @@ class VerifyCsrfToken extends Middleware
         'ckfinder/*',
         'web-hook-call-back',
         'verifyWebhook',
+        'web-hook-transaction',
     ];
 }

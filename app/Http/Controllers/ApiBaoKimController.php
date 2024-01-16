@@ -116,7 +116,7 @@ T9++jUv/hjVAU6mWlvwHYaH1uqki1iw/BEA9EeAj8g==
     }
 
     public function webHookTransaction(Request $request){
-        if($request){
+        try {
             $data = $request->getBody();
             $resp = json_decode($data, true);
             \Log::info([
@@ -135,7 +135,7 @@ T9++jUv/hjVAU6mWlvwHYaH1uqki1iw/BEA9EeAj8g==
                 "Signature"=>$signature
             ];
             return json_encode($requestData);
-        }else{
+        } catch (\Exception $e) {
             return response()->json(array(
                 'error' => true,
                 'message'   => 'Lỗi không có phản hồi',
