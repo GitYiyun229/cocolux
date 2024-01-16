@@ -117,24 +117,29 @@ T9++jUv/hjVAU6mWlvwHYaH1uqki1iw/BEA9EeAj8g==
 
     public function webHookTransaction(Request $request){
         try {
-            $data = $request->getBody();
-            $resp = json_decode($data, true);
-            \Log::info([
-                'message' => $data,
-                'line' => __LINE__,
-                'method' => __METHOD__
-            ]);
-            $signature = '200|Success|COCOLUX2024011500000006|963336008712535|AffTransDebt';
-            $signature = base64_encode($signature);
+            if ($request->isJson()) {
+                $data = $request->json()->all();
+                $content = json_encode($data, JSON_PRETTY_PRINT);
+                $resp = json_decode($content, true);
+                \Log::info([
+                    'message' => $data,
+                    'line' => __LINE__,
+                    'method' => __METHOD__
+                ]);
+                $signature = '200|Success|COCOLUX2024011500000006|963336008712535|AffTransDebt';
+                $signature = base64_encode($signature);
+                $requestData = [
+                    "ResponseCode"=>200,"ResponseMessage"=>"Success",
+                    "ReferenceId"=>"PARTNERCODE58b480bcb05126f7f789",
+                    "AccNo"=>"900300001223",
+                    "AffTransDebt"=>9500000,
+                    "Signature"=>$signature
+                ];
+                return json_encode($requestData);
+            }else {
+                return response()->json(['message' => 'OK'], 200);
+            }
 
-            $requestData = [
-                "ResponseCode"=>200,"ResponseMessage"=>"Success",
-                "ReferenceId"=>"PARTNERCODE58b480bcb05126f7f789",
-                "AccNo"=>"900300001223",
-                "AffTransDebt"=>9500000,
-                "Signature"=>$signature
-            ];
-            return json_encode($requestData);
         } catch (\Exception $e) {
             \Log::info([
                 'message' => $e->getMessage(),
