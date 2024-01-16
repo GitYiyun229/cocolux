@@ -87,7 +87,7 @@
                                 </label>
                             </div>
 
-                            <div class="form-check mb-5">
+                            <div class="form-check mb-5 d-none">
                                 <input class="form-check-input" type="radio" value="2" name="payment" id="payment2">
                                 <label class="form-check-label d-flex align-items-center" for="payment2">
                                     Thanh toán qua cổng Bảo Kim <img src="{{ asset('images/icon-baokim.webp') }}" width="70px" class="img-fluid ms-2" alt="">

@@ -40,6 +40,13 @@ Route::any('/get-inventory', 'ApiNhanhController@inventory')->name('inventory');
 Route::post('/check-coupon', 'ApiNhanhController@checkCoupon')->name('checkCoupon');
 Route::get('/list-coupons', 'ApiNhanhController@listCoupons')->name('listCoupons');
 
+Route::get('/create-vaqr', 'ApiBaoKimController@createVaQr')->name('createVaQr');
+Route::get('/update-vaqr', 'ApiBaoKimController@updateVaQr')->name('updateVaQr');
+Route::get('/search-info-va', 'ApiBaoKimController@searchInfoVa')->name('searchInfoVa');
+Route::get('/search-transaction', 'ApiBaoKimController@searchTransaction')->name('searchTransaction');
+Route::get('/get-bank-bk', 'ApiBaoKimController@getBankBK')->name('getBankBK');
+Route::any('/web-hook-transaction', 'ApiBaoKimController@webHookTransaction')->name('webHookTransaction');
+
 Route::redirect('/danh-muc/trang-diem-makeup-i.1', '/danh-muc/trang-diem-makeup-i.83', 301);
 Route::redirect('/danh-muc/kem-lot-makeup-primer-i.9', '/danh-muc/kem-lot-i.85', 301);
 Route::redirect('/danh-muc/kem-nen-bb-cc-i.10', '/danh-muc/kem-nen-bb-cream-i.86', 301);
