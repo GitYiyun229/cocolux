@@ -8,6 +8,8 @@ use App\Models\OrderItem;
 use App\Models\ProductOptions;
 use App\Models\Setting;
 use App\Models\Store;
+use App\Models\Voucher;
+use App\Models\VoucherItem;
 use App\Services\DealService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -56,6 +58,11 @@ class ApiNhanhController extends Controller
                     if ($resp['event'] == 'productAdd'){
                         return response()->json(['message' => 'OK'], 200);
                     }elseif($resp['event'] == 'productUpdate'){
+                        $item = $resp['data'];
+                        $product = ProductOptions::where('sku',$item['code'])->first();
+                        if ($product){
+                            $this->updateProduct($item, $product,'productUpdate');
+                        }
                         return response()->json(['message' => 'OK'], 200);
                     }elseif($resp['event'] == 'productDelete'){
                         return true;
@@ -164,7 +171,7 @@ class ApiNhanhController extends Controller
                     }
                 }
             }
-            $product_nhanh = $this->searchProducts($inventory['code']);
+            $product_nhanh = $this->searchProducts($product->sku);
             if ($product_nhanh){
                 $data = array();
                 if (isset($product_nhanh['price'])){
@@ -301,8 +308,13 @@ class ApiNhanhController extends Controller
             'form_params' => $this->request_params
         ]);
         $data = json_decode($response->getBody(), true);
-        $result_first = $data['data']['result']['0'];
-        return $result_first;
+        if ($data && isset($data['data'])){
+            $result_first = $data['data']['result'];
+            return $result_first;
+        }else{
+            return null;
+        }
+
     }
 
     public function listCoupons (){
@@ -314,14 +326,41 @@ class ApiNhanhController extends Controller
         $now = Carbon::now();
         $list_coupon = array();
         foreach ($result as $item){
-            if ($item['status'] == 1 && count($item['depotIds']) == 0 && $item['startDate'] < $now && $item['endDate'] > $now){
-                $a = Carbon::createFromFormat('Y-m-d', $item['endDate']);
-                $item['remainingDays'] = $now->diffInDays($a);
-                $first_coupon = $this->getCouponFirst($item['id']);
-                $item['first_coupon'] = $first_coupon;
-                $progressbar = ($item['first_coupon']['usedTimes']/$item['first_coupon']['canUsedTimes'])*100;
-                $item['progressbar'] = $progressbar;
-                $list_coupon[] = $item;
+            $check_voucher = Voucher::where('id_nhanh',$item['id'])->first();
+            $req = array();
+            $couponReq = array();
+            $req['name'] = $item['name'];
+            $req['description'] = $item['description'];
+            if (count($item['depotIds'])){
+                $req['depot_ids'] = json_encode($item['depotIds']);
+            }
+            $req['start_date'] = $item['startDate'];
+            $req['end_date'] = $item['endDate'];
+            if (!empty($item['fromValue'])){
+                $req['from_value'] = $item['fromValue'];
+            }
+            $req['number_of_codes'] = $item['numberOfCodes'];
+            $req['total_used_time'] = $item['totalUsedTime'];
+            $req['total_assign'] = $item['totalAssign'];
+            $req['value_type'] = $item['valueType'];
+            if($item['value']){
+                $req['value'] = $item['value'];
+            }
+            if ($item['valueMax']){
+                $req['value_max'] = $item['valueMax'];
+            }
+            $req['status'] = $item['status'];
+            $req['id_nhanh'] = $item['id'];
+            $coupons = $this->getCouponFirst( ['id']);
+            if ($coupons){
+                if ($check_voucher){
+                    $cat = $check_voucher->update($req);
+                    VoucherItem::where('voucher_id',$check_voucher->id)->delete();
+                    $this->createVoucherItem($coupons,$check_voucher);
+                }else{
+                    $cat = Voucher::create($req);
+                    $this->createVoucherItem($coupons,$cat);
+                }
             }
         }
         if ($total_page != $page){
@@ -329,28 +368,67 @@ class ApiNhanhController extends Controller
                 $data2 = $this->callApiListCoupon($page);
                 $result2 = $data2['data']['result'];
                 foreach ($result2 as $item){
-                    if ($item['status'] == 1 && count($item['depotIds']) == 0 && $item['startDate'] < $now && $item['endDate'] > $now){
-                        $a = Carbon::createFromFormat('Y-m-d', $item['endDate']);
-                        $item['remainingDays'] = $now->diffInDays($a);
-                        $first_coupon = $this->getCouponFirst($item['id']);
-                        $item['first_coupon'] = $first_coupon;
-                        $progressbar = ($item['first_coupon']['usedTimes']/$item['first_coupon']['canUsedTimes'])*100;
-                        $item['progressbar'] = $progressbar;
-                        $list_coupon[] = $item;
+                    $check_voucher = Voucher::where('id_nhanh',$item['id'])->first();
+                    $req = array();
+                    $couponReq = array();
+                    $req['name'] = $item['name'];
+                    $req['description'] = $item['description'];
+                    if (count($item['depotIds'])){
+                        $req['depot_ids'] = json_encode($item['depotIds']);
+                    }
+                    $req['start_date'] = $item['startDate'];
+                    $req['end_date'] = $item['endDate'];
+                    if (!empty($item['fromValue'])){
+                        $req['from_value'] = $item['fromValue'];
+                    }
+                    $req['number_of_codes'] = $item['numberOfCodes'];
+                    $req['total_used_time'] = $item['totalUsedTime'];
+                    $req['total_assign'] = $item['totalAssign'];
+                    $req['value_type'] = $item['valueType'];
+                    if($item['value']){
+                        $req['value'] = $item['value'];
+                    }
+                    if ($item['valueMax']){
+                        $req['value_max'] = $item['valueMax'];
+                    }
+                    $req['status'] = $item['status'];
+                    $req['id_nhanh'] = $item['id'];
+                    $coupons = $this->getCouponFirst($item['id']);
+
+                    if ($coupons){
+                        if ($check_voucher){
+                            $cat = $check_voucher->update($req);
+                            VoucherItem::where('voucher_id',$check_voucher->id)->delete();
+                            $this->createVoucherItem($coupons,$check_voucher);
+                        }else{
+                            $cat = Voucher::create($req);
+                            $this->createVoucherItem($coupons,$cat);
+                        }
                     }
                 }
             }
         }
-        $list_coupon_new = json_encode($list_coupon);
-        $setting = Setting::findOrFail(19);
-        $setting->update([
-            'value' => $list_coupon_new,
-        ]);
 
         return response()->json(array(
             'error' => false,
             'message'   => 'Update mã giảm giá thành công',
         ));
+    }
+
+    public function createVoucherItem($coupons, $cat){
+        foreach ($coupons as $coupon){
+            $couponReq['code'] = $coupon['code'];
+            $couponReq['voucher_id'] = $cat->id;
+            $couponReq['value'] = str_replace(",", "",$coupon['value']);
+            $couponReq['value_type'] = $coupon['valueType'];
+            if ($coupon['valueMax']){
+                $couponReq['value_max'] = str_replace(",", "",$coupon['valueMax']);
+            }
+            $couponReq['can_used_times'] = $coupon['canUsedTimes'];
+            $couponReq['used_times'] = $coupon['usedTimes'];
+            $couponReq['status'] = $coupon['status'];
+            VoucherItem::create($couponReq);
+        }
     }
 
     public function pushOrderNhanh ($id){

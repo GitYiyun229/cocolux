@@ -258,6 +258,16 @@
                         </a>
                     </li>
                 @endcan
+                @can(['view_voucher'])
+                    <li class="nav-item">
+                        <a href="{{ route('admin.voucher.index') }}" class="nav-link @if (request()->is('admin/voucher')) active @endif">
+                            <i class="fas fa-store"></i>
+                            <p>
+                                @lang('form.voucher.')
+                            </p>
+                        </a>
+                    </li>
+                @endcan
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

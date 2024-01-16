@@ -38,7 +38,14 @@ Route::any('/web-hook-call-back', 'ApiNhanhController@WebHookCallBack')->name('W
 Route::any('/get-products', 'ApiNhanhController@searchProducts')->name('searchProducts');
 Route::any('/get-inventory', 'ApiNhanhController@inventory')->name('inventory');
 Route::post('/check-coupon', 'ApiNhanhController@checkCoupon')->name('checkCoupon');
-//Route::get('/list-coupons', 'ApiNhanhController@listCoupons')->name('listCoupons');
+Route::get('/list-coupons', 'ApiNhanhController@listCoupons')->name('listCoupons');
+
+Route::get('/create-vaqr', 'ApiBaoKimController@createVaQr')->name('createVaQr');
+Route::get('/update-vaqr', 'ApiBaoKimController@updateVaQr')->name('updateVaQr');
+Route::get('/search-info-va', 'ApiBaoKimController@searchInfoVa')->name('searchInfoVa');
+Route::get('/search-transaction', 'ApiBaoKimController@searchTransaction')->name('searchTransaction');
+Route::get('/get-bank-bk', 'ApiBaoKimController@getBankBK')->name('getBankBK');
+Route::any('/web-hook-transaction', 'ApiBaoKimController@webHookTransaction')->name('webHookTransaction');
 
 Route::redirect('/danh-muc/trang-diem-makeup-i.1', '/danh-muc/trang-diem-makeup-i.83', 301);
 Route::redirect('/danh-muc/kem-lot-makeup-primer-i.9', '/danh-muc/kem-lot-i.85', 301);
@@ -390,6 +397,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::post('/update/{id}', 'PromotionsController@update')->name('update')->middleware('permission:edit_promotion');
         Route::post('/destroy/{id}', 'PromotionsController@destroy')->name('destroy')->middleware('permission:delete_promotion');
         Route::post('/change-active-promotion/{id}', 'PromotionsController@changeActive')->name('changeActive')->middleware('permission:edit_promotion');
+    });
+
+    Route::group(['prefix' => 'voucher', 'as' => 'voucher.', 'middleware' => ['permission:view_voucher']], function () {
+        Route::get('', 'VoucherController@index')->name('index');
+        Route::get('/create', 'VoucherController@create')->name('create')->middleware('permission:create_voucher');
+        Route::post('/store', 'VoucherController@store')->name('store')->middleware('permission:create_voucher');
+        Route::get('/edit/{id}', 'VoucherController@edit')->name('edit')->middleware('permission:edit_voucher');
+        Route::post('/update/{id}', 'VoucherController@update')->name('update')->middleware('permission:edit_voucher');
+        Route::post('/destroy/{id}', 'VoucherController@destroy')->name('destroy')->middleware('permission:delete_voucher');
+        Route::post('/change-active-voucher/{id}', 'VoucherController@changeActive')->name('changeActive')->middleware('permission:edit_voucher');
     });
 
 });

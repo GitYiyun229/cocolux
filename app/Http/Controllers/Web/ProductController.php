@@ -76,10 +76,11 @@ class ProductController extends Controller
             $total_money_after = $total_money + $order->price_ship_coco - $order->price_coupon_now;
             getRequirement::setKey($this->apiKey, $this->apiSecret);
             $webhook = new Connect();
+            $description = 'Đơn hàng từ cocolux.com, mã đơn hàng: '.$maDonHang;
             $data = [
                 'mrc_order_id' => $maDonHang,
                 'total_amount' => $total_money_after,
-                'description' => 'Đơn hàng từ cocolux.com',
+                'description' => $description,
                 'url_success' => route('orderProductSuccess',['id'=>$orderId]),
                 "merchant_id" => $this->merchantId, //baokim cung cap
                 "url_detail" => route('orderProductSuccess',['id'=>$orderId]),
@@ -1218,7 +1219,12 @@ class ProductController extends Controller
             }
         }
 
-    public function success ($id){
+    public function success ($id, Request $request){
+        \Log::info([
+            'message' => json_encode($request),
+            'line' => __LINE__,
+            'method' => __METHOD__
+        ]);
         Session::forget('cart');
         $order = Order::findOrFail($id);
         if ($order->name != 'test'){
