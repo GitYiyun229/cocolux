@@ -3,6 +3,18 @@
 @section('link')
     @parent
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/nestable2/1.6.0/jquery.nestable.min.css">
+    <style>
+        .dd-remove{
+            cursor: pointer;
+            background: red;
+            display: inline-block;
+            color: #fff;
+            padding: 2px 13px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    </style>
 @endsection
 @section('title_file', trans('form.product_category.'))
 
