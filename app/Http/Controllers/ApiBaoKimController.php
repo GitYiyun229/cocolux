@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ApiBaoKimController extends Controller
 {
@@ -54,6 +55,8 @@ T9++jUv/hjVAU6mWlvwHYaH1uqki1iw/BEA9EeAj8g==
             'AccNo' => NULL
         ];
         return $this->sendRequest($requestData);
+//        $data = json_decode($data, true);
+//        return view('web.testQr');
     }
 
     public function updateVaQr(){
@@ -109,7 +112,7 @@ T9++jUv/hjVAU6mWlvwHYaH1uqki1iw/BEA9EeAj8g==
             'RequestTime' => $now->format('Y-m-d H:i:s'),
             'PartnerCode' => $this->partnerCode,
             'Operation' => "9004",
-            'ReferenceId' => "00000002", //webhook return
+            'ReferenceId' => "PARTNERCODE58b480bcb05126f7f789", //webhook return
         ];
         return $this->sendRequest($requestData);
 
@@ -189,6 +192,7 @@ T9++jUv/hjVAU6mWlvwHYaH1uqki1iw/BEA9EeAj8g==
         ]);
 
         // Xử lý phản hồi
-        echo $response->getBody();
+        return $response->getBody();
     }
+
 }

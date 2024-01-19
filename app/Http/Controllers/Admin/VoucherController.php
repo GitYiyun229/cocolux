@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 use App\DataTables\VoucherDataTable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class VoucherController extends Controller
 {
@@ -72,7 +74,23 @@ class VoucherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $data['active'] = $request->input('active');
+            $store = Voucher::findOrFail($id);
+            $store->update($data);
+            DB::commit();
+            Session::flash('success', trans('message.update_store_success'));
+            return redirect()->route('admin.store.edit', $id);
+        } catch (\Exception $exception) {
+            \Log::info([
+                'message' => $exception->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            Session::flash('danger', trans('message.update_store_error'));
+            return back();
+        }
     }
 
     /**

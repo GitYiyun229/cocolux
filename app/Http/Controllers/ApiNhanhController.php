@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class ApiNhanhController extends Controller
 {
@@ -141,7 +142,6 @@ class ApiNhanhController extends Controller
         }else{
             return null;
         }
-
     }
 
     public function updateProduct($resp_end, $product, $attribute = null){
@@ -295,22 +295,42 @@ class ApiNhanhController extends Controller
         return $data;
     }
 
-    public function getCouponFirst ($batchId){
+    public function getCouponItem ($batchId){
         $api = "/api/promotion/coupon?act=codes";
         $client = new Client();
 
-        $data = [
+        $data_nhanh = [
             'batchId' => $batchId
         ];
-        $this->request_params['data'] = json_encode($data);
+        $this->request_params['data'] = json_encode($data_nhanh);
 
         $response = $client->post($this->linkApi.$api,[
             'form_params' => $this->request_params
         ]);
         $data = json_decode($response->getBody(), true);
         if ($data && isset($data['data'])){
-            $result_first = $data['data']['result'];
-            return $result_first;
+            $total_page = $data['data']['totalPages'];
+            $page = $data['data']['page'];
+            $result1 = $data['data']['result'];
+//            $allResults = array();
+//            if ($total_page != $page){
+//                for ($page = 2; $page <= $total_page; $page++) {
+//                    $data_nhanh = [
+//                        'batchId' => $batchId,
+//                        'page' => $page
+//                    ];
+//                    $this->request_params['data'] = json_encode($data_nhanh);
+//
+//                    $response = $client->post($this->linkApi.$api,[
+//                        'form_params' => $this->request_params
+//                    ]);
+//                    $data2 = json_decode($response->getBody(), true);
+//                    $result2 = $data2['data']['result'];
+//                    $allResults = array_merge($allResults, $result2);
+//                }
+//            }
+//            $result = array_merge($result1, $allResults);
+            return $result1;
         }else{
             return null;
         }
@@ -319,96 +339,65 @@ class ApiNhanhController extends Controller
 
     public function listCoupons (){
         $data = $this->callApiListCoupon();
-
         $total_page = $data['data']['totalPages'];
         $page = $data['data']['page'];
-        $result = $data['data']['result'];
+        $result1 = $data['data']['result'];
         $now = Carbon::now();
         $list_coupon = array();
-        foreach ($result as $item){
-            $check_voucher = Voucher::where('id_nhanh',$item['id'])->first();
-            $req = array();
-            $couponReq = array();
-            $req['name'] = $item['name'];
-            $req['description'] = $item['description'];
-            if (count($item['depotIds'])){
-                $req['depot_ids'] = json_encode($item['depotIds']);
-            }
-            $req['start_date'] = $item['startDate'];
-            $req['end_date'] = $item['endDate'];
-            if (!empty($item['fromValue'])){
-                $req['from_value'] = $item['fromValue'];
-            }
-            $req['number_of_codes'] = $item['numberOfCodes'];
-            $req['total_used_time'] = $item['totalUsedTime'];
-            $req['total_assign'] = $item['totalAssign'];
-            $req['value_type'] = $item['valueType'];
-            if($item['value']){
-                $req['value'] = $item['value'];
-            }
-            if ($item['valueMax']){
-                $req['value_max'] = $item['valueMax'];
-            }
-            $req['status'] = $item['status'];
-            $req['id_nhanh'] = $item['id'];
-            $coupons = $this->getCouponFirst( ['id']);
-            if ($coupons){
-                if ($check_voucher){
-                    $cat = $check_voucher->update($req);
-                    VoucherItem::where('voucher_id',$check_voucher->id)->delete();
-                    $this->createVoucherItem($coupons,$check_voucher);
-                }else{
-                    $cat = Voucher::create($req);
-                    $this->createVoucherItem($coupons,$cat);
-                }
-            }
-        }
+        $allResults = array();
         if ($total_page != $page){
             for ($page = 2; $page <= $total_page; $page++) {
                 $data2 = $this->callApiListCoupon($page);
                 $result2 = $data2['data']['result'];
-                foreach ($result2 as $item){
-                    $check_voucher = Voucher::where('id_nhanh',$item['id'])->first();
-                    $req = array();
-                    $couponReq = array();
-                    $req['name'] = $item['name'];
-                    $req['description'] = $item['description'];
-                    if (count($item['depotIds'])){
-                        $req['depot_ids'] = json_encode($item['depotIds']);
+                $allResults = array_merge($allResults, $result2);
+            }
+        }
+        $result = array_merge($result1, $allResults);
+        $idList = array_map(function ($item) {
+            return $item['id'];
+        }, $result);
+        Voucher::whereNotIn('id_nhanh', $idList)->delete();
+        VoucherItem::truncate();
+        foreach ($result as $item){
+            $name = $item['name'];
+            if (Str::contains(strtolower($name), strtolower('website'))) {
+                $check_voucher = Voucher::where('id_nhanh',$item['id'])->first();
+                $req = array();
+                $couponReq = array();
+                $req['name'] = $item['name'];
+                $req['description'] = $item['description'];
+                if (count($item['depotIds'])){
+                    $req['depot_ids'] = json_encode($item['depotIds']);
+                }
+                $req['start_date'] = $item['startDate'];
+                $req['end_date'] = $item['endDate'];
+                if (!empty($item['fromValue'])){
+                    $req['from_value'] = $item['fromValue'];
+                }
+                $req['number_of_codes'] = $item['numberOfCodes'];
+                $req['total_used_time'] = $item['totalUsedTime'];
+                $req['total_assign'] = $item['totalAssign'];
+                $req['value_type'] = $item['valueType'];
+                if($item['value']){
+                    $req['value'] = $item['value'];
+                }
+                if ($item['valueMax']){
+                    $req['value_max'] = $item['valueMax'];
+                }
+                $req['status'] = $item['status'];
+                $req['id_nhanh'] = $item['id'];
+                $coupons = $this->getCouponItem($item['id']);
+                if ($coupons){
+                    if ($check_voucher){
+                        $check_voucher->update($req);
+                        $cat = $check_voucher;
+                    }else{
+                        $cat = Voucher::create($req);
                     }
-                    $req['start_date'] = $item['startDate'];
-                    $req['end_date'] = $item['endDate'];
-                    if (!empty($item['fromValue'])){
-                        $req['from_value'] = $item['fromValue'];
-                    }
-                    $req['number_of_codes'] = $item['numberOfCodes'];
-                    $req['total_used_time'] = $item['totalUsedTime'];
-                    $req['total_assign'] = $item['totalAssign'];
-                    $req['value_type'] = $item['valueType'];
-                    if($item['value']){
-                        $req['value'] = $item['value'];
-                    }
-                    if ($item['valueMax']){
-                        $req['value_max'] = $item['valueMax'];
-                    }
-                    $req['status'] = $item['status'];
-                    $req['id_nhanh'] = $item['id'];
-                    $coupons = $this->getCouponFirst($item['id']);
-
-                    if ($coupons){
-                        if ($check_voucher){
-                            $cat = $check_voucher->update($req);
-                            VoucherItem::where('voucher_id',$check_voucher->id)->delete();
-                            $this->createVoucherItem($coupons,$check_voucher);
-                        }else{
-                            $cat = Voucher::create($req);
-                            $this->createVoucherItem($coupons,$cat);
-                        }
-                    }
+                    $this->createVoucherItem($coupons,$cat);
                 }
             }
         }
-
         return response()->json(array(
             'error' => false,
             'message'   => 'Update mã giảm giá thành công',
@@ -429,6 +418,7 @@ class ApiNhanhController extends Controller
             $couponReq['status'] = $coupon['status'];
             VoucherItem::create($couponReq);
         }
+        return true;
     }
 
     public function pushOrderNhanh ($id){

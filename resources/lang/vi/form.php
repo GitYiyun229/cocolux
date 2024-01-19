@@ -298,7 +298,7 @@ return [
         'end_date' => 'Ngày kết thúc',
         'from_value' => 'Giá trị từ',
         'number_of_codes' => 'Số coupon',
-        'total_used_time' => 'Số lần có thể sử dụng',
+        'total_used_time' => 'Số lần đã sử dụng',
         'total_assign' => 'Số lần đã sử dụng',
         'value' => 'Giá trị',
         'value_max' => 'Giá trị tối đa',
