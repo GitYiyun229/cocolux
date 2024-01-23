@@ -98,18 +98,6 @@
             </div>
             <div class="col-sm-6">
                 <!-- text input -->
-                <div class="form-group">
-                    <label>@lang('form.voucher.total_assign')</label>
-                    <input type="text" class="form-control" name="total_assign" value="{{ isset($voucher) ? $voucher->total_assign : old('total_assign') }}" readonly>
-                    @if ($errors->has('total_assign'))
-                        <span class="help-block text-danger">
-                    <strong>{{ $errors->first('total_assign') }}</strong>
-                </span>
-                    @endif
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <!-- text input -->
                 <div class="form-group clearfix">
                     <label>@lang('form.status.value_type')</label> <span class="text-danger">*</span>
                     <div class="form-group">

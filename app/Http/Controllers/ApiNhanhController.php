@@ -423,6 +423,16 @@ class ApiNhanhController extends Controller
 
     public function pushOrderNhanh ($id){
         $order = Order::findOrFail($id);
+        if ($order->mess_coupon == 'Kích hoạt thành công'){
+            $voucherItem = VoucherItem::where('code', $order->coupon)->first();
+            if ($voucherItem) {
+                $voucherItem->increment('used_times');
+                $voucher = Voucher::where('id', $voucherItem->voucher_id)->first();
+                if ($voucher){
+                    $voucher->increment('total_used_time');
+                }
+            }
+        }
         $products = OrderItem::with(['productOption' => function($query){
             $query->select('id','sku','slug','title');
         }])->where('order_id', $id)->get();

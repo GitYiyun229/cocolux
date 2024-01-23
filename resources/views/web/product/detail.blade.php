@@ -327,6 +327,69 @@
                             </div>
                         </div>
                     </div>
+
+                    @if($product_in_cat)
+                        <div class="list-product-article mb-4">
+                            <div class="title-product-same">
+                                <span>
+                                 Sản phẩm cùng danh mục
+                                </span>
+                            </div>
+                            <div class="slide-template-slick">
+                                @forelse($product_in_cat as $item)
+                                    <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
+                                        @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
+                                            @if($item->flash_deal->price != $item->normal_price)
+                                                <div class="product-discount">
+                                                    <span class="pe-1">{{ percentage_price($item->flash_deal->price, $item->normal_price) }}</span>
+                                                </div>
+                                            @endif
+                                        @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
+                                            @if($item->hot_deal->price != $item->normal_price)
+                                                <div class="product-discount">
+                                                    <span class="pe-1">{{ percentage_price($item->hot_deal->price, $item->normal_price) }}</span>
+                                                </div>
+                                            @endif
+                                        @else
+                                            @if($item->price != $item->normal_price)
+                                                <div class="product-discount">
+                                                    <span class="pe-1">{{ percentage_price($item->price, $item->normal_price) }}</span>
+                                                </div>
+                                            @endif
+                                        @endif
+                                        <div class="product-thumbnail">
+                                            <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
+                                        </div>
+                                        <div class="product-price">
+                                            @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
+                                                <div class="public-price">{{ format_money($item->flash_deal->price) }}</div>
+                                                @if($item->flash_deal->price != $item->normal_price)
+                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                                @endif
+                                            @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
+                                                <div class="public-price">{{ format_money($item->hot_deal->price) }}</div>
+                                                @if($item->hot_deal->price != $item->normal_price)
+                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                                @endif
+                                            @else
+                                                <div class="public-price">{{ format_money($item->price) }}</div>
+                                                @if($item->price != $item->normal_price)
+                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                                @endif
+                                            @endif
+                                        </div>
+                                        <div class="product-brand">
+                                            {{ $item->brand }}
+                                        </div>
+                                        <div class="product-title">
+                                            {{ $item->title }}
+                                        </div>
+                                    </a>
+                                @empty
+                                @endforelse
+                            </div>
+                        </div>
+                    @endif
                 </div>
 
                 <div class="layout-right">
@@ -433,17 +496,19 @@
                 </div>
             </div>
         </div>
-
     </main>
 @endsection
 
 @section('link')
     @parent
+    <link href="{{ asset('js/web/slick/slick.css') }}" rel="stylesheet">
+    <link href="{{ asset('js/web/slick/slick-theme.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/web/product-detail.css') }}">
 @endsection
 
 @section('script')
     @parent
+    <script src="{{ asset('/js/web/slick/slick.js') }}" data-cfasync="false"></script>
     <script>
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
@@ -621,6 +686,24 @@
 
             }, 1e3);
         }
+
+        $('.slide-template-slick').slick({
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            arrows: true,
+            dots: false,
+            infinite: true,
+            autoplay: true,
+            responsive: [
+                {
+                    breakpoint: 960,
+                    settings: {
+                        slidesToShow: 2.5,
+                        slidesToScroll: 2
+                    }
+                }
+            ]
+        });
     </script>
 
     <script>

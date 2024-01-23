@@ -172,6 +172,11 @@
                         </div>
                         @if($products_choose_down)
                         <div class="list-product-article mb-4">
+                            <div class="title-product-same">
+                                <span>
+                               Một số sản phẩm tương tự
+                                </span>
+                            </div>
                             <div class="slide-template-slick">
                                 @forelse($products_choose_down as $item)
                                     <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">

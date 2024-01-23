@@ -560,7 +560,7 @@ class ProductController extends Controller
 
     public function detail ($slug,$sku){
         $product = ProductOptions::where(['sku' => $sku])->with(['product' => function($query){
-            $query->select('id','category_id','sku','slug','title','attributes','category_path','attribute_path','description','brand');
+            $query->select('id','category_id','sku','slug','title','attributes','category_path','attribute_path','category_id','description','brand');
         }])->where('sku','!=',null)->first();
         if (!$product) {
             abort(404);
@@ -648,6 +648,17 @@ class ProductController extends Controller
 
         $list_cats = ProductsCategories::select('id','slug','title')->whereIn('id',explode(',',$product->product->category_path))->get();
 
+        $product_in_cat = ProductOptions::select('product_options.id','product_options.title','product_options.slug','product_options.images','product_options.price','product_options.normal_price','product_options.normal_price','products.category_id','product_options.sku','product_options.brand','product_options.hot_deal','product_options.flash_deal')
+            ->where(['product_options.active' => 1])
+            ->whereHas('product', function ($query) use ($product) {
+                $query->where('active', 1)->where('category_id', $product->product->category_id);;
+            })
+            ->where('product_options.sku','!=',null)
+            ->where('product_options.slug','!=',null)
+            ->join('products', 'product_options.parent_id', '=', 'products.id')
+            ->addSelect('products.slug as product_slug')
+            ->limit(5)->orderBy('id', 'DESC')->get();
+
         SEOTools::setTitle($product->seo_title?$product->seo_title:$product->title);
         SEOTools::setDescription($product->seo_description?$product->seo_description:$product->description);
         SEOTools::addImages($product->image?asset($product->image):null);
@@ -657,7 +668,7 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($product->seo_keyword?$product->seo_keyword:$product->title);
 
-        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats','flash_sale','hot_deal','stores','count_store','brand','promotions_hot_id','promotions_flash_id'));
+        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats','flash_sale','hot_deal','stores','count_store','brand','promotions_hot_id','promotions_flash_id','product_in_cat'));
     }
 
     public function is_new(){
