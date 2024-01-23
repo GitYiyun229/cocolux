@@ -10,6 +10,10 @@ class Article extends Model
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 
+    const METHOD_PAY_0 = 0;
+    const METHOD_PAY_1 = 1;
+    const METHOD_PAY_2 = 2;
+
     const IS_HOME = 1;
     const IS_NOT_HOME = 0;
 
