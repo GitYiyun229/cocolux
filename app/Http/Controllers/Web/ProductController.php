@@ -1006,7 +1006,7 @@ class ProductController extends Controller
                 $totalQuantity += $item['quantity'];
 
 //                $product = $this->productRepository->getOneById($id);
-                $product = Product::findOrFail($id);
+                $product = ProductOptions::findOrFail($id);
                 $quantity = $item['quantity']; // Số lượng
 
                 // Thêm thông tin sản phẩm vào danh sách
