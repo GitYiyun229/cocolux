@@ -35,10 +35,10 @@ CKEDITOR.editorConfig = function( config ) {
 	config.filebrowserFlashUploadUrl = '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash';
 	config.extraPlugins = 'youtube,pastefromgdocs,pastefromword,collapsibleItem,wenzgmap,html5video,colorbutton,justify,btgrid';
 
-	config.height = 400;
+	config.height = 600;
 	config.extraPlugins = 'youtube';
-    config.extraPlugins = 'youtube,pastefromgdocs,pastefromword,collapsibleItem,html5video,colorbutton,justify,btgrid';
-    config.allowedContent = false;
+    config.extraPlugins = 'youtube,pastefromgdocs,font,pastefromword,collapsibleItem,html5video,colorbutton,justify,btgrid';
+    config.allowedContent = true;
 	config.removeButtons = 'Underline,Subscript,Superscript';
 	config.format_tags = 'p;h1;h2;h3;pre';
 	config.disallowedContent = 'p[clas*];*{text*};p*{color*}*;div[clas*];div[class*];*[dir]';
