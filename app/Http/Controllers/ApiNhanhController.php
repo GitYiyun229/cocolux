@@ -457,6 +457,7 @@ class ApiNhanhController extends Controller
         $api = "/api/order/add";
         $client = new Client();
 
+        $description = $order->note.' (Đơn hàng từ Website cocolux.com)';
         $data = [
             "id" => $id,
             "customerName" => $order->name,
@@ -470,7 +471,7 @@ class ApiNhanhController extends Controller
             "paymentMethod"=> $payment,
             "customerShipFee"=> $order->price_ship_coco,
             "status"=> "New",
-            "description"=> $order->note,
+            "description"=> $description,
             "couponCode"=> $order->coupon,
             "productList" => $productList
         ];

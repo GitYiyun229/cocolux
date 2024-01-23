@@ -75,12 +75,16 @@
                     <label>Hình thức thanh toán</label>
                     <div class="form-group">
                         <div class="icheck-success d-inline">
-                            <input class="" type="radio" id="statusRadio1" name="payment" readonly value="{{ \App\Models\Article::STATUS_ACTIVE }}" {{ (isset($order->payment) && $order->payment == \App\Models\Article::STATUS_ACTIVE) ? 'checked' : (old('payment') && (old('payment') == \App\Models\Article::STATUS_ACTIVE)) ? 'checked' : '' }} disabled required>
+                            <input class="" type="radio" id="statusRadio1" name="payment" readonly value="{{ \App\Models\Article::METHOD_PAY_0 }}" {{ (isset($order->payment) && $order->payment == \App\Models\Article::METHOD_PAY_0) ? 'checked' : (old('payment') && (old('payment') == \App\Models\Article::METHOD_PAY_0)) ? 'checked' : '' }} disabled required>
                             <label for="statusRadio1" class="custom-control-label">Thanh toán khi nhận hàng&nbsp;&nbsp;&nbsp;&nbsp;</label>
                         </div>
                         <div class="icheck-success d-inline">
-                            <input class="" type="radio" id="statusRadio2" name="payment" readonly value="{{ \App\Models\Article::STATUS_INACTIVE }}" {{ (isset($order) && $order->payment == \App\Models\Article::STATUS_INACTIVE) ? 'checked' : (old('payment') && (old('payment') == \App\Models\Article::STATUS_INACTIVE)) ? 'checked' : '' }} disabled required>
+                            <input class="" type="radio" id="statusRadio2" name="payment" readonly value="{{ \App\Models\Article::METHOD_PAY_1 }}" {{ (isset($order) && $order->payment == \App\Models\Article::METHOD_PAY_1) ? 'checked' : (old('payment') && (old('payment') == \App\Models\Article::METHOD_PAY_1)) ? 'checked' : '' }} disabled required>
                             <label for="statusRadio2" class="custom-control-label">Thanh toán chuyển khoản</label>
+                        </div>
+                        <div class="icheck-success d-inline">
+                            <input class="" type="radio" id="statusRadio3" name="payment" readonly value="{{ \App\Models\Article::METHOD_PAY_2 }}" {{ (isset($order) && $order->payment == \App\Models\Article::METHOD_PAY_2) ? 'checked' : (old('payment') && (old('payment') == \App\Models\Article::METHOD_PAY_2)) ? 'checked' : '' }} disabled required>
+                            <label for="statusRadio3" class="custom-control-label">Thanh toán qua bảo kim</label>
                         </div>
                     </div>
                     @if ($errors->has('payment'))
@@ -100,6 +104,11 @@
                         @endforelse
                     </select>
                 </div>
+            </div>
+            <div class="col-md-6">
+                @if($order->payment == \App\Models\Article::METHOD_PAY_2)
+                    <p>{{ $order->baokim_message }}</p>
+                @endif
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
