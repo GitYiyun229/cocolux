@@ -112,6 +112,9 @@
                                         </div>
                                         <span>25%</span>
                                     </div>
+                                    @if($setting['policy_ship'])
+                                        <div class="policy_ship mb-3">{!! $setting['policy_ship'] !!}</div>
+                                    @endif
                                     @if($count_store)
                                     <div class="detail-button">
                                         <div class="dropdown detail-address">
