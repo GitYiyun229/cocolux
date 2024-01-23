@@ -513,7 +513,7 @@
     @parent
     <script src="{{ asset('/js/web/jquery-3.7.1.min.js') }}" data-cfasync="false"></script>
     <script src="{{ asset('/js/web/slick/slick.js') }}" data-cfasync="false"></script>
-    <script data-cfasync="false">
+    <script>
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
@@ -690,7 +690,9 @@
 
             }, 1e3);
         }
+    </script>
 
+    <script data-cfasync="false">
         $('.slide-template-slick').slick({
             slidesToShow: 4,
             slidesToScroll: 4,
