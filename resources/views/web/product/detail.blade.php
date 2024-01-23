@@ -513,7 +513,7 @@
     @parent
     <script src="{{ asset('/js/web/jquery-3.7.1.min.js') }}" data-cfasync="false"></script>
     <script src="{{ asset('/js/web/slick/slick.js') }}" data-cfasync="false"></script>
-    <script>
+    <script data-cfasync="false">
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
