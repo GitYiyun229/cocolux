@@ -64,6 +64,10 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::findOrFail($id);
+        $baokim_hook = '';
+        if ($order->baokim_message == 'Đã thanh toán thành công qua Bảo Kim'){
+            $baokim_hook = json_decode($order->baokim_hook);
+        }
         $products = OrderItem::with(['productOption' => function($query){
             $query->select('id','sku','slug','title');
         }])->where('order_id', $id)->get();
@@ -74,7 +78,7 @@ class OrderController extends Controller
                 $total_money = $total_money+$item_total;
             }
         }
-        return view('admin.order-product.update', compact('order','products','total_money'));
+        return view('admin.order-product.update', compact('order','products','total_money','baokim_hook'));
     }
 
     /**
