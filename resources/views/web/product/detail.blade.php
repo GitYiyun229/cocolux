@@ -715,31 +715,36 @@
     <script>
         function order(id_prd) {
             var quantity = $("#quantity").val();
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '{{ route('addToCart') }}',
-                data: {
-                    quantity: quantity?quantity:1,
-                    id: id_prd,
-                    _token: $('meta[name="csrf-token"]').attr("content")
-                },
-                success: function (data) {
-                    $("#number-added-cart").html(data.total);
-                    Swal.fire(
-                        'Thành công!',
-                        'Thêm vào giỏ hàng thành công',
-                        'success'
-                    )
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Có lỗi xảy ra, Không thành công',
-                    })
-                }
-            });
+            if(quantity < 1){
+                alert('Số lượng không thể ít hơn 1');
+                $('#quantity-'+id_prd).val(1);
+            }else{
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '{{ route('addToCart') }}',
+                    data: {
+                        quantity: quantity?quantity:1,
+                        id: id_prd,
+                        _token: $('meta[name="csrf-token"]').attr("content")
+                    },
+                    success: function (data) {
+                        $("#number-added-cart").html(data.total);
+                        Swal.fire(
+                            'Thành công!',
+                            'Thêm vào giỏ hàng thành công',
+                            'success'
+                        )
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Có lỗi xảy ra, Không thành công',
+                        })
+                    }
+                });
+            }
         }
     </script>
 @endsection
