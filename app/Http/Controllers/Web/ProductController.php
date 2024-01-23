@@ -1126,7 +1126,7 @@ class ProductController extends Controller
         foreach ($cart as $item) {
             $total_price = $total_price + ($item['price'] * $item['quantity']);
         }
-        if (in_array($city_id,[201,234])){
+        if (in_array($city_id,[201])){ //201,234
             if ($total_price > 99000){
                 $price_ship = 0;
             }else{
