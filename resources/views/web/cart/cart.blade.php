@@ -98,19 +98,24 @@
             $(".number-input").change(function(){
                 var id_prd = $(this).data('id');
                 var quantity = $('#quantity-'+id_prd).val();
-                $.ajax({
-                    type: 'POST',
-                    dataType: 'json',
-                    url: '{{ route('updateCart') }}',
-                    data: {
-                        quantity: quantity?quantity:1,
-                        id: id_prd,
-                        _token: $('meta[name="csrf-token"]').attr("content")
-                    },
-                    success: function (data) {
-                        window.location.reload();
-                    }
-                });
+                if(quantity < 1){
+                    alert('Số lượng không thể ít hơn 1');
+                    $('#quantity-'+id_prd).val(1);
+                }else{
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: '{{ route('updateCart') }}',
+                        data: {
+                            quantity: quantity?quantity:1,
+                            id: id_prd,
+                            _token: $('meta[name="csrf-token"]').attr("content")
+                        },
+                        success: function (data) {
+                            window.location.reload();
+                        }
+                    });
+                }
             });
         });
     </script>

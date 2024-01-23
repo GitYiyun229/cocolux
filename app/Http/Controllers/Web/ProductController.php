@@ -1005,7 +1005,8 @@ class ProductController extends Controller
             foreach ($cart as $id => $item) {
                 $totalQuantity += $item['quantity'];
 
-                $product = $this->productRepository->getOneById($id);
+//                $product = $this->productRepository->getOneById($id);
+                $product = Product::findOrFail($id);
                 $quantity = $item['quantity']; // Số lượng
 
                 // Thêm thông tin sản phẩm vào danh sách
