@@ -185,7 +185,7 @@ class ArticleController extends Controller
             $id_articles = explode(',',$article->news_add);
             $article_add = Article::whereIn('id', $id_articles)
                 ->select('id','title','image','slug','description')
-                ->where('active',1)->get();
+                ->where('active',1)->limit(3)->get();
         }
 
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();

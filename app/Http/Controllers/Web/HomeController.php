@@ -12,6 +12,7 @@ use App\Models\RegisterEmail;
 use App\Models\Setting;
 use App\Models\Sliders;
 use App\Models\Store;
+use App\Models\Voucher;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Carbon\Carbon;
@@ -50,18 +51,13 @@ class HomeController extends Controller
     public function index()
     {
         $logo = Setting::where('key', 'logo')->first();
-        $coupon_nhanh = Setting::where('key', 'coupon_nhanh')->where('active', 1)->first();
-        if ($coupon_nhanh){
-            $list_coupon = $coupon_nhanh->value;
-            $list_coupon = json_decode($list_coupon, true);
-        }else{
-            $list_coupon = null;
-        }
+        $title = Setting::where('key', 'title')->first();
+        $meta_key = Setting::where('key', 'meta_key')->first();
+        $meta_des = Setting::where('key', 'meta_des')->first();
 
-
-        SEOTools::setTitle('Hệ Thống Bán Lẻ Mỹ Phẩm Chính Hãng - Cocolux');
-        SEOTools::setDescription('Cocolux.com - Cung cấp +10000 mỹ phẩm chính hãng với +450 thương hiệu mỹ phẩm nổi tiếng & chất lượng | Giá cực tốt | Freeship HN trong 2h | Flash sale hấp dẫn');
-        SEOMeta::setKeywords('Cocolux, coco lux, mua mỹ phẩm chính hãng, son môi, chăm sóc da, chăm sóc tóc,trang điểm môi, chăm sóc cơ thể, kem dưỡng da, sữa rửa mặt, xịt khoáng, giá tốt nhất thị trường ');
+        SEOTools::setTitle($title->value);
+        SEOTools::setDescription($meta_des->value);
+        SEOMeta::setKeywords($meta_key->value);
         SEOTools::addImages(asset($logo->value));
         SEOTools::setCanonical(url()->current());
         SEOTools::opengraph()->setUrl(url()->current());
@@ -118,6 +114,7 @@ class HomeController extends Controller
                 ->limit(4)->orderBy('id', 'ASC')->get();
         }
 
+        $list_coupon = Voucher::where(['status' => 1,'active' => 1])->with(['items'])->orderBy('id', 'ASC')->get();
         return view('web.home', compact('slider','subBanner','product_hots','attribute_brand','articles','product_cats','subBanner2','cats','cat_sub','applied_stop_time','product_flash','promotions_hot_id','promotions_flash_id','stores','list_coupon'));
     }
 

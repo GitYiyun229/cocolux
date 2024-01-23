@@ -89,6 +89,7 @@
                     <div class="slide-main-coupon">
                         <div class="slide-template-slick-coupon">
                             @forelse($list_coupon as $item)
+                                @if($item->items)
                                 <div class="item-coupon">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="box-coupon box-coupon-left text-center">
@@ -98,25 +99,26 @@
                                             </svg>
                                         </div>
                                         <div class="box-coupon box-coupon-right w-100">
-                                            @if($item['valueType'] == 1)
-                                                <p class="sub-title-coupon">Giảm {{$item['value']}}đ</p>
+                                            @if($item->value_type == 1)
+                                                <p class="sub-title-coupon">Giảm {{ $item->value }}đ</p>
                                             @else
-                                                <p class="sub-title-coupon">Giảm {{$item['value']}}</p>
+                                                <p class="sub-title-coupon">Giảm {{ $item->value }}</p>
                                             @endif
                                             <div class="voucher-detail">
-                                                {{ $item['name'] }}
-                                                <p>Còn {{ $item['first_coupon']['canUsedTimes']-$item['first_coupon']['usedTimes'] }} mã, hết hạn trong {{ $item['remainingDays'] }} ngày</p>
+                                                {{ $item->name }}
+                                                <p>Còn {{ $item->total_using_voucher }} mã, hết hạn trong {{ $item->time_end_voucher }} ngày</p>
                                             </div>
                                             <div class="progress">
-                                                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $item['progressbar'] }}%" aria-valuenow="{{ $item['progressbar'] }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $item->progressbar }}%" aria-valuenow="{{ $item->progressbar }}" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center mt-1">
                                                 <button type="button" class="btn btn-call-modal p-0 btn-value" data-value-coupon="{{ json_encode($item) }}" data-bs-toggle="modal" data-bs-target="#info-coupon-detail">Chi tiết</button>
-                                                <button type="button" class="btn btn-dark btn-copy" data-coupon="{{ $item['first_coupon']['code'] }}">Sao chép</button>
+                                                <button type="button" class="btn btn-dark btn-copy" data-coupon="{{ $item->items['code'] }}">Sao chép</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             @empty
                             @endforelse
                         </div>
@@ -445,7 +447,7 @@
                     <div class="box4">
                         <div class="detail-coupon">Chi tiết</div>
                         <div id="description-coupon"></div>
-                        <p>Có hiệu lực từ 13/12/2023 - 19/12/2023</p>
+                        <p>Có hiệu lực từ <span id="show_date">13/12/2023 - 19/12/2023</span></p>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between align-items-center flex-nowrap">
@@ -650,11 +652,12 @@
             let value = $(this).data('value-coupon');
             $(".modal-body #name-coupon").text( 'Giảm ' + value.value );
             $(".modal-body #des-coupon").text( value.name );
-            $(".modal-body #coupon-modal").text( value.first_coupon.code );
-            $(".modal-body #coupon-here").data('coupon',value.first_coupon.code );
-            $(".modal-footer #coupon-end").data('coupon',value.first_coupon.code );
-            $(".modal-body #startDate").text( value.startDate );
-            $(".modal-body #endDate").text( value.endDate );
+            $(".modal-body #coupon-modal").text( value.items.code );
+            $(".modal-body #coupon-here").data('coupon',value.items.code );
+            $(".modal-footer #coupon-end").data('coupon',value.items.code );
+            $(".modal-body #startDate").text( value.start_date );
+            $(".modal-body #endDate").text( value.end_date );
+            $(".modal-body #show_date").text( value.start_date + '- '+ value.end_date );
             $(".modal-body #description-coupon").text( value.description );
         })
 
