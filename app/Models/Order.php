@@ -21,6 +21,10 @@ class Order extends Model
         self::STATUS_CANCEL => 'Hủy'
     ];
 
+//    protected $casts = [
+//        'baokim_hook' => 'object',
+//    ];
+
     protected $appends = [
         'city_name',
         'district_name',

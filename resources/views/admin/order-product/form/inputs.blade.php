@@ -108,7 +108,17 @@
             <div class="col-md-6">
                 @if($order->payment == \App\Models\Article::METHOD_PAY_2)
                     <p>{{ $order->baokim_message }}</p>
+                    @if($order->baokim_message == 'Đã thanh toán thành công qua Bảo Kim')
+                        <p>Số tiền thanh toán: {{ format_money($baokim_hook->txn->amount) }}</p>
+                    @else
+                        <p>Id_BaoKim: {{ $order->baokim_id }}</p>
+                        <p class="d-none">Link thanh toán: <a href="" target="_blank">{{ $order->baokim_hook }}</a></p>
+                    @endif
                 @endif
+            </div>
+            <div class="col-md-6">
+                <b>Thông tin đơn hàng trên Nhanh</b>
+                <p>{{ $order->message }}</p>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
@@ -165,6 +175,11 @@
     @endif
     <div class="col-md-8 text-right text-bold">Tổng tiền: </div>
     <div class="col-md-4">{{ format_money($total_money + $order->price_ship_coco - $order->price_coupon_now) }}</div>
+    @if($order->payment == \App\Models\Article::METHOD_PAY_2)
+        <div class="col-md-8 text-right text-bold">Bảo kim: </div>
+        <div class="col-md-4"><p>{{ $order->baokim_message }}</p></div>
+
+    @endif
 </div>
 @section('link')
     @parent
