@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            @if(!empty($list_coupon))
+            @if(count($list_coupon))
                 <div class="list-coupon">
                     <h2 class="text-center">Mã khuyến mại</h2>
                     <div class="slide-main-coupon">
