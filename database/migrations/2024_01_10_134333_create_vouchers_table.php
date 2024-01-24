@@ -30,6 +30,7 @@ class CreateVouchersTable extends Migration
             $table->integer('status')->nullable();
             $table->integer('active')->nullable()->default(0);
             $table->integer('id_nhanh')->nullable();
+            $table->string('products_add')->nullable();
             $table->timestamps();
         });
     }

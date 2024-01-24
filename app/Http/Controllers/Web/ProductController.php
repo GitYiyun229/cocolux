@@ -1061,6 +1061,8 @@ class ProductController extends Controller
         // Duyệt qua các sản phẩm trong giỏ hàng để lấy thông tin sản phẩm
         $cartItems = [];
         $total_price = 0;
+        $total_price_in_promotion = 0;
+        $total_price_not_in_promotion = 0;
         if (!$cart){
             return redirect()->route('home');
         }
@@ -1070,14 +1072,20 @@ class ProductController extends Controller
         $promotions_hot_id = $hot_deal->pluck('id')->toArray();
         foreach ($cart as $productId => $item) {
             $product = ProductOptions::where(['id' => $productId])->with(['product'])->first();
+            $quantity = $item['quantity']; // Số lượng
             if($product->flash_deal && in_array($product->flash_deal->id,$promotions_flash_id)){
                 $price = $product->flash_deal->price;
+                $promotion = 0;
+                $total_price_in_promotion = $total_price_in_promotion + $price * $quantity;
             }elseif($product->hot_deal && in_array($product->hot_deal->id,$promotions_hot_id)){
                 $price = $product->hot_deal->price;
+                $promotion = 0;
+                $total_price_in_promotion = $total_price_in_promotion + $price * $quantity;
             }else{
                 $price = $product->price;
+                $promotion = 1;
+                $total_price_not_in_promotion = $total_price_not_in_promotion + $price * $quantity;
             }
-            $quantity = $item['quantity']; // Số lượng
             // Thêm thông tin sản phẩm vào danh sách
             $cartItems[] = [
                 'product' => $product,
@@ -1085,13 +1093,14 @@ class ProductController extends Controller
                 'quantity' => $quantity,
                 'price' => $price,
                 'subtotal' => $price * $quantity, // Tính tổng tiền cho mỗi sản phẩm
+                'promotion' => $promotion, // Khuyến mại
             ];
             $total_price = $total_price + $price * $quantity;
         }
 
         $list_city = City::all();
 
-        return view('web.cart.payment', compact('cart','cartItems','total_price','list_city'));
+        return view('web.cart.payment', compact('cart','cartItems','total_price','list_city','total_price_not_in_promotion','total_price_in_promotion'));
     }
 
     public function load_district(Request $request)
