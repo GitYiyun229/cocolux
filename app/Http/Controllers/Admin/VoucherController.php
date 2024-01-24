@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProductOptions;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 use App\DataTables\VoucherDataTable;
@@ -62,7 +63,11 @@ class VoucherController extends Controller
     public function edit($id)
     {
         $voucher = Voucher::findOrFail($id);
-        return view('admin.voucher.update', compact('voucher'));
+        $products_add = array();
+        if ($voucher->products_add){
+            $products_add = ProductOptions::select('id','title','slug','sku','images','price')->whereIn('id',explode(',',$voucher->products_add))->get();
+        }
+        return view('admin.voucher.update', compact('voucher','products_add'));
     }
 
     /**
@@ -77,11 +82,12 @@ class VoucherController extends Controller
         DB::beginTransaction();
         try {
             $data['active'] = $request->input('active');
+            $data['products_add'] = $request->input('products_add');
             $store = Voucher::findOrFail($id);
             $store->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_store_success'));
-            return redirect()->route('admin.store.edit', $id);
+            return redirect()->route('admin.voucher.edit', $id);
         } catch (\Exception $exception) {
             \Log::info([
                 'message' => $exception->getMessage(),

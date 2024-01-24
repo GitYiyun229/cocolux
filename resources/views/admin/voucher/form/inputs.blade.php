@@ -154,12 +154,183 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-5">
-
+    <div class="col-sm-5 d-none">
+        <div class="form-group">
+            <label>Sản phẩm áp dụng</label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="" name="search_product" autocomplete="off" id="search_product">
+            </div>
+        </div>
+        <table class="table table-bordered mt-2" id="list_news">
+            <thead class="thead-light">
+            <tr>
+                <th >Mã SP</th>
+                <th style="width: 280px;">Tên sản phẩm</th>
+                <th style="width: 50px;">#</th>
+            </tr>
+            </thead>
+            <tbody id="table-body-new">
+            @if(!empty($products_add))
+                @forelse($products_add as $k => $item)
+                    <tr>
+                        <td>{{ $item->sku }}</td>
+                        <td>{{ $item->title }}</td>
+                        <td><button type="button" onclick="deleteCellNew('list_product',{{ $k+1 }},{{ $item->id }})" class="btn btn-danger">Xóa</button></td>
+                    </tr>
+                @empty
+                @endforelse
+            @endif
+            </tbody>
+        </table>
+        <input type="hidden" name="products_add" id="products_add" value="@if(!empty($voucher) && $voucher->products_add){{ $voucher->products_add }}@endif">
     </div>
 </div>
-
+@section('link')
+    @parent
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.min.css">
+@endsection
 @section('script')
     @parent
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
     <script src="{{ asset('ckfinder/ckfinder.js') }}"></script>
+    <script>
+        const product_ids = $('#products_add').val();
+        const autoCompleteArticle = new autoComplete({
+            selector: "#search_product",
+            placeHolder: "Tìm sản phẩm...",
+            data: {
+                src: async (query) => {
+                    try {
+                        // Fetch Data from external Source
+                        const articles_ids = $('#news_add').val();
+                        const response = await fetch(`{{ route('admin.article.search') }}`,{
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                keyword: query,
+                                product_ids: product_ids,
+                                _token: $('meta[name="csrf-token"]').attr("content")
+                            })
+                        });
+                        // Data should be an array of `Objects` or `Strings`
+                        const data = await response.json();
+                        return data.data;
+                    } catch (error) {
+                        return error;
+                    }
+                },
+                keys: ["title",'slug']
+            },
+            resultsList: {
+                element: (list, data) => {
+                    const info = document.createElement("p");
+                    if (data.results.length > 0) {
+                        // info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
+                    } else {
+                        info.innerHTML = `Found <strong>${data.matches.length}</strong> matching results for <strong>"${data.query}"</strong>`;
+                    }
+                    list.prepend(info);
+                },
+                noResults: true,
+                maxResults: 30,
+                tabSelect: true
+            },
+            resultItem: {
+                element: (item, data) => {
+                    // Modify Results Item Style
+                    item.style = "display: flex; justify-content: space-between;";
+                    // Modify Results Item Content
+                    item.innerHTML = `
+                      <span style="">
+                        ${data.value.title}
+                      </span>
+                      <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+                        ${data.key}
+                      </span>`;
+                },
+                highlight: true,
+            },
+            diacritics: true,
+            events: {
+                input: {
+                    click: () => {
+                        if (autoCompleteJS.input.value.length) autoCompleteJS.start();
+                    },
+                }
+            }
+        });
+        autoCompleteArticle.input.addEventListener("selection", function (event) {
+            const feedback = event.detail;
+            const selectedData  = feedback.selection.value;
+
+            const newRow = document.createElement('tr');
+
+            const skuCell = document.createElement('td');
+            skuCell.textContent = selectedData['sku'];
+
+            const titleCell = document.createElement('td');
+            titleCell.textContent = selectedData['title'];
+
+            const deleteButtonCell = document.createElement('td');
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Xóa';
+            deleteButton.classList.add('btn', 'btn-danger');
+            deleteButton.setAttribute("data-id",selectedData['id']);
+            deleteButton.setAttribute("type",'button');
+            // Add a click event listener to the delete button
+            deleteButton.addEventListener('click', function (q) {
+                var id_new = $(this).data('id');
+                var new_ids = document.getElementById('products_add').value;
+                var myArray = new_ids.split(',');
+
+                var newArray = myArray.filter(function(item) {
+                    return item != id_new;
+                });
+                document.getElementById('products_add').value = newArray;
+                // Remove the entire row when the delete button is clicked
+                newRow.remove();
+            });
+
+            // Append the delete button to the deleteButtonCell
+            deleteButtonCell.appendChild(deleteButton);
+
+            // Append the cells to the row
+            newRow.appendChild(skuCell);
+            newRow.appendChild(titleCell);
+            newRow.appendChild(deleteButtonCell);
+
+            // Get the table body where you want to add the row
+            const tableBody = document.getElementById('table-body-new');
+
+            // Append the new row to the table
+            tableBody.appendChild(newRow);
+
+            var newsAddInput = document.getElementById('products_add');
+            var currentNewIds = newsAddInput.value;
+            if(currentNewIds){
+                var currentNewIdsArray = currentNewIds.split(',');
+                currentNewIdsArray.push(selectedData['id']);
+            }else{
+                var currentNewIdsArray = [selectedData['id']];
+            }
+            newsAddInput.value = currentNewIdsArray.join(',');
+        });
+
+        function deleteCellNew(tableId, rowIndex, id_new) {
+            var table = document.getElementById(tableId);
+
+            if (table) {
+                table.deleteRow(rowIndex);
+            }
+            var new_ids = document.getElementById('products_add').value;
+            var myArray = new_ids.split(',');
+
+            var newArray = myArray.filter(function(item) {
+                return item != id_new;
+            });
+            document.getElementById('products_add').value = newArray;
+        }
+    </script>
 @endsection

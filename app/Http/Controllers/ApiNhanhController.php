@@ -241,6 +241,13 @@ class ApiNhanhController extends Controller
             ));
         }
 
+        $voucherItem = VoucherItem::where('code', $coupon)->first();
+        $list_products_promotion = '';
+        if ($voucherItem){
+            $voucher = Voucher::findOrFail($voucherItem->voucher_id);
+            $list_products_promotion = $voucher->products_add;
+        }
+
         $cart = Session::get('cart', []);
         $total_price = 0;
         $flash_sale = $this->dealService->isFlashSaleAvailable();
@@ -268,7 +275,8 @@ class ApiNhanhController extends Controller
         return response()->json(array(
             'error' => false,
             'message'   => 'Áp dụng mã thành công',
-            'data' => $couponCode
+            'data' => $couponCode,
+            'list_products_promotion' => $list_products_promotion
         ));
     }
 
