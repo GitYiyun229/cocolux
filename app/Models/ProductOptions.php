@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,7 +26,8 @@ class ProductOptions extends Model
         'brand',
         'image_first',
         'link_product',
-        'attribute_path'
+        'attribute_path',
+        'flash_deal_import'
     ];
 
     protected $casts = [
@@ -37,6 +39,11 @@ class ProductOptions extends Model
     public function product()
     {
         return $this->hasOne(Product::class, 'id', 'parent_id');
+    }
+
+    public function promotionItem()
+    {
+        return $this->hasOne(PromotionItem::class, 'sku', 'sku');
     }
 
     public function stocksAll()
@@ -109,6 +116,16 @@ class ProductOptions extends Model
             return null;
         }
 
+    }
+
+    public function getFlashDealImportAttribute()
+    {
+        $promotionItem = $this->promotionItem;
+        if ($promotionItem) {
+            return $promotionItem;
+        } else {
+            return null;
+        }
     }
 
 }

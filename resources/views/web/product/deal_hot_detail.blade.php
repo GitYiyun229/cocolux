@@ -12,37 +12,39 @@
                 </div>
                 <div class="layout-detail-main bg-white d-grid mb-4">
                     @if(!empty($productOptions))
-                    @forelse($productOptions as $item)
-                            <a href="{{ route('detailProduct',['slug'=>!empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
-                                @if($item->hot_deal->price != $item->normal_price)
+                        @forelse($productOptions as $item)
+                            <a href="{{ route('detailProduct',['slug'=>optional($item->productOption)->slug, 'sku' =>$item->sku]) }}" class="product-template">
+                                @if($item->price != $item->productOption->normal_price)
                                     <div class="product-discount">
-                                        <span class="pe-1">{{ percentage_price($item->hot_deal->price, $item->normal_price) }}</span>
+                                        <span class="pe-1">{{ percentage_price($item->price, $item->productOption->normal_price) }}</span>
                                     </div>
                                 @endif
                                 <div class="product-thumbnail">
-                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
+                                    <img src="{{ asset($item->productOption->image_first) }}" alt="{{ $item->productOption->title }}" class="img-fluid">
                                 </div>
                                 <div class="product-price">
-                                    <div class="public-price">{{ format_money($item->hot_deal->price) }}</div>
-                                    @if($item->hot_deal->price != $item->normal_price)
-                                        <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                    <div class="public-price">{{ format_money($item->price) }}</div>
+                                    @if($item->price != $item->productOption->normal_price)
+                                        <div class="origin-price">{{ format_money($item->productOption->normal_price) }}</div>
                                     @endif
                                 </div>
                                 <div class="product-brand">
-                                    {{ $item->brand }}
+                                    {{ $item->productOption->brand }}
                                 </div>
                                 <div class="product-title">
-                                    {{ $item->title }}
+                                    {{ $item->productOption->title }}
                                 </div>
                                 @if($promotion_hots->applied_stop_time)
                                     <div class="product-progress-sale count-down" time-end="{{ $promotion_hots->applied_stop_time }}"></div>
                                 @endif
                             </a>
-                    @empty
+                        @empty
                     @endforelse
                     @endif
                 </div>
+                @if($productOptions)
                 {{ $productOptions->links('web.components.pagination') }}
+                @endif
             </div>
         </div>
 

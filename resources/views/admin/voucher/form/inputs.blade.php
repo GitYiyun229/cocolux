@@ -147,8 +147,8 @@
                     <textarea class="form-control" rows="3" name="description" >{{ isset($voucher) ? $voucher->description : old('description') }}</textarea>
                     @if ($errors->has('description'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('description') }}</strong>
-                </span>
+                            <strong>{{ $errors->first('description') }}</strong>
+                        </span>
                     @endif
                 </div>
             </div>

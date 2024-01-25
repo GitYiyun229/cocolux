@@ -7,6 +7,7 @@ use App\Models\AttributeValues;
 use App\Models\Banners;
 use App\Models\Product;
 use App\Models\ProductOptions;
+use App\Models\PromotionItem;
 use App\Models\Promotions;
 use App\Models\RegisterEmail;
 use App\Models\Setting;
@@ -70,19 +71,13 @@ class HomeController extends Controller
         $subBanner = Banners::where(['active' => 1, 'type' => 'home_v1_sub_banner'])->select('id','url','image_url','mobile_url','content')->get(); // (2 cái ảnh nhỏ hiển thị cạnh banner)
         $subBanner2 = Banners::where(['active' => 1, 'type' => 'home_v1_primary_banner_2'])->select('id','url','image_url','mobile_url','content')->get(); // (3 ảnh hiển thị dưới cùng trên phần danh sách chi nhánh)
 
-        $promotions = $this->dealService->isFlashSaleAvailable();
-        $promotions_flash_id = $promotions->pluck('id')->toArray();
-        $applied_stop_time = $promotions->pluck('applied_stop_time','id')->toArray();
-
-        $hot_deal = $this->dealService->isHotDealAvailable();
-        $promotions_hot_id = $hot_deal->pluck('id')->toArray();
-
-        $product_flash = ProductOptions::where(['active' => 1, 'is_default' => 1])->whereIn('flash_deal->id',$promotions_flash_id)->where('slug', '!=',null)
-            ->with(['product' => function($query){
-                $query->select('id','is_hot','slug','ordering')->orderBy('ordering', 'ASC');
-            }])->whereHas('product', function ($query) {
-                $query->where('is_hot', 1);
-            })->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')->limit(10)->get();
+        $now = Carbon::now();
+        $product_flash = PromotionItem::where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+            ->where('type', 'flash_deal')
+            ->with(['productOption' => function ($query){
+                $query->select('id','title','images','brand','sku','slug','parent_id','price','normal_price')
+                    ->where('slug', '!=',null)->where(['active' => 1])->orderBy('id', 'ASC')->orderBy('is_default', 'DESC');
+            }])->has('productOption')->limit(10)->get();
 
         $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
             ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price','hot_deal','flash_deal')
@@ -90,7 +85,10 @@ class HomeController extends Controller
                 $query->select('id','is_hot','slug');
             }])->whereHas('product', function ($query) {
                 $query->where('is_hot', 1);
-            })->limit(10)->get();
+            })->with(['promotionItem' => function($query) use ($now){
+                $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                    ->orderBy('price', 'asc');
+            }])->limit(10)->get();
 
         $attribute_brand = AttributeValues::where(['attribute_id' => 19,'active' => 1,'is_home' => 1])->select('id','name','slug','image')->orderBy('ordering', 'ASC')->limit(15)->get(); // thương hiệu
         $cats = ProductsCategories::where(['is_home' => 1,'active' => 1,'parent_id'=>null])
@@ -106,6 +104,10 @@ class HomeController extends Controller
                 ->with(['product' => function($query){
                     $query->select('id','is_home','slug','ordering')->orderBy('ordering', 'ASC');
                 }])
+                ->with(['promotionItem' => function($query) use ($now){
+                    $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                        ->orderBy('price', 'asc');
+                }])
                 ->select('id','title','slug','images','sku','price','parent_id','normal_price','hot_deal','flash_deal')
                 ->limit(10)->get();
             $cat_sub[$item->id] = ProductsCategories::where(['is_home' => 1,'active' => 1])
@@ -115,7 +117,7 @@ class HomeController extends Controller
         }
 
         $list_coupon = Voucher::where(['status' => 1,'active' => 1])->with(['items'])->orderBy('id', 'ASC')->get();
-        return view('web.home', compact('slider','subBanner','product_hots','attribute_brand','articles','product_cats','subBanner2','cats','cat_sub','applied_stop_time','product_flash','promotions_hot_id','promotions_flash_id','stores','list_coupon'));
+        return view('web.home', compact('slider','subBanner','product_hots','attribute_brand','articles','product_cats','subBanner2','cats','cat_sub','product_flash','stores','list_coupon'));
     }
 
     public function registerEmail(Request $request){

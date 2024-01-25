@@ -20,7 +20,7 @@
                 <div class="form-group">
                     <label>@lang('form.promotion.type')</label>
                     <div class="form-group clearfix ">
-                        <select name="type" class="form-control">
+                        <select name="type" class="form-control" required>
                             <option value="" hidden>@lang('form.promotion.type')</option>
                             @forelse(\App\Models\Promotions::TYPE as $key => $value)
                                 <option value="{{ $value }}" @if (isset($promotion) && isset($promotion->type) && ($promotion->type == $value)) selected @elseif (old('type') == $value ) selected @endif>{{ $value }}</option>
@@ -54,7 +54,7 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.promotion.applied_start_time')</label>
-                    <input type="datetime-local" class="form-control" name="applied_start_time" value="{{ isset($promotion) ? $promotion->applied_start_time : old('applied_start_time') }}">
+                    <input type="datetime-local" class="form-control" name="applied_start_time" value="{{ isset($promotion) ? $promotion->applied_start_time : old('applied_start_time') }}" required>
                     @if ($errors->has('applied_start_time'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('applied_start_time') }}</strong>
@@ -66,7 +66,7 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.promotion.applied_stop_time')</label>
-                    <input type="datetime-local" class="form-control" name="applied_stop_time" value="{{ isset($promotion) ? $promotion->applied_stop_time : old('applied_stop_time') }}">
+                    <input type="datetime-local" class="form-control" name="applied_stop_time" value="{{ isset($promotion) ? $promotion->applied_stop_time : old('applied_stop_time') }}" required>
                     @if ($errors->has('applied_stop_time'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('applied_stop_time') }}</strong>
