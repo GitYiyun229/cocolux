@@ -3,19 +3,20 @@
 namespace App\Imports;
 
 use App\Models\ProductOptions;
+use App\Models\PromotionItem;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class ProductPromotionImport implements ToModel, WithHeadingRow
 {
     protected $type;
-    protected $id_promotion;
+    protected $promotion;
     protected $name_promotion;
 
-    public function __construct($id_promotion, $type, $name_promotion)
+    public function __construct($promotion, $type, $name_promotion)
     {
         $this->type = $type;
-        $this->id_promotion = $id_promotion;
+        $this->promotion = $promotion;
         $this->name_promotion = $name_promotion;
     }
 
@@ -30,9 +31,8 @@ class ProductPromotionImport implements ToModel, WithHeadingRow
         $numberWithoutDot = str_replace('.', '', $row['gia_sau_chiet_khau']);
         $integerNumber = (int)$numberWithoutDot;
         $finalStringNumber = (string)$integerNumber;
-
         $productData = [
-            'id' => $this->id_promotion,
+            'id' => optional($this->promotion)->id,
             'name' => $this->name_promotion,
             'price' => $finalStringNumber,
             'value' =>  $row['chiet_khau'],
@@ -44,7 +44,23 @@ class ProductPromotionImport implements ToModel, WithHeadingRow
             }else{
                 $product->flash_deal = $productData;
             }
+            $product->nhanhid = $row['id'];
             $product->save();
+        }
+
+        if ($productData){
+            $data = [
+                'promotion_id' => $productData['id'],
+                'name' => $productData['name'],
+                'price' => $productData['price'],
+                'value' => $productData['value'],
+                'sku' => $row['ma'],
+                'nhanh_id' => $row['id'],
+                'type' => $this->type,
+                'applied_start_time' => optional($this->promotion)->applied_start_time->format('Y-m-d H:i:s'),
+                'applied_stop_time' => optional($this->promotion)->applied_stop_time->format('Y-m-d H:i:s'),
+            ];
+            PromotionItem::create($data);
         }
 
         return $product;

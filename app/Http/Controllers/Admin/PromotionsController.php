@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\PromotionsDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\PromotionItem;
 use App\Models\Promotions;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -68,7 +69,8 @@ class PromotionsController extends Controller
             }
 
             if($file){
-                Excel::import(new ProductPromotionImport($promotion->id, $type, $data['name']), $file);
+                PromotionItem::where('promotion_id', $promotion->id)->delete();
+                Excel::import(new ProductPromotionImport($promotion, $type, $data['name']), $file);
             }
             DB::commit();
             Session::flash('success', trans('message.create_promotion_success'));
@@ -147,7 +149,13 @@ class PromotionsController extends Controller
             }
 
             if ($file){
-                Excel::import(new ProductPromotionImport($id, $type, $data['name']), $file);
+                PromotionItem::where('promotion_id', $id)->delete();
+                Excel::import(new ProductPromotionImport($promotion, $type, $data['name']), $file);
+            }else{
+                $data2['applied_start_time'] = $data['applied_start_time'];
+                $data2['applied_stop_time'] = $data['applied_stop_time'];
+                $data2['type'] = $type;
+                PromotionItem::where('promotion_id', $id)->update($data2);
             }
             DB::commit();
             Session::flash('success', trans('message.update_promotion_success'));

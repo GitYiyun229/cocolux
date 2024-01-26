@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title_file', trans('form.banner.'))
+@section('title_file', 'Mã giảm giá')
 
 @section('content')
     <a href="{{ route('listCoupons') }}" class="btn btn-primary mb-3" target="_blank">Lấy danh sách coupon</a>
