@@ -14,6 +14,7 @@
                 <div class="layout-detail-main bg-white d-grid mb-4">
                     @if(count($productOptions))
                         @forelse($productOptions as $item)
+                            @if(isset($item->productOption->slug))
                             <a href="{{ route('detailProduct',['slug'=>$item->productOption->slug, 'sku' =>$item->productOption->sku]) }}" class="product-template">
                                 @if($item->price != $item->productOption->normal_price)
                                     <div class="product-discount">
@@ -39,6 +40,9 @@
                                     <div class="product-progress-sale count-down" time-end="{{ $item->productOption->promotionItem->applied_stop_time }}"></div>
                                 @endif
                             </a>
+                            @else
+
+                            @endif
                         @empty
                         @endforelse
                     @else
