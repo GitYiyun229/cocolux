@@ -80,9 +80,12 @@ class HomeController extends Controller
             ->with(['productOption' => function ($query){
                 $query->select('id','title','images','brand','sku','slug','parent_id','price','normal_price')
                     ->where('slug', '!=',null)->where(['active' => 1])->orderBy('id', 'ASC')->orderBy('is_default', 'DESC')
-                ->with(['promotionItem' => function($query){
-                    $query->select('applied_stop_time','sku');
-                }]);
+                    ->with(['product' => function($query){
+                        $query->select('id','is_hot','slug')->where('is_hot', 1);
+                    }])
+                    ->with(['promotionItem' => function($query){
+                        $query->select('applied_stop_time','sku');
+                    }]);
             }])->has('productOption')->orderBy('price', 'asc')->limit(10)->get();
 
         $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
