@@ -787,7 +787,7 @@ class ProductController extends Controller
             ->with(['product' => function($query){
                 $query->select('id','slug','brand');
             }])->whereHas('promotionItem', function ($query) use ($now){
-                $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now);
             })->with(['promotionItem' => function($query){
                 $query->select('applied_stop_time','sku','price')->orderBy('price','asc');
             }])->paginate(30);
