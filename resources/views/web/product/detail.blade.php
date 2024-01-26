@@ -381,7 +381,6 @@
                         @if(!empty($products))
                         @forelse($products as $item)
                         <a href="{{ route('detailProduct',['slug' => !empty($item->slug)?trim($item->slug):$item->product_slug, 'sku' => $item->sku]) }}" class="product-template">
-
                             @if($item->promotionItem)
                                 @if($item->promotionItem->price != $item->normal_price)
                                     <div class="product-discount">
@@ -399,7 +398,7 @@
                                 <img src="{{ asset(replace_image($item->image_first)) }}" alt="{{ $item->title }}" class="img-fluid">
                             </div>
                             <div class="product-price">
-                                @if($item->promotionItem))
+                                @if($item->promotionItem)
                                     <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
                                     @if($item->promotionItem->price != $item->normal_price)
                                         <div class="origin-price">{{ format_money($item->normal_price) }}</div>
