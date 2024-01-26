@@ -730,9 +730,7 @@ class ProductController extends Controller
         $productOptions = ProductOptions::select('id','sku', 'slug','title','price','normal_price','slug','images','parent_id')
             ->with(['product' => function($query){
                 $query->select('id','slug','brand');
-            }])->whereHas('product', function ($query) {
-                $query->where('is_hot', 1);
-            })->whereHas('promotionItem', function ($query) use ($now){
+            }])->whereHas('promotionItem', function ($query) use ($now){
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->where('type','flash_deal');
             })->with(['promotionItem' => function($query){
