@@ -783,21 +783,14 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
 
         $now = Carbon::now();
-
-        $productOptions = PromotionItem::where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
-            ->select('sku', DB::raw('MIN(price) as price'))
-            ->groupBy('sku')
-            ->with(['productOption' => function($query){
-                $query->select('id','sku', 'slug','title','price','normal_price','slug','images','parent_id')
-                    ->with(['product' => function($query){
-                        $query->select('id','slug','brand');
-                    }])->with(['promotionItem' => function($query){
-                        $query->select('applied_stop_time','sku');
-                    }]);
-            }])
-            ->has('productOption')
-            ->orderBy('price', 'asc')
-            ->paginate(30);
+        $productOptions = ProductOptions::select('id','sku', 'slug','title','price','normal_price','slug','images','parent_id')
+            ->with(['product' => function($query){
+                $query->select('id','slug','brand');
+            }])->whereHas('promotionItem', function ($query) use ($now){
+                $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+            })->with(['promotionItem' => function($query){
+                $query->select('applied_stop_time','sku','price')->orderBy('price','asc');
+            }])->paginate(30);
 
         return view('web.product.deal_now',compact('productOptions'));
     }
