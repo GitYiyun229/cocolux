@@ -39,7 +39,7 @@ class ProductController extends Controller
     protected $merchantId = 40002;
     protected $apiKey = 'a18ff78e7a9e44f38de372e093d87ca1';
     protected $apiSecret = '9623ac03057e433f95d86cf4f3bef5cc';
-    protected $apiUrl = 'https://dev-api.baokim.vn';
+    protected $apiUrl = 'https://dev-api.baokim.vn'; // link sanbox
 
     protected $linkApi = "https://open.nhanh.vn";
     protected $request_params = [
@@ -736,7 +736,7 @@ class ProductController extends Controller
                         $query->select('id','slug','brand');
                     }])->with(['promotionItem' => function($query){
                         $query->select('applied_stop_time','sku');
-                    }]);
+                    }])->where('slug', '!=',null);
             }])
             ->has('productOption')
             ->orderBy('price', 'asc')
