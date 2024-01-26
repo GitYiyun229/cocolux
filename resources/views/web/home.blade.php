@@ -158,13 +158,13 @@
                                     @endif
                                 </div>
                                 <div class="product-brand">
-                                    {{ $item->brand }}
+                                    {{ $item->productOption->brand }}
                                 </div>
                                 <div class="product-title">
-                                    {{ $item->title }}
+                                    {{ $item->productOption->title }}
                                 </div>
-                                @if($item->applied_stop_time)
-                                    <div class="product-progress-sale count-down" time-end="{{ $item->applied_stop_time }}"></div>
+                                @if($item->productOption->promotionItem && $item->productOption->promotionItem->applied_stop_time)
+                                    <div class="product-progress-sale count-down" time-end="{{ $item->productOption->promotionItem->applied_stop_time }}"></div>
                                 @endif
                             </a>
                         @empty

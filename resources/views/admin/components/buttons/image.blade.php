@@ -43,24 +43,30 @@
                     const file = evt.data.files.first();
                     const output = document.getElementById( 'output-{{ $name }}' );
                     output.innerHTML = '<input type="hidden" class="custom-file-input" id="{{ $name }}" name="{{ $name }}"\n' +
-                        '               value="'+escapeHtml( file.getUrl() )+'"><img src="'+escapeHtml( file.getUrl() )+'" alt="" style="max-width: 100%">';
+                        '               value="'+escapeHtml( file.getUrl() )+'"><img src="'+escapeHtml( file.getUrl() )+'" alt="" style="max-width: 100%">' +
+                        '<span class="remove-image" id="remove-image-{{ $name }}"><i class="far fa-times-circle"></i></span>';
                 } );
 
                 finder.on( 'file:choose:resizedImage', function( evt ) {
                     const output = document.getElementById( 'output-{{ $name }}' );
                     output.innerHTML = '<input type="hidden" class="custom-file-input" id="{{ $name }}" name="{{ $name }}"\n' +
-                        '               value="'+escapeHtml( evt.data.resizedUrl )+'"><img src="'+escapeHtml( evt.data.resizedUrl )+'" alt="" style="max-width: 100%">';
+                        '               value="'+escapeHtml( evt.data.resizedUrl )+'"><img src="'+escapeHtml( evt.data.resizedUrl )+'" alt="" style="max-width: 100%">' +
+                        '<span class="remove-image" id="remove-image-{{ $name }}"><i class="far fa-times-circle"></i></span>';
                 } );
             }
         } );
     };
 
-    var removeImage = document.getElementById( 'remove-image-{{ $name }}' );
+    var imageContainer = document.querySelector('.image-in-content');
 
-    removeImage.onclick = function() {
-        document.getElementById('{{ $name }}').value = '';
-        var imgElement = document.querySelector('#output-{{ $name }} img');
-        imgElement.src = '';
-        this.remove()
-    };
+    imageContainer.addEventListener('click', function(event) {
+        var removeImage = event.target.closest('#remove-image-{{ $name }}');
+        if (removeImage) {
+            document.getElementById('{{ $name }}').value = '';
+            var imgElement = document.querySelector('#output-{{ $name }} img');
+            imgElement.src = '';
+            removeImage.remove();
+        }
+    });
+
 </script>

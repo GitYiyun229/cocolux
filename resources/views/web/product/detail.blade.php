@@ -60,16 +60,7 @@
                                     @endif
 
                                     <div class="detail-price mb-4">
-                                        @if($flash_sale)
-                                            <div class="public-price"><span class="fw-bold">{{ format_money($product->promotionItem->price) }}</span>(Đã bảo gồm VAT)</div>
-                                            @if($product->normal_price)
-                                            <div class="origin-price">
-                                                <span>Giá hãng: {{ format_money($product->normal_price) }}</span>
-                                                <span>- Tiết kiệm được {{ format_money(trim($product->normal_price) - trim($product->promotionItem->price)) }}</span>
-                                                <span>({{ percentage_price($product->promotionItem->price, $product->normal_price) }})</span>
-                                            </div>
-                                            @endif
-                                        @elseif($hot_deal)
+                                        @if($product->promotionItem)
                                             <div class="public-price"><span class="fw-bold">{{ format_money($product->promotionItem->price) }}</span>(Đã bảo gồm VAT)</div>
                                             @if($product->normal_price)
                                             <div class="origin-price">
@@ -341,16 +332,10 @@
                             <div class="slide-template-slick">
                                 @forelse($product_in_cat as $item)
                                     <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
-                                        @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
-                                            @if($item->flash_deal->price != $item->normal_price)
+                                        @if($item->promotionItem)
+                                            @if($item->promotionItem->price != $item->normal_price)
                                                 <div class="product-discount">
-                                                    <span class="pe-1">{{ percentage_price($item->flash_deal->price, $item->normal_price) }}</span>
-                                                </div>
-                                            @endif
-                                        @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
-                                            @if($item->hot_deal->price != $item->normal_price)
-                                                <div class="product-discount">
-                                                    <span class="pe-1">{{ percentage_price($item->hot_deal->price, $item->normal_price) }}</span>
+                                                    <span class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
                                                 </div>
                                             @endif
                                         @else
@@ -364,14 +349,9 @@
                                             <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                         </div>
                                         <div class="product-price">
-                                            @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
-                                                <div class="public-price">{{ format_money($item->flash_deal->price) }}</div>
-                                                @if($item->flash_deal->price != $item->normal_price)
-                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
-                                                @endif
-                                            @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
-                                                <div class="public-price">{{ format_money($item->hot_deal->price) }}</div>
-                                                @if($item->hot_deal->price != $item->normal_price)
+                                            @if($item->promotionItem)
+                                                <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
+                                                @if($item->promotionItem->price != $item->normal_price)
                                                     <div class="origin-price">{{ format_money($item->normal_price) }}</div>
                                                 @endif
                                             @else
