@@ -737,8 +737,7 @@ class ProductController extends Controller
                     }])->with(['promotionItem' => function($query){
                         $query->select('applied_stop_time','sku');
                     }])->where('slug', '!=',null);
-            }])
-            ->has('productOption')
+            }])->has('productOption')
             ->orderBy('price', 'asc')
             ->paginate(30);
 
