@@ -57,16 +57,13 @@
         } );
     };
 
-    var imageContainer = document.querySelector('.image-in-content');
+    var removeImage = document.getElementById( 'remove-image-{{ $name }}' );
 
-    imageContainer.addEventListener('click', function(event) {
-        var removeImage = event.target.closest('#remove-image-{{ $name }}');
-        if (removeImage) {
-            document.getElementById('{{ $name }}').value = '';
-            var imgElement = document.querySelector('#output-{{ $name }} img');
-            imgElement.src = '';
-            removeImage.remove();
-        }
-    });
+    removeImage.onclick = function() {
+        document.getElementById('{{ $name }}').value = '';
+        var imgElement = document.querySelector('#output-{{ $name }} img');
+        imgElement.src = '';
+        this.remove()
+    };
 
 </script>
