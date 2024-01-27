@@ -80,7 +80,7 @@
                 </div>
                 <input type="text" class="form-control" name="keyword" id="keyword" value="{{ old('keyword') }}" autocomplete="off" placeholder="Tìm sản phẩm bạn mong muốn..." required>
                 <input type="hidden" name="categories" id="cat_product">
-                <button type="submit" class="btn form-submit">
+                <button type="submit" class="btn form-submit" name="submit-form-search">
                     <img src="{{ asset('images/search-icon.svg') }}" alt="" class="img-fluid">
                 </button>
             </form>

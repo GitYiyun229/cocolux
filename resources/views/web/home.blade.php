@@ -10,7 +10,7 @@
                         @forelse($slider as $item)
                         <div>
                             <a href="{!! $item->url !!}">
-                                <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->content }}" class="img-fluid">
+                                <img data-src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->content }}" class="img-fluid lazy">
                             </a>
                         </div>
                         @empty
@@ -20,13 +20,13 @@
                 <div class="banner-wrap">
                     @forelse($subBanner as $item)
                     <a href="{!! $item->url !!}">
-                        <img src="{{ asset(replace_image($item->image_url)) }}" alt="{{ $item->content }}" class="img-fluid">
+                        <img data-src="{{ asset(replace_image($item->image_url)) }}" alt="{{ $item->content }}" class="img-fluid lazy">
                     </a>
                     @empty
                     @endforelse
                 </div>
             </div>
-
+            @if($isMobile)
             <div class="section-categories-mobile d-grid d-lg-none mb-4">
                 <a href="" class="item-category d-flex flex-column align-items-center text-center text-uppercase" data-bs-toggle="modal" data-bs-target="#categoriesModal">
                     <div class="section-icon">
@@ -39,12 +39,13 @@
                 </a>
                 @forelse($cat_products as $item)
                 <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}" class="item-category d-flex flex-column align-items-center text-center text-uppercase">
-                    <img src="{{ asset(replace_image($item->logo)) }}" alt="{{ $item->title }}" class="img-fluid" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
+                    <img data-src="{{ asset(replace_image($item->logo)) }}" alt="{{ $item->title }}" class="img-fluid lazy" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
                     {{ $item->title }}
                 </a>
                 @empty
                 @endforelse
             </div>
+            @endif
 
             <div class="modal modal-full fade" id="categoriesModal" tabindex="-1" aria-labelledby="categoriesModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable">
@@ -130,7 +131,7 @@
                 <div class="slide-top">
                     <div class="slide-title d-flex align-items-center gap-2">
                         <a href="{{ route('flashSaleProducts') }}" title="Flash Deal" class="d-flex align-items-center gap-2">
-                            <img src="{{ asset('images/hot_icon.svg') }}" alt="flash deal" class="img-fluid" height="18" width="18">
+                            <img data-src="{{ asset('images/hot_icon.svg') }}" alt="flash deal" class="img-fluid lazy" height="18" width="18">
                             <h2>Flash Deal</h2>
                         </a>
 {{--                        |--}}
@@ -149,7 +150,7 @@
                                     </div>
                                 @endif
                                 <div class="product-thumbnail">
-                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
+                                    <img data-src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid lazy">
                                 </div>
                                 <div class="product-price">
                                     <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
@@ -202,7 +203,7 @@
                                 @endif
                             @endif
                             <div class="product-thumbnail">
-                                <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
+                                <img data-src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid lazy">
                             </div>
                             <div class="product-price">
                                 @if($item->promotionItem)
@@ -447,7 +448,11 @@
 @section('script')
     @parent
     <script src="{{ asset('/js/web/slick/slick.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.0/dist/lazyload.min.js"></script>
     <script>
+        var lazyLoadInstance = new LazyLoad({
+            // Your custom settings go here
+        });
         $('.banner-slick').slick({
             slidesToShow: 1,
             slidesToScroll: 1,
@@ -521,8 +526,15 @@
                 {
                     breakpoint: 960,
                     settings: {
-                        slidesToShow: 2.5,
+                        slidesToShow: 2,
                         slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 767,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
                     }
                 }
             ]
