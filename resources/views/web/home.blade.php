@@ -10,7 +10,7 @@
                         @forelse($slider as $k => $item)
                         <div>
                             <a href="{!! $item->url !!}">
-                                <img @if($k == 0) src="{{ asset(replace_image($item->image)) }}" @else data-src="{{ asset(replace_image($item->image)) }}" @endif alt="{{ $item->content }}" class="img-fluid lazy">
+                                <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->content }}" class="img-fluid">
                             </a>
                         </div>
                         @empty
