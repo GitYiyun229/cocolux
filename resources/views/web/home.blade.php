@@ -447,9 +447,10 @@
 
 @section('script')
     @parent
-    <script src="{{ asset('/js/web/slick/slick.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.0/dist/lazyload.min.js"></script>
-    <script>
+    <script src="{{ asset('/js/web/jquery-3.7.1.min.js') }}" data-cfasync="false"></script>
+    <script src="{{ asset('/js/web/slick/slick.js') }}" data-cfasync="false"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.0/dist/lazyload.min.js" data-cfasync="false"></script>
+    <script data-cfasync="false">
         var lazyLoadInstance = new LazyLoad({
             // Your custom settings go here
         });
