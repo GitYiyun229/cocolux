@@ -246,7 +246,7 @@
                         @if(!empty($attribute_brand))
                         @forelse($attribute_brand as $item)
                         <a href="{{ route('detailBrand',['slug' => $item->slug,'id' => $item->id]) }}" class="brand-template">
-                            <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->name }}" class="img-fluid">
+                            <img data-src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->name }}" class="img-fluid lazy">
                             <div class="title">{{ $item->name }}</div>
                         </a>
                         @empty
@@ -279,7 +279,7 @@
                     <div class="section-main bg-white">
                         <div class="section-poster">
                             <a href="{{ route('catProduct',['slug' => $cat->slug, 'id'=> $cat->id]) }}">
-                                <img src="{{ asset(replace_image($cat->banner)) }}" alt="{{ $cat->title }}" class="img-fluid">
+                                <img data-src="{{ asset(replace_image($cat->banner)) }}" alt="{{ $cat->title }}" class="img-fluid lazy">
                             </a>
                         </div>
                         <div class="section-content">
@@ -300,7 +300,7 @@
                                     @endif
                                 @endif
                                 <div class="product-thumbnail">
-                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
+                                    <img data-src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid lazy">
                                 </div>
                                 <div class="product-price">
                                     @if($item->promotionItem)
@@ -337,7 +337,7 @@
                 @if(!empty($subBanner2))
                 @forelse($subBanner2 as $item)
                 <a class="" href="{{ $item->url }}">
-                    <img alt="{{ $item->title }}" src="{{ asset(replace_image($item->image_url)) }}" class="img-fluid">
+                    <img alt="{{ $item->title }}" data-src="{{ asset(replace_image($item->image_url)) }}" class="img-fluid lazy">
                 </a>
                 @empty
                 @endforelse
@@ -356,7 +356,7 @@
                         @forelse($articles as $item)
                         <a href="{{ route('detailArticle',['slug'=>$item->slug,'id'=>$item->id]) }}" class="article-item" title="{{ $item->title }}">
                             <div class="article-img">
-                                <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid">
+                                <img data-src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid lazy">
                             </div>
                             <div class="article-title">
                                 <span>
@@ -380,7 +380,7 @@
                         @forelse($stores as $item)
                             <div>
                                 <a class='ccs-item-store--img'>
-                                    <img src="{{ asset($item->image) }}" alt="{{ $item->name }}" class="img-fluid" />
+                                    <img data-src="{{ asset($item->image) }}" alt="{{ $item->name }}" class="img-fluid lazy" />
                                 </a>
                                 <div class='ccs-item-store--text'>
                                     <span>{{ $item->name }}</span>
