@@ -7,10 +7,10 @@
             <div class="section-banner-top mb-4">
                 <div class="banner-slide">
                     <div class="banner-slick">
-                        @forelse($slider as $item)
+                        @forelse($slider as $k => $item)
                         <div>
                             <a href="{!! $item->url !!}">
-                                <img data-src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->content }}" class="img-fluid lazy">
+                                <img @if($k == 0) src="{{ asset(replace_image($item->image)) }}" @else data-src="{{ asset(replace_image($item->image)) }}" @endif alt="{{ $item->content }}" class="img-fluid lazy">
                             </a>
                         </div>
                         @empty
@@ -20,7 +20,7 @@
                 <div class="banner-wrap">
                     @forelse($subBanner as $item)
                     <a href="{!! $item->url !!}">
-                        <img data-src="{{ asset(replace_image($item->image_url)) }}" alt="{{ $item->content }}" class="img-fluid lazy">
+                        <img src="{{ asset(replace_image($item->image_url)) }}" alt="{{ $item->content }}" class="img-fluid">
                     </a>
                     @empty
                     @endforelse
