@@ -250,18 +250,20 @@ class ApiNhanhController extends Controller
 
         $cart = Session::get('cart', []);
         $total_price = 0;
-        $flash_sale = $this->dealService->isFlashSaleAvailable();
-        $promotions_flash_id = $flash_sale->pluck('id')->toArray();
-        $hot_deal = $this->dealService->isHotDealAvailable();
-        $promotions_hot_id = $hot_deal->pluck('id')->toArray();
         foreach ($cart as $productId => $item) {
-            $product = ProductOptions::where(['id' => $productId])->with(['product'])->first();
-            if($product->flash_deal && in_array($product->flash_deal->id,$promotions_flash_id)){
-                $price = $product->flash_deal->price;
-            }elseif($product->hot_deal && in_array($product->hot_deal->id,$promotions_hot_id)){
-                $price = $product->hot_deal->price;
-            }else{
-                $price = $product->price;
+            $product = ProductOptions::where(['id' => $productId])->select('id','sku', 'slug','title','price','normal_price','slug','images','parent_id')
+                ->with(['product' => function($query){
+                    $query->select('id','slug','brand');
+                }])->with(['promotionItem' => function($query) use ($now){
+                    $query->select('applied_stop_time','sku','price')
+                        ->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)->orderBy('price','asc');
+                }])->first();
+            if($product){
+                if($product->promotionItem){
+                    $price = 0;
+                }else{
+                    $price = $product->price;
+                }
             }
             $quantity = $item['quantity']; // Số lượng
             $total_price = $total_price + $price * $quantity;
@@ -269,7 +271,7 @@ class ApiNhanhController extends Controller
         if ($total_price < $couponCode['fromValue']){
             return response()->json(array(
                 'error' => true,
-                'message'   => 'Chua đủ điều kiện áp dụng mã ( >= '.format_money($couponCode['fromValue']).').',
+                'message'   => 'Chua đủ điều kiện áp dụng mã ( >= '.format_money($couponCode['fromValue']).') sản phẩm không khuyến mại.'
             ));
         }
         return response()->json(array(

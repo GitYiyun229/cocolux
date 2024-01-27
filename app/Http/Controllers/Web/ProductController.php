@@ -733,8 +733,9 @@ class ProductController extends Controller
             }])->whereHas('promotionItem', function ($query) use ($now){
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->where('type','flash_deal');
-            })->with(['promotionItem' => function($query){
-                $query->select('applied_stop_time','sku','price')->orderBy('price','asc');
+            })->with(['promotionItem' => function($query) use ($now){
+                $query->select('applied_stop_time','sku','price')->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                    ->where('type','flash_deal')->orderBy('price','asc');
             }])->paginate(30);
 
         return view('web.product.flash_sale',compact('productOptions'));
@@ -788,8 +789,9 @@ class ProductController extends Controller
                 $query->select('id','slug','brand');
             }])->whereHas('promotionItem', function ($query) use ($now){
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now);
-            })->with(['promotionItem' => function($query){
-                $query->select('applied_stop_time','sku','price')->orderBy('price','asc');
+            })->with(['promotionItem' => function($query) use ($now){
+                $query->select('applied_stop_time','sku','price')
+                    ->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)->orderBy('price','asc');
             }])->paginate(30);
 
         return view('web.product.deal_now',compact('productOptions'));
