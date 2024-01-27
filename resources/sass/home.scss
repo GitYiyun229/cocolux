@@ -281,21 +281,21 @@
             border-right: 15px solid #171717;
         }
     }
+    .slide-template-slick{
+        max-height: 352px;
+        overflow: hidden;
+        img{
+            display: none;
+        }
+        &.slick-initialized {
+            img{
+                display: block;
+            }
+        }
+    }
     .section-main{
         display: flex;
         gap: 10px;
-        .slide-template-slick{
-            max-height: 352px;
-            overflow: hidden;
-            img{
-                display: none;
-            }
-            &.slick-initialized {
-                img{
-                    display: block;
-                }
-            }
-        }
     }
     .section-poster{
         width: 220px;
