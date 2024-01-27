@@ -48,8 +48,8 @@
                         </div>
                     </div>
                     <div class="license-image">
-                        <img src="{{ asset('images/BCT-noi-khong-voi-hang-gia.png') }}" class="img-fluid">
-                        <a href="http://online.gov.vn/Home/WebDetails/80058" target="_blank"><img src="{{ asset('images/bo-cong-thuong-xanh.svg') }}" class="img-fluid"></a>
+                        <img src="{{ asset('images/BCT-noi-khong-voi-hang-gia.png') }}" alt="BCT nói không với hàng giả" class="img-fluid">
+                        <a href="http://online.gov.vn/Home/WebDetails/80058" target="_blank"><img src="{{ asset('images/bo-cong-thuong-xanh.svg') }}" alt="Bộ công thương xanh" class="img-fluid"></a>
                     </div>
                 </div>
             </div>
@@ -72,10 +72,10 @@
                 </div>
                 <p class="title">PHƯƠNG THỨC THANH TOÁN</p>
                 <div class="link-icon">
-                    <a><img src="{{ asset('images/ic-cash.svg') }}" alt="cocolux" class="img-fluid"></a>
-                    <a><img src="{{ asset('images/ic-internet-banking.svg') }}" alt="cocolux" class="img-fluid"></a>
-                    <a><img src="{{ asset('images/ic-visa.svg') }}" alt="cocolux" class="img-fluid"></a>
-                    <a><img src="{{ asset('images/ic-mastercard.svg') }}" alt="cocolux" class="img-fluid"></a>
+                    <img src="{{ asset('images/ic-cash.svg') }}" alt="cocolux" class="img-fluid">
+                    <img src="{{ asset('images/ic-internet-banking.svg') }}" alt="cocolux" class="img-fluid">
+                    <img src="{{ asset('images/ic-visa.svg') }}" alt="cocolux" class="img-fluid">
+                    <img src="{{ asset('images/ic-mastercard.svg') }}" alt="cocolux" class="img-fluid">
                 </div>
             </div>
             <div class="footer-col">
