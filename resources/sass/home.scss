@@ -6,6 +6,10 @@
     overflow: hidden;
     .banner-slide{
         width: calc(100% - 400px);
+        @media (max-width: 768px) {
+            max-height: 300px;
+            overflow: hidden;
+        }
     }
     .banner-wrap{
         width: 400px;
