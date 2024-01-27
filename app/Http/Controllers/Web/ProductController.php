@@ -819,8 +819,9 @@ class ProductController extends Controller
                 }])->whereHas('promotionItem', function ($query) use ($now, $id){
                     $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                         ->where('type','hot_deal')->where('promotion_id', $id);
-                })->with(['promotionItem' => function($query){
-                    $query->select('applied_stop_time','sku','price')->orderBy('price','asc');
+                })->with(['promotionItem' => function($query) use ($now, $id){
+                    $query->select('applied_stop_time','sku','price')->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                        ->where('type','hot_deal')->where('promotion_id', $id)->orderBy('price','asc');
                 }]);
 
             if (!empty($promotion_hots->sort_product)) {
