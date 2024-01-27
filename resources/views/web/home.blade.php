@@ -85,7 +85,7 @@
             </div>
             @if(count($list_coupon))
                 <div class="list-coupon">
-                    <h2 class="text-center">Mã khuyến mãi</h2>
+                    <h2 class="text-center">Mã khuyến mại</h2>
                     <div class="slide-main-coupon">
                         <div class="slide-template-slick-coupon">
                             @forelse($list_coupon as $item)
@@ -398,7 +398,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="couponModalLabel">Chi tiết Mã khuyến mãi</h5>
+                    <h5 class="modal-title" id="couponModalLabel">Chi tiết Mã khuyến mại</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -567,7 +567,7 @@
                 }
 
                 if (t < 0) {
-                    clearInterval(n), element.html("Đã hết khuyến mãi")
+                    clearInterval(n), element.html("Đã hết khuyến mại")
                 };
 
             }, 1e3);

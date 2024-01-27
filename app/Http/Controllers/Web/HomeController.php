@@ -81,8 +81,9 @@ class HomeController extends Controller
             })->whereHas('promotionItem', function ($query) use ($now){
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->where('type','flash_deal');
-            })->with(['promotionItem' => function($query){
-                $query->select('applied_stop_time','sku','price')->orderBy('price','asc');
+            })->with(['promotionItem' => function($query) use ($now){
+                $query->select('applied_stop_time','sku','price')->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                    ->where('type','flash_deal')->orderBy('price','asc');
             }])->whereNotNull('slug')->whereNotNull('sku')->limit(10)->get();
 
         $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])

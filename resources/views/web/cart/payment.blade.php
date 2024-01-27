@@ -379,46 +379,47 @@
                         var price_ship = $("#price_ship_coco").val();
                         let price_total_sale = parseInt($("#layoutForm #total_price_in_promotion").val()); // tong gia san pham sale
                         let price_total_not_sale = parseInt($("#layoutForm #total_price_not_in_promotion").val()); // tong gia san pham ko sale
-                        if (list_products_promotion){
-                            let list_product_pro = list_products_promotion.split(",");
-                            if(parseInt(result.data.valueType) == 1){
-                                $("#layoutForm #coupon_if_have").css({"display": "flex"});
-                                $("#layoutForm #coupon_now").html("-"+formatMoney(parseInt(result.data.value)));
-                                $("#price_coupon_now").val(result.data.value);
-                                let total_price = price_total_sale + price_total_not_sale;
-                                let total_price_ship_coupon = (parseInt(price_ship) + total_price) - parseInt(result.data.value);
-                                $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
+                        if(price_total_not_sale){
+                            if (list_products_promotion){
+                                let list_product_pro = list_products_promotion.split(",");
+                                if(parseInt(result.data.valueType) == 1){
+                                    $("#layoutForm #coupon_if_have").css({"display": "flex"});
+                                    $("#layoutForm #coupon_now").html("-"+formatMoney(parseInt(result.data.value)));
+                                    $("#price_coupon_now").val(result.data.value);
+                                    let total_price = price_total_sale + price_total_not_sale;
+                                    let total_price_ship_coupon = (parseInt(price_ship) + total_price) - parseInt(result.data.value);
+                                    $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
+                                }else{
+                                    $("#layoutForm #coupon_if_have").css({"display": "flex"});
+                                    $("#layoutForm #coupon_now").html("-"+parseInt(result.data.value)+"%");
+                                    let total_price = price_total_sale + price_total_not_sale;
+                                    let coupon_ = parseInt(result.data.value);
+                                    let price_coupon = price_total_not_sale * coupon_/100;
+                                    $("#price_coupon_now").val(price_coupon);
+                                    let total_price_ship_coupon = (parseInt(price_ship) + total_price) - price_coupon;
+                                    $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
+                                }
                             }else{
-                                $("#layoutForm #coupon_if_have").css({"display": "flex"});
-                                $("#layoutForm #coupon_now").html("-"+parseInt(result.data.value)+"%");
-                                let total_price = price_total_sale + price_total_not_sale;
-                                let coupon_ = parseInt(result.data.value);
-                                let price_coupon = price_total_not_sale * coupon_/100;
-                                $("#price_coupon_now").val(price_coupon);
-                                let total_price_ship_coupon = (parseInt(price_ship) + total_price) - price_coupon;
-                                $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
+                                if(parseInt(result.data.valueType) == 1){
+                                    $("#layoutForm #coupon_if_have").css({"display": "flex"});
+                                    $("#layoutForm #coupon_now").html("-"+formatMoney(parseInt(result.data.value)));
+                                    $("#price_coupon_now").val(result.data.value);
+                                    let total_price = price_total_sale + price_total_not_sale;
+                                    let total_price_ship_coupon = (parseInt(price_ship) + total_price) - parseInt(result.data.value);
+                                    $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
+                                }else{
+                                    $("#layoutForm #coupon_if_have").css({"display": "flex"});
+                                    $("#layoutForm #coupon_now").html("-"+parseInt(result.data.value)+"%");
+                                    let total_price = price_total_sale + price_total_not_sale;
+                                    let coupon_ = parseInt(result.data.value);
+                                    let price_coupon = price_total_not_sale * coupon_/100;
+                                    $("#price_coupon_now").val(price_coupon);
+                                    let total_price_ship_coupon = (parseInt(price_ship) + total_price) - price_coupon;
+                                    $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
+                                }
                             }
                         }else{
-                            if(parseInt(result.data.valueType) == 1){
-                                if(price_total_not_sale){
-
-                                }
-                                $("#layoutForm #coupon_if_have").css({"display": "flex"});
-                                $("#layoutForm #coupon_now").html("-"+formatMoney(parseInt(result.data.value)));
-                                $("#price_coupon_now").val(result.data.value);
-                                let total_price = price_total_sale + price_total_not_sale;
-                                let total_price_ship_coupon = (parseInt(price_ship) + total_price) - parseInt(result.data.value);
-                                $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
-                            }else{
-                                $("#layoutForm #coupon_if_have").css({"display": "flex"});
-                                $("#layoutForm #coupon_now").html("-"+parseInt(result.data.value)+"%");
-                                let total_price = price_total_sale + price_total_not_sale;
-                                let coupon_ = parseInt(result.data.value);
-                                let price_coupon = price_total_not_sale * coupon_/100;
-                                $("#price_coupon_now").val(price_coupon);
-                                let total_price_ship_coupon = (parseInt(price_ship) + total_price) - price_coupon;
-                                $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
-                            }
+                            alert('Voucher không áp dụng cho sản phẩm đang khuyến mại');
                         }
                     }
                 },
