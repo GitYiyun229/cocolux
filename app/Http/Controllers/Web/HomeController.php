@@ -25,6 +25,7 @@ use App\Models\ProductsCategories;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Services\DealService;
+use Detection\MobileDetect;
 
 class HomeController extends Controller
 {
@@ -65,6 +66,9 @@ class HomeController extends Controller
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('cocolux.com');
+
+        $detect = new MobileDetect();
+        $isMobile = $detect->isMobile();
 
         $articles = $this->articleRepository->getList(['active' => 1,'is_home'=>1],['id','title','slug','description','image'], 4);
         $stores = Store::where(['active'=>1,'is_home'=> 1])->select('id','image','name','phone')->get();
@@ -124,7 +128,7 @@ class HomeController extends Controller
         }
 
         $list_coupon = Voucher::where(['status' => 1,'active' => 1])->with(['items'])->orderBy('id', 'ASC')->get();
-        return view('web.home', compact('slider','subBanner','product_hots','attribute_brand','articles','product_cats','subBanner2','cats','cat_sub','product_flash','stores','list_coupon'));
+        return view('web.home', compact('slider','subBanner','product_hots','attribute_brand','articles','product_cats','subBanner2','cats','cat_sub','product_flash','stores','list_coupon','isMobile'));
     }
 
     public function registerEmail(Request $request){

@@ -342,7 +342,7 @@
                 @endforelse
                 @endif
             </div>
-            @if(!empty($articles))
+            @if(!empty($articles) && !$isMobile)
                 <div class="section-article mb-5">
                     <div class="section-top">
                         <a href="{{ route('homeArticle') }}">

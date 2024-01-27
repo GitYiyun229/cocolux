@@ -59,6 +59,14 @@
     }
     .slide-main-coupon{
         .slide-template-slick-coupon{
+            img{
+                display: none;
+            }
+            &.slick-initialized {
+                img{
+                    display: block;
+                }
+            }
             .item-coupon{
                 background: url("../images/coupon-s.png") no-repeat left center;
                 background-size: cover;
@@ -270,6 +278,20 @@
     .section-main{
         display: flex;
         gap: 10px;
+        .slide-template-slick{
+            img{
+                display: none;
+            }
+            &.slick-initialized {
+                img{
+                    display: block;
+                }
+            }
+            .product-template{
+                max-height: 352px;
+                overflow: hidden;
+            }
+        }
     }
     .section-poster{
         width: 220px;
