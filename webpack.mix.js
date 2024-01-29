@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+require('laravel-mix-purgecss');
 
 /*
  |--------------------------------------------------------------------------
@@ -12,11 +13,17 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/web/main.js', 'public/js/web')
+    .js('resources/js/web/home.js', 'public/js/web')
+    .js('resources/js/web/article-detail.js', 'public/js/web')
+    .js('resources/js/web/product-brand.js', 'public/js/web')
+    .js('resources/js/web/product-deal-hot.js', 'public/js/web')
+    .js('resources/js/web/product-deal-now.js', 'public/js/web')
+    .js('resources/js/web/product-flash-sale.js', 'public/js/web')
+    .js('resources/js/web/product-new.js', 'public/js/web')
+    .js('resources/js/web/product-search.js', 'public/js/web')
+    .js('resources/js/web/product-detail.js', 'public/js/web')
+    .js('resources/js/web/product-cat.js', 'public/js/web')
     .js('resources/js/admin/setting.js', 'public/js/admin')
-    .sass('resources/sass/app.scss', 'public/css')
-    .sass('resources/sass/style.scss', 'public/css/web')
-    .sass('resources/sass/template.scss', 'public/css/web')
     .sass('resources/sass/home.scss', 'public/css/web')
     .sass('resources/sass/content.scss', 'public/css/web')
     .sass('resources/sass/article-list.scss', 'public/css/web')
@@ -32,4 +39,4 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/hot-deal.scss', 'public/css/web')
     .sass('resources/sass/deal-detail.scss', 'public/css/web')
     .sass('resources/sass/login-admin.scss', 'public/css/web')
-    .sourceMaps();
+    .sourceMaps().version();
