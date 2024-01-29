@@ -31,6 +31,14 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/deal-detail.scss', 'public/css/web')
     .sass('resources/sass/login-admin.scss', 'public/css/web')
     .sourceMaps().purgeCss({
-        whitelistPatterns: [/prev$/ , /arrow$/],
+        whitelist: [
+            'section-banner-top',
+        ],
+        whitelistPatterns: [/(^slick-)\w+/, /li/, /ul/, /background/,
+            /opacity/,
+            /color/,
+            /content/,
+            /text-align/,],
+        defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
         enabled: true
     }).version();

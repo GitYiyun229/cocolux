@@ -20,23 +20,22 @@
         flex-wrap: wrap;
         gap: 10px;
     }
-
     .slick-dots{
         position: absolute;
         bottom: 20px;
-        li{
+        >li{
             width: auto;
             height: auto;
-        }
-        button{
-            padding: 0;
-            background: #fff;
-            border-radius: 100%;
-            width: 10px;
-            height: 10px;
-            margin: 0;
-            &::before{
-               display: none;
+            button{
+                padding: 0;
+                background: #fff;
+                border-radius: 100%;
+                width: 10px;
+                height: 10px;
+                margin: 0;
+                &::before{
+                    display: none;
+                }
             }
         }
         .slick-active{
@@ -76,6 +75,7 @@
                     display: block;
                 }
             }
+
             .item-coupon{
                 background: url("../images/coupon-s.png") no-repeat left center;
                 background-size: cover;
