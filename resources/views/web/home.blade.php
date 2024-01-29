@@ -10,7 +10,7 @@
                         @forelse($slider as $k => $item)
                         <div>
                             <a href="{!! $item->url !!}">
-                                <img src="{{ asset(replace_image_home($item->image)) }}" alt="{{ $item->content }}" class="img-fluid">
+                                <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->content }}" class="img-fluid">
                             </a>
                         </div>
                         @empty
@@ -20,7 +20,7 @@
                 <div class="banner-wrap">
                     @forelse($subBanner as $item)
                     <a href="{!! $item->url !!}">
-                        <img src="{{ asset(replace_image_home($item->image_url)) }}" alt="{{ $item->content }}" class="img-fluid">
+                        <img src="{{ asset(replace_image($item->image_url)) }}" alt="{{ $item->content }}" class="img-fluid">
                     </a>
                     @empty
                     @endforelse
@@ -39,7 +39,7 @@
                 </a>
                 @forelse($cat_products as $item)
                 <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}" class="item-category d-flex flex-column align-items-center text-center text-uppercase">
-                    <img data-src="{{ asset(replace_image_home($item->logo)) }}" alt="{{ $item->title }}" class="img-fluid lazy" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
+                    <img data-src="{{ asset(replace_image($item->logo)) }}" alt="{{ $item->title }}" class="img-fluid lazy" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
                     {{ $item->title }}
                 </a>
                 @empty
@@ -246,7 +246,7 @@
                         @if(!empty($attribute_brand))
                         @forelse($attribute_brand as $item)
                         <a href="{{ route('detailBrand',['slug' => $item->slug,'id' => $item->id]) }}" class="brand-template">
-                            <img data-src="{{ asset(replace_image_home($item->image)) }}" alt="{{ $item->name }}" class="img-fluid lazy">
+                            <img data-src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->name }}" class="img-fluid lazy">
                             <div class="title">{{ $item->name }}</div>
                         </a>
                         @empty
@@ -279,7 +279,7 @@
                     <div class="section-main bg-white">
                         <div class="section-poster">
                             <a href="{{ route('catProduct',['slug' => $cat->slug, 'id'=> $cat->id]) }}">
-                                <img data-src="{{ asset(replace_image_home($cat->banner)) }}" alt="{{ $cat->title }}" class="img-fluid lazy">
+                                <img data-src="{{ asset(replace_image($cat->banner)) }}" alt="{{ $cat->title }}" class="img-fluid lazy">
                             </a>
                         </div>
                         <div class="section-content">
@@ -337,7 +337,7 @@
                 @if(!empty($subBanner2))
                 @forelse($subBanner2 as $item)
                 <a class="" href="{{ $item->url }}">
-                    <img alt="{{ $item->title }}" data-src="{{ asset(replace_image_home($item->image_url)) }}" class="img-fluid lazy">
+                    <img alt="{{ $item->title }}" data-src="{{ asset(replace_image($item->image_url)) }}" class="img-fluid lazy">
                 </a>
                 @empty
                 @endforelse
@@ -356,7 +356,7 @@
                         @forelse($articles as $item)
                         <a href="{{ route('detailArticle',['slug'=>$item->slug,'id'=>$item->id]) }}" class="article-item" title="{{ $item->title }}">
                             <div class="article-img">
-                                <img data-src="{{ asset(replace_image_home($item->image)) }}" alt="{{ $item->title }}" class="img-fluid lazy">
+                                <img data-src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid lazy">
                             </div>
                             <div class="article-title">
                                 <span>
