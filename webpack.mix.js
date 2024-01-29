@@ -13,7 +13,16 @@ require('laravel-mix-purgecss');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/web/main.js', 'public/js/web')
+    .js('resources/js/web/home.js', 'public/js/web')
+    .js('resources/js/web/article-detail.js', 'public/js/web')
+    .js('resources/js/web/product-brand.js', 'public/js/web')
+    .js('resources/js/web/product-deal-hot.js', 'public/js/web')
+    .js('resources/js/web/product-deal-now.js', 'public/js/web')
+    .js('resources/js/web/product-flash-sale.js', 'public/js/web')
+    .js('resources/js/web/product-new.js', 'public/js/web')
+    .js('resources/js/web/product-search.js', 'public/js/web')
+    .js('resources/js/web/product-detail.js', 'public/js/web')
+    .js('resources/js/web/product-cat.js', 'public/js/web')
     .js('resources/js/admin/setting.js', 'public/js/admin')
     .sass('resources/sass/home.scss', 'public/css/web')
     .sass('resources/sass/content.scss', 'public/css/web')
@@ -30,15 +39,4 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/hot-deal.scss', 'public/css/web')
     .sass('resources/sass/deal-detail.scss', 'public/css/web')
     .sass('resources/sass/login-admin.scss', 'public/css/web')
-    .sourceMaps().purgeCss({
-        whitelist: [
-            'section-banner-top',
-        ],
-        whitelistPatterns: [/(^slick-)\w+/, /li/, /ul/, /background/,
-            /opacity/,
-            /color/,
-            /content/,
-            /text-align/,],
-        defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
-        enabled: true
-    }).version();
+    .sourceMaps().version();

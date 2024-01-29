@@ -38,4 +38,6 @@
 
 @section('script')
 @parent
+<script src="{{ mix('js/app.js') }}"></script>
+@include('web.components.extend')
 @endsection

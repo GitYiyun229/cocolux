@@ -174,41 +174,6 @@
 
 @section('script')
     @parent
-    <script>
-        $('.btn-more-less').click(function() {
-            $(this).toggleClass('less');
-            $('.layout-article').toggleClass('less');
-        })
-
-        $('.filter-item').click(function () {
-            var newValue = $(this).data('value');
-            var className = $(this).data('name');
-            $('.'+className).find('input[type="hidden"]').val(null);
-            $(this).find('input[type="hidden"]').val(newValue);
-            $('#form_filter').submit();
-        });
-
-        $('.card-item').click(function () {
-            var newValue = $(this).data('value');
-            $('.card-item').find('input[type="hidden"]').val(null);
-            $(this).find('input[type="hidden"]').val(newValue);
-            $('#form_filter').submit();
-        });
-
-        $('.del-icon').click(function () {
-            var className = $(this).data('code');
-            $('.'+className).find('input[type="hidden"]').val(null);
-            $('#form_filter').submit();
-        });
-
-        $('#form_filter').submit(function () {
-            $(this).find('input').each(function () {
-                if ($(this).val() === '') {
-                    $(this).remove(); // Loại bỏ input
-                    // $(this).prop('disabled', true); // Vô hiệu hóa input
-                }
-            });
-        });
-
-    </script>
+    <script src="{{ mix('js/web/product-brand.js') }}"></script>
+    @include('web.components.extend')
 @endsection

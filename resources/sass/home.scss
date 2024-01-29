@@ -1,6 +1,9 @@
 @use 'app';
 @use 'style';
 @use 'template';
+@import "~slick-carousel/slick/slick";
+@import "~slick-carousel/slick/slick-theme";
+@import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 .section-banner-top{
     padding-left: 220px;
     height: 400px;

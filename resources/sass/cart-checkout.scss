@@ -1,6 +1,7 @@
 @use 'app';
 @use 'style';
 @use 'template';
+@import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 .page-table{
     border-radius: 5px;
     box-shadow: 0 3px 6px rgba(0,0,0,.15);

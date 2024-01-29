@@ -1,6 +1,7 @@
 @use 'app';
 @use 'style';
 @use 'template';
+@import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 .news-item{
     display: flex;
     flex-direction: column;

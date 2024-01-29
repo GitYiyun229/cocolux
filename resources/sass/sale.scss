@@ -1,6 +1,7 @@
 @use 'app';
 @use 'style';
 @use 'template';
+@import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 .layout-page-hot-deal{
     .text-danger{
         color: #c73030 !important;

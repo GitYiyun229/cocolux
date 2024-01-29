@@ -10,7 +10,7 @@
                         @forelse($slider as $k => $item)
                         <div>
                             <a href="{!! $item->url !!}">
-                                <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->content }}" class="img-fluid">
+                                <img src="{{ asset(replace_image_home($item->image)) }}" alt="{{ $item->content }}" class="img-fluid">
                             </a>
                         </div>
                         @empty
@@ -20,7 +20,7 @@
                 <div class="banner-wrap">
                     @forelse($subBanner as $item)
                     <a href="{!! $item->url !!}">
-                        <img src="{{ asset(replace_image($item->image_url)) }}" alt="{{ $item->content }}" class="img-fluid">
+                        <img src="{{ asset(replace_image_home($item->image_url)) }}" alt="{{ $item->content }}" class="img-fluid">
                     </a>
                     @empty
                     @endforelse
@@ -39,7 +39,7 @@
                 </a>
                 @forelse($cat_products as $item)
                 <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}" class="item-category d-flex flex-column align-items-center text-center text-uppercase">
-                    <img data-src="{{ asset(replace_image($item->logo)) }}" alt="{{ $item->title }}" class="img-fluid lazy" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
+                    <img data-src="{{ asset(replace_image_home($item->logo)) }}" alt="{{ $item->title }}" class="img-fluid lazy" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
                     {{ $item->title }}
                 </a>
                 @empty
@@ -246,7 +246,7 @@
                         @if(!empty($attribute_brand))
                         @forelse($attribute_brand as $item)
                         <a href="{{ route('detailBrand',['slug' => $item->slug,'id' => $item->id]) }}" class="brand-template">
-                            <img data-src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->name }}" class="img-fluid lazy">
+                            <img data-src="{{ asset(replace_image_home($item->image)) }}" alt="{{ $item->name }}" class="img-fluid lazy">
                             <div class="title">{{ $item->name }}</div>
                         </a>
                         @empty
@@ -279,7 +279,7 @@
                     <div class="section-main bg-white">
                         <div class="section-poster">
                             <a href="{{ route('catProduct',['slug' => $cat->slug, 'id'=> $cat->id]) }}">
-                                <img data-src="{{ asset(replace_image($cat->banner)) }}" alt="{{ $cat->title }}" class="img-fluid lazy">
+                                <img data-src="{{ asset(replace_image_home($cat->banner)) }}" alt="{{ $cat->title }}" class="img-fluid lazy">
                             </a>
                         </div>
                         <div class="section-content">
@@ -337,7 +337,7 @@
                 @if(!empty($subBanner2))
                 @forelse($subBanner2 as $item)
                 <a class="" href="{{ $item->url }}">
-                    <img alt="{{ $item->title }}" data-src="{{ asset(replace_image($item->image_url)) }}" class="img-fluid lazy">
+                    <img alt="{{ $item->title }}" data-src="{{ asset(replace_image_home($item->image_url)) }}" class="img-fluid lazy">
                 </a>
                 @empty
                 @endforelse
@@ -356,7 +356,7 @@
                         @forelse($articles as $item)
                         <a href="{{ route('detailArticle',['slug'=>$item->slug,'id'=>$item->id]) }}" class="article-item" title="{{ $item->title }}">
                             <div class="article-img">
-                                <img data-src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->title }}" class="img-fluid lazy">
+                                <img data-src="{{ asset(replace_image_home($item->image)) }}" alt="{{ $item->title }}" class="img-fluid lazy">
                             </div>
                             <div class="article-title">
                                 <span>
@@ -440,217 +440,11 @@
 
 @section('link')
     @parent
-    <link href="{{ asset('js/web/slick/slick.css') }}" rel="stylesheet">
-    <link href="{{ asset('js/web/slick/slick-theme.css') }}" rel="stylesheet">
     <link href="{{ mix('css/web/home.css') }}" rel="stylesheet">
 @endsection
 
 @section('script')
     @parent
-    <script src="{{ asset('/js/web/jquery-3.7.1.min.js') }}" data-cfasync="false"></script>
-    <script src="{{ asset('/js/web/slick/slick.js') }}" data-cfasync="false"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.0/dist/lazyload.min.js" data-cfasync="false"></script>
-    <script data-cfasync="false">
-        var lazyLoadInstance = new LazyLoad({
-            // Your custom settings go here
-        });
-        $('.banner-slick').slick({
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            arrows: true,
-            dots: true,
-            infinite: true,
-            autoplay: true,
-
-        });
-
-        $('.section-store-main').slick({
-            slidesToShow: 6,
-            slidesToScroll: 6,
-            dots: false,
-            arrows: false,
-            infinite: true,
-            autoplay: true,
-            speed: 500,
-            responsive: [
-                {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 6,
-                        slidesToScroll: 6,
-                    }
-                },
-                {
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 4,
-                        slidesToScroll: 4,
-                    }
-                },
-                {
-                    breakpoint: 767,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2,
-                    }
-                }
-            ]
-
-        });
-
-        $('.slide-template-slick').slick({
-            slidesToShow: 5,
-            slidesToScroll: 5,
-            arrows: true,
-            dots: false,
-            infinite: true,
-            autoplay: true,
-            responsive: [
-                {
-                    breakpoint: 960,
-                    settings: {
-                        slidesToShow: 2.5,
-                        slidesToScroll: 2
-                    }
-                }
-            ]
-        });
-
-        $('.slide-template-slick-coupon').slick({
-            slidesToShow: 4,
-            slidesToScroll: 4,
-            arrows: true,
-            dots: false,
-            infinite: true,
-            autoplay: true,
-            responsive: [
-                {
-                    breakpoint: 960,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2
-                    }
-                },
-                {
-                    breakpoint: 767,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                    }
-                }
-            ]
-        });
-
-        $(".count-down").each(function (e) {
-            countdowwn($(this));
-        });
-
-        function countdowwn(element) {
-            let is_title = element.attr('is-title');
-            let e = element.attr('time-end');
-            let l = new Date(e).getTime();
-            let n = setInterval(function () {
-                let e = new Date().getTime();
-                let t = l - e;
-                let a = Math.floor(t / 864e5);
-                let s = Math.floor((t % 864e5) / 36e5);
-                let o = Math.floor((t % 36e5) / 6e4);
-                e = Math.floor((t % 6e4) / 1e3);
-
-                if (is_title) {
-                    element.html(`
-                        <span>${a}</span>
-                        :
-                        <span>${s}</span>
-                        :
-                        <span>${o}</span>
-                        :
-                        <span>${e}</span>
-                    `);
-                } else {
-                    element.html(`
-                        <span>Còn ${a} ngày</span>
-
-                        <span>${s}</span>
-                        :
-                        <span>${o}</span>
-                        :
-                        <span>${e}</span>
-                    `);
-                }
-
-                if (t < 0) {
-                    clearInterval(n), element.html("Đã hết khuyến mại")
-                };
-
-            }, 1e3);
-        }
-
-        $('.btn-copy').click(function(){
-            let value = $(this).data('coupon');
-            let temp = $("<input>");
-            $("body").append(temp);
-            temp.val(value).select();
-            try {
-                document.execCommand("copy");
-                console.log('Text copied to clipboard successfully');
-                Swal.fire(
-                    'Thành công!',
-                    'Copy thành công',
-                    'success'
-                );
-            } catch (err) {
-                console.error('Error copying text to clipboard:', err);
-            } finally {
-                temp.remove();
-            }
-        })
-
-        $('.modal-footer #coupon-end, .modal-body #coupon-here').click(function() {
-            const coupon_here = document.querySelector(".modal-body #coupon-here #coupon-modal");
-
-            // Tạo một đối tượng Range để chọn nội dung của phần tử
-            const range = document.createRange();
-            range.selectNode(coupon_here);
-
-            // Lựa chọn nội dung của phần tử
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-
-            try {
-                document.execCommand("copy");
-
-                // Kiểm tra xem nếu có clipboardData
-                if (event.clipboardData) {
-                    event.clipboardData.setData("text/plain", coupon_here.textContent);
-                }
-
-                Swal.fire(
-                    'Thành công!',
-                    'Copy thành công',
-                    'success'
-                );
-            } catch (err) {
-                console.error('Error copying text to clipboard:', err);
-            } finally {
-                // Xóa lựa chọn
-                selection.removeAllRanges();
-            }
-        });
-
-        $('.btn-value').click(function(){
-            let value = $(this).data('value-coupon');
-            $(".modal-body #name-coupon").text( 'Giảm ' + value.value );
-            $(".modal-body #des-coupon").text( value.name );
-            $(".modal-body #coupon-modal").text( value.items.code );
-            $(".modal-body #coupon-here").data('coupon',value.items.code );
-            $(".modal-footer #coupon-end").data('coupon',value.items.code );
-            $(".modal-body #startDate").text( value.start_date );
-            $(".modal-body #endDate").text( value.end_date );
-            $(".modal-body #show_date").text( value.start_date + '- '+ value.end_date );
-            $(".modal-body #description-coupon").text( value.description );
-        })
-
-    </script>
+    <script src="{{ mix('js/web/home.js') }}"></script>
+    @include('web.components.extend')
 @endsection

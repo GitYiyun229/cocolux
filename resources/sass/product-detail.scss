@@ -1,6 +1,9 @@
 @use 'app';
 @use 'style';
 @use 'template';
+@import "~slick-carousel/slick/slick";
+@import "~slick-carousel/slick/slick-theme";
+@import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 .text-danger{
     color: #c73030 !important;
 }

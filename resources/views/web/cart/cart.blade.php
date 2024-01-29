@@ -76,6 +76,8 @@
 
 @section('script')
     @parent
+    <script src="{{ mix('js/app.js') }}"></script>
+    @include('web.components.extend')
     <script>
         function removeItemCart(id_prd) {
             var quantity = $("#quantity").val();
