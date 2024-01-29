@@ -180,6 +180,7 @@ class PromotionsController extends Controller
     public function destroy($id)
     {
         Promotions::destroy($id);
+		PromotionItem::where('promotion_id', $id)->delete();
         return [
             'status' => true,
             'message' => trans('message.delete_promotion_success')

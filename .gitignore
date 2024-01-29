@@ -6,6 +6,7 @@
 /public/danh-gia
 /public/webhook
 public/images/cdn_images
+public/images/thumbs_images
 /storage/*.key
 /vendor
 .env
