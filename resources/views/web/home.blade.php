@@ -150,7 +150,7 @@
                                     </div>
                                 @endif
                                 <div class="product-thumbnail">
-                                    <img data-src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid lazy">
+                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                 </div>
                                 <div class="product-price">
                                     <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
@@ -203,7 +203,7 @@
                                 @endif
                             @endif
                             <div class="product-thumbnail">
-                                <img data-src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid lazy">
+                                <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                             </div>
                             <div class="product-price">
                                 @if($item->promotionItem)
