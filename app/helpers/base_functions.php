@@ -366,7 +366,11 @@ function replace_image($image){
 }
 
 function replace_image_home($image){
-    return str_replace('https://cdn.cocolux.com','/images/thumbs_images',$image);
+    return str_replace(
+        ['https://cdn.cocolux.com', 'png', 'jpg', 'jpeg'],
+        ['/images/thumbs_images', 'webp', 'webp', 'webp'],
+        $image
+    );
 }
 
 function percentage_price($price, $old_price){
