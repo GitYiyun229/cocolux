@@ -365,6 +365,14 @@ function replace_image($image){
     return str_replace('https://cdn.cocolux.com','/images/cdn_images',$image);
 }
 
+function replace_image_home($image){
+    return str_replace(
+        ['https://cdn.cocolux.com', 'png', 'jpg', 'jpeg'],
+        ['/images/thumbs_images', 'webp', 'webp', 'webp'],
+        $image
+    );
+}
+
 function percentage_price($price, $old_price){
     if ($old_price != 0 || $old_price != null){
         $percentageChange = (($price - $old_price) / $old_price) * 100;
