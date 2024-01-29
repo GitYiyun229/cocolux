@@ -78,10 +78,11 @@ class HomeController extends Controller
 
         $now = Carbon::now();
         $product_flash = ProductOptions::select('id','sku', 'slug','title','price','normal_price','slug','images','parent_id')
+			->where(['is_default' => 1, 'active' => 1])
             ->with(['product' => function($query){
                 $query->select('id','slug','brand');
             }])->whereHas('product', function ($query) {
-                $query->where(['is_hot' => 1, 'is_default' => 1, 'active' => 1]);
+                $query->where(['is_hot' => 1, 'active' => 1]);
             })->whereHas('promotionItem', function ($query) use ($now){
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->where('type','flash_deal');
@@ -98,7 +99,7 @@ class HomeController extends Controller
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
             }])->whereHas('product', function ($query) {
-                $query->where(['is_hot' => 1, 'is_default' => 1, 'active' => 1]);
+                $query->where(['is_hot' => 1, 'active' => 1]);
             })->whereNotNull('slug')->whereNotNull('sku')->limit(10)->get();
 
         $attribute_brand = AttributeValues::where(['attribute_id' => 19,'active' => 1,'is_home' => 1])->select('id','name','slug','image')->orderBy('ordering', 'ASC')->limit(15)->get(); // thương hiệu
