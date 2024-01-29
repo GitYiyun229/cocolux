@@ -5,7 +5,6 @@ import 'bootstrap';
 import swal from 'sweetalert2';
 window.Swal = swal;
 import 'slick-carousel';
-// import 'jquery.toc';
 
 require('./template');
 require('./main');
@@ -71,7 +70,5 @@ function countdowwn(element) {
 
     }, 1e3);
 }
-// $(document).ready(function() {
-//     $("#toc").toc({content: ".layout-main .detail-content", headings: "h1,h2,h3,h4"});
-// })
+
 
