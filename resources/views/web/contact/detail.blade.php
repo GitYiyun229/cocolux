@@ -53,30 +53,11 @@
 
 @section('link')
     @parent
-    <link rel="stylesheet" href="{{ asset('/css/web/contact.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/web/contact.css') }}">
 @endsection
 
 @section('script')
     @parent
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        let toastrSuccsee = '{{ Session::get('success') }}';
-        let toastrDanger = '{{ Session::get('danger') }}';
-        if (toastrDanger.length > 0 || toastrSuccsee.length > 0) {
-            if (toastrDanger.length > 0){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: toastrDanger,
-                })
-                toastr["error"](toastrDanger)
-            } else {
-                Swal.fire(
-                    'Thành công!',
-                    toastrSuccsee,
-                    'success'
-                )
-            }
-        }
-    </script>
+    <script src="{{ mix('js/app.js') }}"></script>
+    @include('web.components.extend')
 @endsection

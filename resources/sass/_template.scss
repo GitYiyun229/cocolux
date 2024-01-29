@@ -334,7 +334,6 @@ body{
         z-index: 10;
         width: 220px;
         > .menu-content{
-            // border: 1px solid #d4d4d4;
             background: #fff;
         }
         .menu-btn{
@@ -638,7 +637,7 @@ footer{
         position: absolute;
         right: 10px;
         top: 8px;
-        background: url('/images/sale-tag.svg') center right no-repeat;
+        background: url('../images/sale-tag.svg') center right no-repeat;
         background-size: contain;
         font-weight: 600;
         color: #fff;
@@ -793,8 +792,6 @@ ol.breadcrumb{
 
 @media (max-width: 960px) {
     .container{
-        // padding-right: 10px;
-        // padding-left: 10px;
         max-width: 100%;
         width: 100%;
     }

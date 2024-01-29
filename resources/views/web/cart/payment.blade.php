@@ -187,11 +187,13 @@
 
 @section('link')
     @parent
-    <link rel="stylesheet" href="{{ asset('/css/web/cart-payment.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/web/cart-payment.css') }}">
 @endsection
 
 @section('script')
     @parent
+    <script src="{{ mix('js/app.js') }}"></script>
+    @include('web.components.extend')
     <script>
         const submitBtn = document.querySelector('.submit-layoutForm');
         const submitForm = document.querySelector('#layoutForm');

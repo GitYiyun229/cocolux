@@ -1,3 +1,7 @@
+@use 'app';
+@use 'style';
+@use 'template';
+@import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 .layout-page-payment-success{
     padding: 20px 30px;
     display: grid;
