@@ -28,7 +28,7 @@
 
 @section('link')
     @parent
-    <link rel="stylesheet" href="{{ asset('/css/web/hot-deal.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/web/hot-deal.css') }}">
 @endsection
 
 @section('script')

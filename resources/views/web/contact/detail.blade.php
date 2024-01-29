@@ -53,7 +53,7 @@
 
 @section('link')
     @parent
-    <link rel="stylesheet" href="{{ asset('/css/web/contact.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/web/contact.css') }}">
 @endsection
 
 @section('script')

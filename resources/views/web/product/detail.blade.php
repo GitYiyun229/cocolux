@@ -474,7 +474,7 @@
     @parent
     <link href="{{ asset('js/web/slick/slick.css') }}" rel="stylesheet">
     <link href="{{ asset('js/web/slick/slick-theme.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('/css/web/product-detail.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/web/product-detail.css') }}">
 @endsection
 
 @section('script')

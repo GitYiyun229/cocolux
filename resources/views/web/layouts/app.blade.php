@@ -11,7 +11,7 @@
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link type='image/x-icon' href='{{ asset('images/favicon.ico') }}' rel='icon'/>
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+{{--    <link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
     @yield('link')
     <script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-NGPB3KQ"></script><script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-JKPNMVXR47&amp;l=dataLayer&amp;cx=c" nonce="g3FmeM9o"></script><script type="text/javascript">
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

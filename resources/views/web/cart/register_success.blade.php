@@ -37,7 +37,7 @@
 
 @section('link')
     @parent
-    <link rel="stylesheet" href="{{ asset('/css/web/cart-success.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/web/cart-success.css') }}">
 @endsection
 
 @section('script')

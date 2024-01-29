@@ -33,7 +33,7 @@
 
 @section('link')
 @parent
-<link rel="stylesheet" href="{{ asset('/css/web/content.css') }}">
+<link rel="stylesheet" href="{{ mix('css/web/content.css') }}">
 @endsection
 
 @section('script')

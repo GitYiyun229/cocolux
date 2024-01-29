@@ -169,7 +169,7 @@
 
 @section('link')
     @parent
-    <link rel="stylesheet" href="{{ asset('/css/web/product-cat.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/web/product-cat.css') }}">
 @endsection
 
 @section('script')

@@ -71,7 +71,7 @@
 
 @section('link')
     @parent
-    <link rel="stylesheet" href="{{ asset('/css/web/cart-checkout.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/web/cart-checkout.css') }}">
 @endsection
 
 @section('script')
