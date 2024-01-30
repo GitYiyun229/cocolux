@@ -37,8 +37,8 @@ class ProductController extends Controller
 {
 
     protected $merchantId = 36282;
-    protected $apiKey = 'a18ff78e7a9e44f38de372e093d87ca1';
-    protected $apiSecret = '9623ac03057e433f95d86cf4f3bef5cc';
+    protected $apiKey = 'sk8Vbo5ZhQ2qStQFwF49xBE1TzZqaFLs';
+    protected $apiSecret = '9iUR1zOPvLUlsxaYwUE7zQn0p9ogvtly';
     protected $apiUrl = 'https://dev-api.baokim.vn'; // link sanbox
 
     protected $linkApi = "https://open.nhanh.vn";
