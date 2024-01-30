@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
+//api for qr bao kim
 class ApiBaoKimController extends Controller
 {
     protected $apiUrl = 'https://devtest.baokim.vn/Sandbox/Collection/V2';

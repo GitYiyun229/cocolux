@@ -29,9 +29,9 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Requests\Order\CreateOrder;
 use App\Services\DealService;
 use GuzzleHttp\Client;
-use BaoKim\BaokimSdk\Connect;
-use BaoKim\BaokimSdk\getRequirement;
-use BaoKim\BaokimSdk\Webhook;
+use App\BaoKim\Connect;
+use App\BaoKim\getRequirement;
+use App\BaoKim\Webhook;
 
 class ProductController extends Controller
 {
@@ -39,7 +39,8 @@ class ProductController extends Controller
     protected $merchantId = 36282;
     protected $apiKey = 'sk8Vbo5ZhQ2qStQFwF49xBE1TzZqaFLs';
     protected $apiSecret = '9iUR1zOPvLUlsxaYwUE7zQn0p9ogvtly';
-    protected $apiUrl = 'https://dev-api.baokim.vn'; // link sanbox
+//    protected $apiUrl = 'https://dev-api.baokim.vn';
+    protected $apiUrl = 'https://api.baokim.vn';
 
     protected $linkApi = "https://open.nhanh.vn";
     protected $request_params = [
@@ -76,6 +77,7 @@ class ProductController extends Controller
             }
             $total_money_after = $total_money + $order->price_ship_coco - $order->price_coupon_now;
             getRequirement::setKey($this->apiKey, $this->apiSecret);
+            getRequirement::setUrl($this->apiUrl);
             $webhook = new Connect();
             $description = 'Đơn hàng từ cocolux.com, mã đơn hàng: '.$maDonHang;
             $data = [
@@ -111,6 +113,7 @@ class ProductController extends Controller
     public function cancelOrder($id)
     {
         getRequirement::setKey($this->apiKey, $this->apiSecret);
+        getRequirement::setUrl($this->apiUrl);
         $data = [
             'id' => $id
         ];
@@ -122,6 +125,7 @@ class ProductController extends Controller
     public function checkOrder($baokimId,$orderId)
     {
         getRequirement::setKey($this->apiKey, $this->apiSecret);
+        getRequirement::setUrl($this->apiUrl);
         $maDonHang = 'DH_BK_' . str_pad($orderId, 8, '0', STR_PAD_LEFT);
         $data = [
             'id' => $baokimId,
