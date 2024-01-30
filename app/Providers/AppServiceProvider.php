@@ -9,6 +9,7 @@ use App\Repositories\Contracts\MenuInterface;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
+use Detection\MobileDetect;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -56,5 +57,8 @@ class AppServiceProvider extends ServiceProvider
             $view->with('cat_products', $cat_products);
         });
 
+        $detect = new MobileDetect();
+        $isMobile = $detect->isMobile();
+        View::share('isMobile', $isMobile);
     }
 }

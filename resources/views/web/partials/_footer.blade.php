@@ -3,7 +3,7 @@
         <div class="footer-top">
             <div class="footer-col">
                 <a href="" title="cocolux m-0">
-                    <img src="{{ $setting['logo_footer'] }}" alt="cocolux" class="img-fluid">
+                    <img src="{{ $setting['logo_footer'] }}" width="130" height="80"  alt="cocolux" class="img-fluid">
                 </a>
                 {!! $setting['content_under_logo_footer'] !!}
             </div>
@@ -24,7 +24,7 @@
             <div class="footer-col">
                 <div class="dmca-cocolux mt-3">
                     <a href="https://www.dmca.com/Protection/Status.aspx?ID=4f30b842-a954-4ab6-8ce0-d5476814e254&amp;refurl=https://cocolux.com/thong-tin/gioi-thieu" title="DMCA.com Protection Status" class="dmca-badge">
-                        <img src="https://images.dmca.com/Badges/dmca_protected_sml_120n.png?ID=4f30b842-a954-4ab6-8ce0-d5476814e254" alt="DMCA.com Protection Status">
+                        <img src="https://images.dmca.com/Badges/dmca_protected_sml_120n.png?ID=4f30b842-a954-4ab6-8ce0-d5476814e254" alt="DMCA.com Protection Status" width="121" height="24" >
                     </a>
                     <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js" type="text/javascript"> </script>
                 </div>
@@ -48,8 +48,8 @@
                         </div>
                     </div>
                     <div class="license-image">
-                        <img src="{{ asset('images/BCT-noi-khong-voi-hang-gia.png') }}" alt="BCT nói không với hàng giả" class="img-fluid">
-                        <a href="http://online.gov.vn/Home/WebDetails/80058" target="_blank"><img src="{{ asset('images/bo-cong-thuong-xanh.svg') }}" alt="Bộ công thương xanh" class="img-fluid"></a>
+                        <img src="{{ asset('images/BCT-noi-khong-voi-hang-gia.png') }}" alt="BCT nói không với hàng giả" class="img-fluid" width="54" height="54" >
+                        <a href="http://online.gov.vn/Home/WebDetails/80058" target="_blank"><img src="{{ asset('images/bo-cong-thuong-xanh.svg') }}" alt="Bộ công thương xanh" class="img-fluid" width="143" height="54" ></a>
                     </div>
                 </div>
             </div>
