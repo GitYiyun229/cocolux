@@ -2,7 +2,7 @@
 @section('preload')
     @forelse($slider as $k => $item)
         @if($item->image_resize)
-            <link rel="preload" as="image" href="{{ asset($item->image_resize) }}">
+            <link rel="preload" fetchpriority="high" as="image" href="{{ asset($item->image_resize) }}" type="image/webp">
         @else
             <link rel="preload" as="image" href="{{ asset(replace_image($item->image)) }}">
         @endif
