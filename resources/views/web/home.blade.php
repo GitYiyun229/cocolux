@@ -22,9 +22,9 @@
                         <div>
                             <a href="{!! $item->url !!}">
                                 @if($item->image_resize)
-                                    <img src="{{ asset($item->image_resize) }}" alt="{{ $item->content }}" class="img-fluid">
+                                    <img src="{{ asset($item->image_resize) }}" alt="{{ $item->content }}" width="700" height="400" class="img-fluid">
                                 @else
-                                    <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->content }}" class="img-fluid">
+                                    <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->content }}" width="700" height="400" class="img-fluid">
                                 @endif
                             </a>
                         </div>
@@ -35,7 +35,7 @@
                 <div class="banner-wrap">
                     @forelse($subBanner as $item)
                     <a href="{!! $item->url !!}">
-                        <img src="{{ asset(replace_image($item->image_url)) }}" alt="{{ $item->content }}" class="img-fluid">
+                        <img src="{{ asset(replace_image($item->image_url)) }}" alt="{{ $item->content }}" width="390" height="195" class="img-fluid">
                     </a>
                     @empty
                     @endforelse
