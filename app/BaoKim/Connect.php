@@ -57,4 +57,44 @@ class Connect {
             return $e->getMessage();
         }
     }
+
+    public function cancelOrder($data) {
+        $Common = new Common();
+        $jwt = getRequirement::$_jwt;
+        try{
+            $header = [
+                'jwt' => 'Bearer '.$jwt,
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ];
+            $rs = $Common->requestAPI('POST', API_URL.'/payment/api/v5/order/cancel', $header, [], $data);
+            return $rs->body;
+//            $responseMassage = $rs->body->message;
+//            $dataRespone = [
+//                'responseCode' => 01,
+//                'responseMessage' => ($responseMassage) ? $responseMassage: ''
+//            ];
+//            if ($rs->body->code == 0) {
+//                $dataRespone['data'] = $rs->body->data;
+//            }
+//            return $dataRespone;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    public function checkOrder($data) {
+        $Common = new Common();
+        $jwt = getRequirement::$_jwt;
+        try{
+            $header = [
+                'jwt' => 'Bearer '.$jwt,
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ];
+            $rs = $Common->requestAPI('GET', API_URL.'/payment/api/v5/order/detail', $header, [], $data);
+            return dd($rs->body);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }
