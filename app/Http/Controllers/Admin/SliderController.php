@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Sliders;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\DataTables\SliderDataTable;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +13,7 @@ use App\Http\Requests\Slide\CreateSlide;
 use App\Http\Requests\Slide\UpdateSlide;
 use App\Repositories\Contracts\SlideInterface;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class SliderController extends Controller
 {
@@ -62,9 +64,19 @@ class SliderController extends Controller
                 $data['image'] = urldecode($image_root);
             }
             $model = $this->slideRepository->create($data);
-            if (!empty($data['image'])){
-                $this->slideRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'slider');
-            }
+
+            $now = Carbon::now();
+            $timestamp = $now->timestamp;
+            $fileNameWithoutExtension = urldecode(pathinfo($data['image'], PATHINFO_FILENAME));
+            $fileName = $fileNameWithoutExtension. '.webp';
+            $thumbnail = Image::make(asset($data['image']))->resize(700, 400, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->encode('webp', 75);
+            $thumbnailPath = 'storage/slider/' .$timestamp.'-'. $fileName;
+            Storage::makeDirectory('public/slider/');
+            $thumbnail->save($thumbnailPath);
+
             DB::commit();
             Session::flash('success', trans('message.create_slide_success'));
             return redirect()->back();
@@ -112,16 +124,24 @@ class SliderController extends Controller
      */
     public function update($id, UpdateSlide $req)
     {
-        $data_root = $this->slideRepository->getOneById($id);
+        $slider = $this->slideRepository->getOneById($id);
         DB::beginTransaction();
         try {
             $data = $req->validated();
-            $slider = $this->slideRepository->getOneById($id);
-            if (!empty($data['image']) && $data_root->image_url != $data['image']){
-                $this->slideRepository->removeImageResize($data_root->image,$this->resizeImage, $id,'slider');
-                $data['image'] = $this->slideRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'slider');
-            }
             $slider->update($data);
+
+            $now = Carbon::now();
+            $timestamp = $now->timestamp;
+            $fileNameWithoutExtension = urldecode(pathinfo($data['image'], PATHINFO_FILENAME));
+            $fileName = $fileNameWithoutExtension. '.webp';
+            $thumbnail = Image::make(asset($data['image']))->resize(700, 400, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->encode('webp', 75);
+            $thumbnailPath = 'storage/slider/' .$timestamp.'-'. $fileName;
+            Storage::makeDirectory('public/slider/');
+            $thumbnail->save($thumbnailPath);
+
             DB::commit();
             Session::flash('success', trans('message.update_slide_success'));
             return redirect()->route('admin.slider.edit', $id);

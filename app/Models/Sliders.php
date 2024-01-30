@@ -10,7 +10,7 @@ class Sliders extends Model
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 0;
 
-    public $resizeImage = ['lager' => [1920,980], 'resize' => [290,160]];
+    public $resizeImage = ['lager' => [700,400], 'resize' => [412,236]];
 
     protected $appends = [
         'image_resize',
@@ -21,12 +21,12 @@ class Sliders extends Model
     public function getImageResizeAttribute()
     {
         $img_path = pathinfo($this->image, PATHINFO_DIRNAME);
-        $array_resize = array();
-        $resizeImage = $this->resizeImage;
-        foreach ($resizeImage as $k => $item){
-            $array_resize_ = str_replace($img_path.'/','/storage/slider/'.$item[0].'x'.$item[1].'/'.$this->id.'-',$this->image);
-            $array_resize[$k] = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
+        $array_resize_ = str_replace($img_path.'/','/storage/slider/'.strtotime($this->updated_at).'-',$this->image);
+        $array_resize = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
+        if ($array_resize){
+            return $array_resize;
+        }else{
+            return null;
         }
-        return $array_resize;
     }
 }
