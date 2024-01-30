@@ -1149,40 +1149,44 @@ class ProductController extends Controller
             $order = Order::create($data);
 
             $cart = Session::get('cart', []);
-
-            $now = Carbon::now();
-            foreach ($cart as $productId => $item) {
-                $product = ProductOptions::where(['id' => $productId])->with(['product'])
-                    ->with(['promotionItem' => function($query) use ($now){
-                        $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
-                            ->orderBy('price', 'asc');
-                    }])->first();
-                if($product->promotionItem){
-                    $price = $product->promotionItem->price;
+            if ($cart){
+                $now = Carbon::now();
+                foreach ($cart as $productId => $item) {
+                    $product = ProductOptions::where(['id' => $productId])->with(['product'])
+                        ->with(['promotionItem' => function($query) use ($now){
+                            $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                                ->orderBy('price', 'asc');
+                        }])->first();
+                    if($product->promotionItem){
+                        $price = $product->promotionItem->price;
+                    }else{
+                        $price = $product->price;
+                    }
+                    if (empty($product)){
+                        unset($cart[$productId]);
+                        Session::flash('danger', 'Có sản phẩm không còn tồn tại');
+                        return redirect()->back();
+                    }
+                    $quantity = $item['quantity']; // Số lượng
+                    OrderItem::create([
+                        'order_id' => $order->id,
+                        'product_id' => $productId,
+                        'product_title' => $product->title,
+                        'product_number' => $quantity,
+                        'product_price' => $price,
+                    ]);
+                }
+                DB::commit();
+                Session::forget('cart');
+                if ($method_payment == 2){
+                    return redirect()->route('orderSendBK',['orderId'=>$order->id]);
                 }else{
-                    $price = $product->price;
+                    Session::flash('success', trans('message.create_order_success'));
+                    return redirect()->route('orderProductSuccess',['id'=>$order->id]);
                 }
-                if (empty($product)){
-                    unset($cart[$productId]);
-                    Session::flash('danger', 'Có sản phẩm không còn tồn tại');
-                    return redirect()->back();
-                }
-                $quantity = $item['quantity']; // Số lượng
-                OrderItem::create([
-                    'order_id' => $order->id,
-                    'product_id' => $productId,
-                    'product_title' => $product->title,
-                    'product_number' => $quantity,
-                    'product_price' => $price,
-                ]);
-            }
-            DB::commit();
-            Session::forget('cart');
-            if ($method_payment == 2){
-                return redirect()->route('orderSendBK',['orderId'=>$order->id]);
             }else{
-                Session::flash('success', trans('message.create_order_success'));
-                return redirect()->route('orderProductSuccess',['id'=>$order->id]);
+                Session::flash('success', 'Chưa có sản phẩm trong giỏ hàng, vui lòng thêm sản phẩm');
+                return redirect()->route('home');
             }
         } catch (\Exception $ex) {
             DB::rollBack();
