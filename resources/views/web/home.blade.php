@@ -10,7 +10,11 @@
                         @forelse($slider as $k => $item)
                         <div>
                             <a href="{!! $item->url !!}">
-                                <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->content }}" class="img-fluid">
+                                @if($item->image_resize)
+                                    <img src="{{ asset($item->image_resize) }}" alt="{{ $item->content }}" class="img-fluid">
+                                @else
+                                    <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->content }}" class="img-fluid">
+                                @endif
                             </a>
                         </div>
                         @empty
