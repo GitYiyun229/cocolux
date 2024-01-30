@@ -1111,7 +1111,7 @@ class ProductController extends Controller
             $total_price = $total_price + ($item['price'] * $item['quantity']);
         }
         if (in_array($city_id,[201])){ //201,234
-            if ($total_price > 99000){
+            if ($total_price >= 99000){
                 $price_ship = 0;
             }else{
                 if (!empty($district_id)){
@@ -1122,7 +1122,7 @@ class ProductController extends Controller
                 }
             }
         }else{
-            if ($total_price > 249000){
+            if ($total_price >= 249000){
                 $price_ship = 0;
             }
         }
