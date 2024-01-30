@@ -105,7 +105,7 @@ class ProductOptions extends Model
     {
         $images = json_decode($this->attributes['images'], true);
         $image = isset($images[0]) ? $images[0] : null;
-        return str_replace('https://cdn.cocolux.com','/images/cdn_images',$image);
+        return str_replace('https://cdn.cocolux.com','/images/thumbs_images',$image);
     }
 
     public function getLinkProductAttribute()
