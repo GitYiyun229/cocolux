@@ -1,5 +1,15 @@
 @extends('web.layouts.web')
+@section('preload')
+    @forelse($slider as $k => $item)
+        @if($item->image_resize)
+            <link rel="preload" as="image" href="{{ asset($item->image_resize) }}">
+        @else
+            <link rel="preload" as="image" href="{{ asset(replace_image($item->image)) }}">
+        @endif
+    @empty
+    @endforelse
 
+@endsection
 @section('content')
     <main>
 
