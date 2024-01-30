@@ -92,9 +92,9 @@ class HomeController extends Controller
             }])->whereNotNull('slug')->whereNotNull('sku')->limit(10)->get();
 
         $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
-            ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price','hot_deal','flash_deal')
+            ->select('id','sku', 'slug','title','price','normal_price','slug','images','parent_id')
             ->with(['product' => function($query){
-                $query->select('id','is_hot','slug');
+                $query->select('id','is_hot','slug','brand');
             },'promotionItem' => function($query) use ($now){
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
