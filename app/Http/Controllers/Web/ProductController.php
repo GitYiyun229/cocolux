@@ -1185,7 +1185,7 @@ class ProductController extends Controller
                     return redirect()->route('orderProductSuccess',['id'=>$order->id]);
                 }
             }else{
-                Session::flash('success', 'Chưa có sản phẩm trong giỏ hàng, vui lòng thêm sản phẩm');
+                Session::flash('danger', 'Chưa có sản phẩm trong giỏ hàng, vui lòng thêm sản phẩm');
                 return redirect()->route('home');
             }
         } catch (\Exception $ex) {
