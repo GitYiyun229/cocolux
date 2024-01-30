@@ -503,7 +503,7 @@ class ProductController extends Controller
         $products = ProductOptions::with(['product' => function ($query) {
             $query->select('id', 'is_new', 'brand','slug','attribute_path');
         }])->whereHas('product', function ($query) use ($brand,$list_id_request) {
-            $query->where('active', 1)->where('attribute_path', 'LIKE', '%'.$brand->attribute_id.':'.$brand->id.'%');
+            $query->where('active', 1)->where('attribute_path', 'LIKE', '%'.$brand->attribute_id.':'.$brand->id.',%');
             if ($list_id_request){
                 foreach ($list_id_request as $item){
                     $query->where('attribute_path','like', '%'.$item.'%');
@@ -524,7 +524,7 @@ class ProductController extends Controller
         $total_products = ProductOptions::with(['product' => function ($query) {
             $query->select('id', 'is_new', 'brand','slug','attribute_path');
         }])->whereHas('product', function ($query) use ($brand,$list_id_request) {
-            $query->where('active', 1)->where('attribute_path', 'LIKE', '%'.$brand->attribute_id.':'.$brand->id.'%');
+            $query->where('active', 1)->where('attribute_path', 'LIKE', '%'.$brand->attribute_id.':'.$brand->id.',%');
             if ($list_id_request){
                 foreach ($list_id_request as $item){
                     $query->where('attribute_path','like', '%'.$item.'%');
