@@ -64,18 +64,18 @@
             <div class="footer-col">
                 <p class="title-2">KẾT NỐI</p>
                 <div class="link-icon">
-                    <a href="{{ $setting['link_facebook'] }}" target="blank"><img src="{{ asset('images/ic-facebook.svg') }}" alt="cocolux" class="img-fluid"></a>
-                    <a href="{{ $setting['link_instagram'] }}" target="blank"><img src="{{ asset('images/ic-insta.svg') }}" alt="cocolux" class="img-fluid"></a>
-                    <a href="{{ $setting['link_youtube'] }}" target="blank"><img src="{{ asset('images/ic-youtube.svg') }}" alt="cocolux" class="img-fluid"></a>
-                    <a href="{{ $setting['link_tiktok'] }}" class="ic-invert" target="blank"><img src="{{ asset('images/ic-tiktok.svg') }}" alt="cocolux" class="img-fluid filter-white"></a>
-                    <a class="ic-invert ic-zalo" href="{{ $setting['link_zalo'] }}" target="blank"><img src="{{ asset('images/ic-zalo.svg') }}" alt="cocolux" class="img-fluid filter-white"></a>
+                    <a href="{{ $setting['link_facebook'] }}" target="blank"><img src="{{ asset('images/ic-facebook.svg') }}" width="25" height="25" alt="cocolux" class="img-fluid"></a>
+                    <a href="{{ $setting['link_instagram'] }}" target="blank"><img src="{{ asset('images/ic-insta.svg') }}" width="25" height="25" alt="cocolux" class="img-fluid"></a>
+                    <a href="{{ $setting['link_youtube'] }}" target="blank"><img src="{{ asset('images/ic-youtube.svg') }}" width="25" height="25" alt="cocolux" class="img-fluid"></a>
+                    <a href="{{ $setting['link_tiktok'] }}" class="ic-invert" target="blank"><img src="{{ asset('images/ic-tiktok.svg') }}" width="25" height="25" alt="cocolux" class="img-fluid filter-white"></a>
+                    <a class="ic-invert ic-zalo" href="{{ $setting['link_zalo'] }}" target="blank"><img src="{{ asset('images/ic-zalo.svg') }}" width="25" height="25" alt="cocolux" class="img-fluid filter-white"></a>
                 </div>
                 <p class="title">PHƯƠNG THỨC THANH TOÁN</p>
                 <div class="link-icon">
-                    <img src="{{ asset('images/ic-cash.svg') }}" alt="cocolux" class="img-fluid">
-                    <img src="{{ asset('images/ic-internet-banking.svg') }}" alt="cocolux" class="img-fluid">
-                    <img src="{{ asset('images/ic-visa.svg') }}" alt="cocolux" class="img-fluid">
-                    <img src="{{ asset('images/ic-mastercard.svg') }}" alt="cocolux" class="img-fluid">
+                    <img src="{{ asset('images/ic-cash.svg') }}" width="25" height="41" alt="cocolux" class="img-fluid">
+                    <img src="{{ asset('images/ic-internet-banking.svg') }}" width="41" height="25" alt="cocolux" class="img-fluid">
+                    <img src="{{ asset('images/ic-visa.svg') }}" width="25" height="25" alt="cocolux" class="img-fluid">
+                    <img src="{{ asset('images/ic-mastercard.svg') }}" width="31" height="25" alt="cocolux" class="img-fluid">
                 </div>
             </div>
             <div class="footer-col">
