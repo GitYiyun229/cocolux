@@ -4,7 +4,7 @@
         <!-- Header -->
         @include('web.partials._header')
         <!-- /.Header -->
-        <div class="content slick-slider">
+        <div class="content">
             @yield('content')
         </div>
         <!-- Main Footer -->
