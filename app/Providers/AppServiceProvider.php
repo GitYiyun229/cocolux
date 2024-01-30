@@ -57,8 +57,5 @@ class AppServiceProvider extends ServiceProvider
             $view->with('cat_products', $cat_products);
         });
 
-        $detect = new MobileDetect();
-        $isMobile = $detect->isMobile();
-        View::share('isMobile', $isMobile);
     }
 }
