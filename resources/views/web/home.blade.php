@@ -8,7 +8,8 @@
         @endif
     @empty
     @endforelse
-
+    <link rel="preload" as="style" media="screen" type="text/css" href="{{ mix('css/web/home.css') }}">
+    <link rel="preload" href="{{ mix('js/web/home.js') }}" as="script" />
 @endsection
 @section('content')
     <main>
