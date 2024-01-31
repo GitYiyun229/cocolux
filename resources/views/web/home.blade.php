@@ -23,7 +23,7 @@
                             <a href="{!! $item->url !!}">
                                 @if($item->image_resize)
                                     <img
-                                        src="{{ asset($item->image_resize) }}"
+                                        src="{{ asset( str_replace('larger','small',$item->image_resize)) }}"
                                         srcset="
                                             {{ asset( str_replace('larger','small',$item->image_resize)) }} 400w,
                                             {{ asset( str_replace('larger','small',$item->image_resize)) }} 800w,
