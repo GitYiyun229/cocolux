@@ -1,9 +1,11 @@
 @use 'app';
 @use 'style';
 @use 'template';
+@import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
+/* purgecss start ignore */
 @import "~slick-carousel/slick/slick";
 @import "~slick-carousel/slick/slick-theme";
-@import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
+
 .slick-track{
     left:unset;
     top: unset;
@@ -772,3 +774,4 @@
         }
     }
 }
+/* purgecss end ignore */
