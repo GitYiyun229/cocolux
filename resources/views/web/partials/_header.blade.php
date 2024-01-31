@@ -12,50 +12,52 @@
         <a href="{{ route('home') }}" title="cocolux" class="header-main-logo-icon">
             <img src="{{ $setting['logo_scroll'] }}" alt="cocolux" class="img-fluid logo-icon">
         </a>
-        <div class="header-menu">
-            <div class="menu-item menu-site">
-                <a href="">
-                    <i class="fa-solid fa-bars"></i>
-                    Danh mục sản phẩm
-                </a>
-                <div class="menu-content">
-                    @forelse($cat_products as $item)
-                    <div class="menu-item">
-                        <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}" class="menu-btn">{{ $item->title }} <i class="fa-solid fa-angle-right"></i></a>
-                        @if(count($item->children) > 0)
-                        <div class="menu-content">
-                            <div class="position-relative h-100 w-100">
-                                <div class="menu-group-top">
-                                    <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}?sort=1">Nổi bật</a>
-                                    <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}?sort=2">Bán chạy</a>
-                                    <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}?sort=3">Hàng mới</a>
-                                </div>
-                                <div class="menu-group-bottom">
-                                    @forelse($item->children as $child)
-                                    <div class="menu-col-item">
-                                        <a href="{{ route('catProduct',['slug' => $child->slug, 'id' => $child->id]) }}" class="item-parent">{{ $child->title }}</a>
-                                        @if(count($child->children) > 0)
-                                            @forelse($child->children as $lv3)
-                                                <a href="{{ route('catProduct',['slug' => $lv3->slug, 'id' => $lv3->id]) }}" class="item-child">{{ $lv3->title }}</a>
-                                            @empty
-                                            @endforelse
-                                        @endif
+        @if(!$isMobile)
+            <div class="header-menu">
+                <div class="menu-item menu-site">
+                    <a href="">
+                        <i class="fa-solid fa-bars"></i>
+                        Danh mục sản phẩm
+                    </a>
+                    <div class="menu-content">
+                        @forelse($cat_products as $item)
+                            <div class="menu-item">
+                                <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}" class="menu-btn">{{ $item->title }} <i class="fa-solid fa-angle-right"></i></a>
+                                @if(count($item->children) > 0)
+                                    <div class="menu-content">
+                                        <div class="position-relative h-100 w-100">
+                                            <div class="menu-group-top">
+                                                <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}?sort=1">Nổi bật</a>
+                                                <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}?sort=2">Bán chạy</a>
+                                                <a href="{{ route('catProduct',['slug' => $item->slug, 'id' => $item->id]) }}?sort=3">Hàng mới</a>
+                                            </div>
+                                            <div class="menu-group-bottom">
+                                                @forelse($item->children as $child)
+                                                    <div class="menu-col-item">
+                                                        <a href="{{ route('catProduct',['slug' => $child->slug, 'id' => $child->id]) }}" class="item-parent">{{ $child->title }}</a>
+                                                        @if(count($child->children) > 0)
+                                                            @forelse($child->children as $lv3)
+                                                                <a href="{{ route('catProduct',['slug' => $lv3->slug, 'id' => $lv3->id]) }}" class="item-child">{{ $lv3->title }}</a>
+                                                            @empty
+                                                            @endforelse
+                                                        @endif
+                                                    </div>
+                                                @empty
+                                                @endforelse
+                                            </div>
+                                            <div class="menu-poster">
+                                                <img src="{{ $item->image }}" alt="">
+                                            </div>
+                                        </div>
                                     </div>
-                                    @empty
-                                    @endforelse
-                                </div>
-                                <div class="menu-poster">
-                                    <img src="{{ $item->image }}" alt="">
-                                </div>
+                                @endif
                             </div>
-                        </div>
-                        @endif
+                        @empty
+                        @endforelse
                     </div>
-                    @empty
-                    @endforelse
                 </div>
             </div>
-        </div>
+        @endif
         <div class="header-main-menu">
             <form action="{{ route('search') }}" name="search_product" id="search_product" method="get">
                 <div class="dropdown">
