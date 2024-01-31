@@ -98,6 +98,7 @@
         </div>
     </div>
 </div>
+@if(!$isMobile)
     <div class="header-bottom">
         <div class="container header-bottom-menu header-menu">
             <div class="menu-item menu-site @if (request()->route()->getName() == 'home') active @endif">
@@ -190,4 +191,4 @@
             </div>
         </div>
     </div>
-
+@endif
