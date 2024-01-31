@@ -20,7 +20,7 @@
                     <div class="banner-slick">
                         @forelse($slider as $k => $item)
                         <div>
-                            <a href="{!! $item->url !!}">
+                            <a href="{!! $item->url !!}" aria-label="{{ $item->content }}">
                                 @if($item->image_resize)
                                     <img
                                         src="{{ asset( str_replace('larger','small',$item->image_resize)) }}"
