@@ -1,6 +1,7 @@
 @use 'app';
 @use 'style';
 @use 'template';
+/* purgecss start ignore */
 @import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 .layout-nav{
     a{
@@ -26,3 +27,4 @@
         grid-gap: 10px 10px;
     }
 }
+/* purgecss end ignore */

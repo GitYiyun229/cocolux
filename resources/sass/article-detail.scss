@@ -1,8 +1,8 @@
 @use 'app';
 @use 'style';
 @use 'template';
-@import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 /* purgecss start ignore */
+@import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 @import "~slick-carousel/slick/slick";
 @import "~slick-carousel/slick/slick-theme";
 .layout-page-news-list .layout-main{

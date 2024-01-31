@@ -1,6 +1,7 @@
 @use 'app';
 @use 'style';
 @use 'template';
+/* purgecss start ignore */
 @import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 .layout-page-payment-success{
     padding: 20px 30px;
@@ -66,3 +67,4 @@
         margin: auto;
     }
 }
+/* purgecss end ignore */

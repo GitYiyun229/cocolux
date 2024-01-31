@@ -1,6 +1,7 @@
 @use 'app';
 @use 'style';
 @use 'template';
+/* purgecss start ignore */
 @import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 .order-detail-title {
     font-size: 16px;
@@ -329,3 +330,4 @@
         }
     }
 }
+/* purgecss end ignore */
