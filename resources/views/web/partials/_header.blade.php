@@ -82,7 +82,7 @@
                 </div>
                 <input type="text" class="form-control" name="keyword" id="keyword" value="{{ old('keyword') }}" autocomplete="off" placeholder="Tìm sản phẩm bạn mong muốn..." required>
                 <input type="hidden" name="categories" id="cat_product">
-                <button type="submit" class="btn form-submit" name="submit-form-search" id="submit-form-search">
+                <button type="submit" class="btn form-submit" name="submit-form-search" id="submit-form-search" aria-label="Submit form search>
                     <img src="{{ asset('images/search-icon.svg') }}" alt="" width="29" height="29" class="img-fluid">
                 </button>
             </form>
