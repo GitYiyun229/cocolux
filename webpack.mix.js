@@ -12,6 +12,7 @@ require('laravel-mix-purgecss');
  |
  */
 
+mix.js('resources/js/admin/setting.js', 'public/js/admin');
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/web/home.js', 'public/js/web')
     .js('resources/js/web/article-detail.js', 'public/js/web')
@@ -23,8 +24,9 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/web/product-search.js', 'public/js/web')
     .js('resources/js/web/product-detail.js', 'public/js/web')
     .js('resources/js/web/product-cat.js', 'public/js/web')
-    .js('resources/js/admin/setting.js', 'public/js/admin')
-    .sass('resources/sass/home.scss', 'public/css/web')
+    .extract(['jquery','bootstrap','sweetalert2']).sourceMaps().version();
+
+mix.sass('resources/sass/home.scss', 'public/css/web')
     .sass('resources/sass/content.scss', 'public/css/web')
     .sass('resources/sass/article-list.scss', 'public/css/web')
     .sass('resources/sass/article-detail.scss', 'public/css/web')

@@ -36,3 +36,8 @@
         </ul>
     </nav>
 @endsection
+@section('script')
+    @parent
+    <script src="{{ mix('js/web/manifest.js') }}"></script>
+    <script src="{{ mix('js/web/vendor.js') }}"></script>
+@endsection
