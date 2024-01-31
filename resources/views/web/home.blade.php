@@ -41,34 +41,36 @@
                         @endforelse
                     </div>
                 </div>
-                <div class="banner-wrap">
-                    @forelse($subBanner as $item)
-                    <a href="{!! $item->url !!}">
-                        <img src="{{ asset(replace_image($item->image_url)) }}" alt="{{ $item->content }}" width="390" height="195" class="img-fluid">
+                @if(!$isMobile)
+                    <div class="banner-wrap">
+                        @forelse($subBanner as $item)
+                        <a href="{!! $item->url !!}">
+                            <img src="{{ asset(replace_image($item->image_url)) }}" alt="{{ $item->content }}" width="390" height="195" class="img-fluid">
+                        </a>
+                        @empty
+                        @endforelse
+                    </div>
+                @endif
+            </div>
+            @if($isMobile)
+                <div class="section-categories-mobile d-grid d-lg-none mb-4">
+                    <a href="" class="item-category d-flex flex-column align-items-center text-center text-uppercase" data-bs-toggle="modal" data-bs-target="#categoriesModal">
+                        <div class="section-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        Danh mục
+                    </a>
+                    @forelse($cat_products as $item)
+                    <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}" class="item-category d-flex flex-column align-items-center text-center text-uppercase">
+                        <img data-src="{{ asset(replace_image($item->logo)) }}" alt="{{ $item->title }}" class="img-fluid lazy" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
+                        {{ $item->title }}
                     </a>
                     @empty
                     @endforelse
                 </div>
-            </div>
-            @if($isMobile)
-            <div class="section-categories-mobile d-grid d-lg-none mb-4">
-                <a href="" class="item-category d-flex flex-column align-items-center text-center text-uppercase" data-bs-toggle="modal" data-bs-target="#categoriesModal">
-                    <div class="section-icon">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    Danh mục
-                </a>
-                @forelse($cat_products as $item)
-                <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}" class="item-category d-flex flex-column align-items-center text-center text-uppercase">
-                    <img data-src="{{ asset(replace_image($item->logo)) }}" alt="{{ $item->title }}" class="img-fluid lazy" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
-                    {{ $item->title }}
-                </a>
-                @empty
-                @endforelse
-            </div>
             @endif
 
             <div class="modal modal-full fade" id="categoriesModal" tabindex="-1" aria-labelledby="categoriesModalLabel" aria-hidden="true">
