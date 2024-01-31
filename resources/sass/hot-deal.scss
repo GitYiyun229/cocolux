@@ -1,6 +1,7 @@
 @use 'app';
 @use 'style';
 @use 'template';
+/* purgecss start ignore */
 @import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 .layout-page-hot-deal{
     .text-danger{
@@ -50,3 +51,4 @@
         font-size: 14px !important;
     }
 }
+/* purgecss end ignore */

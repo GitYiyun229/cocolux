@@ -1,6 +1,7 @@
 @use 'app';
 @use 'style';
 @use 'template';
+/* purgecss start ignore */
 @import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 .total-brand{
     font-size: 18px;
@@ -38,3 +39,4 @@
         background: #fff;
     }
 }
+/* purgecss end ignore */

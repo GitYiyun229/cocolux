@@ -1,6 +1,7 @@
 @use 'app';
 @use 'style';
 @use 'template';
+/* purgecss start ignore */
 @import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 nav[aria-label=breadcrumb]{
     margin-bottom: 0 !important;
@@ -199,3 +200,4 @@ nav[aria-label=breadcrumb]{
         grid-template-columns: repeat(2, 1fr);
     }
 }
+/* purgecss end ignore */
