@@ -29,7 +29,6 @@ mix.js('resources/js/app.js', 'public/js')
         'bootstrap',
         'sweetalert2',
         'slick-carousel',
-        'lodash',
         '@tarekraafat/autocomplete.js',
         'vanilla-lazyload'
     ]).sourceMaps().version();
