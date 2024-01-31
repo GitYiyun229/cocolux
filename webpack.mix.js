@@ -24,7 +24,15 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/web/product-search.js', 'public/js/web')
     .js('resources/js/web/product-detail.js', 'public/js/web')
     .js('resources/js/web/product-cat.js', 'public/js/web')
-    .extract(['jquery','bootstrap','sweetalert2']).sourceMaps().version();
+    .extract([
+        'jquery',
+        'bootstrap',
+        'sweetalert2',
+        'slick-carousel',
+        'lodash',
+        '@tarekraafat/autocomplete.js',
+        'vanilla-lazyload'
+    ]).sourceMaps().version();
 
 mix.sass('resources/sass/home.scss', 'public/css/web')
     .sass('resources/sass/content.scss', 'public/css/web')
@@ -41,4 +49,5 @@ mix.sass('resources/sass/home.scss', 'public/css/web')
     .sass('resources/sass/hot-deal.scss', 'public/css/web')
     .sass('resources/sass/deal-detail.scss', 'public/css/web')
     .sass('resources/sass/login-admin.scss', 'public/css/web')
+    .purgeCss()
     .sourceMaps().version();

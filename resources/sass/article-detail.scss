@@ -1,9 +1,10 @@
 @use 'app';
 @use 'style';
 @use 'template';
+@import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
+/* purgecss start ignore */
 @import "~slick-carousel/slick/slick";
 @import "~slick-carousel/slick/slick-theme";
-@import "~@tarekraafat/autocomplete.js/dist/css/autoComplete.css";
 .layout-page-news-list .layout-main{
     max-width: 100%;
     overflow: hidden;
@@ -273,3 +274,4 @@ nav[aria-label=breadcrumb]{
         justify-content: center;
     }
 }
+/* purgecss end ignore */
