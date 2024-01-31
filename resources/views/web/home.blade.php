@@ -22,7 +22,16 @@
                         <div>
                             <a href="{!! $item->url !!}">
                                 @if($item->image_resize)
-                                    <img src="{{ asset($item->image_resize) }}" alt="{{ $item->content }}" width="700" height="400" class="img-fluid">
+                                    <img
+                                        src="{{ asset($item->image_resize) }}"
+                                        srcset="
+                                            {{ asset( str_replace('larger','small',$item->image_resize)) }} 400w,
+                                            {{ asset( str_replace('larger','small',$item->image_resize)) }} 800w,
+                                            {{ asset($item->image_resize) }} 1200w"
+                                        sizes="(max-width: 600px) 400px,
+                                        (max-width: 1024px) 800px,
+                                        1200px"
+                                        alt="{{ $item->content }}" width="700" height="400" class="img-fluid">
                                 @else
                                     <img src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->content }}" width="700" height="400" class="img-fluid">
                                 @endif
