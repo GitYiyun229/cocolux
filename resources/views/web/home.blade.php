@@ -44,7 +44,7 @@
                 @if(!$isMobile)
                     <div class="banner-wrap">
                         @forelse($subBanner as $item)
-                        <a href="{!! $item->url !!}">
+                        <a href="{!! $item->url !!}" aria-label="{{ $item->content }}">
                             <img src="{{ asset(replace_image($item->image_url)) }}" alt="{{ $item->content }}" width="390" height="195" class="img-fluid">
                         </a>
                         @empty
@@ -157,7 +157,7 @@
                 <div class="slide-top">
                     <div class="slide-title d-flex align-items-center gap-2">
                         <a href="{{ route('flashSaleProducts') }}" title="Flash Deal" class="d-flex align-items-center gap-2">
-                            <img data-src="{{ asset('images/hot_icon.svg') }}" alt="flash deal" class="img-fluid lazy" height="18" width="18">
+                            <img data-src="{{ asset('images/hot_icon.svg') }}" alt="flash deal icon" class="img-fluid lazy" height="18" width="18">
                             <h2>Flash Deal</h2>
                         </a>
 {{--                        |--}}
@@ -272,7 +272,7 @@
                         @if(!empty($attribute_brand))
                         @forelse($attribute_brand as $item)
                         <a href="{{ route('detailBrand',['slug' => $item->slug,'id' => $item->id]) }}" class="brand-template">
-                            <img data-src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->name }}" class="img-fluid lazy">
+                            <img data-src="{{ asset(replace_image($item->image)) }}" alt="{{ $item->name }} logo" class="img-fluid lazy">
                             <div class="title">{{ $item->name }}</div>
                         </a>
                         @empty
@@ -362,8 +362,8 @@
             <div class="section-banner-middle mb-5">
                 @if(!empty($subBanner2))
                 @forelse($subBanner2 as $item)
-                <a class="" href="{{ $item->url }}">
-                    <img alt="{{ $item->title }}" data-src="{{ asset(replace_image($item->image_url)) }}" class="img-fluid lazy">
+                <a class="" href="{{ $item->url }}" aria-label="{{ $item->content }}">
+                    <img alt="{{ $item->content }}" data-src="{{ asset(replace_image($item->image_url)) }}" class="img-fluid lazy">
                 </a>
                 @empty
                 @endforelse
