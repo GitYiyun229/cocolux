@@ -165,6 +165,18 @@
     height: 100%;
     width: 100%; }
 
+.owl-carousel {
+    display: block;
+}
+
+.owl-carousel .slide-owl-wrap:not(:first-child) {
+    display: none;
+}
+
+.owl-carousel img {
+    width: 100%;
+}
+
 .owl-carousel .owl-stage{
     margin: 0 auto;
 }
@@ -534,6 +546,11 @@
             @media (max-width: 768px) {
                 min-height: 255px;
                 overflow: hidden;
+            }
+        }
+        .slide-brand{
+            @media (max-width: 768px) {
+                min-height: auto;
             }
         }
     }

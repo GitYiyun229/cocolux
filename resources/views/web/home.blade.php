@@ -268,7 +268,7 @@
                     </a>
                 </div>
                 <div class="slide-main">
-                    <div class="slide-template-slide owl-carousel">
+                    <div class="slide-template-slide slide-brand owl-carousel">
                         @if(!empty($attribute_brand))
                         @forelse($attribute_brand as $item)
                         <a href="{{ route('detailBrand',['slug' => $item->slug,'id' => $item->id]) }}" class="brand-template">
