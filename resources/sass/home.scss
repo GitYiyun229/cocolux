@@ -411,19 +411,11 @@
     .slide-main-coupon{
         .slide-template-slide-coupon{
             max-height: 123px;
+            overflow: hidden;
             @media (max-width: 768px) {
                 max-height: 123px;
                 height: 123px;
                 overflow: hidden;
-            }
-            overflow: hidden;
-            img{
-                display: none;
-            }
-            &.slick-initialized {
-                img{
-                    display: block;
-                }
             }
 
             .item-coupon{
@@ -1020,14 +1012,6 @@
             @media (max-width: 768px) {
                 min-height: 255px;
                 overflow: hidden;
-            }
-            img{
-                display: none;
-            }
-            &.slick-initialized {
-                img{
-                    display: block;
-                }
             }
         }
     }
