@@ -47,6 +47,13 @@ $('.banner-slick').owlCarousel({
     }
 });
 
+setTimeout(() => {
+    var carouselData = $('.banner-slick').data();
+    var carouselOptions = carouselData['owl.carousel'].options;
+    carouselOptions.autoplayTimeout = 6000;
+    $('.banner-slick').trigger('refresh.owl.carousel');
+}, 1000);
+
 $('.section-store-main').owlCarousel({
     loop: false,
     rewind: true,
