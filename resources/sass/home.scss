@@ -311,6 +311,7 @@
         width: 700px;
         @media (max-width: 768px) {
             max-height: 236px;
+            height: 236px;
             overflow: hidden;
         }
         .banner-slick{
@@ -408,8 +409,13 @@
         margin-bottom: 20px;
     }
     .slide-main-coupon{
-        .slide-template-slick-coupon{
+        .slide-template-slide-coupon{
             max-height: 123px;
+            @media (max-width: 768px) {
+                max-height: 123px;
+                height: 123px;
+                overflow: hidden;
+            }
             overflow: hidden;
             img{
                 display: none;
@@ -652,9 +658,14 @@
             border-right: 15px solid #171717;
         }
     }
-    .slide-template-slick{
+    .slide-template-slide{
         max-height: 352px;
         overflow: hidden;
+        @media (max-width: 768px) {
+            max-height: 285px;
+            min-height: 270px;
+            overflow: hidden;
+        }
         img{
             display: none;
         }
