@@ -4,7 +4,7 @@ window.$ = $;
 import 'bootstrap';
 import swal from 'sweetalert2';
 window.Swal = swal;
-import 'slick-carousel';
+import 'owl.carousel';
 import LazyLoad from "vanilla-lazyload";
 
 require('./template');
@@ -13,91 +13,104 @@ require('./main');
 var lazyLoadInstance = new LazyLoad({
     // Your custom settings go here
 });
-$('.banner-slick').slick({
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: true,
-    dots: true,
-    infinite: true,
-    autoplay: true,
+// $('.banner-slick').slick({
+//     slidesToShow: 1,
+//     slidesToScroll: 1,
+//     arrows: true,
+//     dots: true,
+//     infinite: true,
+//     autoplay: true,
+//
+// });
 
+$('.banner-slick').owlCarousel({
+    margin:10,
+    autoplay:true,
+    autoplayTimeout:3000,
+    responsiveClass:true,
+    loop: false,
+    rewind: true,
+    responsive:{
+        0:{
+            items:1,
+            nav:true
+        },
+        600:{
+            items:1,
+            nav:false
+        },
+        1000:{
+            items:1,
+            nav:true,
+            loop:false
+        }
+    }
 });
 
-$('.section-store-main').slick({
-    slidesToShow: 6,
-    slidesToScroll: 6,
-    dots: false,
-    arrows: false,
-    infinite: true,
-    autoplay: true,
-    speed: 500,
-    responsive: [
-        {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 6,
-                slidesToScroll: 6,
-            }
+$('.section-store-main').owlCarousel({
+    loop: false,
+    rewind: true,
+    dots:false,
+    responsiveClass:true,
+    responsive:{
+        0:{
+            items:2,
+            nav:true
         },
-        {
-            breakpoint: 992,
-            settings: {
-                slidesToShow: 4,
-                slidesToScroll: 4,
-            }
+        600:{
+            items:4,
+            nav:false
         },
-        {
-            breakpoint: 767,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2,
-            }
+        1000:{
+            items:6,
+            nav:true,
+            loop:false
         }
-    ]
-
+    }
 });
 
-$('.slide-template-slick').slick({
-    slidesToShow: 5,
-    slidesToScroll: 5,
-    arrows: true,
-    dots: false,
-    infinite: true,
-    autoplay: true,
-    responsive: [
-        {
-            breakpoint: 960,
-            settings: {
-                slidesToShow: 2.5,
-                slidesToScroll: 2
-            }
+$('.slide-template-slick').owlCarousel({
+    loop: false,
+    rewind: true,
+    dots:false,
+    responsiveClass:true,
+    responsive:{
+        0:{
+            items:2,
+            nav:true
+        },
+        600:{
+            items:3,
+            nav:false
+        },
+        1000:{
+            items:5,
+            nav:true,
+            loop:false
         }
-    ]
+    }
 });
 
-$('.slide-template-slick-coupon').slick({
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    arrows: true,
-    dots: false,
-    infinite: true,
-    autoplay: true,
-    responsive: [
-        {
-            breakpoint: 960,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2
-            }
+$('.slide-template-slick-coupon').owlCarousel({
+    loop: false,
+    rewind: true,
+    dots:false,
+    responsiveClass:true,
+    responsive:{
+        0:{
+            items:1,
+            nav:true
         },
-        {
-            breakpoint: 767,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-            }
+        600:{
+            items:2,
+            nav:false
+        },
+        1000:{
+            items:4,
+            nav:true,
+            loop:false
         }
-    ]
+    }
 });
 
 $(".count-down").each(function (e) {

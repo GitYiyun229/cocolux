@@ -17,7 +17,7 @@
         <div class="container">
             <div class="section-banner-top mb-4">
                 <div class="banner-slide">
-                    <div class="banner-slick">
+                    <div class="banner-slick owl-carousel">
                         @forelse($slider as $k => $item)
                         <div>
                             <a href="{!! $item->url !!}" aria-label="{{ $item->content }}">
@@ -114,7 +114,7 @@
                 <div class="list-coupon">
                     <h2 class="text-center">Mã khuyến mại</h2>
                     <div class="slide-main-coupon">
-                        <div class="slide-template-slick-coupon">
+                        <div class="slide-template-slick-coupon owl-carousel">
                             @forelse($list_coupon as $item)
                                 @if($item->items)
                                 <div class="item-coupon">
@@ -166,7 +166,7 @@
                     <a href="{{ route('flashSaleProducts') }}" class="slide-more">Xem tất cả</a>
                 </div>
                 <div class="slide-main">
-                    <div class="slide-template-slick">
+                    <div class="slide-template-slick owl-carousel">
                         @if(!empty($product_flash))
                         @forelse($product_flash as $item)
                             <a href="{{ route('detailProduct',['slug'=>trim($item->slug), 'sku' => $item->sku]) }}" class="product-template">
@@ -212,7 +212,7 @@
                     </a>
                 </div>
                 <div class="slide-main">
-                    <div class="slide-template-slick">
+                    <div class="slide-template-slick owl-carousel">
                         @forelse($product_hots as $item)
                         <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
                             @if($item->promotionItem)
@@ -268,7 +268,7 @@
                     </a>
                 </div>
                 <div class="slide-main">
-                    <div class="slide-template-slick">
+                    <div class="slide-template-slick owl-carousel">
                         @if(!empty($attribute_brand))
                         @forelse($attribute_brand as $item)
                         <a href="{{ route('detailBrand',['slug' => $item->slug,'id' => $item->id]) }}" class="brand-template">
@@ -402,7 +402,7 @@
                             <h2 class="text-uppercase">Danh sách cửa hàng</h2>
                         </a>
                     </div>
-                    <div class="section-store-main">
+                    <div class="section-store-main owl-carousel">
                         @forelse($stores as $item)
                             <div>
                                 <a class='ccs-item-store--img'>
