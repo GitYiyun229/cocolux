@@ -535,14 +535,6 @@
                 min-height: 255px;
                 overflow: hidden;
             }
-            img{
-                display: none;
-            }
-            &.slick-initialized {
-                img{
-                    display: block;
-                }
-            }
         }
     }
     .owl-nav{
