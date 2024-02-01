@@ -69,7 +69,7 @@ $('.section-store-main').owlCarousel({
     }
 });
 
-$('.slide-template-slick').owlCarousel({
+$('.slide-template-slide').owlCarousel({
     loop: false,
     rewind: true,
     dots:false,
@@ -91,7 +91,7 @@ $('.slide-template-slick').owlCarousel({
     }
 });
 
-$('.slide-template-slick-coupon').owlCarousel({
+$('.slide-template-slide-coupon').owlCarousel({
     loop: false,
     rewind: true,
     dots:false,
