@@ -61,11 +61,17 @@ $('#image').change(function() {
 })
 
 $('.submit-review').click(function(e) {
-    e.preventDefault();
+    // e.preventDefault();
     let content = $('#content').val();
     let rate = $('#rate').val();
+    let phone = $('#phone').val();
+    let name = $('#name').val();
+    const regexTel = /^0\d{9}$/;
+
     $('.review-rating p').remove();
     $('#content').next('p').remove();
+    $('.phone p').remove();
+    $('#name').next('p').remove();
     if (rate == 0){
         $('.review-rating').append('<p class="position-absolute text-danger m-0" style="left: 150px; font-size: 14px">Vui lòng đánh giá sản phẩm.</p>');
         return false;
@@ -75,8 +81,29 @@ $('.submit-review').click(function(e) {
         $('<p class="mb-2 text-danger">Vui lòng nhập nội dung đánh giá của bạn.</p>').insertAfter("#content");
         return false;
     }
-    $(this).closest('form').submit();
+    if (!name.trim()) {
+        $('#name').focus();
+        $('<p class="mb-2 text-danger">Vui lòng nhập tên của bạn.</p>').insertAfter("#name");
+        return false;
+    }
+    if (!phone.trim()) {
+        $('#phone').focus();
+        $('<p class="mb-2 text-danger">Vui lòng nhập số điện thoại của bạn.</p>').insertAfter("#phone");
+        return false;
+    }
+
+    if(regexTel.test(phone.value) === false) {
+        $('<p class="mb-2 text-danger">Số điện thoại gồm 10 số, nhập lại số điện thoại.</p>').insertAfter("#phone");
+        return false;
+    }
+
+    // $(this).closest('form').submit();
 })
+
+$('#content').on('click', function () {
+    // Hiển thị các ô input name và phone khi click vào textarea
+    $('.name-field, .phone-field').show();
+});
 
 $('.review-rating-item').hover(function() {
     toggleStar(parseInt($(this).attr('value')))

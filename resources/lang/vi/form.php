@@ -162,6 +162,15 @@ return [
         'is_home' => 'Hiển thị trang chủ',
     ],
 
+    'product_comment' => [
+        '' => 'Bình luận sản phẩm',
+        'name' => 'Tên',
+        'phone' => 'Số điện thoại',
+        'active' => 'Trạng thái',
+        'create' => 'Tạo binh luận sản phẩm',
+        'update' => 'Sửa binh luận sản phẩm',
+    ],
+
     'setting' => [
         '' => 'Cài đặt',
         'name' => 'Tên',

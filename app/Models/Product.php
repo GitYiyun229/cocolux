@@ -42,6 +42,10 @@ class Product extends Model
         return $this->hasMany(ProductOptions::class, 'parent_id', 'id');
     }
 
+    public function productComment()
+    {
+        return $this->belongsTo(ProductComments::class, 'id', 'product_id');
+    }
 
     public function getImageResizeAttribute()
     {

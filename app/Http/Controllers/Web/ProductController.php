@@ -11,6 +11,7 @@ use App\Models\Districts;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\ProductComments;
 use App\Models\ProductOptions;
 use App\Models\ProductsCategories;
 use App\Models\PromotionItem;
@@ -617,6 +618,25 @@ class ProductController extends Controller
         if (!$product_root) {
             abort(404);
         }
+        $comments = ProductComments::where(['product_id' => $product_root->id,'active' => 1])->get();
+        $ratings = ProductComments::select('rating', DB::raw('COUNT(*) as count'))
+            ->groupBy('rating')
+            ->orderBy('rating')
+            ->where(['product_id' => $product_root->id,'active' => 1])
+            ->pluck('count', 'rating')
+            ->all();
+        $percentages = [5 => 0, 4 => 0, 3 => 0, 2 => 0, 1 => 0];
+        $totalComments = array_sum($ratings);
+        foreach ($ratings as $rating => $count) {
+            $percentages[$rating] = ($count / $totalComments) * 100;
+        }
+        $averageRating = round(ProductComments::where(['product_id' => $product_root->id,'active' => 1])->average('rating'),1);
+
+        // In kết quả
+//        foreach ($percentages as $rating => $percentage) {
+//            echo "Rating: $rating, Percentage: $percentage%\n";
+//        }die;
+
         $attribute_value = !empty($product_root->attributes)?$product_root->attributes:null;
         $attribute_value = collect($attribute_value)->sortByDesc('id')->values()->all();
 
@@ -671,7 +691,7 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($product->product->seo_keyword?$product->product->seo_keyword:$product->title);
 
-        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats','stores','count_store','brand','product_in_cat'));
+        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats','stores','count_store','brand','product_in_cat','comments','percentages','averageRating'));
     }
 
     public function is_new(){
@@ -1270,5 +1290,25 @@ class ProductController extends Controller
         }
         $maDonHang = 'DH' . str_pad($id, 8, '0', STR_PAD_LEFT);
         return view('web.cart.detail_order_success',compact('order','maDonHang','products','total_money'));
+    }
+
+    public function commentProduct (Request $request){
+        DB::beginTransaction();
+        try{
+            $data['content'] = ($request->input('content'));
+            $data['rating'] = ($request->input('rate'));
+            $data['name'] = ($request->input('name'));
+            $data['phone'] = ($request->input('phone'));
+            $data['product_id'] = ($request->input('product_id'));
+            $data['active'] = 0;
+            ProductComments::create($data);
+            DB::commit();
+            Session::flash('success', 'Cảm ơn bạn đã để lại bình luận');
+            return redirect()->back();
+        }catch (\Exception $ex) {
+            DB::rollBack();
+            Session::flash('danger', 'Bình luận chưa thành công');
+            return redirect()->back();
+        }
     }
 }

@@ -167,6 +167,7 @@ Route::group(['namespace' => 'Web'], function (){
     Route::post('/register-email', 'HomeController@registerEmail')->name('registerEmail');
     Route::post('/search-product', 'HomeController@search')->name('searchAjax');
     Route::post('/search-order', 'ProductController@searchOrder')->name('searchOrder');
+    Route::post('/comment-product', 'ProductController@commentProduct')->name('commentProduct');
 
     Route::get('/order-test/{orderId}', 'ProductController@orderSendBK')->name('orderSendBK');
     Route::post('/verifyWebhook', 'ProductController@verifyWebhook')->name('verifyWebhook');
@@ -349,6 +350,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::post('/change-is-home-product/{id}', 'ProductController@changeIsHome')->name('changeIsHome')->middleware('permission:edit_product');
         Route::post('/change-is-hot-product/{id}', 'ProductController@changeIsHot')->name('changeIsHot')->middleware('permission:edit_product');
         Route::post('/change-is-new-product/{id}', 'ProductController@changeIsNew')->name('changeIsNew')->middleware('permission:edit_product');
+    });
+
+    Route::group(['prefix' => 'product-comment', 'as' => 'product-comment.', 'middleware' => ['permission:view_product_comment']], function () {
+        Route::get('', 'ProductsCommentController@index')->name('index');
+        Route::get('/create', 'ProductsCommentController@create')->name('create')->middleware('permission:create_product_comment');
+        Route::post('/store', 'ProductsCommentController@store')->name('store')->middleware('permission:create_product_comment');
+        Route::get('/edit/{id}', 'ProductsCommentController@edit')->name('edit')->middleware('permission:edit_product_comment');
+        Route::post('/update/{id}', 'ProductsCommentController@update')->name('update')->middleware('permission:edit_product_comment');
+        Route::post('/destroy/{id}', 'ProductsCommentController@destroy')->name('destroy')->middleware('permission:delete_product_comment');
+        Route::post('/change-active-product-cat/{id}', 'ProductsCommentController@changeActive')->name('changeActive')->middleware('permission:edit_product_comment');
     });
 
     Route::group(['prefix' => 'product-option', 'as' => 'product-option.', 'middleware' => ['permission:view_product']], function () {
