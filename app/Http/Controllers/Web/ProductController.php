@@ -236,7 +236,8 @@ class ProductController extends Controller
         $products = ProductOptions::with(['product' => function ($query) {
                 $query->select('id', 'is_new', 'brand','slug','attribute_path');
             }])->whereHas('product', function ($query) use ($id,$list_id_request) {
-                $query->select('id','title','slug','category_path','attribute_path')->where('active', 1)->where('category_path', 'LIKE', '%'.$id.'%');
+                $query->select('id','title','slug','category_path','attribute_path')->where('active', 1)
+                    ->where('category_path', 'REGEXP', '[[:<:]]'.$id.'[[:>:]]');
                 if ($list_id_request){
                     foreach ($list_id_request as $item){
                         $query->where('attribute_path','like', '%'.$item.'%');
@@ -257,7 +258,7 @@ class ProductController extends Controller
         $total_products = ProductOptions::with(['product' => function ($query) {
                 $query->select('id', 'is_new', 'brand','slug','attribute_path');
             }])->whereHas('product', function ($query) use ($id,$list_id_request) {
-                $query->where('active', 1)->where('category_path', 'LIKE', '%'.$id.'%');
+                $query->where('active', 1)->where('category_path', 'REGEXP', '[[:<:]]'.$id.'[[:>:]]');
                 if ($list_id_request){
                     foreach ($list_id_request as $item){
                         $query->where('attribute_path','like', '%'.$item.'%');
