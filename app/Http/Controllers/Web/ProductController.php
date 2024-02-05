@@ -1252,7 +1252,7 @@ class ProductController extends Controller
         ]);
         Session::forget('cart');
         $order = Order::findOrFail($id);
-        if ($order->message != 'Đã đồng bộ đơn hàng lên nhanh thành công'){
+        if ($order->message != 'Đã đồng bộ đơn hàng lên nhanh thành công' && $order->id > 4157){
             app('App\Http\Controllers\ApiNhanhController')->pushOrderNhanh($order->id);
         }
         $maDonHang = 'DH' . str_pad($id, 8, '0', STR_PAD_LEFT);
