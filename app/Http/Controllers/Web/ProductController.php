@@ -1129,6 +1129,8 @@ class ProductController extends Controller
 
     public function calculator_ship($city_id = null, $district_id = null){
         $price_ship = 20000;
+        return $price_ship;
+
         $total_price = 0;
         //tính ship, 201 là code hà nội, 234 thanh hóa
         $cart = Session::get('cart', []);
