@@ -761,7 +761,7 @@ class ProductController extends Controller
             })->with(['promotionItem' => function($query) use ($now){
                 $query->select('applied_stop_time','sku','price')->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->where('type','flash_deal')->orderBy('price','asc');
-            }])->paginate(30);
+            }])->orderBy('is_default', 'DESC')->paginate(30);
 
         return view('web.product.flash_sale',compact('productOptions'));
     }
