@@ -81,7 +81,11 @@ class Product extends Model
                 }
             }
             $brand = AttributeValues::where('id',$id_brand)->first();
-            return $brand->name;
+            if ($brand){
+                return $brand->name;
+            }else{
+                return null;
+            }
         } else {
             return null;
         }
