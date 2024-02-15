@@ -134,7 +134,7 @@
 
                                         </div>
                                         <div class="product-brand">
-                                            {{ optional($item->product)->brand_name }}
+                                            {{ $item->brand }}
                                         </div>
                                         <div class="product-title">
                                             {{ $item->title }}
