@@ -31,7 +31,7 @@
                                     @endif
                                 </div>
                                 <div class="product-brand">
-                                    {{ $item->brand }}
+                                    {{ optional($item->product)->brand }}
                                 </div>
                                 <div class="product-title">
                                     {{ $item->title }}

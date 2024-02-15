@@ -23,7 +23,8 @@ class Product extends Model
 
     protected $appends = [
         'image_resize',
-        'image_change_url'
+        'image_change_url',
+        'brand_name'
     ];
 
     protected $casts = [
@@ -62,5 +63,27 @@ class Product extends Model
     public function getImageChangeUrlAttribute()
     {
         return str_replace('https://cdn.cocolux.com','/images/cdn_images',$this->image);
+    }
+
+    public function getBrandNameAttribute()
+    {
+        $product = $this->attribute_path;
+        if ($product) {
+            $pairs = explode(',', $this->attribute_path);
+
+            $id_brand = null;
+            foreach ($pairs as $pair) {
+                list($key, $value) = explode(':', $pair);
+
+                if ($key == '19') {
+                    $id_brand = $value;
+                    break;
+                }
+            }
+            $brand = AttributeValues::where('id',$id_brand)->first();
+            return $brand->name;
+        } else {
+            return null;
+        }
     }
 }
