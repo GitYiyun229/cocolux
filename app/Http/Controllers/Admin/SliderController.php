@@ -58,11 +58,11 @@ class SliderController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
-            $image_root = '';
-            if (!empty($data['image'])){
-                $image_root = $data['image'];
-                $data['image'] = urldecode($image_root);
-            }
+//            $image_root = '';
+//            if (!empty($data['image'])){
+//                $image_root = $data['image'];
+//                $data['image'] = urldecode($image_root);
+//            }
             $model = $this->slideRepository->create($data);
 
             $now = Carbon::now();
