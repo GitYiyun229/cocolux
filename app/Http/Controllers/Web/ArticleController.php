@@ -10,6 +10,7 @@ use App\Models\Setting;
 use App\Repositories\Contracts\ArticleCategoryInterface;
 use App\Repositories\Contracts\ArticleInterface;
 use App\Services\DealService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\ArticlesCategories;
 use Artesaos\SEOTools\Facades\SEOTools;
@@ -45,6 +46,7 @@ class ArticleController extends Controller
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('cocolux.com');
 
+        $now = Carbon::now();
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
         $article = $this->articleRepository->paginate(12,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1]);
         $article_hot = Article::where(['active' => 1, 'is_home' => 1])->limit(3)->get();
@@ -52,6 +54,9 @@ class ArticleController extends Controller
             ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price')
             ->with(['product' => function($query){
                 $query->select('id','is_hot','slug');
+            },'promotionItem' => function($query) use ($now){
+                $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                    ->orderBy('price', 'asc');
             }])->whereHas('product', function ($query) {
                 $query->where('is_hot', 1);
             })->limit(5)->get();
@@ -71,6 +76,8 @@ class ArticleController extends Controller
         if (!$category) {
             abort(404);
         }
+
+        $now = Carbon::now();
         $cat_article = ArticlesCategories::where(['active'=> 1])->withDepth()->defaultOrder()->get()->toTree();
         $article = $this->articleRepository->paginate(12,['id','slug','image','description','title','active','category_id','created_at'],['active'=>1,'category_id'=>$id]);
         $article_hot = Article::where(['active' => 1, 'category_id' => $id])->limit(3)->orderBy('id','DESC')->get();
@@ -78,6 +85,9 @@ class ArticleController extends Controller
             ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price')
             ->with(['product' => function($query){
                 $query->select('id','is_hot','slug');
+            },'promotionItem' => function($query) use ($now){
+                $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                    ->orderBy('price', 'asc');
             }])->whereHas('product', function ($query) {
                 $query->where('is_hot', 1);
             })->limit(5)->get();
@@ -102,7 +112,7 @@ class ArticleController extends Controller
     public function detail($slug, $id)
     {
         $article = $this->articleRepository->getOneById($id,['category']);
-
+        $now = Carbon::now();
         preg_match_all('/product-option-(\d+)/', $article->content, $matches);
         $productOptionIds = $matches[1];
         if (!empty($productOptionIds)){
@@ -153,11 +163,11 @@ class ArticleController extends Controller
             $article->content = $contentWithTitles;
         }
 
-        $promotions = $this->dealService->isFlashSaleAvailable();
-        $promotions_flash_id = $promotions->pluck('id')->toArray();
+//        $promotions = $this->dealService->isFlashSaleAvailable();
+//        $promotions_flash_id = $promotions->pluck('id')->toArray();
 //        $applied_stop_time = $promotions->pluck('applied_stop_time','id')->toArray();
-        $hot_deal = $this->dealService->isHotDealAvailable();
-        $promotions_hot_id = $hot_deal->pluck('id')->toArray();
+//        $hot_deal = $this->dealService->isHotDealAvailable();
+//        $promotions_hot_id = $hot_deal->pluck('id')->toArray();
 
         $products_choose = null;
         if ($article->products_up){
@@ -165,10 +175,22 @@ class ArticleController extends Controller
             if ($article->updated_at < '2023-10-17'){
                 $products_choose = ProductOptions::whereIn('parent_id', $id_products)
                     ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')
+                    ->with(['product' => function($query){
+                        $query->select('id','is_hot','slug');
+                    },'promotionItem' => function($query) use ($now){
+                        $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                            ->orderBy('price', 'asc');
+                    }])
                     ->where('sku','!=',null)->where('slug','!=',null)->get();
             }else{
                 $products_choose = ProductOptions::whereIn('id', $id_products)
                     ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')
+                    ->with(['product' => function($query){
+                        $query->select('id','is_hot','slug');
+                    },'promotionItem' => function($query) use ($now){
+                        $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                            ->orderBy('price', 'asc');
+                    }])
                     ->where('sku','!=',null)->where('slug','!=',null)->get();
             }
         }
@@ -177,6 +199,12 @@ class ArticleController extends Controller
             $id_products_down = explode(',',$article->products_down);
             $products_choose_down = ProductOptions::whereIn('id', $id_products_down)
                 ->select('id','title','images','brand','hot_deal','flash_deal','sku','slug','parent_id','price','normal_price')
+                ->with(['product' => function($query){
+                    $query->select('id','is_hot','slug');
+                },'promotionItem' => function($query) use ($now){
+                    $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                        ->orderBy('price', 'asc');
+                }])
                 ->where('sku','!=',null)->where('slug','!=',null)->get();
         }
 
@@ -196,6 +224,9 @@ class ArticleController extends Controller
             ->select('id','title','images','brand','hot_deal','sku','slug','parent_id','price','normal_price')
             ->with(['product' => function($query){
                 $query->select('id','is_hot','slug');
+            },'promotionItem' => function($query) use ($now){
+                $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                    ->orderBy('price', 'asc');
             }])->whereHas('product', function ($query) {
                 $query->where('is_hot', 1);
             })->limit(5)->get();
@@ -209,6 +240,6 @@ class ArticleController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($article->seo_keyword?$article->seo_keyword:$article->title);
 
-        return view('web.article.detail', compact('article','cat_article','article_in_cat','product_hots','parent_cat','products_choose','promotions_flash_id','promotions_hot_id','products_choose_down','article_add'));
+        return view('web.article.detail', compact('article','cat_article','article_in_cat','product_hots','parent_cat','products_choose','products_choose_down','article_add'));
     }
 }

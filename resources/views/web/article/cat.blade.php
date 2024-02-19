@@ -36,9 +36,16 @@
                                     <img src="{{ asset($item->image_first) }}" alt=" {{ $item->title }}" class="img-fluid">
                                 </div>
                                 <div class="product-price">
-                                    <div class="public-price">{{ format_money($item->price) }}</div>
-                                    @if($item->price != $item->normal_price)
-                                        <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                    @if($item->promotionItem)
+                                        <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
+                                        @if($item->promotionItem->price != $item->normal_price)
+                                            <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                        @endif
+                                    @else
+                                        <div class="public-price">{{ format_money($item->price) }}</div>
+                                        @if($item->price != $item->normal_price)
+                                            <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                        @endif
                                     @endif
                                 </div>
                                 <div class="product-brand">
