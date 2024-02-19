@@ -175,7 +175,7 @@
                                         <span class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
                                     </div>
                                 @endif
-                                <div class="product-thumbnail">
+                                <div class="product-thumbnail @if($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
                                     <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                 </div>
                                 <div class="product-price">
@@ -228,7 +228,7 @@
                                     </div>
                                 @endif
                             @endif
-                            <div class="product-thumbnail">
+                            <div class="product-thumbnail @if($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
                                 <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                             </div>
                             <div class="product-price">
@@ -325,7 +325,7 @@
                                         </div>
                                     @endif
                                 @endif
-                                <div class="product-thumbnail">
+                                <div class="product-thumbnail @if($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
                                     <img data-src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid lazy">
                                 </div>
                                 <div class="product-price">
