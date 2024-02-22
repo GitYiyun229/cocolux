@@ -8,7 +8,19 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {!! SEO::generate() !!}
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    @if(request()->is('web.config') ||
+        request()->is('*slug*') ||
+        request()->is('*sid*') ||
+        request()->is('search') ||
+        request()->query('keyword') ||
+        request()->is('*page*') ||
+        request()->query('utm_source') ||
+        request()->query('source') ||
+        request()->query('attributes'))
+        <meta name="robots" content="noindex">
+    @else
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    @endif
     <link type='image/x-icon' href='{{ asset('images/favicon.ico') }}' rel='icon'/>
     <!-- Styles -->
 {{--    <link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
