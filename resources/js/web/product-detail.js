@@ -92,10 +92,10 @@ $('.submit-review').click(function(e) {
         return false;
     }
 
-    if(regexTel.test(phone.value) === false) {
-        $('<p class="mb-2 text-danger">Số điện thoại gồm 10 số, nhập lại số điện thoại.</p>').insertAfter("#phone");
-        return false;
-    }
+    // if(regexTel.test(phone.value) == false) {
+    //     $('<p class="mb-2 text-danger">Số điện thoại gồm 10 số, nhập lại số điện thoại.</p>').insertAfter("#phone");
+    //     return false;
+    // }
 
     // $(this).closest('form').submit();
 })
