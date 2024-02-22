@@ -14,5 +14,8 @@ Disallow: /web.config
 Disallow: /*slug*
 Disallow: /*sid*
 Disallow: /search?keyword*
-Disallow: /search?*
+Disallow: /*page*
+Disallow: /*utm_source*
+Disallow: /*source*
+Disallow: /*attributes*
 Sitemap: https://cocolux.com/sitemap.xml
