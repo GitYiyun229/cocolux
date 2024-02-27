@@ -30,8 +30,19 @@ mix.js('resources/js/app.js', 'public/js')
         'sweetalert2',
         'slick-carousel',
         '@tarekraafat/autocomplete.js',
+        'owl.carousel',
         'vanilla-lazyload'
-    ]).sourceMaps().version();
+    ]).webpackConfig(webpack => {
+        return {
+            plugins: [
+                new webpack.ProvidePlugin({
+                    $: 'jquery',
+                    jQuery: 'jquery',
+                    'window.jQuery': 'jquery'
+                })
+            ]
+        };
+    }).sourceMaps().version();
 
 mix.sass('resources/sass/home.scss', 'public/css/web')
     .sass('resources/sass/content.scss', 'public/css/web')

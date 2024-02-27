@@ -11,6 +11,7 @@ use App\Models\Districts;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\ProductComments;
 use App\Models\ProductOptions;
 use App\Models\ProductsCategories;
 use App\Models\PromotionItem;
@@ -236,7 +237,8 @@ class ProductController extends Controller
         $products = ProductOptions::with(['product' => function ($query) {
                 $query->select('id', 'is_new', 'brand','slug','attribute_path');
             }])->whereHas('product', function ($query) use ($id,$list_id_request) {
-                $query->select('id','title','slug','category_path','attribute_path')->where('active', 1)->where('category_path', 'LIKE', '%'.$id.'%');
+                $query->select('id','title','slug','category_path','attribute_path')->where('active', 1)
+                    ->where('category_path', 'REGEXP', '[[:<:]]'.$id.'[[:>:]]');
                 if ($list_id_request){
                     foreach ($list_id_request as $item){
                         $query->where('attribute_path','like', '%'.$item.'%');
@@ -257,7 +259,7 @@ class ProductController extends Controller
         $total_products = ProductOptions::with(['product' => function ($query) {
                 $query->select('id', 'is_new', 'brand','slug','attribute_path');
             }])->whereHas('product', function ($query) use ($id,$list_id_request) {
-                $query->where('active', 1)->where('category_path', 'LIKE', '%'.$id.'%');
+                $query->where('active', 1)->where('category_path', 'REGEXP', '[[:<:]]'.$id.'[[:>:]]');
                 if ($list_id_request){
                     foreach ($list_id_request as $item){
                         $query->where('attribute_path','like', '%'.$item.'%');
@@ -616,6 +618,25 @@ class ProductController extends Controller
         if (!$product_root) {
             abort(404);
         }
+        $comments = ProductComments::where(['product_id' => $product_root->id,'active' => 1])->get();
+        $ratings = ProductComments::select('rating', DB::raw('COUNT(*) as count'))
+            ->groupBy('rating')
+            ->orderBy('rating')
+            ->where(['product_id' => $product_root->id,'active' => 1])
+            ->pluck('count', 'rating')
+            ->all();
+        $percentages = [5 => 0, 4 => 0, 3 => 0, 2 => 0, 1 => 0];
+        $totalComments = array_sum($ratings);
+        foreach ($ratings as $rating => $count) {
+            $percentages[$rating] = ($count / $totalComments) * 100;
+        }
+        $averageRating = round(ProductComments::where(['product_id' => $product_root->id,'active' => 1])->average('rating'),1);
+
+        // In kết quả
+//        foreach ($percentages as $rating => $percentage) {
+//            echo "Rating: $rating, Percentage: $percentage%\n";
+//        }die;
+
         $attribute_value = !empty($product_root->attributes)?$product_root->attributes:null;
         $attribute_value = collect($attribute_value)->sortByDesc('id')->values()->all();
 
@@ -670,7 +691,7 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($product->product->seo_keyword?$product->product->seo_keyword:$product->title);
 
-        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats','stores','count_store','brand','product_in_cat'));
+        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats','stores','count_store','brand','product_in_cat','comments','percentages','averageRating'));
     }
 
     public function is_new(){
@@ -740,7 +761,7 @@ class ProductController extends Controller
             })->with(['promotionItem' => function($query) use ($now){
                 $query->select('applied_stop_time','sku','price')->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->where('type','flash_deal')->orderBy('price','asc');
-            }])->paginate(30);
+            }])->orderBy('is_default', 'DESC')->paginate(30);
 
         return view('web.product.flash_sale',compact('productOptions'));
     }
@@ -1108,6 +1129,7 @@ class ProductController extends Controller
 
     public function calculator_ship($city_id = null, $district_id = null){
         $price_ship = 20000;
+
         $total_price = 0;
         //tính ship, 201 là code hà nội, 234 thanh hóa
         $cart = Session::get('cart', []);
@@ -1229,7 +1251,7 @@ class ProductController extends Controller
         ]);
         Session::forget('cart');
         $order = Order::findOrFail($id);
-        if ($order->message != 'Đã đồng bộ đơn hàng lên nhanh thành công'){
+        if ($order->message != 'Đã đồng bộ đơn hàng lên nhanh thành công' && $order->id > 4157){
             app('App\Http\Controllers\ApiNhanhController')->pushOrderNhanh($order->id);
         }
         $maDonHang = 'DH' . str_pad($id, 8, '0', STR_PAD_LEFT);
@@ -1269,5 +1291,25 @@ class ProductController extends Controller
         }
         $maDonHang = 'DH' . str_pad($id, 8, '0', STR_PAD_LEFT);
         return view('web.cart.detail_order_success',compact('order','maDonHang','products','total_money'));
+    }
+
+    public function commentProduct (Request $request){
+        DB::beginTransaction();
+        try{
+            $data['content'] = ($request->input('content'));
+            $data['rating'] = ($request->input('rate'));
+            $data['name'] = ($request->input('name'));
+            $data['phone'] = ($request->input('phone'));
+            $data['product_id'] = ($request->input('product_id'));
+            $data['active'] = 0;
+            ProductComments::create($data);
+            DB::commit();
+            Session::flash('success', 'Cảm ơn bạn đã để lại bình luận');
+            return redirect()->back();
+        }catch (\Exception $ex) {
+            DB::rollBack();
+            Session::flash('danger', 'Bình luận chưa thành công');
+            return redirect()->back();
+        }
     }
 }

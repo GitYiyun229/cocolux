@@ -31,16 +31,10 @@
                         <p class="mb-0 text-center text-uppercase fw-bold layout-title text-red">Sản phẩm hot</p>
                         @forelse($product_hots as $item)
                             <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
-                                @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
-                                    @if($item->flash_deal->price != $item->normal_price)
+                                @if($item->promotionItem)
+                                    @if($item->promotionItem->price != $item->normal_price)
                                         <div class="product-discount">
-                                            <span class="pe-1">{{ percentage_price($item->flash_deal->price, $item->normal_price) }}</span>
-                                        </div>
-                                    @endif
-                                @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
-                                    @if($item->hot_deal->price != $item->normal_price)
-                                        <div class="product-discount">
-                                            <span class="pe-1">{{ percentage_price($item->hot_deal->price, $item->normal_price) }}</span>
+                                            <span class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
                                         </div>
                                     @endif
                                 @else
@@ -54,14 +48,9 @@
                                     <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                 </div>
                                 <div class="product-price">
-                                    @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
-                                        <div class="public-price">{{ format_money($item->flash_deal->price) }}</div>
-                                        @if($item->flash_deal->price != $item->normal_price)
-                                            <div class="origin-price">{{ format_money($item->normal_price) }}</div>
-                                        @endif
-                                    @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
-                                        <div class="public-price">{{ format_money($item->hot_deal->price) }}</div>
-                                        @if($item->hot_deal->price != $item->normal_price)
+                                    @if($item->promotionItem)
+                                        <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
+                                        @if($item->promotionItem->price != $item->normal_price)
                                             <div class="origin-price">{{ format_money($item->normal_price) }}</div>
                                         @endif
                                     @else
@@ -97,16 +86,10 @@
                             <div class="slide-template-slick">
                                 @forelse($products_choose as $item)
                                     <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
-                                        @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
-                                            @if($item->flash_deal->price != $item->normal_price)
+                                        @if($item->promotionItem)
+                                            @if($item->promotionItem->price != $item->normal_price)
                                                 <div class="product-discount">
-                                                    <span class="pe-1">{{ percentage_price($item->flash_deal->price, $item->normal_price) }}</span>
-                                                </div>
-                                            @endif
-                                        @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
-                                            @if($item->hot_deal->price != $item->normal_price)
-                                                <div class="product-discount">
-                                                    <span class="pe-1">{{ percentage_price($item->hot_deal->price, $item->normal_price) }}</span>
+                                                    <span class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
                                                 </div>
                                             @endif
                                         @else
@@ -120,14 +103,9 @@
                                             <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                         </div>
                                         <div class="product-price">
-                                            @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
-                                                <div class="public-price">{{ format_money($item->flash_deal->price) }}</div>
-                                                @if($item->flash_deal->price != $item->normal_price)
-                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
-                                                @endif
-                                            @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
-                                                <div class="public-price">{{ format_money($item->hot_deal->price) }}</div>
-                                                @if($item->hot_deal->price != $item->normal_price)
+                                            @if($item->promotionItem)
+                                                <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
+                                                @if($item->promotionItem->price != $item->normal_price)
                                                     <div class="origin-price">{{ format_money($item->normal_price) }}</div>
                                                 @endif
                                             @else
@@ -170,6 +148,29 @@
                         <div class="detail-content">
                             {!! replace_image($article->content) !!}
                         </div>
+                        @if(!empty($article->content_faq))
+                            <div class="faq-for-article">
+                                <div class="title-faq">
+                                    <span>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_407_691)">
+                                            <path d="M4 6H2V22H18V20H4V6Z" fill="black"/>
+                                            <path d="M6 2V18H22V2H6ZM13.51 10.16C13.92 9.43 14.69 9 15.14 8.36C15.62 7.68 15.35 6.42 14 6.42C13.12 6.42 12.68 7.09 12.5 7.65L11.13 7.08C11.51 5.96 12.52 5 13.99 5C15.22 5 16.07 5.56 16.5 6.26C16.87 6.86 17.08 7.99 16.51 8.83C15.88 9.76 15.28 10.04 14.95 10.64C14.82 10.88 14.77 11.04 14.77 11.82H13.25C13.26 11.41 13.19 10.74 13.51 10.16ZM12.95 13.95C12.95 13.36 13.42 12.91 14 12.91C14.59 12.91 15.04 13.36 15.04 13.95C15.04 14.53 14.6 15 14 15C13.42 15 12.95 14.53 12.95 13.95Z" fill="black"/>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_407_691">
+                                                <rect width="24" height="24" fill="white"/>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                    Câu hỏi thường gặp
+                                    </span>
+                                </div>
+                                <div class="detail-content-faq">
+                                    {!! $article->content_faq !!}
+                                </div>
+                            </div>
+                        @endif
                         @if($products_choose_down)
                         <div class="list-product-article mb-4">
                             <div class="title-product-same">
@@ -180,16 +181,10 @@
                             <div class="slide-template-slick">
                                 @forelse($products_choose_down as $item)
                                     <a href="{{ route('detailProduct',['slug'=> !empty($item->slug)?trim($item->slug):$item->product->slug, 'sku' =>$item->sku]) }}" class="product-template">
-                                        @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
-                                            @if($item->flash_deal->price != $item->normal_price)
+                                        @if($item->promotionItem)
+                                            @if($item->promotionItem->price != $item->normal_price)
                                                 <div class="product-discount">
-                                                    <span class="pe-1">{{ percentage_price($item->flash_deal->price, $item->normal_price) }}</span>
-                                                </div>
-                                            @endif
-                                        @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
-                                            @if($item->hot_deal->price != $item->normal_price)
-                                                <div class="product-discount">
-                                                    <span class="pe-1">{{ percentage_price($item->hot_deal->price, $item->normal_price) }}</span>
+                                                    <span class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
                                                 </div>
                                             @endif
                                         @else
@@ -203,14 +198,9 @@
                                             <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                         </div>
                                         <div class="product-price">
-                                            @if($item->flash_deal && in_array($item->flash_deal->id,$promotions_flash_id))
-                                                <div class="public-price">{{ format_money($item->flash_deal->price) }}</div>
-                                                @if($item->flash_deal->price != $item->normal_price)
-                                                    <div class="origin-price">{{ format_money($item->normal_price) }}</div>
-                                                @endif
-                                            @elseif($item->hot_deal && in_array($item->hot_deal->id,$promotions_hot_id))
-                                                <div class="public-price">{{ format_money($item->hot_deal->price) }}</div>
-                                                @if($item->hot_deal->price != $item->normal_price)
+                                            @if($item->promotionItem)
+                                                <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
+                                                @if($item->promotionItem->price != $item->normal_price)
                                                     <div class="origin-price">{{ format_money($item->normal_price) }}</div>
                                                 @endif
                                             @else
@@ -264,29 +254,7 @@
                                 </div>
                             </div>
                         @endif
-                        @if(!empty($article->content_faq))
-                            <div class="faq-for-article">
-                                <div class="title-faq">
-                                    <span>
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <g clip-path="url(#clip0_407_691)">
-                                            <path d="M4 6H2V22H18V20H4V6Z" fill="black"/>
-                                            <path d="M6 2V18H22V2H6ZM13.51 10.16C13.92 9.43 14.69 9 15.14 8.36C15.62 7.68 15.35 6.42 14 6.42C13.12 6.42 12.68 7.09 12.5 7.65L11.13 7.08C11.51 5.96 12.52 5 13.99 5C15.22 5 16.07 5.56 16.5 6.26C16.87 6.86 17.08 7.99 16.51 8.83C15.88 9.76 15.28 10.04 14.95 10.64C14.82 10.88 14.77 11.04 14.77 11.82H13.25C13.26 11.41 13.19 10.74 13.51 10.16ZM12.95 13.95C12.95 13.36 13.42 12.91 14 12.91C14.59 12.91 15.04 13.36 15.04 13.95C15.04 14.53 14.6 15 14 15C13.42 15 12.95 14.53 12.95 13.95Z" fill="black"/>
-                                        </g>
-                                        <defs>
-                                            <clipPath id="clip0_407_691">
-                                                <rect width="24" height="24" fill="white"/>
-                                            </clipPath>
-                                        </defs>
-                                    </svg>
-                                    Câu hỏi thường gặp
-                                    </span>
-                                </div>
-                                <div class="detail-content-faq">
-                                    {!! $article->content_faq !!}
-                                </div>
-                            </div>
-                        @endif
+
                     </div>
                 </div>
 

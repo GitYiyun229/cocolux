@@ -259,7 +259,7 @@ class ApiNhanhController extends Controller
                         ->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)->orderBy('price','asc');
                 }])->first();
             if($product){
-                if($product->promotionItem){
+                if($product->promotionItem || $product->price != $product->normal_price){
                     $price = 0;
                 }else{
                     $price = $product->price;

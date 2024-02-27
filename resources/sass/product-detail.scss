@@ -688,6 +688,9 @@
             color: #c73030;
         }
     }
+    .name-field, .phone-field {
+        display: none;
+    }
     .submit-image{
         background: #c73030;
         color: #fff;
@@ -718,6 +721,13 @@
         background: #f7f7f7;
         border-radius: 5px 5px 0 0;
         box-shadow: 0 3px 6px rgba(0 ,0, 0, 0.15);
+    }
+    .feedback-list{
+        .review-rating-item-comment{
+            .active{
+                color: #c73030;
+            }
+        }
     }
     select{
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);

@@ -36,6 +36,21 @@
         </ul>
     </nav>
 @endsection
+@section('link')
+    @parent
+    <style>
+        .image-frame {
+            @if($setting['frame_image_for_sale'])
+                background: url('{{ asset($setting['frame_image_for_sale']) }}') center center no-repeat;
+                background-size: cover;
+                padding: 10px;
+                border-radius: 8px;
+                display: inline-block;
+            @endif
+        }
+    </style>
+@endsection
+
 @section('script')
     @parent
     <script src="{{ mix('js/web/manifest.js') }}"></script>

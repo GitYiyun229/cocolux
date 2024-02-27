@@ -40,7 +40,7 @@ class SliderDataTable extends DataTable
             ->addColumn('action', function ($q) {
                 $urlEdit = route('admin.slider.edit', $q->id);
                 $urlDelete = route('admin.slider.destroy', $q->id);
-                $lowerModelName = strtolower(class_basename(new Sliders()));
+                $lowerModelName = 'slider';
                 return view('admin.components.buttons.edit', compact('urlEdit'))->render() . view('admin.components.buttons.delete', compact('urlDelete', 'lowerModelName'))->render();
             })->rawColumns(['active','action']);
     }

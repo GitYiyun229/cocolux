@@ -230,7 +230,7 @@
                     @endforelse
                     @endif
 
-                    <div class="layout-box layout-padding bg-white d-none">
+                    <div class="layout-box layout-padding bg-white">
                         <h2 class="layout-title mb-2 fw-bold">Đánh giá</h2>
                         <p>Khách hàng đánh giá</p>
 
@@ -238,22 +238,22 @@
                             <div class="layout-rating-item text-center">
                                 <p>Đánh giá trung bình</p>
                                 <div class="product-total-rating">
-                                    4.8
+                                    {{ $averageRating }}
                                 </div>
-                                <div class="product-total-review">30 nhận xét</div>
+                                <div class="product-total-review">{{ count($comments) }} nhận xét</div>
                             </div>
                             <div class="layout-rating-item">
-                                @for($i = 5; $i >= 1; $i --)
+                                @foreach($percentages as $rating => $percentage)
                                 <div class="product-rating-item d-grid align-items-center gap-1">
-                                    <div class="">{{ $i }} sao</div>
+                                    <div class="">{{ $rating }} sao</div>
                                     <div class="progress" role="progressbar" aria-label="Example 20px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                        <div class="progress-bar" style="width: 21%"></div>
+                                        <div class="progress-bar" style="width: {{ $percentage }}%"></div>
                                     </div>
                                     <div>
-                                        21%
+                                        {{ $percentage }}%
                                     </div>
                                     <div class="">
-                                        @switch($i)
+                                        @switch($rating)
                                             @case(1)
                                                 Rất tệ
                                                 @break
@@ -273,7 +273,7 @@
                                         @endswitch
                                     </div>
                                 </div>
-                                @endfor
+                                @endforeach
                             </div>
                             <div class="layout-rating-item text-center">
                                 <p>Chia sẻ cảm nghĩ của bạn về sản phẩm</p>
@@ -281,34 +281,50 @@
                             </div>
                         </div>
 
-                        <form class="layout-review mb-4" id="formReivew" action="" method="POST" enctype="multipart/form-data">
+                        <form class="layout-review mb-4" id="formReivew" action="{{ route('commentProduct') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
                             <p class="mb-2">Đánh giá sản phẩm này *</p>
                             <div class="review-rating position-relative d-flex align-items-center mb-3 fs-4">
                                 @for ($i = 1; $i <= 5; $i++)
-                                <div class="review-rating-item" value="{{ $i }}">
-                                    <i class="fa-solid fa-star"></i>
-                                </div>
+                                    <div class="review-rating-item" value="{{ $i }}">
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
                                 @endfor
                             </div>
                             <input type="hidden" name="rate" id="rate" value="0">
+                            <input type="hidden" name="product_id" id="product_id" value="{{ $product_root->id }}">
                             <input type="file" class="d-none" name="image" multiple id="image" accept="image/*" id="image">
-                            <textarea name="content" id="content" rows="3" class="form-control mb-3" placeholder="Nhập mô tả ở đây"></textarea>
-                            <div class="d-flex justify-content-between">
-                                <p class="mb-0">Thêm ảnh sản phẩm (tối đa 5)</p>
-                                <div class="text-end">
-                                    <div class="d-flex align-items-center gap-2 mb-2">
-                                        <div class="list-image-review d-flex align-items-center gap-2"></div>
-                                        <a href="" class="submit-image d-inline-block fw-bold">Chọn hình</a>
+                            <textarea name="content" id="content" rows="3" class="form-control mb-3" placeholder="Nhập mô tả ở đây" required></textarea>
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="name-field">
+                                        <label for="name" class="mb-1">Name:</label>
+                                        <input type="text" id="name" name="name" class="form-control" required>
                                     </div>
-                                    <a href="" class="submit-review d-inline-block fw-bold">Gửi</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="phone-field">
+                                        <label for="phone" class="mb-1">Số điện thoại:</label>
+                                        <input type="text" id="phone" name="phone" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <p class="mb-0 d-none">Thêm ảnh sản phẩm (tối đa 5)</p>
+                                <div class="text-end">
+{{--                                    <div class="d-flex align-items-center gap-2 mb-2">--}}
+{{--                                        <div class="list-image-review d-flex align-items-center gap-2"></div>--}}
+{{--                                        <a href="" class="submit-image d-inline-block fw-bold">Chọn hình</a>--}}
+{{--                                    </div>--}}
+                                    <button type="submit" class="submit-review d-inline-block fw-bold">Gửi</button>
                                 </div>
                             </div>
                         </form>
 
                         <div class="layout-feedback">
                             <div class="feedback-title mb-4 d-flex align-items-center justify-content-between">
-                                <p class="mb-0">0 đánh giá cho sản phẩm này</p>
-                                <div class="feedback-sort">
+                                <p class="mb-0">{{ count($comments) }} đánh giá cho sản phẩm này</p>
+                                <div class="feedback-sort d-none">
                                     <select name="" id="">
                                         <option value="">Ngày tạo mới nhất</option>
                                         <option value="">Ngày tạo lâu nhất</option>
@@ -316,8 +332,25 @@
                                 </div>
                             </div>
                             <div class="feedback-list">
-                                <p class="mb-1 text-secondary">Chưa có đánh giá nào cho sản phẩm này</p>
-                                <p class="mb-0">Hãy trở thành người đầu tiên đánh giá cho sản phẩm này...</p>
+                                @if(!count($comments))
+                                    <p class="mb-1 text-secondary">Chưa có đánh giá nào cho sản phẩm này</p>
+                                    <p class="mb-0">Hãy trở thành người đầu tiên đánh giá cho sản phẩm này...</p>
+                                @else
+                                    @foreach($comments as $comment)
+                                        <div class="alert alert-light" role="alert">
+                                            <p class="fw-bold mb-2">{{ $comment->name }}</p>
+                                            <div class="review-rating-item-comment mb-2" >
+                                                @for ($i = 1; $i <= $comment->rating; $i++)
+                                                    <i class="fa-solid fa-star active"></i>
+                                                @endfor
+                                                @for ($i = 1; $i <= (5 - $comment->rating); $i++)
+                                                    <i class="fa-solid fa-star"></i>
+                                                @endfor
+                                            </div>
+                                            {{ $comment->content }}
+                                        </div>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -345,7 +378,7 @@
                                                 </div>
                                             @endif
                                         @endif
-                                        <div class="product-thumbnail">
+                                        <div class="product-thumbnail @if($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
                                             <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                         </div>
                                         <div class="product-price">
@@ -394,7 +427,7 @@
                                     </div>
                                 @endif
                             @endif
-                            <div class="product-thumbnail">
+                            <div class="product-thumbnail @if($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
                                 <img src="{{ asset(replace_image($item->image_first)) }}" alt="{{ $item->title }}" class="img-fluid">
                             </div>
                             <div class="product-price">

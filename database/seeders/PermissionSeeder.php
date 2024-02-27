@@ -138,6 +138,11 @@ class PermissionSeeder extends Seeder
             ['name' => 'edit_voucher', 'display_name' => 'Sửa mã giảm giá', 'guard_name' => 'web'],
             ['name' => 'delete_voucher', 'display_name' => 'Xóa mã giảm giá', 'guard_name' => 'web'],
 
+            ['name' => 'view_product_comment', 'display_name' => 'Xem bình luận sản phẩm', 'guard_name' => 'web'],
+            ['name' => 'create_product_comment', 'display_name' => 'Thêm mới bình luận sản phẩm', 'guard_name' => 'web'],
+            ['name' => 'edit_product_comment', 'display_name' => 'Sửa bình luận sản phẩm', 'guard_name' => 'web'],
+            ['name' => 'delete_product_comment', 'display_name' => 'Xóa bình luận sản phẩm', 'guard_name' => 'web'],
+
         ];
     }
 }

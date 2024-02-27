@@ -165,6 +165,14 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.product-comment.index') }}" class="nav-link @if (request()->is('admin/product-comment')) active @endif">
+                                    <i class="nav-icon fas fa-comment"></i>
+                                    <p>
+                                        @lang('form.product_comment.')
+                                    </p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 @endcan

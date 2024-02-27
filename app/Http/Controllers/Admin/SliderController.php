@@ -58,11 +58,11 @@ class SliderController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
-            $image_root = '';
-            if (!empty($data['image'])){
-                $image_root = $data['image'];
-                $data['image'] = urldecode($image_root);
-            }
+//            $image_root = '';
+//            if (!empty($data['image'])){
+//                $image_root = $data['image'];
+//                $data['image'] = urldecode($image_root);
+//            }
             $model = $this->slideRepository->create($data);
 
             $now = Carbon::now();
@@ -73,8 +73,16 @@ class SliderController extends Controller
                 $constraint->aspectRatio();
                 $constraint->upsize();
             })->encode('webp', 75);
-            $thumbnailPath = 'storage/slider/' .$timestamp.'-'. $fileName;
-            Storage::makeDirectory('public/slider/');
+            $thumbnailPath = 'storage/slider/larger/' .$timestamp.'-'. $fileName;
+            Storage::makeDirectory('public/slider/larger/');
+            $thumbnail->save($thumbnailPath);
+
+            $thumbnail = Image::make(asset($data['image']))->resize(412, 236, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->encode('webp', 75);
+            $thumbnailPath = 'storage/slider/small/' .$timestamp.'-'. $fileName;
+            Storage::makeDirectory('public/slider/small/');
             $thumbnail->save($thumbnailPath);
 
             DB::commit();

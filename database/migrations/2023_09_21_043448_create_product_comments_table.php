@@ -17,8 +17,11 @@ class CreateProductCommentsTable extends Migration
             $table->id();
             $table->text('content');
             $table->string('product');
+            $table->string('name');
+            $table->string('name');
             $table->text('comments');
-            $table->integer('active');
+            $table->integer('product_id');
+            $table->integer('active')->default(0);
             $table->timestamps();
         });
     }
