@@ -9,6 +9,7 @@
 
     {!! SEO::generate() !!}
     @if(request()->is('web.config') ||
+        str_contains(request()->fullUrl(), '?') ||
         request()->is('*slug*') ||
         request()->is('*sid*') ||
         request()->is('search') ||
@@ -17,7 +18,7 @@
         request()->query('utm_source') ||
         request()->query('source') ||
         request()->query('attributes'))
-        <meta name="robots" content="noindex">
+        <meta name="robots" content="noindex, follow, noarchive">
     @else
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     @endif
