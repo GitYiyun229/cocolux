@@ -219,7 +219,8 @@ class ApiNhanhController extends Controller
             ));
         }
         $couponCode = reset($data['data']['couponCode']);
-        $now = Carbon::now();
+        $now_ca = Carbon::now();
+        $now = $now_ca->toDateString();
         if ($couponCode['status'] != 1){
             return response()->json(array(
                 'error' => true,
