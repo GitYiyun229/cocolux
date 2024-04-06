@@ -93,7 +93,7 @@ class ArticleController extends Controller
             }
 
             DB::commit();
-            Session::flash('success', trans('message.create_article_success'));
+            Session::flash('success', trans('message.create_article_succes'));
             return redirect()->back();
         } catch (\Exception $ex) {
             DB::rollBack();
