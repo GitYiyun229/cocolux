@@ -10,7 +10,8 @@
                     <option value="">@lang('form.product.category')</option>
                     @forelse($categories as $key => $category)
                         <option value="{{ $category['id'] }}" @if (isset($data['category']) && $data['category'] ==  $category['id']) selected @endif>{{ $category['title'] }}</option>
-                    @empty
+
+                        @empty
                     @endforelse
                 </select>
                 <button type="submit" class="btn btn-primary ml-3"><i class="fa fa-search"></i> @lang('form.button.search')</button>

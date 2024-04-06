@@ -82,6 +82,7 @@ $exts = [
     'm3u' => ['audio/x-mpegurl'],
     'm4a' => ['audio/mp4'],
     'md' => ['text/markdown', 'text/x-markdown'],
+    'webp' => ['image/webp'],
     'mdb' => ['application/x-msaccess'],
     'mid' => ['audio/midi'],
     'mov' => ['video/quicktime'],

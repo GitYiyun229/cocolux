@@ -26,9 +26,7 @@
     },
     "files": ["src/JmesPath.php"]
   },
-
   "bin": ["bin/jp.php"],
-
   "extra": {
     "branch-alias": {
       "dev-master": "2.0-dev"

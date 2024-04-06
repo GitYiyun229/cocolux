@@ -6,7 +6,10 @@ use App\Repositories\Contracts\BaseInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-
+use DOMDocument;
+use DOMXPath;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
 abstract class BaseRepository implements BaseInterface
 {
     protected $model;
@@ -103,7 +106,7 @@ abstract class BaseRepository implements BaseInterface
     /**
      * @return Collection
      */
-    public function getWithDepth() : Collection
+    public function getWithDepth(): Collection
     {
         return $this->model->withDepth()->defaultOrder()->get();
     }
@@ -119,21 +122,20 @@ abstract class BaseRepository implements BaseInterface
     {
         $query = $this->model->select($columns);
 
-        if($where){
-            foreach($where as $key => $value){
-                if (gettype($value) === 'array'){
+        if ($where) {
+            foreach ($where as $key => $value) {
+                if (gettype($value) === 'array') {
                     $query->where($key, $value[1], $value[0]);
-                }else{
+                } else {
                     $query->where($key, $value);
                 }
-
             }
         }
-        if (!empty($limit)){
+        if (!empty($limit)) {
             $query->limit($limit);
         }
 
-        if ($limit == 1){
+        if ($limit == 1) {
             return $query->with($relationships)->first();
         }
 
@@ -155,13 +157,13 @@ abstract class BaseRepository implements BaseInterface
      * @param string $nameModule
      * @return string
      */
-    public function removeImageResize(string $file,array $resizeImage = null,int $id = null, string $nameModule)
+    public function removeImageResize(string $file, array $resizeImage = null, int $id = null, string $nameModule)
     {
         $img_path = pathinfo($file, PATHINFO_DIRNAME);
-        if (!empty($resizeImage) && !empty($id)){
-            foreach ($resizeImage as $item){
-                $array_resize_ = str_replace($img_path.'/','/public/'.$nameModule.'/'.$item[0].'x'.$item[1].'/'.$id.'-',$file);
-                $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
+        if (!empty($resizeImage) && !empty($id)) {
+            foreach ($resizeImage as $item) {
+                $array_resize_ = str_replace($img_path . '/', '/public/' . $nameModule . '/' . $item[0] . 'x' . $item[1] . '/' . $id . '-', $file);
+                $array_resize_ = str_replace(['.jpg', '.png', '.bmp', '.gif', '.jpeg'], '.webp', $array_resize_);
                 Storage::delete($array_resize_);
             }
         }
@@ -176,23 +178,72 @@ abstract class BaseRepository implements BaseInterface
      * @param string $styleResize
      * @return string
      */
-    public function saveFileUpload(string $file,array $resizeImage = null,int $id = null, string $nameModule)
+    public function saveFileUpload(string $file, array $resizeImage = null, int $id = null, string $nameModule)
     {
         $fileNameWithoutExtension = urldecode(pathinfo($file, PATHINFO_FILENAME));
-        $fileName = $fileNameWithoutExtension. '.webp';
+        $fileName = $fileNameWithoutExtension . '.webp';
         if (Storage::disk('local')->exists($file)) {
-            if (!empty($resizeImage) && !empty($id)){
-                foreach ($resizeImage as $item){
-                    $thumbnail = Image::make(asset($file))->resize($item[0], $item[1],function ($constraint) {
+            if (!empty($resizeImage) && !empty($id)) {
+                foreach ($resizeImage as $item) {
+                    $thumbnail = Image::make(asset($file))->resize($item[0], $item[1], function ($constraint) {
                         $constraint->aspectRatio();
                         $constraint->upsize();
                     })->encode('webp', 75);
-                    $thumbnailPath = 'storage/'.$nameModule.'/'.$item[0].'x'.$item[1].'/' .$id.'-'. $fileName;
-                    Storage::makeDirectory('public/'.$nameModule.'/'.$item[0].'x'.$item[1].'/');
+                    $thumbnailPath = 'storage/' . $nameModule . '/' . $item[0] . 'x' . $item[1] . '/' . $id . '-' . $fileName;
+                    Storage::makeDirectory('public/' . $nameModule . '/' . $item[0] . 'x' . $item[1] . '/');
                     $thumbnail->save($thumbnailPath);
                 }
             }
         }
         return urldecode($file);
+    }
+
+
+
+    /**
+     * @param string $html
+     * @param $resizeImage
+     * @param $id
+     * @param string $nameModule
+     * @return string
+     */
+    public function FileHtmlImageToWebp(string $html, int $id = null, string $nameModule)
+    {
+        $dom = new DOMDocument('1.0', 'UTF-8');
+
+        libxml_use_internal_errors(true);
+        $dom->loadHTML('<?xml encoding="UTF-8">' . $html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        libxml_use_internal_errors(false);
+        $xpath = new DOMXPath($dom);
+        $images = $xpath->query('//img');
+        foreach ($images as $image) {
+            $imageUrl = $image->getAttribute('src');
+            $webpImagePath = $this->saveFileHtmlImageUploadWebp($imageUrl, $id, $nameModule);
+            $webpImagePath = Str::replaceFirst(public_path(), '', $webpImagePath);
+            $webpImagePath = URL::to('/') . '/' . $webpImagePath;
+            $image->setAttribute('src', $webpImagePath);
+        }
+        $updatedHtml = $dom->saveHTML();
+        return $updatedHtml;
+    }
+    /**
+     * @param $file
+     * @param $id
+     * @param string $nameModule
+     * @param string $styleResize
+     * @return string
+     */
+    public function saveFileHtmlImageUploadWebp(string $file, int $id = null, string $nameModule)
+    {
+        $imageName = substr(basename($file), 0, 15);
+        $thumbnailPath = '';
+        $fileName = $imageName . '.webp';
+        if (!empty($id)) {
+            $thumbnail = Image::make(asset($file))->encode('webp');
+            $thumbnailPath = 'storage/' . $nameModule . '/' . 'HtmlWebp' . '/' . $id . '-' . $fileName;
+            Storage::makeDirectory('public/' . $nameModule . '/' . 'HtmlWebp'  . '/');
+            $thumbnail->save($thumbnailPath);
+        }
+        return $thumbnailPath;
     }
 }

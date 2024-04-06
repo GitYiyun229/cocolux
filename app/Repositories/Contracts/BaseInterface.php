@@ -100,5 +100,22 @@ interface BaseInterface
      * @param string $styleResize
      * @return mixed
      */
-    public function saveFileUpload(string $file, array $resizeImage , int $id, string $nameModule);
+    public function saveFileUpload(string $file, array $resizeImage, int $id, string $nameModule);
+
+    /**
+     * @param string $html
+     * @param int $id
+     * @param string $nameModule
+     * @return mixed
+     */
+    public function FileHtmlImageToWebp(string $html, int $id, string $nameModule);
+
+    /**
+     * @param string $file
+     * @param int $id
+     * @param string $nameModule
+     * @param string $styleResize
+     * @return mixed
+     */
+    public function saveFileHtmlImageUploadWebp(string $file, int $id, string $nameModule);
 }

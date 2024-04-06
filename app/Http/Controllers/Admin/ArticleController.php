@@ -16,6 +16,8 @@ use App\Http\Requests\Article\UpdateArticle;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use DOMDocument;
+use DOMXPath;
 
 class ArticleController extends Controller
 {
@@ -41,11 +43,11 @@ class ArticleController extends Controller
     {
         $data = request()->all();
         $categories = $this->articleCategoryRepository->getAll();
-        if ($categories->count() === 0){
+        if ($categories->count() === 0) {
             Session::flash('danger', 'Chưa có danh mục nào');
             return redirect()->route('admin.article-category.index');
         }
-        return $dataTable->addScope(new ArticleDataTableScope())->render('admin.article.index', compact('data','categories'));
+        return $dataTable->addScope(new ArticleDataTableScope())->render('admin.article.index', compact('data', 'categories'));
     }
 
     /**
@@ -56,7 +58,7 @@ class ArticleController extends Controller
     public function create()
     {
         $categories = $this->articleCategoryRepository->getAll();
-        return view('admin.article.create',compact('categories'));
+        return view('admin.article.create', compact('categories'));
     }
 
     /**
@@ -71,16 +73,25 @@ class ArticleController extends Controller
         try {
             $data = $req->validated();
             $image_root = '';
-            $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
-            if (!empty($data['image'])){
+            $data['slug'] = $req->input('slug') ? \Str::slug($req->input('slug'), '-') : \Str::slug($data['title'], '-');
+            if (!empty($data['image'])) {
                 $image_root = $data['image'];
                 $data['image'] = urldecode($image_root);
             }
             $data['products'] = $data['products_add'];
             $model = $this->articleRepository->create($data);
-            if (!empty($data['image'])){
-                $this->articleRepository->saveFileUpload($image_root,$this->resizeImage,$model->id,'article');
+            if (!empty($data['image'])) {
+                $this->articleRepository->saveFileUpload($image_root, $this->resizeImage, $model->id, 'article');
             }
+            if (!empty($data['content'])) {
+                $ContentHtml = $data['content'];
+                $html = $this->articleRepository->FileHtmlImageToWebp($ContentHtml, $model->id, 'article');
+                // dd($html);
+                $data['content'] = $html;
+                $article = $this->articleRepository->getOneById($model->id);
+                $article->update($data);
+            }
+
             DB::commit();
             Session::flash('success', trans('message.create_article_success'));
             return redirect()->back();
@@ -118,22 +129,22 @@ class ArticleController extends Controller
         $article = $this->articleRepository->getOneById($id);
         $categories = $this->articleCategoryRepository->getAll();
         $products = array();
-        if ($article->products){
-            if ($article->updated_at < '2023-10-17'){
-                $products = ProductOptions::select('id','title','slug','sku','images','price')->whereIn('parent_id',explode(',',$article->products))->get();
-                $article_products = ProductOptions::select('id')->whereIn('parent_id',explode(',',$article->products))->pluck('id')->toArray();
-                $article->products = implode(',',$article_products);
-            }else{
-                $products = ProductOptions::select('id','title','slug','sku','images','price')->whereIn('id',explode(',',$article->products))->get();
+        if ($article->products) {
+            if ($article->updated_at < '2023-10-17') {
+                $products = ProductOptions::select('id', 'title', 'slug', 'sku', 'images', 'price')->whereIn('parent_id', explode(',', $article->products))->get();
+                $article_products = ProductOptions::select('id')->whereIn('parent_id', explode(',', $article->products))->pluck('id')->toArray();
+                $article->products = implode(',', $article_products);
+            } else {
+                $products = ProductOptions::select('id', 'title', 'slug', 'sku', 'images', 'price')->whereIn('id', explode(',', $article->products))->get();
             }
         }
 
         $news_add = array();
-        if ($article->news_add){
-            $news_add = Article::select('id','title','slug')->whereIn('id',explode(',',$article->news_add))->limit(3)->get();
+        if ($article->news_add) {
+            $news_add = Article::select('id', 'title', 'slug')->whereIn('id', explode(',', $article->news_add))->limit(3)->get();
         }
 
-        return view('admin.article.update', compact('article','categories','products','news_add'));
+        return view('admin.article.update', compact('article', 'categories', 'products', 'news_add'));
     }
 
     /**
@@ -149,15 +160,21 @@ class ArticleController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
+            if (!empty($data['content']) && $data_root->content != $data['content']) {
+                $ContentHtml = $data['content'];
+                $html = $this->articleRepository->FileHtmlImageToWebp($ContentHtml, $id, 'article');
+                $data['content'] = $html;
+            }
+
             $article = $this->articleRepository->getOneById($id);
-            if (!empty($data['image']) && $data_root->image != $data['image']){
+            if (!empty($data['image']) && $data_root->image != $data['image']) {
                 if (Storage::disk('local')->exists($data_root->image)) {
                     $this->articleRepository->removeImageResize($data_root->image, $this->resizeImage, $id, 'article');
                 }
-                $data['image'] = $this->articleRepository->saveFileUpload($data['image'],$this->resizeImage, $id,'article');
+                $data['image'] = $this->articleRepository->saveFileUpload($data['image'], $this->resizeImage, $id, 'article');
             }
-            if (empty($data['slug'])){
-                $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
+            if (empty($data['slug'])) {
+                $data['slug'] = $req->input('slug') ? \Str::slug($req->input('slug'), '-') : \Str::slug($data['title'], '-');
             }
             $data['products'] = $data['products_add'];
             $article->update($data);
@@ -175,6 +192,11 @@ class ArticleController extends Controller
         }
     }
 
+
+    // Hàm xử lý dữ liệu content tìm kiếm ảnh thay thế ảnh thành webp và lưu về data của web
+    public function saveImagesFromHtml($dataHtml, $url)
+    {
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -188,9 +210,9 @@ class ArticleController extends Controller
         // Đường dẫn tới tệp tin
         $resize = $this->resizeImage;
         $img_path = pathinfo($data->image, PATHINFO_DIRNAME);
-        foreach ($resize as $item){
-            $array_resize_ = str_replace($img_path.'/','/public/article/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
-            $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
+        foreach ($resize as $item) {
+            $array_resize_ = str_replace($img_path . '/', '/public/article/' . $item[0] . 'x' . $item[1] . '/' . $data->id . '-', $data->image);
+            $array_resize_ = str_replace(['.jpg', '.png', '.bmp', '.gif', '.jpeg'], '.webp', $array_resize_);
             Storage::delete($array_resize_);
         }
 
@@ -207,24 +229,24 @@ class ArticleController extends Controller
         $keyword = $request->input('keyword');
         $product_ids = $request->input('product_ids');
         $products = ProductOptions::with(['product' => function ($query) {
-            $query->select('id', 'is_new','sku','brand','slug','attribute_path');
-        }])->whereHas('product', function ($query) use ($keyword,$product_ids) {
+            $query->select('id', 'is_new', 'sku', 'brand', 'slug', 'attribute_path');
+        }])->whereHas('product', function ($query) use ($keyword, $product_ids) {
             $query->where('product_options.active', 1);
-            if ($keyword){
-                $query->where('product_options.title', 'LIKE', '%'.$keyword.'%')
-                ->Orwhere('product_options.slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
-                ->Orwhere('product_options.sku', 'LIKE', '%'.$keyword.'%');
+            if ($keyword) {
+                $query->where('product_options.title', 'LIKE', '%' . $keyword . '%')
+                    ->Orwhere('product_options.slug', 'LIKE', '%' . \Str::slug($keyword, '-') . '%')
+                    ->Orwhere('product_options.sku', 'LIKE', '%' . $keyword . '%');
             }
-            if ($product_ids){
-                $query->whereNotIn('id', explode(',',$product_ids));
+            if ($product_ids) {
+                $query->whereNotIn('id', explode(',', $product_ids));
             }
         })
-            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.normal_price','product_options.slug','product_options.images')
+            ->select('product_options.id', 'product_options.sku', 'product_options.title', 'product_options.parent_id', 'product_options.price', 'product_options.normal_price', 'product_options.slug', 'product_options.images')
             ->addSelect('products.title as product_name')
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->orderBy('product_options.id', 'DESC')
-            ->where('product_options.sku','!=',null)
-            ->where('product_options.slug','!=',null)
+            ->where('product_options.sku', '!=', null)
+            ->where('product_options.slug', '!=', null)
             ->limit(30)->get()->toArray();
 
         $result = array();
@@ -237,9 +259,9 @@ class ArticleController extends Controller
     {
         $keyword = $request->input('keyword');
         $articles_ids = $request->input('articles_ids');
-        $articles = Article::where('title', 'LIKE', '%'.$keyword.'%')
-            ->Orwhere('slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
-            ->whereNotIn('id', explode(',',$articles_ids))
+        $articles = Article::where('title', 'LIKE', '%' . $keyword . '%')
+            ->Orwhere('slug', 'LIKE', '%' . \Str::slug($keyword, '-') . '%')
+            ->whereNotIn('id', explode(',', $articles_ids))
             ->limit(30)->get()->toArray();
 
         $result = array();
