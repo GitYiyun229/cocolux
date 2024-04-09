@@ -10,6 +10,7 @@ use DOMDocument;
 use DOMXPath;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
+
 abstract class BaseRepository implements BaseInterface
 {
     protected $model;
@@ -217,11 +218,14 @@ abstract class BaseRepository implements BaseInterface
         $xpath = new DOMXPath($dom);
         $images = $xpath->query('//img');
         foreach ($images as $image) {
+
             $imageUrl = $image->getAttribute('src');
-            $webpImagePath = $this->saveFileHtmlImageUploadWebp($imageUrl, $id, $nameModule);
-            $webpImagePath = Str::replaceFirst(public_path(), '', $webpImagePath);
-            $webpImagePath = URL::to('/') . '/' . $webpImagePath;
-            $image->setAttribute('src', $webpImagePath);
+            if (!Str::startsWith($imageUrl, '/storage/upload_image/')) {
+                $webpImagePath = $this->saveFileHtmlImageUploadWebp($imageUrl, $id, $nameModule);
+                $webpImagePath = Str::replaceFirst(public_path(), '', $webpImagePath);
+                $webpImagePath = URL::to('/') . '/' . $webpImagePath;
+                $image->setAttribute('src', $webpImagePath);
+            }
         }
         $updatedHtml = $dom->saveHTML();
         return $updatedHtml;

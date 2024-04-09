@@ -126,7 +126,7 @@
                                                             {{ $districtName }}
                                                         </p>
                                                         @forelse($districtStores as $wardName => $store)
-{{--                                                        <div class="group-item mb-1">Tạm hết hàng tại Kho Media</div>--}}
+                                                            {{-- <div class="group-item mb-1">Tạm hết hàng tại Kho Media</div>--}}
                                                             <div class="group-item mb-1"><span>Còn hàng</span> tại {{ $store->name }}</div>
                                                         @empty
                                                         @endforelse
