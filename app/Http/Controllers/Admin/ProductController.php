@@ -258,7 +258,6 @@ class ProductController extends Controller
             $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
             Storage::delete($array_resize_);
         }
-
         $product_option = ProductOptions::where('parent_id',$id)->select('id')->get(); // check product exist in cat
         if (count($product_option)){
             return [
