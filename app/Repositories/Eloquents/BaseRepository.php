@@ -220,7 +220,7 @@ abstract class BaseRepository implements BaseInterface
         foreach ($images as $image) {
 
             $imageUrl = $image->getAttribute('src');
-            if (!Str::startsWith($imageUrl, '/storage/upload_image/')) {
+            if (!Str::startsWith($imageUrl, '/storage/upload_image/') || !Str::startsWith($imageUrl, '/images')) {
                 $webpImagePath = $this->saveFileHtmlImageUploadWebp($imageUrl, $id, $nameModule);
                 $webpImagePath = Str::replaceFirst(public_path(), '', $webpImagePath);
                 $webpImagePath = URL::to('/') . '/' . $webpImagePath;
