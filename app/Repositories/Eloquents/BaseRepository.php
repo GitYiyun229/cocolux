@@ -223,7 +223,7 @@ abstract class BaseRepository implements BaseInterface
             if (Str::startsWith($imageUrl, 'https')) {
                 $webpImagePath = $this->saveFileHtmlImageUploadWebp($imageUrl, $id, $nameModule);
                 // $webpImagePath = Str::replaceFirst(public_path(), '', $webpImagePath);
-                $webpImagePath = URL::to('/') . '/' . $webpImagePath;
+                // $webpImagePath = URL::to('/') . '/' . $webpImagePath;
                 $image->setAttribute('src', $webpImagePath);
             }
         }
