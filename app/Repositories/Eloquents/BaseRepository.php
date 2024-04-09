@@ -244,7 +244,7 @@ abstract class BaseRepository implements BaseInterface
         $fileName = $imageName . '.webp';
         if (!empty($id)) {
             $thumbnail = Image::make(asset($file))->encode('webp');
-            $thumbnailPath = 'storage/' . $nameModule . '/' . 'HtmlWebp' . '/' . $id . '-' . $fileName;
+            $thumbnailPath = '/'.'storage/' . $nameModule . '/' . 'HtmlWebp' . '/' . $id . '-' . $fileName;
             Storage::makeDirectory('public/' . $nameModule . '/' . 'HtmlWebp'  . '/');
             $thumbnail->save($thumbnailPath);
         }
