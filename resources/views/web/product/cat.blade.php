@@ -98,10 +98,10 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="layout-list-items mb-4">
                                 @if(!empty($products))
                                 @forelse($products as $item)
+                           
                                     <a href="{{ route('detailProduct',['slug' => !empty($item->slug)?trim($item->slug):trim($item->product->slug),'sku' => $item->sku]) }}" class="product-template">
                                         @if($item->promotionItem)
                                             @if($item->promotionItem->price != $item->normal_price)

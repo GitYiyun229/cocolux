@@ -40,7 +40,7 @@ class ProductController extends Controller
     protected $merchantId = 36282;
     protected $apiKey = 'sk8Vbo5ZhQ2qStQFwF49xBE1TzZqaFLs';
     protected $apiSecret = '9iUR1zOPvLUlsxaYwUE7zQn0p9ogvtly';
-//    protected $apiUrl = 'https://dev-api.baokim.vn';
+    //    protected $apiUrl = 'https://dev-api.baokim.vn';
     protected $apiUrl = 'https://api.baokim.vn';
 
     protected $linkApi = "https://open.nhanh.vn";
@@ -51,9 +51,9 @@ class ProductController extends Controller
         'accessToken' => "XGZ5UbNYrSuFHqccvHaRyUmalKXWbQnMTPKKQTmH5zWchgEFv9SRKUPAI4UIlREA0XksifCQ8KGaRq2g7XwWL1xI2DmmZhFvRUln5WItTuXTdpAH1n1hMjMI6THgwou4Jqb3L",
     ];
 
-    protected $productCategoryRepository,$productRepository;
+    protected $productCategoryRepository, $productRepository;
     protected $dealService;
-    public function __construct(ProductCategoryInterface $productCategoryRepository,ProductInterface $productRepository,DealService $dealService)
+    public function __construct(ProductCategoryInterface $productCategoryRepository, ProductInterface $productRepository, DealService $dealService)
     {
         $this->productCategoryRepository = $productCategoryRepository;
         $this->productRepository = $productRepository;
@@ -64,32 +64,32 @@ class ProductController extends Controller
     // thanh toan bao kim
     public function orderSendBK($orderId)
     {
-        $order = Order::where('id',$orderId)->with(['orderItems'])->first();
-        if ($order){
+        $order = Order::where('id', $orderId)->with(['orderItems'])->first();
+        if ($order) {
             $maDonHang = 'DH_BK_' . str_pad($orderId, 8, '0', STR_PAD_LEFT);
 
             $total_money = 0;
-            if (!empty($order->orderItems)){
+            if (!empty($order->orderItems)) {
                 $products = $order->orderItems;
-                foreach ($products as $item){
-                    $item_total = $item->product_number*$item->product_price;
-                    $total_money = $total_money+$item_total;
+                foreach ($products as $item) {
+                    $item_total = $item->product_number * $item->product_price;
+                    $total_money = $total_money + $item_total;
                 }
             }
             $total_money_after = $total_money + $order->price_ship_coco - $order->price_coupon_now;
             getRequirement::setKey($this->apiKey, $this->apiSecret);
             getRequirement::setUrl($this->apiUrl);
             $webhook = new Connect();
-            $description = 'Đơn hàng từ cocolux.com, mã đơn hàng: '.$maDonHang;
+            $description = 'Đơn hàng từ cocolux.com, mã đơn hàng: ' . $maDonHang;
             $data = [
                 'mrc_order_id' => $maDonHang,
                 'total_amount' => $total_money_after,
                 'description' => $description,
-                'url_success' => route('orderProductSuccess',['id'=>$orderId]),
+                'url_success' => route('orderProductSuccess', ['id' => $orderId]),
                 "merchant_id" => $this->merchantId, //baokim cung cap
-                "url_detail" => route('orderProductSuccess',['id'=>$orderId]),
+                "url_detail" => route('orderProductSuccess', ['id' => $orderId]),
                 'webhooks' => route('verifyWebhook'), //nhan thông tin thanh toan post
-                'customer_phone' => '0'.$order->tel,
+                'customer_phone' => '0' . $order->tel,
             ];
             $response = $webhook->createOrder($data);
             $order->update([
@@ -98,16 +98,16 @@ class ProductController extends Controller
                 'baokim_hook' => $response['data']['paymentUrl']
             ]);
 
-            if ($response && !$response['responseMessage']){
+            if ($response && !$response['responseMessage']) {
                 $url_redirect = $response['data']['paymentUrl'];
                 return redirect($url_redirect);
-            }else{
+            } else {
                 Session::flash('danger', 'Thanh toán không thành công, đơn hàng đã ghi nhận');
-                return redirect()->route('orderProductSuccess',['id'=>$orderId]);
+                return redirect()->route('orderProductSuccess', ['id' => $orderId]);
             }
-        }else{
+        } else {
             Session::flash('danger', 'Thanh toán không thành công, đơn hàng đã ghi nhận');
-            return redirect()->route('orderProductSuccess',['id'=>$orderId]);
+            return redirect()->route('orderProductSuccess', ['id' => $orderId]);
         }
     }
 
@@ -123,7 +123,7 @@ class ProductController extends Controller
         return redirect()->route('home');
     }
 
-    public function checkOrder($baokimId,$orderId)
+    public function checkOrder($baokimId, $orderId)
     {
         getRequirement::setKey($this->apiKey, $this->apiSecret);
         getRequirement::setUrl($this->apiUrl);
@@ -138,7 +138,7 @@ class ProductController extends Controller
 
     public function verifyWebhook(Request $request)
     {
-		\Log::info([
+        \Log::info([
             'message' => $request->getContent(),
             'line' => __LINE__,
             'method' => __METHOD__
@@ -147,8 +147,8 @@ class ProductController extends Controller
 
         $webhook = new Webhook($this->apiSecret);
         $check_ok = $webhook->verify($request->getContent());
-        if(isset($check_ok)){
-            $id = (int) substr($webhookData['order']['mrc_order_id'],6);
+        if (isset($check_ok)) {
+            $id = (int) substr($webhookData['order']['mrc_order_id'], 6);
             $total_amount = $webhookData['txn']['total_amount'];
             $order = Order::findOrFail($id);
             $order->update([
@@ -172,29 +172,30 @@ class ProductController extends Controller
             'baokim_message' => 'Thanh toán không thành công',
         ]);
         Session::flash('danger', 'Thanh toán không thành công, đơn hàng đã ghi nhận');
-        return redirect()->route('orderProductSuccess',['id'=>$orderId]);
+        return redirect()->route('orderProductSuccess', ['id' => $orderId]);
     }
 
     //end thanh toan bao kim
 
-    public function cat(Request $request, $slug,$id){
+    public function cat(Request $request, $slug, $id)
+    {
         $cat = $this->productCategoryRepository->getOneById($id);
         if (!$cat) {
             abort(404);
         }
-        $cats = ProductsCategories::where(['active' => 1,'parent_id' => $id])->orWhere(['id' => $id])->select('id','title','slug','parent_id')->get();
-        $attributes = Attribute::where(['active' => 1,'type' => 'select'])->whereIn('id',  explode(',',$cat->attribute_id))->select('id','name','code')->with(['attributeValue'=>function($query){
-            $query->select('id', 'name', 'attribute_id','slug');
+        $cats = ProductsCategories::where(['active' => 1, 'parent_id' => $id])->orWhere(['id' => $id])->select('id', 'title', 'slug', 'parent_id')->get();
+        $attributes = Attribute::where(['active' => 1, 'type' => 'select'])->whereIn('id',  explode(',', $cat->attribute_id))->select('id', 'name', 'code')->with(['attributeValue' => function ($query) {
+            $query->select('id', 'name', 'attribute_id', 'slug');
         }])->get();
 
         $list_id_request = array();
         $list_id = array();
-        foreach ($attributes as $item){
+        foreach ($attributes as $item) {
             if ($request->input($item->code)) {
-                $list_id_request[] = $item->id.':'.$request->input($item->code);
+                $list_id_request[] = $item->id . ':' . $request->input($item->code);
             }
-            foreach ($item->attributeValue as $value){
-                $list_id[] = $item->id.':'.$value->id;
+            foreach ($item->attributeValue as $value) {
+                $list_id[] = $item->id . ':' . $value->id;
             }
         }
 
@@ -209,24 +210,24 @@ class ProductController extends Controller
         $columnToSort = 'product_options.id';
         $orderDirection = 'desc';
 
-        foreach ($sorts as $k => $item){
+        foreach ($sorts as $k => $item) {
             if ($request->input('sort')) {
-                if ($request->input('sort') == 1){
+                if ($request->input('sort') == 1) {
                     $columnToSort = 'products.is_home';
                     $orderDirection = 'desc';
-                }elseif ($request->input('sort') == 2){
+                } elseif ($request->input('sort') == 2) {
                     $columnToSort = 'products.is_hot';
                     $orderDirection = 'desc';
-                }elseif ($request->input('sort') == 3){
+                } elseif ($request->input('sort') == 3) {
                     $columnToSort = 'products.is_new';
                     $orderDirection = 'desc';
-                }elseif ($request->input('sort') == 4){
+                } elseif ($request->input('sort') == 4) {
                     $columnToSort = 'product_options.price';
                     $orderDirection = 'desc';
-                }elseif ($request->input('sort') == 5){
+                } elseif ($request->input('sort') == 5) {
                     $columnToSort = 'product_options.price';
                     $orderDirection = 'asc';
-                }else{
+                } else {
                     $columnToSort = 'product_options.id';
                     $orderDirection = 'desc';
                 }
@@ -235,39 +236,39 @@ class ProductController extends Controller
 
         $now = Carbon::now();
         $products = ProductOptions::with(['product' => function ($query) {
-                $query->select('id', 'is_new', 'brand','slug','attribute_path');
-            }])->whereHas('product', function ($query) use ($id,$list_id_request) {
-                $query->select('id','title','slug','category_path','attribute_path')->where('active', 1)
-                    ->where('category_path', 'REGEXP', '[[:<:]]'.$id.'[[:>:]]');
-                if ($list_id_request){
-                    foreach ($list_id_request as $item){
-                        $query->where('attribute_path','like', '%'.$item.'%');
-                    }
+            $query->select('id', 'is_new', 'brand', 'slug', 'attribute_path');
+        }])->whereHas('product', function ($query) use ($id, $list_id_request) {
+            $query->select('id', 'title', 'slug', 'category_path', 'attribute_path')->where('active', 1)
+                ->where('category_path', 'REGEXP', '[[:<:]]' . $id . '[[:>:]]');
+            if ($list_id_request) {
+                foreach ($list_id_request as $item) {
+                    $query->where('attribute_path', 'like', '%' . $item . '%');
                 }
-            })
-            ->with(['promotionItem' => function($query) use ($now){
+            }
+        })
+            ->with(['promotionItem' => function ($query) use ($now) {
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
             }])
-            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.normal_price','product_options.slug','product_options.images','product_options.hot_deal','product_options.flash_deal')
+            ->select('product_options.id', 'product_options.sku', 'product_options.title', 'product_options.parent_id', 'product_options.price', 'product_options.normal_price', 'product_options.slug', 'product_options.images', 'product_options.hot_deal', 'product_options.flash_deal')
             ->addSelect('products.title as product_name')
-            ->where('product_options.sku','!=',null)
+            ->where('product_options.sku', '!=', null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->orderBy($columnToSort, $orderDirection)
             ->paginate(30);
 
         $total_products = ProductOptions::with(['product' => function ($query) {
-                $query->select('id', 'is_new', 'brand','slug','attribute_path');
-            }])->whereHas('product', function ($query) use ($id,$list_id_request) {
-                $query->where('active', 1)->where('category_path', 'REGEXP', '[[:<:]]'.$id.'[[:>:]]');
-                if ($list_id_request){
-                    foreach ($list_id_request as $item){
-                        $query->where('attribute_path','like', '%'.$item.'%');
-                    }
+            $query->select('id', 'is_new', 'brand', 'slug', 'attribute_path');
+        }])->whereHas('product', function ($query) use ($id, $list_id_request) {
+            $query->where('active', 1)->where('category_path', 'REGEXP', '[[:<:]]' . $id . '[[:>:]]');
+            if ($list_id_request) {
+                foreach ($list_id_request as $item) {
+                    $query->where('attribute_path', 'like', '%' . $item . '%');
                 }
-            })
+            }
+        })
             ->select('id', 'parent_id')
-            ->where('sku','!=',null)
+            ->where('sku', '!=', null)
             ->get()->pluck('attribute_path')->toArray();
 
         $countArray = [];
@@ -283,41 +284,42 @@ class ProductController extends Controller
         $currentUrl = url()->full();
         $products->setPath($currentUrl);
 
-        SEOTools::setTitle($cat->seo_title?$cat->seo_title:$cat->title);
-        SEOTools::setDescription($cat->seo_description?$cat->seo_description:$cat->description);
-        SEOTools::addImages($cat->image?asset($cat->image):null);
+        SEOTools::setTitle($cat->seo_title ? $cat->seo_title : $cat->title);
+        SEOTools::setDescription($cat->seo_description ? $cat->seo_description : $cat->description);
+        SEOTools::addImages($cat->image ? asset($cat->image) : null);
         SEOTools::setCanonical(url()->current());
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('cocolux.com');
-        SEOMeta::setKeywords($cat->seo_keyword?$cat->seo_keyword:$cat->title);
+        SEOMeta::setKeywords($cat->seo_keyword ? $cat->seo_keyword : $cat->title);
 
-        return view('web.product.cat',compact('cat','cats','products','attributes','sorts','countArray'));
+        return view('web.product.cat', compact('cat', 'cats', 'products', 'attributes', 'sorts', 'countArray'));
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $keyword = $request->input('keyword');
         $id = $request->input('categories');
-        if ($id){
+        if ($id) {
             $cat = $this->productCategoryRepository->getOneById($id);
-            $cats = ProductsCategories::where(['active' => 1,'parent_id' => $id])->orWhere(['id' => $id])->select('id','title','slug','parent_id')->get();
-        }else{
+            $cats = ProductsCategories::where(['active' => 1, 'parent_id' => $id])->orWhere(['id' => $id])->select('id', 'title', 'slug', 'parent_id')->get();
+        } else {
             $cat = null;
-            $cats = ProductsCategories::where(['active' => 1,'parent_id' => null])->select('id','title','slug','parent_id')->get();
+            $cats = ProductsCategories::where(['active' => 1, 'parent_id' => null])->select('id', 'title', 'slug', 'parent_id')->get();
         }
 
-        $attributes = Attribute::where(['active' => 1,'type' => 'select'])->select('id','name','code')->with(['attributeValue'=>function($query){
-            $query->select('id', 'name', 'attribute_id','slug');
+        $attributes = Attribute::where(['active' => 1, 'type' => 'select'])->select('id', 'name', 'code')->with(['attributeValue' => function ($query) {
+            $query->select('id', 'name', 'attribute_id', 'slug');
         }])->get();
 
         $list_id_request = array();
         $list_id = array();
-        foreach ($attributes as $item){
+        foreach ($attributes as $item) {
             if ($request->input($item->code)) {
-                $list_id_request[] = $item->id.':'.$request->input($item->code);
+                $list_id_request[] = $item->id . ':' . $request->input($item->code);
             }
-            foreach ($item->attributeValue as $value){
-                $list_id[] = $item->id.':'.$value->id;
+            foreach ($item->attributeValue as $value) {
+                $list_id[] = $item->id . ':' . $value->id;
             }
         }
 
@@ -332,24 +334,24 @@ class ProductController extends Controller
         $columnToSort = 'product_options.id';
         $orderDirection = 'desc';
 
-        foreach ($sorts as $k => $item){
+        foreach ($sorts as $k => $item) {
             if ($request->input('sort')) {
-                if ($request->input('sort') == 1){
+                if ($request->input('sort') == 1) {
                     $columnToSort = 'products.is_home';
                     $orderDirection = 'desc';
-                }elseif ($request->input('sort') == 2){
+                } elseif ($request->input('sort') == 2) {
                     $columnToSort = 'products.is_hot';
                     $orderDirection = 'desc';
-                }elseif ($request->input('sort') == 3){
+                } elseif ($request->input('sort') == 3) {
                     $columnToSort = 'products.is_new';
                     $orderDirection = 'desc';
-                }elseif ($request->input('sort') == 4){
+                } elseif ($request->input('sort') == 4) {
                     $columnToSort = 'product_options.price';
                     $orderDirection = 'desc';
-                }elseif ($request->input('sort') == 5){
+                } elseif ($request->input('sort') == 5) {
                     $columnToSort = 'product_options.price';
                     $orderDirection = 'asc';
-                }else{
+                } else {
                     $columnToSort = 'product_options.id';
                     $orderDirection = 'desc';
                 }
@@ -358,74 +360,74 @@ class ProductController extends Controller
 
         $now = Carbon::now();
         $products = ProductOptions::with(['product' => function ($query) {
-            $query->select('id', 'is_new', 'brand','slug','attribute_path');
-        }])->whereHas('product', function ($query) use ($id,$list_id_request) {
+            $query->select('id', 'is_new', 'brand', 'slug', 'attribute_path');
+        }])->whereHas('product', function ($query) use ($id, $list_id_request) {
             $query->where('active', 1);
-            if ($id){
-                $query->where('category_path', 'LIKE', '%'.$id.'%');
+            if ($id) {
+                $query->where('category_path', 'LIKE', '%' . $id . '%');
             }
-            if ($list_id_request){
-                foreach ($list_id_request as $item){
-                    $query->where('attribute_path','like', '%'.$item.'%');
+            if ($list_id_request) {
+                foreach ($list_id_request as $item) {
+                    $query->where('attribute_path', 'like', '%' . $item . '%');
                 }
             }
         })
-            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.normal_price','product_options.slug','product_options.images','product_options.hot_deal','product_options.flash_deal')
+            ->select('product_options.id', 'product_options.sku', 'product_options.title', 'product_options.parent_id', 'product_options.price', 'product_options.normal_price', 'product_options.slug', 'product_options.images', 'product_options.hot_deal', 'product_options.flash_deal')
             ->addSelect('products.title as product_name')
-            ->with(['promotionItem' => function($query) use ($now){
+            ->with(['promotionItem' => function ($query) use ($now) {
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
             }])
-            ->where('product_options.sku','!=',null)
-            ->where(function($query) use ($keyword){
-                if ($keyword){
+            ->where('product_options.sku', '!=', null)
+            ->where(function ($query) use ($keyword) {
+                if ($keyword) {
                     $keywords = explode(' ', $keyword);
                     $query->where(function ($query) use ($keywords) {
                         foreach ($keywords as $keyword) {
                             $query->where(function ($query) use ($keyword) {
-                                $query->where('product_options.title', 'LIKE', '%'.$keyword.'%')
-                                    ->orWhere('product_options.slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
-                                    ->orWhere('product_options.sku', 'LIKE', '%'.$keyword.'%');
+                                $query->where('product_options.title', 'LIKE', '%' . $keyword . '%')
+                                    ->orWhere('product_options.slug', 'LIKE', '%' . \Str::slug($keyword, '-') . '%')
+                                    ->orWhere('product_options.sku', 'LIKE', '%' . $keyword . '%');
                             });
                         }
                     });
                 }
             })
-            ->where('product_options.active',1)
+            ->where('product_options.active', 1)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->orderBy($columnToSort, $orderDirection)
             ->paginate(30);
 
         $total_products = ProductOptions::with(['product' => function ($query) {
-            $query->select('id', 'is_new', 'brand','slug','attribute_path');
-        }])->whereHas('product', function ($query) use ($id,$list_id_request,$keyword) {
+            $query->select('id', 'is_new', 'brand', 'slug', 'attribute_path');
+        }])->whereHas('product', function ($query) use ($id, $list_id_request, $keyword) {
             $query->where('active', 1);
-            if ($id){
-                $query->where('category_path', 'LIKE', '%'.$id.'%');
+            if ($id) {
+                $query->where('category_path', 'LIKE', '%' . $id . '%');
             }
-            if ($list_id_request){
-                foreach ($list_id_request as $item){
-                    $query->where('attribute_path','like', '%'.$item.'%');
+            if ($list_id_request) {
+                foreach ($list_id_request as $item) {
+                    $query->where('attribute_path', 'like', '%' . $item . '%');
                 }
             }
         })
             ->select('id', 'parent_id')
-            ->where('sku','!=',null)
-            ->where(function($query) use ($keyword){
-                if ($keyword){
+            ->where('sku', '!=', null)
+            ->where(function ($query) use ($keyword) {
+                if ($keyword) {
                     $keywords = explode(' ', $keyword);
                     $query->where(function ($query) use ($keywords) {
                         foreach ($keywords as $keyword) {
                             $query->where(function ($query) use ($keyword) {
-                                $query->where('title', 'LIKE', '%'.$keyword.'%')
-                                    ->orWhere('slug', 'LIKE', '%'.\Str::slug($keyword, '-').'%')
-                                    ->orWhere('sku', 'LIKE', '%'.$keyword.'%');
+                                $query->where('title', 'LIKE', '%' . $keyword . '%')
+                                    ->orWhere('slug', 'LIKE', '%' . \Str::slug($keyword, '-') . '%')
+                                    ->orWhere('sku', 'LIKE', '%' . $keyword . '%');
                             });
                         }
                     });
                 }
             })
-            ->where('active',1)
+            ->where('active', 1)
             ->get()->pluck('attribute_path')->toArray();
 
         $countArray = [];
@@ -449,24 +451,25 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($keyword);
 
-        return view('web.product.search',compact('cat','cats','products','attributes','sorts','countArray','keyword'));
+        return view('web.product.search', compact('cat', 'cats', 'products', 'attributes', 'sorts', 'countArray', 'keyword'));
     }
 
-    public function brand(Request $request, $slug,$id){
+    public function brand(Request $request, $slug, $id)
+    {
         $brand = AttributeValues::findOrFail($id);
-        $cats = ProductsCategories::where(['active' => 1,'parent_id' => null])->select('id','title','slug','parent_id')->get();
-        $attributes = Attribute::where(['active' => 1,'type' => 'select'])->select('id','name','code')->with(['attributeValue'=>function($query){
-            $query->select('id', 'name', 'attribute_id','slug');
+        $cats = ProductsCategories::where(['active' => 1, 'parent_id' => null])->select('id', 'title', 'slug', 'parent_id')->get();
+        $attributes = Attribute::where(['active' => 1, 'type' => 'select'])->select('id', 'name', 'code')->with(['attributeValue' => function ($query) {
+            $query->select('id', 'name', 'attribute_id', 'slug');
         }])->get();
 
         $list_id_request = array();
         $list_id = array();
-        foreach ($attributes as $item){
+        foreach ($attributes as $item) {
             if ($request->input($item->code)) {
-                $list_id_request[] = $item->id.':'.$request->input($item->code);
+                $list_id_request[] = $item->id . ':' . $request->input($item->code);
             }
-            foreach ($item->attributeValue as $value){
-                $list_id[] = $item->id.':'.$value->id;
+            foreach ($item->attributeValue as $value) {
+                $list_id[] = $item->id . ':' . $value->id;
             }
         }
 
@@ -481,24 +484,24 @@ class ProductController extends Controller
         $columnToSort = 'product_options.id';
         $orderDirection = 'desc';
 
-        foreach ($sorts as $k => $item){
+        foreach ($sorts as $k => $item) {
             if ($request->input('sort')) {
-                if ($request->input('sort') == 1){
+                if ($request->input('sort') == 1) {
                     $columnToSort = 'products.is_home';
                     $orderDirection = 'desc';
-                }elseif ($request->input('sort') == 2){
+                } elseif ($request->input('sort') == 2) {
                     $columnToSort = 'products.is_hot';
                     $orderDirection = 'desc';
-                }elseif ($request->input('sort') == 3){
+                } elseif ($request->input('sort') == 3) {
                     $columnToSort = 'products.is_new';
                     $orderDirection = 'desc';
-                }elseif ($request->input('sort') == 4){
+                } elseif ($request->input('sort') == 4) {
                     $columnToSort = 'product_options.price';
                     $orderDirection = 'desc';
-                }elseif ($request->input('sort') == 5){
+                } elseif ($request->input('sort') == 5) {
                     $columnToSort = 'product_options.price';
                     $orderDirection = 'asc';
-                }else{
+                } else {
                     $columnToSort = 'product_options.id';
                     $orderDirection = 'desc';
                 }
@@ -507,33 +510,33 @@ class ProductController extends Controller
 
         $now = Carbon::now();
         $products = ProductOptions::with(['product' => function ($query) {
-            $query->select('id', 'is_new', 'brand','slug','attribute_path');
-        }])->whereHas('product', function ($query) use ($brand,$list_id_request) {
-            $query->where('active', 1)->where('attribute_path', 'LIKE', '%'.$brand->attribute_id.':'.$brand->id.',%');
-            if ($list_id_request){
-                foreach ($list_id_request as $item){
-                    $query->where('attribute_path','like', '%'.$item.'%');
+            $query->select('id', 'is_new', 'brand', 'slug', 'attribute_path');
+        }])->whereHas('product', function ($query) use ($brand, $list_id_request) {
+            $query->where('active', 1)->where('attribute_path', 'LIKE', '%' . $brand->attribute_id . ':' . $brand->id . ',%');
+            if ($list_id_request) {
+                foreach ($list_id_request as $item) {
+                    $query->where('attribute_path', 'like', '%' . $item . '%');
                 }
             }
         })
-            ->with(['promotionItem' => function($query) use ($now){
+            ->with(['promotionItem' => function ($query) use ($now) {
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
             }])
-            ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.normal_price','product_options.slug','product_options.images','product_options.hot_deal','product_options.flash_deal')
+            ->select('product_options.id', 'product_options.sku', 'product_options.title', 'product_options.parent_id', 'product_options.price', 'product_options.normal_price', 'product_options.slug', 'product_options.images', 'product_options.hot_deal', 'product_options.flash_deal')
             ->addSelect('products.title as product_name')
-            ->where('product_options.sku','!=',null)
+            ->where('product_options.sku', '!=', null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->orderBy($columnToSort, $orderDirection)
             ->paginate(30);
 
         $total_products = ProductOptions::with(['product' => function ($query) {
-            $query->select('id', 'is_new', 'brand','slug','attribute_path');
-        }])->whereHas('product', function ($query) use ($brand,$list_id_request) {
-            $query->where('active', 1)->where('attribute_path', 'LIKE', '%'.$brand->attribute_id.':'.$brand->id.',%');
-            if ($list_id_request){
-                foreach ($list_id_request as $item){
-                    $query->where('attribute_path','like', '%'.$item.'%');
+            $query->select('id', 'is_new', 'brand', 'slug', 'attribute_path');
+        }])->whereHas('product', function ($query) use ($brand, $list_id_request) {
+            $query->where('active', 1)->where('attribute_path', 'LIKE', '%' . $brand->attribute_id . ':' . $brand->id . ',%');
+            if ($list_id_request) {
+                foreach ($list_id_request as $item) {
+                    $query->where('attribute_path', 'like', '%' . $item . '%');
                 }
             }
         })
@@ -553,52 +556,54 @@ class ProductController extends Controller
         $currentUrl = url()->full();
         $products->setPath($currentUrl);
 
-        SEOTools::setTitle($brand->seo_title?$brand->seo_title:$brand->name);
-        SEOTools::setDescription($brand->seo_description?$brand->seo_description:'');
-        SEOTools::addImages($brand->image?asset($brand->image):null);
+        SEOTools::setTitle($brand->seo_title ? $brand->seo_title : $brand->name);
+        SEOTools::setDescription($brand->seo_description ? $brand->seo_description : '');
+        SEOTools::addImages($brand->image ? asset($brand->image) : null);
         SEOTools::setCanonical(url()->current());
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('cocolux.com');
-        SEOMeta::setKeywords($brand->seo_keyword?$brand->seo_keyword:$brand->name);
+        SEOMeta::setKeywords($brand->seo_keyword ? $brand->seo_keyword : $brand->name);
 
-        return view('web.product.brand',compact('brand','cats','products','attributes','sorts','countArray'));
+        return view('web.product.brand', compact('brand', 'cats', 'products', 'attributes', 'sorts', 'countArray'));
     }
 
-    public function detail ($slug,$sku){
+    public function detail($slug, $sku)
+    {
         $now = Carbon::now();
-        $product = ProductOptions::where(['sku' => $sku])->with(['product' => function($query){
-            $query->select('id','category_id','sku','slug','title','attributes','category_path','attribute_path','category_id','description','brand','seo_title','seo_keyword','seo_description');
-        }])->with(['promotionItem' => function($query) use ($now){
+        $product = ProductOptions::where(['sku' => $sku])->with(['product' => function ($query) {
+            $query->select('id', 'category_id', 'sku', 'slug', 'title', 'attributes', 'category_path', 'attribute_path', 'category_id', 'description', 'brand', 'seo_title', 'seo_keyword', 'seo_description');
+        }])->with(['promotionItem' => function ($query) use ($now) {
             $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                 ->orderBy('price', 'asc');
-        }])->where('sku','!=',null)->first();
+        }])->where('sku', '!=', null)->first();
         if (!$product) {
             abort(404);
         }
-        if (isset($product->stocks)){
+        // dd($product);
+        if (isset($product->stocks)) {
             $stocks = (object)$product->stocks;
             $count_store = 0;
             $id_stores = array();
-            foreach ($stocks as $item){
-                $active_store = Store::with(['cities','districts','wards'])->where('id', $item->id)->where('active',1)->first();
-                if ($item->total_quantity && $active_store){
+            foreach ($stocks as $item) {
+                $active_store = Store::with(['cities', 'districts', 'wards'])->where('id', $item->id)->where('active', 1)->first();
+                if ($item->total_quantity && $active_store) {
                     $id_stores[] = $item->id;
                     $count_store++;
                 }
             }
-            $stores = Store::with(['cities','districts','wards'])->whereIn('id', $id_stores)->where('active',1)->get()
+            $stores = Store::with(['cities', 'districts', 'wards'])->whereIn('id', $id_stores)->where('active', 1)->get()
                 ->groupBy([
                     'cities.name',
                     'districts.name',
                 ]);
-        }else{
+        } else {
             $count_store = 13;
             $stocks = null;
             $stores = null;
         }
         $brand = null;
-        if ($product->attribute_path){
+        if ($product->attribute_path) {
             $pairs = explode(',', $product->attribute_path);
 
             $id_brand = null;
@@ -610,19 +615,19 @@ class ProductController extends Controller
                     break;
                 }
             }
-            $brand = AttributeValues::where('id',$id_brand)->first();
+            $brand = AttributeValues::where('id', $id_brand)->first();
         }
 
         $list_image = json_decode($product->images);
-        $product_root = Product::where(['id' => $product->parent_id])->select('id','slug','title','image','brand','category_id','description','attributes')->first();
+        $product_root = Product::where(['id' => $product->parent_id])->select('id', 'slug', 'title', 'image', 'brand', 'category_id', 'description', 'attributes')->first();
         if (!$product_root) {
             abort(404);
         }
-        $comments = ProductComments::where(['product_id' => $product_root->id,'active' => 1])->get();
+        $comments = ProductComments::where(['product_id' => $product_root->id, 'active' => 1])->get();
         $ratings = ProductComments::select('rating', DB::raw('COUNT(*) as count'))
             ->groupBy('rating')
             ->orderBy('rating')
-            ->where(['product_id' => $product_root->id,'active' => 1])
+            ->where(['product_id' => $product_root->id, 'active' => 1])
             ->pluck('count', 'rating')
             ->all();
         $percentages = [5 => 0, 4 => 0, 3 => 0, 2 => 0, 1 => 0];
@@ -630,71 +635,72 @@ class ProductController extends Controller
         foreach ($ratings as $rating => $count) {
             $percentages[$rating] = ($count / $totalComments) * 100;
         }
-        $averageRating = round(ProductComments::where(['product_id' => $product_root->id,'active' => 1])->average('rating'),1);
+        $averageRating = round(ProductComments::where(['product_id' => $product_root->id, 'active' => 1])->average('rating'), 1);
 
         // In kết quả
-//        foreach ($percentages as $rating => $percentage) {
-//            echo "Rating: $rating, Percentage: $percentage%\n";
-//        }die;
+        //        foreach ($percentages as $rating => $percentage) {
+        //            echo "Rating: $rating, Percentage: $percentage%\n";
+        //        }die;
 
-        $attribute_value = !empty($product_root->attributes)?$product_root->attributes:null;
+        $attribute_value = !empty($product_root->attributes) ? $product_root->attributes : null;
         $attribute_value = collect($attribute_value)->sortByDesc('id')->values()->all();
 
-        $list_product_parent = ProductOptions::select('id','images','title','slug','sku')
+        $list_product_parent = ProductOptions::select('id', 'images', 'title', 'slug', 'sku')
             ->where(['parent_id' => $product->parent_id])
-            ->where('sku','!=',null)
-            ->with(['product' => function($query){
-                $query->select('id','sku','slug','title');
-            }])->orderBy('is_default','DESC')->get();
+            ->where('sku', '!=', null)
+            ->with(['product' => function ($query) {
+                $query->select('id', 'sku', 'slug', 'title');
+            }])->orderBy('is_default', 'DESC')->get();
 
-        $products = ProductOptions::select('product_options.id','product_options.title','product_options.slug','product_options.images','product_options.price','product_options.normal_price','product_options.normal_price','products.category_id','product_options.sku','product_options.brand','product_options.hot_deal','product_options.flash_deal')
+        $products = ProductOptions::select('product_options.id', 'product_options.title', 'product_options.slug', 'product_options.images', 'product_options.price', 'product_options.normal_price', 'product_options.normal_price', 'products.category_id', 'product_options.sku', 'product_options.brand', 'product_options.hot_deal', 'product_options.flash_deal')
             ->where(['product_options.active' => 1])
-            ->with(['promotionItem' => function($query) use ($now){
+            ->with(['promotionItem' => function ($query) use ($now) {
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
             }])
             ->whereHas('product', function ($query) use ($brand) {
                 $query->where('active', 1);
-                if ($brand){
-                    $query->where('attribute_path', 'LIKE', '%'.$brand->attribute_id.':'.$brand->id.'%');
+                if ($brand) {
+                    $query->where('attribute_path', 'LIKE', '%' . $brand->attribute_id . ':' . $brand->id . '%');
                 }
             })
-            ->where('product_options.sku','!=',null)
-            ->where('product_options.slug','!=',null)
+            ->where('product_options.sku', '!=', null)
+            ->where('product_options.slug', '!=', null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->addSelect('products.slug as product_slug')
             ->limit(3)->orderBy('id', 'DESC')->get();
 
-        $list_cats = ProductsCategories::select('id','slug','title')->whereIn('id',explode(',',$product->product->category_path))->get();
+        $list_cats = ProductsCategories::select('id', 'slug', 'title')->whereIn('id', explode(',', $product->product->category_path))->get();
 
-        $product_in_cat = ProductOptions::select('product_options.id','product_options.title','product_options.slug','product_options.images','product_options.price','product_options.normal_price','product_options.normal_price','products.category_id','product_options.sku','product_options.brand','product_options.hot_deal','product_options.flash_deal')
+        $product_in_cat = ProductOptions::select('product_options.id', 'product_options.title', 'product_options.slug', 'product_options.images', 'product_options.price', 'product_options.normal_price', 'product_options.normal_price', 'products.category_id', 'product_options.sku', 'product_options.brand', 'product_options.hot_deal', 'product_options.flash_deal')
             ->where(['product_options.active' => 1])
             ->whereHas('product', function ($query) use ($product) {
                 $query->where('active', 1)->where('category_id', $product->product->category_id);;
             })
-            ->with(['promotionItem' => function($query) use ($now){
+            ->with(['promotionItem' => function ($query) use ($now) {
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
             }])
-            ->where('product_options.sku','!=',null)
-            ->where('product_options.slug','!=',null)
+            ->where('product_options.sku', '!=', null)
+            ->where('product_options.slug', '!=', null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->addSelect('products.slug as product_slug')
             ->limit(5)->orderBy('id', 'DESC')->get();
 
-        SEOTools::setTitle($product->product->seo_title?$product->product->seo_title:$product->title);
-        SEOTools::setDescription($product->product->seo_description?$product->product->seo_description:$product->product->description);
-        SEOTools::addImages($product_root->image?asset($product_root->image):null);
+        SEOTools::setTitle($product->product->seo_title ? $product->product->seo_title : $product->title);
+        SEOTools::setDescription($product->product->seo_description ? $product->product->seo_description : $product->product->description);
+        SEOTools::addImages($product_root->image ? asset($product_root->image) : null);
         SEOTools::setCanonical(url()->current());
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('cocolux.com');
-        SEOMeta::setKeywords($product->product->seo_keyword?$product->product->seo_keyword:$product->title);
+        SEOMeta::setKeywords($product->product->seo_keyword ? $product->product->seo_keyword : $product->title);
 
-        return view('web.product.detail',compact('product','products','list_image','list_product_parent','attribute_value','stocks','product_root','list_cats','stores','count_store','brand','product_in_cat','comments','percentages','averageRating'));
+        return view('web.product.detail', compact('product', 'products', 'list_image', 'list_product_parent', 'attribute_value', 'stocks', 'product_root', 'list_cats', 'stores', 'count_store', 'brand', 'product_in_cat', 'comments', 'percentages', 'averageRating'));
     }
 
-    public function is_new(){
+    public function is_new()
+    {
 
         $logo = Setting::where('key', 'logo')->first();
 
@@ -712,17 +718,18 @@ class ProductController extends Controller
         }])->whereHas('product', function ($query) {
             $query->where('is_new', 1);
         })
-            ->with(['promotionItem' => function($query) use ($now){
+            ->with(['promotionItem' => function ($query) use ($now) {
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
             }])
-            ->select('id','sku', 'title', 'parent_id','price','slug','images','normal_price','hot_deal','flash_deal')
-            ->where('sku','!=',null)
-            ->where('slug','!=',null)->paginate(30);
-        return view('web.product.new',compact('products'));
+            ->select('id', 'sku', 'title', 'parent_id', 'price', 'slug', 'images', 'normal_price', 'hot_deal', 'flash_deal')
+            ->where('sku', '!=', null)
+            ->where('slug', '!=', null)->paginate(30);
+        return view('web.product.new', compact('products'));
     }
 
-    public function deal_hot(){
+    public function deal_hot()
+    {
 
         $logo = Setting::where('key', 'logo')->first();
 
@@ -735,10 +742,11 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
 
         $promotions = $this->dealService->isHotDealAvailable();
-        return view('web.product.deal_hot',compact('promotions'));
+        return view('web.product.deal_hot', compact('promotions'));
     }
 
-    public function flash_deal(){
+    public function flash_deal()
+    {
 
         $logo = Setting::where('key', 'logo')->first();
 
@@ -752,21 +760,22 @@ class ProductController extends Controller
 
         $now = Carbon::now();
 
-        $productOptions = ProductOptions::select('id','sku', 'slug','title','price','normal_price','slug','images','parent_id')
-            ->with(['product' => function($query){
-                $query->select('id','slug','brand');
-            }])->whereHas('promotionItem', function ($query) use ($now){
+        $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id')
+            ->with(['product' => function ($query) {
+                $query->select('id', 'slug', 'brand');
+            }])->whereHas('promotionItem', function ($query) use ($now) {
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
-                    ->where('type','flash_deal');
-            })->with(['promotionItem' => function($query) use ($now){
-                $query->select('applied_stop_time','sku','price')->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
-                    ->where('type','flash_deal')->orderBy('price','asc');
+                    ->where('type', 'flash_deal');
+            })->with(['promotionItem' => function ($query) use ($now) {
+                $query->select('applied_stop_time', 'sku', 'price')->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                    ->where('type', 'flash_deal')->orderBy('price', 'asc');
             }])->orderBy('is_default', 'DESC')->paginate(30);
 
-        return view('web.product.flash_sale',compact('productOptions'));
+        return view('web.product.flash_sale', compact('productOptions'));
     }
 
-    public function item_hot(){
+    public function item_hot()
+    {
 
         $logo = Setting::where('key', 'logo')->first();
 
@@ -779,24 +788,25 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
 
         $now = Carbon::now();
-        $productOptions = ProductOptions::select('id','sku', 'slug','title','price','normal_price','slug','images','flash_deal','hot_deal','parent_id')
-            ->with(['product' => function($query){
-                $query->select('id','slug','brand');
+        $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'flash_deal', 'hot_deal', 'parent_id')
+            ->with(['product' => function ($query) {
+                $query->select('id', 'slug', 'brand');
             }])
             ->whereHas('product', function ($query) {
                 $query->where('is_hot', 1);
             })
-            ->where('slug', '!=',null)
-            ->with(['promotionItem' => function($query) use ($now){
+            ->where('slug', '!=', null)
+            ->with(['promotionItem' => function ($query) use ($now) {
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
             }])
             ->paginate(30);
-        return view('web.product.item_hot',compact('productOptions'));
+        return view('web.product.item_hot', compact('productOptions'));
     }
 
 
-    public function deal_now(){
+    public function deal_now()
+    {
 
         $logo = Setting::where('key', 'logo')->first();
 
@@ -809,20 +819,21 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
 
         $now = Carbon::now();
-        $productOptions = ProductOptions::select('id','sku', 'slug','title','price','normal_price','slug','images','parent_id')
-            ->with(['product' => function($query){
-                $query->select('id','slug','brand');
-            }])->whereHas('promotionItem', function ($query) use ($now){
+        $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id')
+            ->with(['product' => function ($query) {
+                $query->select('id', 'slug', 'brand');
+            }])->whereHas('promotionItem', function ($query) use ($now) {
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now);
-            })->with(['promotionItem' => function($query) use ($now){
-                $query->select('applied_stop_time','sku','price')
-                    ->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)->orderBy('price','asc');
+            })->with(['promotionItem' => function ($query) use ($now) {
+                $query->select('applied_stop_time', 'sku', 'price')
+                    ->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)->orderBy('price', 'asc');
             }])->paginate(30);
 
-        return view('web.product.deal_now',compact('productOptions'));
+        return view('web.product.deal_now', compact('productOptions'));
     }
 
-    public function deal_hot_detail($id){
+    public function deal_hot_detail($id)
+    {
 
         $logo = Setting::where('key', 'logo')->first();
 
@@ -837,16 +848,16 @@ class ProductController extends Controller
         $now = Carbon::now();
         $promotion_hots = $this->dealService->isHotDealAvailable($id);
         $productOptions = null;
-        if ($promotion_hots){
-            $productOptions = ProductOptions::select('id','sku', 'slug','title','price','normal_price','slug','images','parent_id')
-                ->with(['product' => function($query){
-                    $query->select('id','slug','brand');
-                }])->whereHas('promotionItem', function ($query) use ($now, $id){
+        if ($promotion_hots) {
+            $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id')
+                ->with(['product' => function ($query) {
+                    $query->select('id', 'slug', 'brand');
+                }])->whereHas('promotionItem', function ($query) use ($now, $id) {
                     $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
-                        ->where('type','hot_deal')->where('promotion_id', $id);
-                })->with(['promotionItem' => function($query) use ($now, $id){
-                    $query->select('applied_stop_time','sku','price')->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
-                        ->where('type','hot_deal')->where('promotion_id', $id)->orderBy('price','asc');
+                        ->where('type', 'hot_deal')->where('promotion_id', $id);
+                })->with(['promotionItem' => function ($query) use ($now, $id) {
+                    $query->select('applied_stop_time', 'sku', 'price')->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                        ->where('type', 'hot_deal')->where('promotion_id', $id)->orderBy('price', 'asc');
                 }]);
 
             if (!empty($promotion_hots->sort_product)) {
@@ -855,15 +866,16 @@ class ProductController extends Controller
             $productOptions = $productOptions->paginate(30);
         }
 
-        return view('web.product.deal_hot_detail',compact('productOptions','promotion_hots'));
+        return view('web.product.deal_hot_detail', compact('productOptions', 'promotion_hots'));
     }
 
-    public function addToCart (Request $req){
+    public function addToCart(Request $req)
+    {
         $productId = $req['id'];
         $quantity = $req['quantity'];
         $now = Carbon::now();
         $product = ProductOptions::where(['id' => $productId])->with(['product'])
-            ->with(['promotionItem' => function($query) use ($now){
+            ->with(['promotionItem' => function ($query) use ($now) {
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
             }])->first();
@@ -872,15 +884,15 @@ class ProductController extends Controller
             abort(404);
         }
         $cart = Session::get('cart', []);
-        if($product->promotionItem){
+        if ($product->promotionItem) {
             $price = $product->promotionItem->price;
-        }else{
+        } else {
             $price = $product->price;
         }
 
         if (array_key_exists($product->id, $cart)) {
             // Sản phẩm đã tồn tại trong giỏ hàng, tăng số lượng
-            $cart[$product->id]['quantity'] = $cart[$product->id]['quantity']+$quantity;
+            $cart[$product->id]['quantity'] = $cart[$product->id]['quantity'] + $quantity;
         } else {
             // Sản phẩm chưa tồn tại trong giỏ hàng, thêm mới
             $cart[$product->id] = [
@@ -903,12 +915,13 @@ class ProductController extends Controller
         ));
     }
 
-    public function addToCartNow (Request $req){
+    public function addToCartNow(Request $req)
+    {
         $productId = $req->input('id_product');
         $quantity = $req->input('quantity');
         $now = Carbon::now();
         $product = ProductOptions::where(['id' => $productId])->with(['product'])
-            ->with(['promotionItem' => function($query) use ($now){
+            ->with(['promotionItem' => function ($query) use ($now) {
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
             }])->first();;
@@ -917,15 +930,15 @@ class ProductController extends Controller
         }
 
         $cart = Session::get('cart', []);
-        if($product->promotionItem){
+        if ($product->promotionItem) {
             $price = $product->promotionItem->price;
-        }else{
+        } else {
             $price = $product->price;
         }
 
         if (array_key_exists($product->id, $cart)) {
             // Sản phẩm đã tồn tại trong giỏ hàng, tăng số lượng
-            $cart[$product->id]['quantity'] = $cart[$product->id]['quantity']+$quantity;
+            $cart[$product->id]['quantity'] = $cart[$product->id]['quantity'] + $quantity;
         } else {
             // Sản phẩm chưa tồn tại trong giỏ hàng, thêm mới
             $cart[$product->id] = [
@@ -952,7 +965,7 @@ class ProductController extends Controller
         // Duyệt qua các sản phẩm trong giỏ hàng để lấy thông tin sản phẩm
         $cartItems = [];
         $total_price = 0;
-        if (!$cart){
+        if (!$cart) {
             Session::flash('danger', 'Chưa có sản phẩm nào trong giỏ hàng');
             return redirect()->route('home');
         }
@@ -960,13 +973,13 @@ class ProductController extends Controller
         $now = Carbon::now();
         foreach ($cart as $productId => $item) {
             $product = ProductOptions::where(['id' => $productId])->with(['product'])->with(['product'])
-                ->with(['promotionItem' => function($query) use ($now){
+                ->with(['promotionItem' => function ($query) use ($now) {
                     $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                         ->orderBy('price', 'asc');
                 }])->first();
-            if($product->promotionItem){
+            if ($product->promotionItem) {
                 $price = $product->promotionItem->price;
-            }else{
+            } else {
                 $price = $product->price;
             }
             $quantity = $item['quantity']; // Số lượng
@@ -980,7 +993,7 @@ class ProductController extends Controller
             $total_price = $total_price + $price * $quantity;
         }
 
-        return view('web.cart.cart', compact('cart','cartItems','total_price'));
+        return view('web.cart.cart', compact('cart', 'cartItems', 'total_price'));
     }
 
     public function updateCart(Request $request)
@@ -1006,16 +1019,16 @@ class ProductController extends Controller
             foreach ($cart as $id => $item) {
                 $totalQuantity += $item['quantity'];
 
-//                $product = $this->productRepository->getOneById($id);
+                //$product = $this->productRepository->getOneById($id);
                 $product = ProductOptions::findOrFail($id);
                 $quantity = $item['quantity']; // Số lượng
 
                 // Thêm thông tin sản phẩm vào danh sách
-//                $cartItems[] = [
-//                    'product' => $product,
-//                    'quantity' => $quantity,
-//                    'subtotal' => $product->price * $quantity, // Tính tổng tiền cho mỗi sản phẩm
-//                ];
+                //                $cartItems[] = [
+                //                    'product' => $product,
+                //                    'quantity' => $quantity,
+                //                    'subtotal' => $product->price * $quantity, // Tính tổng tiền cho mỗi sản phẩm
+                //                ];
                 $total_price = $total_price + $product->price * $quantity;
             }
 
@@ -1064,23 +1077,23 @@ class ProductController extends Controller
         $total_price = 0;
         $total_price_in_promotion = 0;
         $total_price_not_in_promotion = 0;
-        if (!$cart){
+        if (!$cart) {
             return redirect()->route('home');
         }
 
         $now = Carbon::now();
         foreach ($cart as $productId => $item) {
             $product = ProductOptions::where(['id' => $productId])->with(['product'])
-                ->with(['promotionItem' => function($query) use ($now){
+                ->with(['promotionItem' => function ($query) use ($now) {
                     $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                         ->orderBy('price', 'asc');
                 }])->first();
             $quantity = $item['quantity']; // Số lượng
-            if($product->promotionItem){
+            if ($product->promotionItem) {
                 $price = $product->promotionItem->price;
                 $promotion = 0;
                 $total_price_in_promotion = $total_price_in_promotion + $price * $quantity;
-            }else{
+            } else {
                 $price = $product->price;
                 $promotion = 1;
                 $total_price_not_in_promotion = $total_price_not_in_promotion + $price * $quantity;
@@ -1099,7 +1112,7 @@ class ProductController extends Controller
 
         $list_city = City::all();
 
-        return view('web.cart.payment', compact('cart','cartItems','total_price','list_city','total_price_not_in_promotion','total_price_in_promotion'));
+        return view('web.cart.payment', compact('cart', 'cartItems', 'total_price', 'list_city', 'total_price_not_in_promotion', 'total_price_in_promotion'));
     }
 
     public function load_district(Request $request)
@@ -1127,7 +1140,8 @@ class ProductController extends Controller
         return json_encode($result);
     }
 
-    public function calculator_ship($city_id = null, $district_id = null){
+    public function calculator_ship($city_id = null, $district_id = null)
+    {
         $price_ship = 20000;
 
         $total_price = 0;
@@ -1136,26 +1150,27 @@ class ProductController extends Controller
         foreach ($cart as $item) {
             $total_price = $total_price + ($item['price'] * $item['quantity']);
         }
-        if (in_array($city_id,[201])){ //201,234
-            if ($total_price >= 99000){
+        if (in_array($city_id, [201])) { //201,234
+            if ($total_price >= 99000) {
                 $price_ship = 0;
-            }else{
-                if (!empty($district_id)){
-                    $list_distict = [1616,1486,1492,1493,3440,1491,1542,1490,1489,1488,1485,1482,1484]; // các quận nội thành và thành phố thanh hóa
-                    if (in_array($district_id,$list_distict)) {
+            } else {
+                if (!empty($district_id)) {
+                    $list_distict = [1616, 1486, 1492, 1493, 3440, 1491, 1542, 1490, 1489, 1488, 1485, 1482, 1484]; // các quận nội thành và thành phố thanh hóa
+                    if (in_array($district_id, $list_distict)) {
                         $price_ship = 15000;
                     }
                 }
             }
-        }else{
-            if ($total_price >= 249000){
+        } else {
+            if ($total_price >= 249000) {
                 $price_ship = 0;
             }
         }
         return $price_ship;
     }
 
-    public function order (CreateOrder $req){
+    public function order(CreateOrder $req)
+    {
         DB::beginTransaction();
         try {
             $data = $req->validated();
@@ -1163,28 +1178,28 @@ class ProductController extends Controller
             $method_payment = $data['payment'];
 
             $response = $this->useCoupon($coupon);
-            if ($response){
+            if ($response) {
                 $data['mess_coupon'] = 'Kích hoạt thành công';
-            }else{
+            } else {
                 $data['mess_coupon'] = 'Kích hoạt lỗi';
             }
             $order = Order::create($data);
 
             $cart = Session::get('cart', []);
-            if ($cart){
+            if ($cart) {
                 $now = Carbon::now();
                 foreach ($cart as $productId => $item) {
                     $product = ProductOptions::where(['id' => $productId])->with(['product'])
-                        ->with(['promotionItem' => function($query) use ($now){
+                        ->with(['promotionItem' => function ($query) use ($now) {
                             $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                                 ->orderBy('price', 'asc');
                         }])->first();
-                    if($product->promotionItem){
+                    if ($product->promotionItem) {
                         $price = $product->promotionItem->price;
-                    }else{
+                    } else {
                         $price = $product->price;
                     }
-                    if (empty($product)){
+                    if (empty($product)) {
                         unset($cart[$productId]);
                         Session::flash('danger', 'Có sản phẩm không còn tồn tại');
                         return redirect()->back();
@@ -1200,13 +1215,13 @@ class ProductController extends Controller
                 }
                 DB::commit();
                 Session::forget('cart');
-                if ($method_payment == 2){
-                    return redirect()->route('orderSendBK',['orderId'=>$order->id]);
-                }else{
+                if ($method_payment == 2) {
+                    return redirect()->route('orderSendBK', ['orderId' => $order->id]);
+                } else {
                     Session::flash('success', trans('message.create_order_success'));
-                    return redirect()->route('orderProductSuccess',['id'=>$order->id]);
+                    return redirect()->route('orderProductSuccess', ['id' => $order->id]);
                 }
-            }else{
+            } else {
                 Session::flash('danger', 'Chưa có sản phẩm trong giỏ hàng, vui lòng thêm sản phẩm');
                 return redirect()->route('home');
             }
@@ -1224,26 +1239,28 @@ class ProductController extends Controller
         return redirect()->back();
     }
 
-        public function useCoupon($coupon){
-            $api = "/api/promotion/coupon?act=use";
-            $client = new Client();
+    public function useCoupon($coupon)
+    {
+        $api = "/api/promotion/coupon?act=use";
+        $client = new Client();
 
-            $data = [
-                'couponCode' => $coupon
-            ];
-            $this->request_params['data'] = json_encode($data);
-            $response = $client->post($this->linkApi.$api,[
-                'form_params' => $this->request_params
-            ]);
-            $data = json_decode($response->getBody(), true);
-            if ($data['code'] == 1){
-                return true;
-            }else{
-                return false;
-            }
+        $data = [
+            'couponCode' => $coupon
+        ];
+        $this->request_params['data'] = json_encode($data);
+        $response = $client->post($this->linkApi . $api, [
+            'form_params' => $this->request_params
+        ]);
+        $data = json_decode($response->getBody(), true);
+        if ($data['code'] == 1) {
+            return true;
+        } else {
+            return false;
         }
+    }
 
-    public function success ($id, Request $request){
+    public function success($id, Request $request)
+    {
         \Log::info([
             'message' => json_encode($request),
             'line' => __LINE__,
@@ -1251,51 +1268,53 @@ class ProductController extends Controller
         ]);
         Session::forget('cart');
         $order = Order::findOrFail($id);
-        if ($order->message != 'Đã đồng bộ đơn hàng lên nhanh thành công' && $order->id > 4157){
+        if ($order->message != 'Đã đồng bộ đơn hàng lên nhanh thành công' && $order->id > 4157) {
             app('App\Http\Controllers\ApiNhanhController')->pushOrderNhanh($order->id);
         }
         $maDonHang = 'DH' . str_pad($id, 8, '0', STR_PAD_LEFT);
-        return view('web.cart.register_success',compact('order','maDonHang'));
+        return view('web.cart.register_success', compact('order', 'maDonHang'));
     }
 
-    public function searchOrder (Request $request){
+    public function searchOrder(Request $request)
+    {
         $maDonHang = $request->input('order');
         if (strpos($maDonHang, 'DH') == 0) {
             $id = (int) substr($maDonHang, 2);
-            $order = Order::where('id',$id)->first();
-            if ($order){
-                return redirect()->route('detailOrderSuccess',['id'=>$order->id]);
-            }else{
+            $order = Order::where('id', $id)->first();
+            if ($order) {
+                return redirect()->route('detailOrderSuccess', ['id' => $order->id]);
+            } else {
                 Session::flash('danger', 'Mã đơn hàng không tồn tại');
                 return redirect()->back();
             }
-        }else{
+        } else {
             Session::flash('danger', 'Mã đơn hàng không tồn tại');
             return redirect()->back();
         }
-
     }
 
-    public function detailOrderSuccess ($id){
+    public function detailOrderSuccess($id)
+    {
         Session::forget('cart');
         $order = Order::findOrFail($id);
-        $products = OrderItem::with(['productOption' => function($query){
-            $query->select('id','sku','slug','title','images');
+        $products = OrderItem::with(['productOption' => function ($query) {
+            $query->select('id', 'sku', 'slug', 'title', 'images');
         }])->where('order_id', $id)->get();
         $total_money = 0;
-        if (!empty($products)){
-            foreach ($products as $item){
-                $item_total = $item->product_number*$item->product_price;
-                $total_money = $total_money+$item_total;
+        if (!empty($products)) {
+            foreach ($products as $item) {
+                $item_total = $item->product_number * $item->product_price;
+                $total_money = $total_money + $item_total;
             }
         }
         $maDonHang = 'DH' . str_pad($id, 8, '0', STR_PAD_LEFT);
-        return view('web.cart.detail_order_success',compact('order','maDonHang','products','total_money'));
+        return view('web.cart.detail_order_success', compact('order', 'maDonHang', 'products', 'total_money'));
     }
 
-    public function commentProduct (Request $request){
+    public function commentProduct(Request $request)
+    {
         DB::beginTransaction();
-        try{
+        try {
             $data['content'] = ($request->input('content'));
             $data['rating'] = ($request->input('rate'));
             $data['name'] = ($request->input('name'));
@@ -1306,7 +1325,7 @@ class ProductController extends Controller
             DB::commit();
             Session::flash('success', 'Cảm ơn bạn đã để lại bình luận');
             return redirect()->back();
-        }catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             DB::rollBack();
             Session::flash('danger', 'Bình luận chưa thành công');
             return redirect()->back();
