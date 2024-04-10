@@ -117,6 +117,10 @@
                                                 </div>
                                             @endif
                                         @endif
+                                           @if (empty($item->stocks))
+                                                <img src="{{ asset('images/ic-tam-het-hang.png') }}" alt="Tạm hết hàng"
+                                                    class="img-fluid lazy position-absolute" >
+                                            @endif
                                         <div class="product-thumbnail">
                                             <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                         </div>
