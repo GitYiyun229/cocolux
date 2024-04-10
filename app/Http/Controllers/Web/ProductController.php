@@ -396,8 +396,8 @@ class ProductController extends Controller
             })
             ->where('product_options.active', 1)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
-            // ->orderBy($columnToSort, $orderDirection)
             ->orderByRaw("CASE WHEN stocks = '[]' THEN 1 ELSE 0 END ")
+            ->orderBy($columnToSort, $orderDirection)
             ->paginate(30);
 
         $total_products = ProductOptions::with(['product' => function ($query) {
@@ -525,7 +525,7 @@ class ProductController extends Controller
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
             }])
-            ->select('product_options.id', 'product_options.sku','product_options.title', 'product_options.stocks', 'product_options.parent_id', 'product_options.price', 'product_options.normal_price', 'product_options.slug', 'product_options.images', 'product_options.hot_deal', 'product_options.flash_deal')
+            ->select('product_options.id', 'product_options.sku', 'product_options.title', 'product_options.stocks', 'product_options.parent_id', 'product_options.price', 'product_options.normal_price', 'product_options.slug', 'product_options.images', 'product_options.hot_deal', 'product_options.flash_deal')
             ->addSelect('products.title as product_name')
             ->where('product_options.sku', '!=', null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
