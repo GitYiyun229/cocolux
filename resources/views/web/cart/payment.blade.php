@@ -302,7 +302,7 @@
                                                         <i class="fa-solid fa-angle-down"></i>
                                                     </button>
                                                 </div>
-                                                @if ($total_price <= $item->from_value)
+                                                @if ($total_price >= $item->from_value)
                                                     <button type="button" class="btn btn-dark btn-apply"
                                                         data-coupon="{{ $item->items['code'] }}">Apply</button>
                                                 @else
