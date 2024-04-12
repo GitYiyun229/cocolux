@@ -176,7 +176,6 @@ class ArticleController extends Controller
             if (empty($data['slug'])) {
                 $data['slug'] = $req->input('slug') ? \Str::slug($req->input('slug'), '-') : \Str::slug($data['title'], '-');
             }
-            // $data['products'] = $data['products_add'];
             $data['products'] = $data['products_up'] . ',' . $data['products_down'];
             $article->update($data);
             DB::commit();
