@@ -265,7 +265,7 @@
                 <div class="modal-body list-coupon-modal description-main-view less">
                     @if (count($list_coupon))
                         @forelse($list_coupon as $item)
-                         {{ $item}}
+          
                             @if ($item->items)
 
                                 <div class="item-coupon mb-3">
