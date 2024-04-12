@@ -33,7 +33,7 @@ use GuzzleHttp\Client;
 use App\BaoKim\Connect;
 use App\BaoKim\getRequirement;
 use App\BaoKim\Webhook;
-
+use App\Models\Voucher;
 class ProductController extends Controller
 {
 
@@ -583,7 +583,8 @@ class ProductController extends Controller
         if (!$product) {
             abort(404);
         }
-        // dd($product);
+        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('id', 'ASC')->get();
+        // dd($list_coupon);
         if (isset($product->stocks)) {
             $stocks = (object)$product->stocks;
             $count_store = 0;
@@ -699,7 +700,7 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($product->product->seo_keyword ? $product->product->seo_keyword : $product->title);
 
-        return view('web.product.detail', compact('product', 'products', 'list_image', 'list_product_parent', 'attribute_value', 'stocks', 'product_root', 'list_cats', 'stores', 'count_store', 'brand', 'product_in_cat', 'comments', 'percentages', 'averageRating'));
+        return view('web.product.detail', compact('product', 'products', 'list_image', 'list_product_parent', 'attribute_value', 'stocks', 'product_root', 'list_cats', 'stores', 'count_store', 'brand', 'product_in_cat', 'comments', 'percentages', 'averageRating', 'list_coupon'));
     }
 
     public function is_new()
@@ -1112,10 +1113,11 @@ class ProductController extends Controller
             ];
             $total_price = $total_price + $price * $quantity;
         }
+        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('id', 'ASC')->get();
 
         $list_city = City::all();
 
-        return view('web.cart.payment', compact('cart', 'cartItems', 'total_price', 'list_city', 'total_price_not_in_promotion', 'total_price_in_promotion'));
+        return view('web.cart.payment', compact('cart', 'cartItems', 'total_price', 'list_city', 'total_price_not_in_promotion', 'total_price_in_promotion', 'list_coupon'));
     }
 
     public function load_district(Request $request)

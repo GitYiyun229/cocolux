@@ -268,3 +268,61 @@ window.orderProduct = function (id_prd) {
         });
     }
 }
+$(".btn-copy").click(function () {
+    let value = $(this).data("coupon");
+    let temp = $("<input>");
+    $("body").append(temp);
+    temp.val(value).select();
+    try {
+        document.execCommand("copy");
+        console.log("Text copied to clipboard successfully");
+        Swal.fire("Thành công!", "Copy thành công", "success");
+    } catch (err) {
+        console.error("Error copying text to clipboard:", err);
+    } finally {
+        temp.remove();
+    }
+});
+$(".modal-footer #coupon-end, .modal-body #coupon-here").click(function () {
+    const coupon_here = document.querySelector(
+        ".modal-body #coupon-here #coupon-modal"
+    );
+
+    // Tạo một đối tượng Range để chọn nội dung của phần tử
+    const range = document.createRange();
+    range.selectNode(coupon_here);
+
+    // Lựa chọn nội dung của phần tử
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    try {
+        document.execCommand("copy");
+
+        // Kiểm tra xem nếu có clipboardData
+        if (event.clipboardData) {
+            event.clipboardData.setData("text/plain", coupon_here.textContent);
+        }
+
+        Swal.fire("Thành công!", "Copy thành công", "success");
+    } catch (err) {
+        console.error("Error copying text to clipboard:", err);
+    } finally {
+        // Xóa lựa chọn
+        selection.removeAllRanges();
+    }
+});
+
+$(".btn-value").click(function () {
+    let value = $(this).data("value-coupon");
+    $(".modal-body #name-coupon").text("Giảm " + value.value);
+    $(".modal-body #des-coupon").text(value.name);
+    $(".modal-body #coupon-modal").text(value.items.code);
+    $(".modal-body #coupon-here").data("coupon", value.items.code);
+    $(".modal-footer #coupon-end").data("coupon", value.items.code);
+    $(".modal-body #startDate").text(value.start_date);
+    $(".modal-body #endDate").text(value.end_date);
+    $(".modal-body #show_date").text(value.start_date + "- " + value.end_date);
+    $(".modal-body #description-coupon").text(value.description);
+});

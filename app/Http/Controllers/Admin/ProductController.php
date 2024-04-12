@@ -25,7 +25,7 @@ class ProductController extends Controller
     protected $productResponstory, $productCategoryResponstory;
     protected $resizeImage;
 
-    function __construct(ProductCategoryInterface $productCategoryResponstory,ProductInterface $productResponstory)
+    function __construct(ProductCategoryInterface $productCategoryResponstory, ProductInterface $productResponstory)
     {
         $this->middleware('auth');
         $this->productCategoryResponstory = $productCategoryResponstory;
@@ -42,7 +42,7 @@ class ProductController extends Controller
     {
         $data = request()->all();
         $categories = $this->productCategoryResponstory->getAll();
-        if ($categories->count() === 0){
+        if ($categories->count() === 0) {
             Session::flash('danger', 'Chưa có danh mục nào');
             return redirect()->route('admin.product-category.index');
         }
@@ -57,13 +57,13 @@ class ProductController extends Controller
     public function create()
     {
         $categories = $this->productCategoryResponstory->getAll();
-        $attribute = Attribute::select('id','code','name','type')->where(function($query){
+        $attribute = Attribute::select('id', 'code', 'name', 'type')->where(function ($query) {
             $query->orWhere('type', 'select')
                 ->orWhere('type', 'ckeditor');
-        })->where(['active' => 1])->with(['attributeValue' => function($query){
-            $query->select('id','slug','name','attribute_id')->where('active', 1);
+        })->where(['active' => 1])->with(['attributeValue' => function ($query) {
+            $query->select('id', 'slug', 'name', 'attribute_id')->where('active', 1);
         }])->get();
-        return view('admin.product.create', compact('categories','attribute'));
+        return view('admin.product.create', compact('categories', 'attribute'));
     }
 
     /**
@@ -78,20 +78,27 @@ class ProductController extends Controller
         try {
             $data = $req->validated();
             $image_root = '';
-            $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
-            if (!empty($data['image'])){
+            $data['slug'] = $req->input('slug') ? \Str::slug($req->input('slug'), '-') : \Str::slug($data['title'], '-');
+            if (!empty($data['image'])) {
                 $image_root = $data['image'];
                 $data['image'] = urldecode($image_root);
             }
             $model = $this->productResponstory->create($data);
-            if (!empty($data['image'])){
-                $this->productResponstory->saveFileUpload($image_root,$this->resizeImage,$model->id,'product');
+            if (!empty($data['image'])) {
+                $this->productResponstory->saveFileUpload($image_root, $this->resizeImage, $model->id, 'product');
             }
             $category = ProductsCategories::findOrFail($data['category_id']);
-            if ($category->path){
-                $data['category_path'] = $category->path.','.$category->id;
-            }else{
+            if ($category->path) {
+                $data['category_path'] = $category->path . ',' . $category->id;
+            } else {
                 $data['category_path'] = $category->id;
+            }
+            if (!empty($data['description'])) {
+                $ContentHtml = $data['description'];
+                $html = $this->productResponstory->FileHtmlImageToWebp($ContentHtml, $model->id, 'product');
+                $data['description'] = $html;
+                $article = $this->productResponstory->getOneById($model->id);
+                $article->update($data);
             }
 
             DB::commit();
@@ -132,14 +139,15 @@ class ProductController extends Controller
         $product = $this->productResponstory->getOneById($id);
         $product_option = ProductOptions::where(['parent_id' => $product->id])->get();
         $attribute_value = $product->attributes;
-        $attribute = Attribute::select('id','code','name','type')->where(function($query){
+        $attribute = Attribute::select('id', 'code', 'name', 'type')->where(function ($query) {
             $query->orWhere('type', 'select')
-                    ->orWhere('type', 'ckeditor');
-        })->where(['active' => 1])->with(['attributeValue' => function($query){
-            $query->select('id','slug','name','attribute_id')->where('active', 1);
+                ->orWhere('type', 'ckeditor');
+        })->where(['active' => 1])->with(['attributeValue' => function ($query) {
+            $query->select('id', 'slug', 'name', 'attribute_id')->where('active', 1);
         }])->orderBy('id', 'DESC')->get();
-        foreach ($attribute as $item){
-            if ($attribute_value){
+
+        foreach ($attribute as $item) {
+            if ($attribute_value) {
                 $result = array_filter($attribute_value, function ($value) use ($item) {
                     return $value->id == $item->id;
                 });
@@ -153,7 +161,7 @@ class ProductController extends Controller
                 }
             }
         }
-        return view('admin.product.update', compact('product','categories','attribute','product_option'));
+        return view('admin.product.update', compact('product', 'categories', 'attribute', 'product_option'));
     }
 
     /**
@@ -169,39 +177,52 @@ class ProductController extends Controller
         DB::beginTransaction();
         try {
             $data = $req->validated();
-            if (!empty($data['image']) && $data_root->image != $data['image']){
-                if ($data_root->image && !\Str::contains($data_root->image, 'cdn.cocolux.com')){
+            if (!empty($data['description']) && $data_root->content != $data['description']) {
+                $ContentHtml = $data['description'];
+                $html = $this->productResponstory->FileHtmlImageToWebp($ContentHtml, $id, 'product');
+                $data['description'] = $html;
+            }
+
+            if (!empty($data['image']) && $data_root->image != $data['image']) {
+                if ($data_root->image && !\Str::contains($data_root->image, 'cdn.cocolux.com')) {
                     if (Storage::disk('local')->exists($data_root->image)) {
-                        $this->productResponstory->removeImageResize($data_root->image,$this->resizeImage, $id,'product');
+                        $this->productResponstory->removeImageResize($data_root->image, $this->resizeImage, $id, 'product');
                     }
                 }
-                $data['image'] = $this->productResponstory->saveFileUpload($data['image'],$this->resizeImage, $id,'product','resize');
+                $data['image'] = $this->productResponstory->saveFileUpload($data['image'], $this->resizeImage, $id, 'product', 'resize');
             }
-            if (empty($data['slug'])){
-                $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['title'], '-');
+            if (empty($data['slug'])) {
+                $data['slug'] = $req->input('slug') ? \Str::slug($req->input('slug'), '-') : \Str::slug($data['title'], '-');
             }
-            $attribute = Attribute::select('id','code','name','type')->where(function($query){
+            $attribute = Attribute::select('id', 'code', 'name', 'type')->where(function ($query) {
                 $query->orWhere('type', 'select')
                     ->orWhere('type', 'ckeditor');
             })->where(['active' => 1])->get();
 
             $attributes = array();
             $attribute_path = array();
-            foreach ($attribute as $item){
-                if (request($item->code)){
-                    if ($item->type == 'select'){
-                        $attribute_value = AttributeValues::select('id','name')->where(['active' => 1, 'id' => request($item->code)])->first();
+            foreach ($attribute as $item) {
+                if (request($item->code)) {
+                    if ($item->type == 'select') {
+                        $attribute_value = AttributeValues::select('id', 'name')->where(['active' => 1, 'id' => request($item->code)])->first();
                         $value = [
                             'id' => request($item->code),
                             'name' => $attribute_value->name,
                             'type' => $item->type
                         ];
                         $attribute_value_id = $attribute_value->id;
-                    }else{
-                        $attribute_value = AttributeValues::select('id','name')->where(['active' => 1, 'attribute_id' => $item->id])->first();
+                    } else {
+                        $attribute_value = AttributeValues::select('id', 'name')->where(['active' => 1, 'attribute_id' => $item->id])->first();
+                        $NameHtml = '';
+                        if (!empty(request($item->code))) {
+                            $NameHtml = request($item->code);
+                            if (!empty($NameHtml)) {
+                                $NameHtml = $this->productResponstory->FileHtmlImageToWebp($NameHtml, $id, 'product');
+                            }
+                        }
                         $value = [
                             'id' => $attribute_value->id,
-                            'name' => request($item->code),
+                            'name' =>  $NameHtml,
                             'type' => $item->type
                         ];
                         $attribute_value_id = $attribute_value->id;
@@ -211,16 +232,16 @@ class ProductController extends Controller
                         'name' => $item->name,
                         'value' => $value,
                     ];
-                    $attribute_path[] =  $item->id.':'.$attribute_value_id;
+                    $attribute_path[] =  $item->id . ':' . $attribute_value_id;
                 }
             }
             $attribute_path_st = implode(',', $attribute_path);
             $data['attributes'] = $attributes;
             $data['attribute_path'] = $attribute_path_st;
             $category = ProductsCategories::findOrFail($data['category_id']);
-            if ($category->path){
-                $data['category_path'] = $category->path.','.$category->id;
-            }else{
+            if ($category->path) {
+                $data['category_path'] = $category->path . ',' . $category->id;
+            } else {
                 $data['category_path'] = $category->id;
             }
 
@@ -253,18 +274,18 @@ class ProductController extends Controller
         // Đường dẫn tới tệp tin
         $resize = $this->resizeImage;
         $img_path = pathinfo($data->image, PATHINFO_DIRNAME);
-        foreach ($resize as $item){
-            $array_resize_ = str_replace($img_path.'/','/public/product/'.$item[0].'x'.$item[1].'/'.$data->id.'-',$data->image);
-            $array_resize_ = str_replace(['.jpg', '.png','.bmp','.gif','.jpeg'],'.webp',$array_resize_);
+        foreach ($resize as $item) {
+            $array_resize_ = str_replace($img_path . '/', '/public/product/' . $item[0] . 'x' . $item[1] . '/' . $data->id . '-', $data->image);
+            $array_resize_ = str_replace(['.jpg', '.png', '.bmp', '.gif', '.jpeg'], '.webp', $array_resize_);
             Storage::delete($array_resize_);
         }
-        $product_option = ProductOptions::where('parent_id',$id)->select('id')->get(); // check product exist in cat
-        if (count($product_option)){
+        $product_option = ProductOptions::where('parent_id', $id)->select('id')->get(); // check product exist in cat
+        if (count($product_option)) {
             return [
                 'status' => false,
                 'message' => 'Vẫn còn sản phẩm phụ trong sản phẩm này'
             ];
-        }else{
+        } else {
             $this->productResponstory->delete($id);
             return [
                 'status' => true,

@@ -143,7 +143,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>{{ $item->name }}</label>
-                                        <select name="{{ $item->code }}" id="{{ $item->code }}" class="form-control">
+                                        <select name="{{ $item->code }}" id="{{ $item->code }}" class="form-control select2">
                                             <option value="" selected>--{{ $item->name }}--</option>
                                             @forelse($item->attributeValue as $key => $val)
                                                 <option value="{{ $val->id }}" {{ isset($item->content) && $item->content['id'] == $val->id ? 'selected' : old($item->code) == $val->id ? 'selected' : '' }}>{{ $val->name }}</option>
