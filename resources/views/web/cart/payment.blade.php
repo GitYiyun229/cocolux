@@ -195,7 +195,7 @@
                                         </h2>
                                         <div class="slide-main-coupon">
                                             <div
-                                                class="slide-template-slide-coupon owl-carousel d-flex align-items-center justify-content-between">
+                                                class="slide-template-slide-coupon owl-carousel d-flex align-items-center justify-content-between gap-2 flex-row flex-wrap">
                                                 @forelse($list_coupon as $item)
                                                     @if ($item->items)
                                                         <div class="item-coupon mb-2">
@@ -265,9 +265,7 @@
                 <div class="modal-body list-coupon-modal description-main-view less">
                     @if (count($list_coupon))
                         @forelse($list_coupon as $item)
-          
                             @if ($item->items)
-
                                 <div class="item-coupon mb-3">
                                     <div class="">
                                         <div class=" d-flex align-items-center justify-content-center">
