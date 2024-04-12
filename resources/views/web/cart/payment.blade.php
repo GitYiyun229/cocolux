@@ -177,7 +177,7 @@
                                 <hr>
                                 <div class="align-items-center justify-content-between mb-3" id="coupon_if_have"
                                     style="display: none">
-                                    <span>Mã giảm giá đang áp dụng:</span>
+                                    <span>Mã giảm giá :</span>
                                     <span id="coupon_now">0 đ</span>
                                     <input type="hidden" value="0" name="price_coupon_now" id="price_coupon_now">
                                 </div>
@@ -302,8 +302,14 @@
                                                         <i class="fa-solid fa-angle-down"></i>
                                                     </button>
                                                 </div>
-                                                <button type="button" class="btn btn-dark btn-apply"
-                                                    data-coupon="{{ $item->items['code'] }}">Apply</button>
+                                                @if ($total_price <= $item->from_value)
+                                                    <button type="button" class="btn btn-dark btn-apply"
+                                                        data-coupon="{{ $item->items['code'] }}">Apply</button>
+                                                @else
+                                                    <button type="button" class="btn btn-white">No
+                                                        Apply</button>
+                                                @endif
+
                                             </div>
                                         </div>
                                     </div>
@@ -626,7 +632,7 @@
         $(".btn-apply").click(function() {
             let code = $(this).attr('data-coupon');
             $('#coupon').val(code);
-            $( "#check_coupon" ).trigger( "click" );
+            $("#check_coupon").trigger("click");
         });
     </script>
 @endsection
