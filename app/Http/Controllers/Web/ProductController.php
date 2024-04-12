@@ -33,7 +33,7 @@ use GuzzleHttp\Client;
 use App\BaoKim\Connect;
 use App\BaoKim\getRequirement;
 use App\BaoKim\Webhook;
-
+use App\Models\Voucher;
 class ProductController extends Controller
 {
 
@@ -250,10 +250,11 @@ class ProductController extends Controller
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
             }])
-            ->select('product_options.id', 'product_options.sku', 'product_options.title', 'product_options.parent_id', 'product_options.price', 'product_options.normal_price', 'product_options.slug', 'product_options.images', 'product_options.hot_deal', 'product_options.flash_deal')
+            ->select('product_options.id', 'product_options.sku', 'product_options.title', 'product_options.parent_id', 'product_options.stocks', 'product_options.price', 'product_options.normal_price', 'product_options.slug', 'product_options.images', 'product_options.hot_deal', 'product_options.flash_deal')
             ->addSelect('products.title as product_name')
             ->where('product_options.sku', '!=', null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
+            ->orderByRaw("CASE WHEN stocks = '[]' THEN 1 ELSE 0 END ")
             ->orderBy($columnToSort, $orderDirection)
             ->paginate(30);
 
@@ -372,7 +373,7 @@ class ProductController extends Controller
                 }
             }
         })
-            ->select('product_options.id', 'product_options.sku', 'product_options.title', 'product_options.parent_id', 'product_options.price', 'product_options.normal_price', 'product_options.slug', 'product_options.images', 'product_options.hot_deal', 'product_options.flash_deal')
+            ->select('product_options.id', 'product_options.sku', 'product_options.title', 'product_options.parent_id', 'product_options.price', 'product_options.stocks', 'product_options.normal_price', 'product_options.slug', 'product_options.images', 'product_options.hot_deal', 'product_options.flash_deal')
             ->addSelect('products.title as product_name')
             ->with(['promotionItem' => function ($query) use ($now) {
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
@@ -395,6 +396,7 @@ class ProductController extends Controller
             })
             ->where('product_options.active', 1)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
+            ->orderByRaw("CASE WHEN stocks = '[]' THEN 1 ELSE 0 END ")
             ->orderBy($columnToSort, $orderDirection)
             ->paginate(30);
 
@@ -523,10 +525,11 @@ class ProductController extends Controller
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
             }])
-            ->select('product_options.id', 'product_options.sku', 'product_options.title', 'product_options.parent_id', 'product_options.price', 'product_options.normal_price', 'product_options.slug', 'product_options.images', 'product_options.hot_deal', 'product_options.flash_deal')
+            ->select('product_options.id', 'product_options.sku', 'product_options.title', 'product_options.stocks', 'product_options.parent_id', 'product_options.price', 'product_options.normal_price', 'product_options.slug', 'product_options.images', 'product_options.hot_deal', 'product_options.flash_deal')
             ->addSelect('products.title as product_name')
             ->where('product_options.sku', '!=', null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
+            ->orderByRaw("CASE WHEN stocks = '[]' THEN 1 ELSE 0 END ")
             ->orderBy($columnToSort, $orderDirection)
             ->paginate(30);
 
@@ -580,7 +583,8 @@ class ProductController extends Controller
         if (!$product) {
             abort(404);
         }
-        // dd($product);
+        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('id', 'ASC')->get();
+        // dd($list_coupon);
         if (isset($product->stocks)) {
             $stocks = (object)$product->stocks;
             $count_store = 0;
@@ -696,7 +700,7 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($product->product->seo_keyword ? $product->product->seo_keyword : $product->title);
 
-        return view('web.product.detail', compact('product', 'products', 'list_image', 'list_product_parent', 'attribute_value', 'stocks', 'product_root', 'list_cats', 'stores', 'count_store', 'brand', 'product_in_cat', 'comments', 'percentages', 'averageRating'));
+        return view('web.product.detail', compact('product', 'products', 'list_image', 'list_product_parent', 'attribute_value', 'stocks', 'product_root', 'list_cats', 'stores', 'count_store', 'brand', 'product_in_cat', 'comments', 'percentages', 'averageRating', 'list_coupon'));
     }
 
     public function is_new()
@@ -1109,10 +1113,11 @@ class ProductController extends Controller
             ];
             $total_price = $total_price + $price * $quantity;
         }
+        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('id', 'ASC')->get();
 
         $list_city = City::all();
 
-        return view('web.cart.payment', compact('cart', 'cartItems', 'total_price', 'list_city', 'total_price_not_in_promotion', 'total_price_in_promotion'));
+        return view('web.cart.payment', compact('cart', 'cartItems', 'total_price', 'list_city', 'total_price_not_in_promotion', 'total_price_in_promotion', 'list_coupon'));
     }
 
     public function load_district(Request $request)

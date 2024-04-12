@@ -218,12 +218,11 @@ abstract class BaseRepository implements BaseInterface
         $xpath = new DOMXPath($dom);
         $images = $xpath->query('//img');
         foreach ($images as $image) {
-
             $imageUrl = $image->getAttribute('src');
-            if (!Str::startsWith($imageUrl, '/storage/upload_image/') || !Str::startsWith($imageUrl, '/images')) {
+            if (Str::startsWith($imageUrl, 'https')) {
                 $webpImagePath = $this->saveFileHtmlImageUploadWebp($imageUrl, $id, $nameModule);
-                $webpImagePath = Str::replaceFirst(public_path(), '', $webpImagePath);
-                $webpImagePath = URL::to('/') . '/' . $webpImagePath;
+                // $webpImagePath = Str::replaceFirst(public_path(), '', $webpImagePath);
+                // $webpImagePath = URL::to('/') . '/' . $webpImagePath;
                 $image->setAttribute('src', $webpImagePath);
             }
         }
@@ -239,7 +238,7 @@ abstract class BaseRepository implements BaseInterface
      */
     public function saveFileHtmlImageUploadWebp(string $file, int $id = null, string $nameModule)
     {
-        $imageName = substr(basename($file), 0, 15);
+        $imageName = substr(basename($file), 0, 40);
         $thumbnailPath = '';
         $fileName = $imageName . '.webp';
         if (!empty($id)) {
@@ -248,6 +247,6 @@ abstract class BaseRepository implements BaseInterface
             Storage::makeDirectory('public/' . $nameModule . '/' . 'HtmlWebp'  . '/');
             $thumbnail->save($thumbnailPath);
         }
-        return $thumbnailPath;
+        return '/'.$thumbnailPath;
     }
 }

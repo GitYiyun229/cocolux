@@ -4,7 +4,8 @@
 
 @section('content')
     <div class="card card-primary card-body">
-        <form action="{{ route('admin.product.update', $product->id) }}" id="form-product" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.product.update', $product->id) }}" id="form-product" method="POST"
+            enctype="multipart/form-data">
             @csrf
             @include('admin.product.form.inputs')
             <input type="hidden" name="id" value="{{ $product->id }}">
@@ -18,23 +19,34 @@
     <script src="{{ asset('ckeditor/ckeditor.js') }}?v=1.0"></script>
     <script src="{{ asset('ckfinder/ckfinder.js') }}?v=1.0"></script>
     <script src="{{ asset('js/admin/Sortable.js') }}"></script>
+    <script src="{{ asset('js/select2.js') }}?v=1.0"></script>
     <script>
-        CKEDITOR.replace( 'description' );
-        @if(!empty($attribute))
-        @forelse($attribute as $item)
-        @if($item->type == 'ckeditor')
-        CKEDITOR.replace("{{ $item->code }}");
+        CKEDITOR.replace('description');
+        @if (!empty($attribute))
+            @forelse($attribute as $item)
+                @if ($item->type == 'ckeditor')
+                    CKEDITOR.replace("{{ $item->code }}");
+                @endif
+            @empty
+            @endforelse
         @endif
-        @empty
-        @endforelse
-        @endif
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                // Các tùy chọn Select2 ở đây
+            });
+        });
     </script>
     <script>
         function editProductOption(id_product) {
             $.ajax({
                 type: "POST",
                 url: "{{ route('admin.product-option.edit') }}",
-                data: {id: id_product, _token: $('meta[name="csrf-token"]').attr("content")},
+                data: {
+                    id: id_product,
+                    _token: $('meta[name="csrf-token"]').attr("content")
+                },
                 success: function(data) {
                     $("#form-product-option").html(data);
                     initializeSortable();
@@ -50,9 +62,9 @@
             new Sortable(sortableContainer[0], {
                 animation: 150,
                 handle: 'img',
-                onEnd: function (/**Event*/evt) {
+                onEnd: function( /**Event*/ evt) {
                     var imageElements = sortableContainer.find('img');
-                    var imageLinks = imageElements.map(function () {
+                    var imageLinks = imageElements.map(function() {
                         return this.src.replace(/^.*\/\/[^/]+/, '');
                     }).get();
                     $('#sortedIdsInput').val(imageLinks.join(','));
@@ -85,7 +97,7 @@
                     onInit: function(finder) {
                         finder.on('files:choose', function(evt) {
                             const files = evt.data.files;
-                            files.forEach( function( file, i ) {
+                            files.forEach(function(file, i) {
                                 const fileroot = file.getUrl();
                                 const divElement = document.createElement('span');
                                 divElement.classList.add('mr-2');
@@ -103,7 +115,7 @@
 
                         finder.on('file:choose:resizedImage', function(evt) {
                             const files = evt.data.resizedUrl;
-                            files.forEach( function( file, i ) {
+                            files.forEach(function(file, i) {
                                 const fileroot = file.getUrl();
                                 const divElement = document.createElement('span');
                                 divElement.classList.add('mr-2');
@@ -140,13 +152,16 @@
                 confirmButtonText: "Yes!",
                 cancelButtonText: "No, cancel!",
                 reverseButtons: !0
-            }).then(function (result) {
+            }).then(function(result) {
                 if (result.value == true) {
                     $.ajax({
                         type: "POST",
                         url: "{{ route('admin.product-option.destroy') }}",
-                        data: {id: id_product, _token: $('meta[name="csrf-token"]').attr("content")},
-                        success: function (result) {
+                        data: {
+                            id: id_product,
+                            _token: $('meta[name="csrf-token"]').attr("content")
+                        },
+                        success: function(result) {
                             if (result.status === true) {
                                 toastr["success"](result.message);
                                 window.location.reload();
@@ -158,7 +173,7 @@
                         }
                     });
                 }
-            }, function (dismiss) {
+            }, function(dismiss) {
                 return false;
             });
         }
@@ -166,8 +181,10 @@
         function addProductOption() {
             $.ajax({
                 type: "POST",
-                url: "{{ route('admin.product-option.create',['id_parent' => $product->id]) }}",
-                data: {_token: $('meta[name="csrf-token"]').attr("content")},
+                url: "{{ route('admin.product-option.create', ['id_parent' => $product->id]) }}",
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr("content")
+                },
                 success: function(data) {
                     $("#form-product-option").html(data);
                     initializeSortable();
@@ -179,7 +196,7 @@
 
         function checkSku() {
             var sku = $('#form-product-option #sku-product-option').val();
-            if(sku){
+            if (sku) {
                 $.ajax({
                     type: "POST",
                     url: "{{ route('admin.product-option.checkSku') }}",
@@ -187,7 +204,7 @@
                         sku: sku,
                         _token: $('meta[name="csrf-token"]').attr("content")
                     },
-                    success: function (result) {
+                    success: function(result) {
                         if (result.status === true) {
                             toastr["success"](result.message);
                         }
@@ -197,7 +214,7 @@
                         }
                     }
                 });
-            }else{
+            } else {
                 toastr["error"]("Bạn cần nhập mã sku");
             }
 
@@ -215,8 +232,8 @@
                     name: $('#form-product-option #name-product-option').val(),
                     price: $('#form-product-option #price-product-option').val(),
                     normal_price: $('#form-product-option #normal_price-product-option').val(),
-                    stock: $('#form-product-option input[name="store[]"]').map(function(){
-                        return $(this).data('id')+':'+$(this).val()+':'+$(this).data('id-stock');
+                    stock: $('#form-product-option input[name="store[]"]').map(function() {
+                        return $(this).data('id') + ':' + $(this).val() + ':' + $(this).data('id-stock');
                     }).get(),
                     slug: $('#form-product-option #slug-product-option').val(),
                     parent_id: $('#form-product-option #id_product_parent').val(),
@@ -238,6 +255,5 @@
                 }
             });
         }
-
     </script>
 @endsection
