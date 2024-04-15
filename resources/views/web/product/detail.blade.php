@@ -133,7 +133,6 @@
                                                     <i class="fa-solid fa-circle-check"></i>
                                                     {{ $count_store }}/17 Chi nhánh còn sản phẩm
                                                 </a>
-
                                                 @if ($stores)
                                                     <div class="dropdown-menu detail-addess-box">
                                                         @forelse($stores as $cityName => $cityStore)
