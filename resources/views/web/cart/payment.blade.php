@@ -177,7 +177,7 @@
                                 <hr>
                                 <div class="align-items-center justify-content-between mb-3" id="coupon_if_have"
                                     style="display: none">
-                                    <span>Mã giảm giá :</span>
+                                    <span>Giá trị giảm :</span>
                                     <span id="coupon_now">0 đ</span>
                                     <input type="hidden" value="0" name="price_coupon_now" id="price_coupon_now">
                                 </div>
