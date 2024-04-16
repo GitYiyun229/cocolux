@@ -63,7 +63,7 @@ class ApiNhanhController extends Controller
                         $product = ProductOptions::where('sku', $item['code'])->first();
                         if ($product) {
                             $this->updateProduct($item, $product, 'productUpdate');
-                        }
+                        }   
                         return response()->json(['message' => 'OK'], 200);
                     } elseif ($resp['event'] == 'productDelete') {
                         return true;
