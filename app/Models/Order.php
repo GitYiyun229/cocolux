@@ -21,6 +21,10 @@ class Order extends Model
         self::STATUS_CANCEL => 'Hủy'
     ];
 
+    const METHOD_PAY_0 = 0;
+    const METHOD_PAY_1 = 1;
+    const METHOD_PAY_2 = 2;
+
 //    protected $casts = [
 //        'baokim_hook' => 'object',
 //    ];

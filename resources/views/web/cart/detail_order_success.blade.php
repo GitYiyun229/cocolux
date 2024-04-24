@@ -133,7 +133,7 @@
                             </div>
                             <div>
                                 <span class='highlight'>HÌNH THỨC THANH TOÁN</span>
-                                <span>{{ $order->payment == \App\Models\Article::STATUS_ACTIVE ?"Thanh toán khi nhận hàng":"Thanh toán chuyển khoản" }}</span>
+                                <span>{{ $order->payment == \App\Models\Order::METHOD_PAY_2 ?"Thanh toán qua bảo kim": ($order->payment == \App\Models\Order::METHOD_PAY_1)?"Thanh toán chuyển khoản":"Thanh toán khi nhận hàng" }}</span>
                             </div>
                         </div>
                     </div>
