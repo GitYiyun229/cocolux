@@ -133,6 +133,11 @@ class ApiNhanhController extends Controller
             "name" => $sku
         ];
         $this->request_params['data'] = json_encode($data);
+        \Log::info([
+            'message' => json_encode($data),
+            'line' => __LINE__,
+            'method' => __METHOD__
+        ]);
 
         $response = $client->post($this->linkApi . $api, [
             'form_params' => $this->request_params
@@ -175,7 +180,11 @@ class ApiNhanhController extends Controller
                     }
                 }
             }
-
+            \Log::info([
+                'message' => json_encode($product),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
             $product_nhanh = $this->searchProducts($product->sku);
             if ($product_nhanh) {
                 $data = array();

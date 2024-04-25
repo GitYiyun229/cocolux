@@ -11,7 +11,8 @@ class StoreController extends Controller
 {
     public function index(){
         $stores = Store::where(['active' => 1])->get();
-        $cities = City::has('store')->get();
+        // $cities = City::has('store')->get();
+        $cities = City::all();
         return view('web.store.home', compact('stores','cities'));
     }
 }
