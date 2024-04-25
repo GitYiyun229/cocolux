@@ -161,7 +161,7 @@ class ApiNhanhController extends Controller
             if ($attribute == 'inventoryChange') {
                 $inventory = $resp_end;
             } else {
-                $inventory = $resp_end['inventory'];
+                $inventory = $resp_end['inventories'];
             }
 
             $stocks = array();
