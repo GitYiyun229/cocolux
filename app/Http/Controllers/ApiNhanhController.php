@@ -60,6 +60,11 @@ class ApiNhanhController extends Controller
                         return response()->json(['message' => 'OK'], 200);
                     } elseif ($resp['event'] == 'productUpdate') {
                         $item = $resp['data'];
+                        \Log::info([
+                            'message' => $item,
+                            'line' => __LINE__,
+                            'method' => __METHOD__
+                        ]);
                         $product = ProductOptions::where('sku', $item['code'])->first();
                         if ($product) {
                             $this->updateProduct($item, $product, 'productUpdate');
