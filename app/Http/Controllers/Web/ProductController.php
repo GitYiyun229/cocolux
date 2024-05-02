@@ -573,6 +573,7 @@ class ProductController extends Controller
 
     public function detail($slug, $sku)
     {
+        
         $now = Carbon::now();
         $product = ProductOptions::where(['sku' => $sku])->with(['product' => function ($query) {
             $query->select('id', 'category_id', 'sku', 'slug', 'title', 'attributes', 'category_path', 'attribute_path', 'category_id', 'description', 'brand', 'seo_title', 'seo_keyword', 'seo_description');
