@@ -135,7 +135,7 @@ class PromotionsController extends Controller
             $data['sort_product'] = $sort_product;
             $data['applied_start_time'] = Carbon::parse($request->input('applied_start_time'));
             $data['applied_stop_time'] = Carbon::parse($request->input('applied_stop_time'));
-
+            
             $promotion = Promotions::findOrFail($id);
             $promotion->update($data);
 
