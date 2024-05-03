@@ -192,6 +192,11 @@ class ApiNhanhController extends Controller
             ]);
             $product_nhanh = $this->searchProducts($product->sku);
             if ($product_nhanh) {
+                \Log::info([
+                    'message' => json_encode($product_nhanh),
+                    'line' => __LINE__,
+                    'method' => __METHOD__
+                ]);
                 $data = array();
                 if (isset($product_nhanh['price'])) {
                     $data['price'] = $product_nhanh['price'];
