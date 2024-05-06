@@ -60,11 +60,11 @@ class ApiNhanhController extends Controller
                         return response()->json(['message' => 'OK'], 200);
                     } elseif ($resp['event'] == 'productUpdate') {
                         $item = $resp['data'];
-                        \Log::info([
-                            'message' => $item,
-                            'line' => __LINE__,
-                            'method' => __METHOD__
-                        ]);
+                        // \Log::info([
+                        //     'message' => $item,
+                        //     'line' => __LINE__,
+                        //     'method' => __METHOD__
+                        // ]);
                         $product = ProductOptions::where('sku', $item['code'])->first();
                         if ($product) {
                             $this->updateProduct($item, $product, 'productUpdate');
@@ -185,18 +185,18 @@ class ApiNhanhController extends Controller
                     }
                 }
             }
-            \Log::info([
-                'message' => json_encode($product),
-                'line' => __LINE__,
-                'method' => __METHOD__
-            ]);
+            // \Log::info([
+            //     'message' => json_encode($product),
+            //     'line' => __LINE__,
+            //     'method' => __METHOD__
+            // ]);
             $product_nhanh = $this->searchProducts($product->sku);
             if ($product_nhanh) {
-                \Log::info([
-                    'message' => json_encode($product_nhanh),
-                    'line' => __LINE__,
-                    'method' => __METHOD__
-                ]);
+                // \Log::info([
+                //     'message' => json_encode($product_nhanh),
+                //     'line' => __LINE__,
+                //     'method' => __METHOD__
+                // ]);
                 $data = array();
                 if (isset($product_nhanh['price'])) {
                     $data['price'] = $product_nhanh['price'];
@@ -209,6 +209,7 @@ class ApiNhanhController extends Controller
                 }
                 $data['stocks'] = $stocks;
                 $data['nhanhid'] = $product_nhanh['idNhanh'];
+                $data['brand'] = $product_nhanh['brandName'];
                 return $product->update($data);
             }
             return response()->json(['message' => 'OK'], 200);
