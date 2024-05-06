@@ -49,6 +49,8 @@ class BannerController extends Controller
             // Kiểm tra xem route có thuộc nhóm có namespace 'web' không
             if (isset($action['namespace']) && $action['namespace'] === 'App\Http\Controllers\Web') {
                 $uri = $route->uri();
+
+
                 // Loại bỏ các tham số đường dẫn ({{...}}) trong URI
                 $uriWithoutParameters = preg_replace('/\{\w+\}/', '', $uri);
 
