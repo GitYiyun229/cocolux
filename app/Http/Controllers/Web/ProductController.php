@@ -611,7 +611,6 @@ class ProductController extends Controller
         $brand = null;
         if ($product->attribute_path) {
             $pairs = explode(',', $product->attribute_path);
-
             $id_brand = null;
             foreach ($pairs as $pair) {
                 list($key, $value) = explode(':', $pair);
