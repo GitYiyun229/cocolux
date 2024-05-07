@@ -168,30 +168,30 @@
                 <div class="slide-main">
                     <div class="slide-template-slide owl-carousel">
                         @if(!empty($product_flash))
-                        @forelse($product_flash as $item)
-                            <a href="{{ route('detailProduct',['slug'=>trim($item->slug), 'sku' => $item->sku]) }}" class="product-template">
-                                @if($item->promotionItem->price != $item->normal_price)
+                        @forelse($product_flash as $item_fl)
+                            <a href="{{ route('detailProduct',['slug'=>trim($item_fl->slug), 'sku' => $item_fl->sku]) }}" class="product-template">
+                                @if($item_fl->promotionItem->price != $item_fl->normal_price)
                                     <div class="product-discount">
-                                        <span class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
+                                        <span class="pe-1">{{ percentage_price($item_fl->promotionItem->price, $item_fl->normal_price) }}</span>
                                     </div>
                                 @endif
-                                <div class="product-thumbnail @if($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
-                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
+                                <div class="product-thumbnail @if($item_fl->promotionItem && $item_fl->promotionItem->applied_stop_time) image-frame @endif">
+                                    <img src="{{ asset($item_fl->image_first) }}" alt="{{ $item_fl->title }}" class="img-fluid">
                                 </div>
                                 <div class="product-price">
-                                    <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
-                                    @if($item->promotionItem->price != $item->normal_price)
-                                        <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                    <div class="public-price">{{ format_money($item_fl->promotionItem->price) }}</div>
+                                    @if($item_fl->promotionItem->price != $item_fl->normal_price)
+                                        <div class="origin-price">{{ format_money($item_fl->normal_price) }}</div>
                                     @endif
                                 </div>
                                 <div class="product-brand">
-                                    {{ $item->brand }}
+                                    {{ $item_fl->brand ?: $item_fl->product->brand }}
                                 </div>
                                 <div class="product-title">
-                                    {{ $item->title }}
+                                    {{ $item_fl->title }}
                                 </div>
-                                @if($item->promotionItem && $item->promotionItem->applied_stop_time)
-                                    <div class="product-progress-sale count-down" time-end="{{ $item->promotionItem->applied_stop_time }}"></div>
+                                @if($item_fl->promotionItem && $item_fl->promotionItem->applied_stop_time)
+                                    <div class="product-progress-sale count-down" time-end="{{ $item_fl->promotionItem->applied_stop_time }}"></div>
                                 @endif
                             </a>
                         @empty

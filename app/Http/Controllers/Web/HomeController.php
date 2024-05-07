@@ -161,12 +161,13 @@ class HomeController extends Controller
         })
             ->select('product_options.id','product_options.sku', 'product_options.title', 'product_options.parent_id','product_options.price','product_options.normal_price','product_options.slug','product_options.images')
             ->addSelect('products.title as product_name')
+            ->addSelect('products.active as active')
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->orderBy('product_options.id', 'DESC')
             ->where('product_options.sku','!=',null)
             ->where('product_options.slug','!=',null)
+            ->where('products.active',1)
             ->limit(30)->get()->toArray();
-
         $result = array();
         $result['error'] = false;
         $result['data'] = $products;
