@@ -153,6 +153,7 @@
     .toc-content p a, .detail-summary p a, .detail-content p a{
         text-decoration: underline;
         transition: all 0.3s;
+        color: #007bff;
         &:hover {
             color: #c73030 !important;
         }
@@ -160,6 +161,7 @@
     .toc-content p span a, .detail-summary p span a, .detail-content p span a{
         text-decoration: underline;
         transition: all 0.3s;
+         color: #007bff;
         &:hover {
             color: #c73030 !important;
         }
