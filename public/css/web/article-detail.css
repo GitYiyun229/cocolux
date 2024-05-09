@@ -23376,6 +23376,13 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   max-width: 100%;
   overflow: hidden;
 }
+.layout-main-detail a {
+  text-decoration: underline;
+  transition: all 0.3s;
+}
+.layout-main-detail a:hover {
+  color: #c73030 !important;
+}
 .layout-main-detail .detail-title {
   font-size: 20px;
   padding: 18px 26px 12px;
@@ -23416,7 +23423,8 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   height: auto !important;
   margin: 20px 0px;
 }
-.layout-main-detail .detail-content video, .layout-main-detail .detail-content iframe {
+.layout-main-detail .detail-content video,
+.layout-main-detail .detail-content iframe {
   max-width: 100% !important;
 }
 .layout-main-detail .detail-content figure {
@@ -23472,7 +23480,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   font-style: normal;
   font-weight: 700;
   line-height: 20px;
-  border-bottom: 1px solid #DDD;
+  border-bottom: 1px solid #ddd;
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
@@ -23481,7 +23489,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
 }
 .layout-main-detail .blog-for-article .title-blog span:after {
   content: "";
-  background: #C73030;
+  background: #c73030;
   height: 2px;
   position: absolute;
   bottom: -12px;
@@ -23507,7 +23515,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   font-style: normal;
   font-weight: 700;
   line-height: 20px;
-  border-bottom: 1px solid #DDD;
+  border-bottom: 1px solid #ddd;
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
@@ -23516,7 +23524,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
 }
 .layout-main-detail .faq-for-article .title-faq span:after {
   content: "";
-  background: #C73030;
+  background: #c73030;
   height: 2px;
   position: absolute;
   bottom: -12px;
@@ -23524,7 +23532,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   width: 100%;
 }
 .layout-main-detail .faq-for-article .detail-content-faq .accordion-item {
-  border-bottom: 1px solid #EEE;
+  border-bottom: 1px solid #eee;
   padding-top: 15px;
 }
 .layout-main-detail .faq-for-article .detail-content-faq .accordion-item .panel-title {
@@ -23558,7 +23566,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   font-style: normal;
   font-weight: 700;
   line-height: 20px;
-  border-bottom: 1px solid #DDD;
+  border-bottom: 1px solid #ddd;
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
@@ -23567,7 +23575,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
 }
 .list-product-article .title-product-same span:after {
   content: "";
-  background: #C73030;
+  background: #c73030;
   height: 2px;
   position: absolute;
   bottom: -12px;
