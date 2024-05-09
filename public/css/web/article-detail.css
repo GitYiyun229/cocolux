@@ -23377,17 +23377,17 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   overflow: hidden;
 }
 .layout-main-detail .toc-content p a, .layout-main-detail .detail-summary p a, .layout-main-detail .detail-content p a {
-  text-decoration: underline;
   transition: all 0.3s;
   color: #007bff;
+  font-weight: bold;
 }
 .layout-main-detail .toc-content p a:hover, .layout-main-detail .detail-summary p a:hover, .layout-main-detail .detail-content p a:hover {
   color: #c73030 !important;
 }
 .layout-main-detail .toc-content p span a, .layout-main-detail .detail-summary p span a, .layout-main-detail .detail-content p span a {
-  text-decoration: underline;
   transition: all 0.3s;
   color: #007bff;
+  font-weight: bold;
 }
 .layout-main-detail .toc-content p span a:hover, .layout-main-detail .detail-summary p span a:hover, .layout-main-detail .detail-content p span a:hover {
   color: #c73030 !important;
