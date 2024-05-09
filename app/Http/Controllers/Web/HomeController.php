@@ -74,7 +74,7 @@ class HomeController extends Controller
         $subBanner2 = Banners::where(['active' => 1, 'type' => 'home_v1_primary_banner_2'])->select('id','url','image_url','mobile_url','content')->get(); // (3 ảnh hiển thị dưới cùng trên phần danh sách chi nhánh)
 
         $now = Carbon::now();
-        $product_flash = ProductOptions::select('id','sku', 'slug','title','price','normal_price','slug','images','parent_id')
+        $product_flash = ProductOptions::select('id','sku', 'slug','title','price','normal_price','slug','images','parent_id','brand')
 			->where(['is_default' => 1, 'active' => 1])
             ->with(['product' => function($query){
                 $query->select('id','slug','brand');
