@@ -143,7 +143,21 @@
     max-width: 100%;
     overflow: hidden;
 
-    .toc-content a, .detail-summary a, .detail-content a{
+    // .toc-content a, .detail-summary a, .detail-content a{
+    //     text-decoration: underline;
+    //     transition: all 0.3s;
+    //     &:hover {
+    //         color: #c73030 !important;
+    //     }
+    // }
+    .toc-content p a, .detail-summary p a, .detail-content p a{
+        text-decoration: underline;
+        transition: all 0.3s;
+        &:hover {
+            color: #c73030 !important;
+        }
+    }
+    .toc-content p span a, .detail-summary p span a, .detail-content p span a{
         text-decoration: underline;
         transition: all 0.3s;
         &:hover {
