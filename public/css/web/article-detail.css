@@ -23376,11 +23376,11 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   max-width: 100%;
   overflow: hidden;
 }
-.layout-main-detail a {
+.layout-main-detail .toc-content a, .layout-main-detail .detail-summary a, .layout-main-detail .detail-content a {
   text-decoration: underline;
   transition: all 0.3s;
 }
-.layout-main-detail a:hover {
+.layout-main-detail .toc-content a:hover, .layout-main-detail .detail-summary a:hover, .layout-main-detail .detail-content a:hover {
   color: #c73030 !important;
 }
 .layout-main-detail .detail-title {
