@@ -34,6 +34,7 @@ use App\BaoKim\Connect;
 use App\BaoKim\getRequirement;
 use App\BaoKim\Webhook;
 use App\Models\Voucher;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 class ProductController extends Controller
 {
 
@@ -459,7 +460,11 @@ class ProductController extends Controller
 
     public function brand(Request $request, $slug, $id)
     {
-        $brand = AttributeValues::findOrFail($id);
+        try {
+            $brand = AttributeValues::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            abort(404);
+        }
         $cats = ProductsCategories::where(['active' => 1, 'parent_id' => null])->select('id', 'title', 'slug', 'parent_id')->get();
         $attributes = Attribute::where(['active' => 1, 'type' => 'select'])->select('id', 'name', 'code')->with(['attributeValue' => function ($query) {
             $query->select('id', 'name', 'attribute_id', 'slug');
