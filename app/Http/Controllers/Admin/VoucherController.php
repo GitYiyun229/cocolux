@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\DataTables\VoucherDataTable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class VoucherController extends Controller
 {
@@ -63,17 +62,12 @@ class VoucherController extends Controller
      */
     public function edit($id)
     {
-
-        try {
-            $voucher = Voucher::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        $voucher = Voucher::findOrFail($id);
         $products_add = array();
-        if ($voucher->products_add) {
-            $products_add = ProductOptions::select('id', 'title', 'slug', 'sku', 'images', 'price')->whereIn('id', explode(',', $voucher->products_add))->get();
+        if ($voucher->products_add){
+            $products_add = ProductOptions::select('id','title','slug','sku','images','price')->whereIn('id',explode(',',$voucher->products_add))->get();
         }
-        return view('admin.voucher.update', compact('voucher', 'products_add'));
+        return view('admin.voucher.update', compact('voucher','products_add'));
     }
 
     /**
@@ -89,12 +83,7 @@ class VoucherController extends Controller
         try {
             $data['active'] = $request->input('active');
             $data['products_add'] = $request->input('products_add');
-
-            try {
-                $store = Voucher::findOrFail($id);
-            } catch (ModelNotFoundException $e) {
-                abort(404);
-            }
+            $store = Voucher::findOrFail($id);
             $store->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_store_success'));
@@ -127,12 +116,7 @@ class VoucherController extends Controller
      */
     public function changeActive($id)
     {
-
-        try {
-            $voucher = Voucher::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        $voucher = Voucher::findOrFail($id);
         $voucher->update(['active' => !$voucher->active]);
         return [
             'status' => true,
