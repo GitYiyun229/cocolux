@@ -35,6 +35,7 @@ use App\BaoKim\getRequirement;
 use App\BaoKim\Webhook;
 use App\Models\Voucher;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class ProductController extends Controller
 {
 
@@ -151,7 +152,12 @@ class ProductController extends Controller
         if (isset($check_ok)) {
             $id = (int) substr($webhookData['order']['mrc_order_id'], 6);
             $total_amount = $webhookData['txn']['total_amount'];
-            $order = Order::findOrFail($id);
+
+            try {
+                $order = Order::findOrFail($id);
+            } catch (ModelNotFoundException $e) {
+                abort(404);
+            }
             $order->update([
                 'baokim_message' => 'Đã thanh toán thành công qua Bảo Kim',
                 'baokim_id' => $webhookData['order']['id'],
@@ -168,7 +174,12 @@ class ProductController extends Controller
 
     public function orderPayBaoKimNotSuccess($orderId)
     {
-        $order = Order::findOrFail($orderId);
+
+        try {
+            $order = Order::findOrFail($orderId);
+        } catch (ModelNotFoundException $e) {
+            abort(404);
+        }
         $order->update([
             'baokim_message' => 'Thanh toán không thành công',
         ]);
@@ -258,8 +269,8 @@ class ProductController extends Controller
             ->orderByRaw("CASE WHEN stocks = '[]' THEN 1 ELSE 0 END ")
             ->orderBy($columnToSort, $orderDirection)
             ->paginate(30);
-            // ->toSql();
-// dd($products->toSql(), $products->getBindings());
+        // ->toSql();
+        // dd($products->toSql(), $products->getBindings());
         $total_products = ProductOptions::with(['product' => function ($query) {
             $query->select('id', 'is_new', 'brand', 'slug', 'attribute_path');
         }])->whereHas('product', function ($query) use ($id, $list_id_request) {
@@ -1279,7 +1290,12 @@ class ProductController extends Controller
             'method' => __METHOD__
         ]);
         Session::forget('cart');
-        $order = Order::findOrFail($id);
+
+        try {
+            $order = Order::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            abort(404);
+        }
         if ($order->message != 'Đã đồng bộ đơn hàng lên nhanh thành công' && $order->id > 4157) {
             app('App\Http\Controllers\ApiNhanhController')->pushOrderNhanh($order->id);
         }
@@ -1308,7 +1324,12 @@ class ProductController extends Controller
     public function detailOrderSuccess($id)
     {
         Session::forget('cart');
-        $order = Order::findOrFail($id);
+
+        try {
+            $order = Order::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            abort(404);
+        }
         $products = OrderItem::with(['productOption' => function ($query) {
             $query->select('id', 'sku', 'slug', 'title', 'images');
         }])->where('order_id', $id)->get();

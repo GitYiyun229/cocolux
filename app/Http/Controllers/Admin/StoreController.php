@@ -12,7 +12,7 @@ use App\Http\Requests\Store\CreateStore;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Repositories\Contracts\StoreInterface;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 class StoreController extends Controller
 {
     protected $storeRepository;
@@ -157,7 +157,12 @@ class StoreController extends Controller
      */
     public function changeIsHome($id)
     {
-        $store = Store::findOrFail($id);
+
+        try {
+            $store = Store::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            abort(404);
+        }
         $store->update(['is_home' => !$store->is_home]);
         return [
             'status' => true,
