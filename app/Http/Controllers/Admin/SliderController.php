@@ -14,7 +14,7 @@ use App\Http\Requests\Slide\UpdateSlide;
 use App\Repositories\Contracts\SlideInterface;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class SliderController extends Controller
 {
     protected $slideRepository;
@@ -205,11 +205,7 @@ class SliderController extends Controller
      */
     public function changeActive($id)
     {
-        try {
-            $slider = Sliders::findOrFail($id);
-        } catch (ModelNotFoundException $e) {
-            abort(404);
-        }
+        $slider = Sliders::findOrFail($id);
         $slider->update(['active' => !$slider->active]);
         return [
             'status' => true,
