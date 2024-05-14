@@ -43,11 +43,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
-        if ($e instanceof NotFoundHttpException) {
-            // Nếu là lỗi 404, chuyển hướng đến view 404
+        if ($this->isHttpException($e) || !config('app.debug')) {
             return response()->view('web.404', [], 404);
         }
-
+   
         return parent::render($request, $e);
     }
 
