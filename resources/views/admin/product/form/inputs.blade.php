@@ -187,6 +187,18 @@
                     @endif
                 </div>
             </div>
+            <div class="col-sm-12">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.product.canonical_url')</label>
+                    <input type="text" class="form-control" name="canonical_url" value="{{ isset($product) ? $product->canonical_url : old('canonical_url') }}">
+                    @if ($errors->has('canonical_url'))
+                        <span class="help-block text-danger">
+                            <strong>{{ $errors->first('canonical_url') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
             <div class="div-list-products">
                 <table class="table table-bordered mt-2 w-100" id="list_products" style="width: 100%">
                     <thead class="thead-light">

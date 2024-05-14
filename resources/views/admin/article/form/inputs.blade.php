@@ -133,6 +133,18 @@
                     @endif
                 </div>
             </div>
+                           <div class="col-sm-12">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.article.canonical_url')</label>
+                    <input type="text" class="form-control" name="canonical_url" value="{{ isset($article) ? $article->canonical_url : old('canonical_url') }}">
+                    @if ($errors->has('canonical_url'))
+                        <span class="help-block text-danger">
+                            <strong>{{ $errors->first('canonical_url') }}</strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
             <div class="col-sm-12">
                 <div class="form-group">
                     <label>@lang('form.description')</label> <span class="text-danger">*</span>
@@ -144,6 +156,7 @@
                     @endif
                 </div>
             </div>
+
         </div>
     </div>
     <div class="col-sm-5">

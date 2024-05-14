@@ -37,6 +37,7 @@ class CreateProduct extends FormRequest
             'normal_price' => 'nullable',
             'price' => 'nullable',
             'video_url' => 'nullable',
+            'canonical_url' => 'nullable',
             'description' => 'nullable',
             'seo_title' => 'nullable',
             'seo_keyword' => 'nullable',
