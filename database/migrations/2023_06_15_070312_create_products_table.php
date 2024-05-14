@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->integer('barcode')->nullable();
             $table->json('hashtag')->nullable();
             $table->string('video_url')->nullable();
+            $table->text('canonical_url')->nullable();
             $table->integer('normal_price')->nullable();
             $table->text('description')->nullable();
             $table->text('document')->nullable();

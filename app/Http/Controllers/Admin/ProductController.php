@@ -175,6 +175,8 @@ class ProductController extends Controller
     {
         $data_root = $this->productResponstory->getOneById($id);
         DB::beginTransaction();
+        // dd($req->canonical_url);
+
         try {
             $data = $req->validated();
             if (!empty($data['description']) && $data_root->content != $data['description']) {
@@ -235,6 +237,7 @@ class ProductController extends Controller
                     $attribute_path[] =  $item->id . ':' . $attribute_value_id;
                 }
             }
+
             $attribute_path_st = implode(',', $attribute_path);
             $data['attributes'] = $attributes;
             $data['attribute_path'] = $attribute_path_st;
@@ -244,7 +247,7 @@ class ProductController extends Controller
             } else {
                 $data['category_path'] = $category->id;
             }
-
+            // dd($data);
             $data_root->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_product_success'));

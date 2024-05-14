@@ -593,7 +593,7 @@ class ProductController extends Controller
 
         $now = Carbon::now();
         $product = ProductOptions::where(['sku' => $sku])->with(['product' => function ($query) {
-            $query->select('id', 'category_id', 'sku', 'slug', 'title', 'attributes', 'category_path', 'attribute_path', 'category_id', 'description', 'brand', 'seo_title', 'seo_keyword', 'seo_description');
+            $query->select('id', 'category_id', 'sku', 'slug', 'title', 'attributes', 'category_path', 'attribute_path', 'category_id', 'description', 'brand', 'seo_title', 'seo_keyword', 'seo_description', 'canonical_url');
         }])->with(['promotionItem' => function ($query) use ($now) {
             $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                 ->orderBy('price', 'asc');
@@ -712,7 +712,9 @@ class ProductController extends Controller
         SEOTools::setTitle($product->product->seo_title ? $product->product->seo_title : $product->title);
         SEOTools::setDescription($product->product->seo_description ? $product->product->seo_description : $product->product->description);
         SEOTools::addImages($product_root->image ? asset($product_root->image) : null);
-        SEOTools::setCanonical(url()->current());
+
+        SEOTools::setCanonical($product->product->canonical_url ?? url()->current());
+
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('cocolux.com');

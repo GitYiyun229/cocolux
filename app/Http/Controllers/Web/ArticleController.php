@@ -234,7 +234,8 @@ class ArticleController extends Controller
         SEOTools::setTitle($article->seo_title?$article->seo_title:$article->title);
         SEOTools::setDescription($article->seo_description?$article->seo_description:$article->description);
         SEOTools::addImages($article->image?asset($article->image):null);
-        SEOTools::setCanonical(url()->current());
+        // SEOTools::setCanonical(url()->current());
+        SEOTools::setCanonical($article->canonical_url ?? url()->current());
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('cocolux.com');

@@ -12,6 +12,7 @@
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active p-3" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="row">
+
                 <div class="col-sm-6">
                     <div class="form-group d-flex align-items-center">
                         <label class="col-md-4 font-weight-bold small p-0 m-0"> Mã hàng sku: </label>
@@ -27,6 +28,7 @@
                         <input type="text" name="name" class="form-control" id="name-product-option" value="{{ isset($product_option)?$product_option->title:'' }}">
                     </div>
                 </div>
+
                 <div class="col-md-6">
                     <div class="form-group d-flex align-items-center">
                         <label class="col-md-4 font-weight-bold small p-0 m-0"> Giá bán: </label>
