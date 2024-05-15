@@ -46,7 +46,6 @@ class Handler extends ExceptionHandler
         if ($this->isHttpException($e) || !config('app.debug')) {
             return response()->view('web.404', [], 404);
         }
-   
         return parent::render($request, $e);
     }
 
