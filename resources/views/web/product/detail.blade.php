@@ -197,6 +197,52 @@
                             </form>
                         </div>
                     </div>
+                    @if (count($list_coupon))
+                        <div class="list-coupon coupon-pc">
+                            <h2 class="text-center">Mã khuyến mại</h2>
+                            <div class="slide-main-coupon">
+                                <div class="slide-template-slide-coupon owl-carousel">
+                                    @forelse($list_coupon as $item)
+                                        @if ($item->items)
+                                            <div class="item-coupon mb-3">
+                                                <div class="d-flex align-items-center justify-content-between m-2">
+                                                    <div class="box-coupon box-coupon-right w-100">
+                                                        @if ($item->value_type == 1)
+                                                            <p class="sub-title-coupon">Giảm {{ $item->value }}đ</p>
+                                                        @else
+                                                            <p class="sub-title-coupon">Giảm {{ $item->value }}</p>
+                                                        @endif
+                                                        <div class="voucher-detail">
+                                                            {{ $item->name }}
+                                                            <p>Còn {{ $item->total_using_voucher }} mã, hết hạn trong
+                                                                {{ $item->time_end_voucher }} ngày</p>
+                                                        </div>
+                                                        <div class="progress">
+                                                            <div class="progress-bar bg-danger" role="progressbar"
+                                                                style="width: {{ $item->progressbar }}%"
+                                                                aria-valuenow="{{ $item->progressbar }}"
+                                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                        <div
+                                                            class="d-flex justify-content-between align-items-center mt-2">
+                                                            <button type="button"
+                                                                class="btn btn-call-modal p-0 btn-value"
+                                                                data-value-coupon="{{ json_encode($item) }}"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#info-coupon-detail">Chi tiết</button>
+                                                            <button type="button" class="btn btn-dark btn-copy"
+                                                                data-coupon="{{ $item->items['code'] }}">Sao chép</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @empty
+                                    @endforelse
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
                     <div class="layout-box layout-padding bg-white">
                         <h2 class="layout-title mb-2 fw-bold">Thông tin sản phẩm</h2>
@@ -603,53 +649,54 @@
             </div>
         </div>
 
-    </main>        <!-- Modal -->
-        <div class="modal fade" id="info-coupon-detail" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="couponModalLabel">Chi tiết Mã khuyến mại</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </main> <!-- Modal -->
+    <div class="modal fade" id="info-coupon-detail" tabindex="-1" aria-labelledby="couponModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="couponModalLabel">Chi tiết Mã khuyến mại</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="box1">
+                        <b id="name-coupon"></b>
+                        <span id="des-coupon"></span>
                     </div>
-                    <div class="modal-body">
-                        <div class="box1">
-                            <b id="name-coupon"></b>
-                            <span id="des-coupon"></span>
-                        </div>
-                        <hr>
-                        <div class="box2">
-                            <span>Mã giảm giá</span>
-                            <span class="coupon-here" id="coupon-here" data-coupon="">
-                                <span id="coupon-modal"></span>
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M15.8334 15.8334H6.66669C6.20835 15.8334 5.81599 15.6702 5.4896 15.3438C5.16321 15.0174 5.00002 14.625 5.00002 14.1667V2.50004C5.00002 2.04171 5.16321 1.64935 5.4896 1.32296C5.81599 0.996568 6.20835 0.833374 6.66669 0.833374H12.5L17.5 5.83337V14.1667C17.5 14.625 17.3368 15.0174 17.0104 15.3438C16.684 15.6702 16.2917 15.8334 15.8334 15.8334ZM11.6667 6.66671V2.50004H6.66669V14.1667H15.8334V6.66671H11.6667ZM3.33335 19.1667C2.87502 19.1667 2.48266 19.0035 2.15627 18.6771C1.82988 18.3507 1.66669 17.9584 1.66669 17.5V5.83337H3.33335V17.5H12.5V19.1667H3.33335Z"
-                                        fill="#C73030" />
-                                </svg>
-                            </span>
-                        </div>
-                        <hr>
-                        <div class="box3">
-                            <p>Áp dụng từ</p>
-                            <span id="startDate"></span> - <span id="endDate"></span>
-                        </div>
-                        <hr>
-                        <div class="box4">
-                            <div class="detail-coupon">Chi tiết</div>
-                            <div id="description-coupon"></div>
-                            <p>Có hiệu lực từ <span id="show_date">13/12/2023 - 19/12/2023</span></p>
-                            <p>Không áp dụng đồng thời CTKM khác</p>
-                        </div>
+                    <hr>
+                    <div class="box2">
+                        <span>Mã giảm giá</span>
+                        <span class="coupon-here" id="coupon-here" data-coupon="">
+                            <span id="coupon-modal"></span>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M15.8334 15.8334H6.66669C6.20835 15.8334 5.81599 15.6702 5.4896 15.3438C5.16321 15.0174 5.00002 14.625 5.00002 14.1667V2.50004C5.00002 2.04171 5.16321 1.64935 5.4896 1.32296C5.81599 0.996568 6.20835 0.833374 6.66669 0.833374H12.5L17.5 5.83337V14.1667C17.5 14.625 17.3368 15.0174 17.0104 15.3438C16.684 15.6702 16.2917 15.8334 15.8334 15.8334ZM11.6667 6.66671V2.50004H6.66669V14.1667H15.8334V6.66671H11.6667ZM3.33335 19.1667C2.87502 19.1667 2.48266 19.0035 2.15627 18.6771C1.82988 18.3507 1.66669 17.9584 1.66669 17.5V5.83337H3.33335V17.5H12.5V19.1667H3.33335Z"
+                                    fill="#C73030" />
+                            </svg>
+                        </span>
                     </div>
-                    <div class="modal-footer justify-content-between align-items-center flex-nowrap">
-                        <button type="button" class="btn btn-white" data-bs-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn btn-dark coupon-end" id="coupon-end" data-coupon="">Sao
-                            chép</button>
+                    <hr>
+                    <div class="box3">
+                        <p>Áp dụng từ</p>
+                        <span id="startDate"></span> - <span id="endDate"></span>
                     </div>
+                    <hr>
+                    <div class="box4">
+                        <div class="detail-coupon">Chi tiết</div>
+                        <div id="description-coupon"></div>
+                        <p>Có hiệu lực từ <span id="show_date">13/12/2023 - 19/12/2023</span></p>
+                        <p>Không áp dụng đồng thời CTKM khác</p>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between align-items-center flex-nowrap">
+                    <button type="button" class="btn btn-white" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-dark coupon-end" id="coupon-end" data-coupon="">Sao
+                        chép</button>
                 </div>
             </div>
         </div>
+    </div>
 @endsection
 
 @section('link')

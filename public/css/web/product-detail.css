@@ -23123,6 +23123,10 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   background-color: rgba(255, 122, 122, 0.15);
 }
 
+.list-coupon.coupon-pc {
+  display: none;
+}
+
 @media only screen and (max-width: 600px) {
   .autoComplete_wrapper > input {
     width: 18rem;
@@ -24227,6 +24231,12 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
 }
 
 @media (max-width: 960px) {
+  .list-coupon {
+    display: none;
+  }
+  .list-coupon.coupon-pc {
+    display: block;
+  }
   .layout-page-product-detail {
     flex-wrap: wrap;
   }
