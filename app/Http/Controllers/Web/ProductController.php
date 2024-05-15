@@ -712,9 +712,7 @@ class ProductController extends Controller
         SEOTools::setTitle($product->product->seo_title ? $product->product->seo_title : $product->title);
         SEOTools::setDescription($product->product->seo_description ? $product->product->seo_description : $product->product->description);
         SEOTools::addImages($product_root->image ? asset($product_root->image) : null);
-
         SEOTools::setCanonical($product->product->canonical_url ?? url()->current());
-
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('cocolux.com');
