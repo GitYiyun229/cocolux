@@ -1,10 +1,11 @@
 import $ from "jquery";
 window.$ = $;
 import 'bootstrap';
+import "owl.carousel";
+
 import swal from 'sweetalert2';
 window.Swal = swal;
 import 'slick-carousel';
-
 require('./template');
 require('./main');
 
@@ -325,4 +326,25 @@ $(".btn-value").click(function () {
     $(".modal-body #endDate").text(value.end_date);
     $(".modal-body #show_date").text(value.start_date + "- " + value.end_date);
     $(".modal-body #description-coupon").text(value.description);
+});
+$(".slide-template-slide-coupon-pc").owlCarousel({
+    loop: false,
+    rewind: true,
+    dots: false,
+    responsiveClass: true,
+    responsive: {
+        0: {
+            items: 1,
+            nav: true,
+        },
+        600: {
+            items: 2,
+            nav: false,
+        },
+        1000: {
+            items: 4,
+            nav: true,
+            loop: false,
+        },
+    },
 });
