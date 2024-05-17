@@ -2,31 +2,32 @@
 @use "style";
 @use "template";
 
-
-
 .owl-carousel {
     display: none;
     width: 100%;
     -webkit-tap-highlight-color: transparent;
     position: relative;
-    z-index: 1; }
+    z-index: 1;
+}
 .owl-carousel .owl-stage {
     position: relative;
     -ms-touch-action: pan-Y;
     touch-action: manipulation;
     -moz-backface-visibility: hidden;
- }
+}
 .owl-carousel .owl-stage:after {
     content: ".";
     display: block;
     clear: both;
     visibility: hidden;
     line-height: 0;
-    height: 0; }
+    height: 0;
+}
 .owl-carousel .owl-stage-outer {
     position: relative;
     overflow: hidden;
-    -webkit-transform: translate3d(0px, 0px, 0px); }
+    -webkit-transform: translate3d(0px, 0px, 0px);
+}
 .owl-carousel .owl-wrapper,
 .owl-carousel .owl-item {
     -webkit-backface-visibility: hidden;
@@ -34,20 +35,24 @@
     -ms-backface-visibility: hidden;
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0); }
+    -ms-transform: translate3d(0, 0, 0);
+}
 .owl-carousel .owl-item {
     position: relative;
     min-height: 1px;
     float: left;
     -webkit-backface-visibility: hidden;
     -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none; }
+    -webkit-touch-callout: none;
+}
 .owl-carousel .owl-item img {
     display: block;
-    width: 100%; }
+    width: 100%;
+}
 .owl-carousel .owl-nav.disabled,
 .owl-carousel .owl-dots.disabled {
-    display: none; }
+    display: none;
+}
 .owl-carousel .owl-nav .owl-prev,
 .owl-carousel .owl-nav .owl-next,
 .owl-carousel .owl-dot {
@@ -56,7 +61,8 @@
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none; }
+    user-select: none;
+}
 .owl-carousel .owl-nav button.owl-prev,
 .owl-carousel .owl-nav button.owl-next,
 .owl-carousel button.owl-dot {
@@ -64,68 +70,90 @@
     color: inherit;
     border: none;
     padding: 0 !important;
-    font: inherit; }
+    font: inherit;
+}
 .owl-carousel.owl-loaded {
-    display: block; }
+    display: block;
+}
 .owl-carousel.owl-loading {
     opacity: 0;
-    display: block; }
+    display: block;
+}
 .owl-carousel.owl-hidden {
-    opacity: 0; }
+    opacity: 0;
+}
 .owl-carousel.owl-refresh .owl-item {
-    visibility: hidden; }
+    visibility: hidden;
+}
 .owl-carousel.owl-drag .owl-item {
     -ms-touch-action: pan-y;
     touch-action: pan-y;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none; }
+    user-select: none;
+}
 .owl-carousel.owl-grab {
     cursor: move;
-    cursor: grab; }
+    cursor: grab;
+}
 .owl-carousel.owl-rtl {
-    direction: rtl; }
+    direction: rtl;
+}
 .owl-carousel.owl-rtl .owl-item {
-    float: right; }
+    float: right;
+}
 .no-js .owl-carousel {
-    display: block; }
+    display: block;
+}
 .owl-carousel .animated {
     animation-duration: 1000ms;
-    animation-fill-mode: both; }
+    animation-fill-mode: both;
+}
 .owl-carousel .owl-animated-in {
-    z-index: 0; }
+    z-index: 0;
+}
 
 .owl-carousel .owl-animated-out {
-    z-index: 1; }
+    z-index: 1;
+}
 
 .owl-carousel .fadeOut {
-    animation-name: fadeOut; }
+    animation-name: fadeOut;
+}
 
 @keyframes fadeOut {
     0% {
-        opacity: 1; }
+        opacity: 1;
+    }
     100% {
-        opacity: 0; } }
+        opacity: 0;
+    }
+}
 
 .owl-height {
-    transition: height 500ms ease-in-out; }
+    transition: height 500ms ease-in-out;
+}
 
 .owl-carousel .owl-item {
- }
+}
 .owl-carousel .owl-item .owl-lazy {
     opacity: 0;
-    transition: opacity 400ms ease; }
-.owl-carousel .owl-item .owl-lazy[src^=""], .owl-carousel .owl-item .owl-lazy:not([src]) {
-    max-height: 0; }
+    transition: opacity 400ms ease;
+}
+.owl-carousel .owl-item .owl-lazy[src^=""],
+.owl-carousel .owl-item .owl-lazy:not([src]) {
+    max-height: 0;
+}
 .owl-carousel .owl-item img.owl-lazy {
-    transform-style: preserve-3d; }
-
+    transform-style: preserve-3d;
+}
 
 .owl-carousel .owl-video-wrapper {
     position: relative;
     height: 100%;
-    background: #000; }
+    background: #000;
+}
 
 .owl-carousel .owl-video-play-icon {
     position: absolute;
@@ -139,15 +167,18 @@
     cursor: pointer;
     z-index: 1;
     -webkit-backface-visibility: hidden;
-    transition: transform 100ms ease; }
+    transition: transform 100ms ease;
+}
 
 .owl-carousel .owl-video-play-icon:hover {
     -ms-transform: scale(1.3, 1.3);
-    transform: scale(1.3, 1.3); }
+    transform: scale(1.3, 1.3);
+}
 
 .owl-carousel .owl-video-playing .owl-video-tn,
 .owl-carousel .owl-video-playing .owl-video-play-icon {
-    display: none; }
+    display: none;
+}
 
 .owl-carousel .owl-video-tn {
     opacity: 0;
@@ -155,13 +186,15 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
-    transition: opacity 400ms ease; }
+    transition: opacity 400ms ease;
+}
 
 .owl-carousel .owl-video-frame {
     position: relative;
     z-index: 1;
     height: 100%;
-    width: 100%; }
+    width: 100%;
+}
 
 //important for speed
 .owl-carousel {
@@ -176,7 +209,7 @@
     width: 100%;
 }
 
-.owl-carousel .owl-stage{
+.owl-carousel .owl-stage {
     margin: 0 auto;
 }
 /* purgecss start ignore */
@@ -302,7 +335,7 @@
 .autoComplete_wrapper > ul > li[aria-selected="true"] {
     background-color: rgba(255, 122, 122, 0.15);
 }
-.list-coupon.coupon-pc{
+.list-coupon.coupon-pc {
     display: none;
 }
 @media only screen and (max-width: 600px) {
@@ -354,7 +387,6 @@
             .item-coupon {
                 background: url("../images/coupon-ss.png") no-repeat left center;
                 background-size: cover;
-
 
                 .box-coupon {
                     padding: 10px 10px 10px 15px;
@@ -449,24 +481,43 @@
         }
     }
 }
-#info-coupon-detail{
-.modal-header{
-    .modal-title{
-        color: #000;
-        font-size: 18px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 20px;
+.view-404 {
+    .view-1 {
+        img {
+            background: #fcfee9;
+        }
+    }
+    .view-2 {
+        bottom: 12%;
+        a {
+            font-size: 20px;
+        }
+        a:hover {
+            color: #c73030;
+            svg {
+                fill: #c73030;
+            }
+        }
     }
 }
-    .modal-body{
-        .box1{
-            color:#707070;
+#info-coupon-detail {
+    .modal-header {
+        .modal-title {
+            color: #000;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 20px;
+        }
+    }
+    .modal-body {
+        .box1 {
+            color: #707070;
             font-size: 14px;
             font-style: normal;
             font-weight: 400;
             line-height: 20px;
-            b{
+            b {
                 display: block;
                 color: #000;
                 font-size: 16px;
@@ -475,7 +526,7 @@
                 line-height: 20px;
             }
         }
-        .box2{
+        .box2 {
             color: #000;
             font-size: 14px;
             font-style: normal;
@@ -484,7 +535,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            .coupon-here{
+            .coupon-here {
                 color: #000;
                 font-size: 14px;
                 font-style: normal;
@@ -492,13 +543,13 @@
                 line-height: 20px;
             }
         }
-        .box3{
+        .box3 {
             color: #707070;
             font-size: 14px;
             font-style: normal;
             font-weight: 400;
             line-height: 20px;
-            p{
+            p {
                 font-size: 14px;
                 font-style: normal;
                 font-weight: 400;
@@ -507,13 +558,13 @@
                 color: #000;
             }
         }
-        .box4{
+        .box4 {
             color: #707070;
             font-size: 14px;
             font-style: normal;
             font-weight: 400;
             line-height: 20px;
-            .detail-coupon{
+            .detail-coupon {
                 color: #000;
                 font-size: 14px;
                 font-style: normal;
@@ -522,8 +573,8 @@
             }
         }
     }
-    .modal-footer{
-        button{
+    .modal-footer {
+        button {
             width: 100%;
         }
     }
@@ -1226,10 +1277,20 @@
 }
 
 @media (max-width: 960px) {
-    .list-coupon{
+    .view-404 .view-2 {
+        a {
+            
+            svg {
+                width: 15px;
+                height: 15px;
+            }
+            font-size: 13px !important;
+        }
+    }
+    .list-coupon {
         display: none;
     }
-    .list-coupon.coupon-pc{
+    .list-coupon.coupon-pc {
         display: block;
     }
     .layout-page-product-detail {

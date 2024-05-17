@@ -23123,7 +23123,8 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   transition: opacity 400ms ease;
 }
 
-.owl-carousel .owl-item .owl-lazy[src^=""], .owl-carousel .owl-item .owl-lazy:not([src]) {
+.owl-carousel .owl-item .owl-lazy[src^=""],
+.owl-carousel .owl-item .owl-lazy:not([src]) {
   max-height: 0;
 }
 
@@ -23717,6 +23718,22 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
 }
 .list-coupon .slide-main-coupon .slick-next::before {
   content: "\f105";
+}
+
+.view-404 .view-1 img {
+  background: #fcfee9;
+}
+.view-404 .view-2 {
+  bottom: 12%;
+}
+.view-404 .view-2 a {
+  font-size: 20px;
+}
+.view-404 .view-2 a:hover {
+  color: #c73030;
+}
+.view-404 .view-2 a:hover svg {
+  fill: #c73030;
 }
 
 #info-coupon-detail .modal-header .modal-title {
@@ -24453,6 +24470,13 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
 }
 
 @media (max-width: 960px) {
+  .view-404 .view-2 a {
+    font-size: 13px !important;
+  }
+  .view-404 .view-2 a svg {
+    width: 15px;
+    height: 15px;
+  }
   .list-coupon {
     display: none;
   }
