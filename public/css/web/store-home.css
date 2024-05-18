@@ -23067,11 +23067,17 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   line-height: 100%;
 }
 .showroom-main .right-main-showroom #myTab-cat li:hover {
-  background: #c6c6cf;
   cursor: pointer;
+  background: #d1d3d3;
+}
+.showroom-main .right-main-showroom #myTab-cat li:hover p.name-showroom {
+  color: #c73030;
 }
 .showroom-main .right-main-showroom #myTab-cat .active {
-  background: #f8f8f9;
+  background: #d1d3d3;
+}
+.showroom-main .right-main-showroom #myTab-cat .active p.name-showroom {
+  color: #c73030;
 }
 
 @media (max-width: 960px) {

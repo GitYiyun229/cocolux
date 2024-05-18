@@ -98,12 +98,18 @@
                     }
                 }
                 &:hover {
-                    background: #c6c6cf;
                     cursor: pointer;
+                    background: #d1d3d3;
+                    p.name-showroom {
+                        color: #c73030;
+                    }
                 }
             }
             .active {
-                background: #f8f8f9;
+                background: #d1d3d3;
+                p.name-showroom {
+                    color: #c73030;
+                }
             }
         }
     }
