@@ -23376,20 +23376,28 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   max-width: 100%;
   overflow: hidden;
 }
-.layout-main-detail .toc-content p a, .layout-main-detail .detail-summary p a, .layout-main-detail .detail-content p a {
+.layout-main-detail .toc-content p a,
+.layout-main-detail .detail-summary p a,
+.layout-main-detail .detail-content p a {
   transition: all 0.3s;
   color: #007bff;
   font-weight: bold;
 }
-.layout-main-detail .toc-content p a:hover, .layout-main-detail .detail-summary p a:hover, .layout-main-detail .detail-content p a:hover {
+.layout-main-detail .toc-content p a:hover,
+.layout-main-detail .detail-summary p a:hover,
+.layout-main-detail .detail-content p a:hover {
   color: #c73030 !important;
 }
-.layout-main-detail .toc-content p span a, .layout-main-detail .detail-summary p span a, .layout-main-detail .detail-content p span a {
+.layout-main-detail .toc-content p span a,
+.layout-main-detail .detail-summary p span a,
+.layout-main-detail .detail-content p span a {
   transition: all 0.3s;
   color: #007bff;
   font-weight: bold;
 }
-.layout-main-detail .toc-content p span a:hover, .layout-main-detail .detail-summary p span a:hover, .layout-main-detail .detail-content p span a:hover {
+.layout-main-detail .toc-content p span a:hover,
+.layout-main-detail .detail-summary p span a:hover,
+.layout-main-detail .detail-content p span a:hover {
   color: #c73030 !important;
 }
 .layout-main-detail .detail-title {
@@ -23449,6 +23457,11 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   margin: 20px auto;
   width: 80%;
   max-width: 100%;
+  display: flex;
+  overflow: auto;
+  gap: 10px;
+  white-space: nowrap;
+  flex-wrap: nowrap;
 }
 .layout-main-detail .detail-content table tr td {
   border: 1px solid #999;
