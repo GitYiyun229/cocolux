@@ -24,6 +24,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/web/product-search.js', 'public/js/web')
     .js('resources/js/web/product-detail.js', 'public/js/web')
     .js('resources/js/web/product-cat.js', 'public/js/web')
+    .js('resources/js/web/show-room.js', 'public/js/web')
     .extract([
         'jquery',
         'bootstrap',

@@ -144,7 +144,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6">
+            {{-- <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.store.latitude')</label>
@@ -155,8 +155,8 @@
                 </span>
                     @endif
                 </div>
-            </div>
-            <div class="col-sm-6">
+            </div> --}}
+            {{-- <div class="col-sm-6">
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.store.longitude')</label>
@@ -164,6 +164,18 @@
                     @if ($errors->has('longitude'))
                         <span class="help-block text-danger">
                     <strong>{{ $errors->first('longitude') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div> --}}
+                <div class="col-sm-12">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.store.ifame_googlemap')</label>
+                    <input type="text" class="form-control" name="ifame_googlemap" value="{{ isset($store) ? $store->ifame_googlemap : old('ifame_googlemap') }}">
+                    @if ($errors->has('ifame_googlemap'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('ifame_googlemap') }}</strong>
                 </span>
                     @endif
                 </div>

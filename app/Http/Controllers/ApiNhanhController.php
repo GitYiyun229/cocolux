@@ -192,13 +192,15 @@ class ApiNhanhController extends Controller
             }
 
             $product_nhanh = $this->searchProducts($product->sku);
-
-                \Log::info([
-                    'message' => (json_encode($product_nhanh).'-----'.$product->sku ),
-                    'line' => __LINE__,
-                    'method' => __METHOD__
-                ]);
-
+            if ($product_nhanh) {
+                if ($attribute == 'inventoryChange') {
+                } else {
+                    \Log::info([
+                        'message' => json_encode($product_nhanh),
+                        'line' => __LINE__,
+                        'method' => __METHOD__
+                    ]);
+                }
 
                 $data = array();
                 if (isset($product_nhanh['price'])) {
