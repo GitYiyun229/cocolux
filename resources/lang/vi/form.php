@@ -280,8 +280,9 @@ return [
         'image' => 'Hình ảnh',
         'latitude' => 'Vĩ độ',
         'longitude' => 'Kinh độ',
-        'ifame_googlemap' => 'Nhúng ifame google map ',
         
+        'ifame_googlemap' => 'Nhúng ifame google map ',
+
         'city_id' => 'Tỉnh/Thành phố',
         'active' => 'Trạng thái',
         'update' => 'Update',

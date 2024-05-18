@@ -35,6 +35,7 @@ class CreateStore extends FormRequest
             'province' => 'nullable',
             'district' => 'nullable',
             'ifame_googlemap' => 'nullable' ,
+
             'ward' => 'nullable',
             'active' => 'nullable',
             'is_home' => 'nullable',
