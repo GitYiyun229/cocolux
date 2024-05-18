@@ -1,7 +1,110 @@
-@use 'app';
-@use 'style';
-@use 'template';
+@use "app";
+@use "style";
+@use "template";
 .custom-max-height {
     max-height: 550px;
     overflow-y: auto;
+}
+
+.showroom-title-under {
+    img,
+    iframe,
+    video {
+        max-width: 100%;
+    }
+}
+.showroom-main {
+    display: grid;
+    grid-template-columns: auto 800px;
+    grid-gap: 0 20px;
+    .tab-content-cat {
+        .tab-pane-cat {
+            display: none;
+            p {
+                width: 100%;
+            }
+            iframe {
+                width: 100%;
+                border-radius: 20px;
+                height: 565px;
+            }
+        }
+        .active {
+            display: flex;
+        }
+    }
+    .right-main-showroom {
+        .filter-showroom {
+            select {
+                background: #ffffff;
+                border: 1px solid #000000;
+                border-radius: 12px;
+                width: 100%;
+                padding: 9px 16px 8px;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 100%;
+                color: #000000;
+            }
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 0 10px;
+            #search-showroom {
+                border-radius: 12px;
+                border: 1px solid #d1d3d3;
+                background: #fff;
+                padding-left: 15px;
+            }
+        }
+        #myTab-cat {
+            overflow: hidden;
+            border: 1px solid #d1d3d3;
+            border-radius: 12px;
+            max-height: 505px;
+            overflow-y: scroll;
+            padding: 0 0 0 10px;
+            li {
+                padding: 15px 10px;
+                list-style: none;
+                border-bottom: 1px solid #d1d3d3;
+                .name-showroom {
+                    font-weight: 600;
+                    font-size: 16px;
+                    line-height: 100%;
+                    color: #000000;
+                    margin-bottom: 10px;
+                }
+                .address,
+                .hotline {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 8px;
+                    span {
+                        width: calc(100% - 18px - 8px);
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 140%;
+                        color: rgba(0, 0, 0, 0.87);
+                    }
+                }
+
+                .hotline {
+                    margin-top: 6px;
+                    align-items: center;
+                    span {
+                        font-weight: 600;
+                        line-height: 100%;
+                    }
+                }
+                &:hover {
+                    background: #f8f8f9;
+                    cursor: pointer;
+                }
+            }
+            .active {
+                background: #f8f8f9;
+            }
+        }
+    }
 }

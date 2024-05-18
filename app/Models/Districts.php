@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Districts extends Model
 {
-//    use HasFactory;
+    //    use HasFactory;
+    public function Store()
+    {
+        return $this->hasMany(Store::class, 'district', 'code');
+    }
 }

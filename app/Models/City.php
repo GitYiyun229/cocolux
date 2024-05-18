@@ -10,5 +10,10 @@ class City extends Model
 //    use HasFactory;
     protected $table = 'cities';
     protected $guarded = ['id'];
+
+    public function Store()
+    {
+        return $this->hasMany(Store::class, 'province', 'code');
+    }
 }
 

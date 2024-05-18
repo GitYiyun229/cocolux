@@ -18,6 +18,10 @@ class Store extends Model
     {
         return $this->belongsTo(City::class, 'province','code');
     }
+    // public function cities()
+    // {
+    //     return $this->belongsTo(City::class, 'province','code');
+    // }
 
     public function districts()
     {
