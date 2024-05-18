@@ -268,6 +268,7 @@ return [
         'image' => 'Hình ảnh',
         'latitude' => 'Vĩ độ',
         'longitude' => 'Kinh độ',
+        'ifame_googlemap' => 'Nhúng Ifame google map',
         'city_id' => 'Tỉnh/Thành phố',
         'active' => 'Trạng thái',
         'update' => 'Update',

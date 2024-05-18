@@ -33,6 +33,7 @@ class UpdateStore extends FormRequest
             'latitude' => 'nullable',
             'longitude' => 'nullable',
             'province' => 'nullable',
+            'ifame_googlemap' => 'nullable',
             'district' => 'nullable',
             'ward' => 'nullable',
             'active' => 'nullable',
