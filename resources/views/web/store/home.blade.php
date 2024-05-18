@@ -15,6 +15,7 @@
                             @forelse($cities as $city)
                                 <option value="{{ $city->code }}">{{ $city->name }}</option>
                             @empty
+                            
                             @endforelse
                         </select>
                     </div>
@@ -63,7 +64,7 @@
                 </div>
                 <div class="col-md-9">
                       <div class="showroom-title-under">
-           
+
         </div>
                 </div>
 
