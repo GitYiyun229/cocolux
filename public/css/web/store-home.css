@@ -23067,11 +23067,8 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   line-height: 100%;
 }
 .showroom-main .right-main-showroom #myTab-cat li:hover {
-  background: #c73030;
+  background: #c6c6cf;
   cursor: pointer;
-}
-.showroom-main .right-main-showroom #myTab-cat li:hover p {
-  color: #fff;
 }
 .showroom-main .right-main-showroom #myTab-cat .active {
   background: #f8f8f9;
