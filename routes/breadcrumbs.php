@@ -35,6 +35,12 @@ Breadcrumbs::for('homeBrand', function ($trail) {
     $trail->push('Thương hiệu', route('homeBrand'));
 });
 
+// Home > Hệ thống cửa hàng
+Breadcrumbs::for('StoreCocolux', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Hệ thống cửa hàng', route('homeBrand'));
+});
+
 // Home > Thương hiệu > Brand
 Breadcrumbs::for('detailBrand', function ($trail, $brand) {
     $trail->parent('home');

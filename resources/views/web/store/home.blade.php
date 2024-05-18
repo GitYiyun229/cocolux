@@ -1,12 +1,11 @@
 @extends('web.layouts.web')
 @section('content')
-    <div class="top-content-media">
-        <div class="container">
-            <h1 class="title-page mt-4">hệ thống cửa hàng</h1>
-        </div>
-    </div>
     <div class="list-store-home ">
         <div class="container">
+            <nav aria-label="breadcrumb" class="pt-3 pb-3 mb-4">
+                {{ Breadcrumbs::render('StoreCocolux') }}
+            </nav>
+
             <div class="py-5 showroom-main">
                 <div class="right-main-showroom">
                     <div class="filter-showroom">
@@ -20,7 +19,8 @@
                         <select name="district" id="district" class="select_box form-control">
                             <option value="">--Quận huyện--</option>
                             @forelse($districts as $district)
-                                <option style="display:none;" value="{{ $district->code }}" data-city="profile-cat-{{ $district->city_code }}">{{ $district->name }}</option>
+                                <option style="display:none;" value="{{ $district->code }}"
+                                    data-city="profile-cat-{{ $district->city_code }}">{{ $district->name }}</option>
                             @empty
                             @endforelse
                         </select>
@@ -28,7 +28,9 @@
                     <ul class="list-stores custom-max-height nav-tabs menuScroll" id="myTab-cat">
 
                         @forelse ($stores as $k => $item)
-                            <li data-id="profile-cat-{{ $item->id }}" data-code="profile-cat-{{ $item->province }}"  data-district="profile-cat-{{ $item->district }}" class="navScroll {{ $k == 0 ? 'active' : '' }}">
+                            <li data-id="profile-cat-{{ $item->id }}" data-code="profile-cat-{{ $item->province }}"
+                                data-district="profile-cat-{{ $item->district }}"
+                                class="navScroll {{ $k == 0 ? 'active' : '' }}">
                                 <p class="name-showroom">
                                     {{ $item->name }}
                                 </p>
@@ -68,8 +70,9 @@
                 </div>
                 <div class="tab-content-cat">
                     @foreach ($stores as $key => $items)
-                        <div class="tab-pane-cat row-item {{ $loop->first ? 'active' : '' }}" id="profile-cat-{{ $items->id }}">
-                             {!! $items->ifame_googlemap !!}
+                        <div class="tab-pane-cat row-item {{ $loop->first ? 'active' : '' }}"
+                            id="profile-cat-{{ $items->id }}">
+                            {!! $items->ifame_googlemap !!}
                         </div>
                     @endforeach
                 </div>
