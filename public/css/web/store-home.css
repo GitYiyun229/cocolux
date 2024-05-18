@@ -23067,9 +23067,24 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   line-height: 100%;
 }
 .showroom-main .right-main-showroom #myTab-cat li:hover {
-  background: #f8f8f9;
+  background: #c73030;
   cursor: pointer;
+}
+.showroom-main .right-main-showroom #myTab-cat li:hover p {
+  color: #fff;
 }
 .showroom-main .right-main-showroom #myTab-cat .active {
   background: #f8f8f9;
+}
+
+@media (max-width: 960px) {
+  .showroom-main {
+    grid-template-columns: 1fr;
+    grid-gap: 20px 0;
+  }
+  .showroom-title {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
 }

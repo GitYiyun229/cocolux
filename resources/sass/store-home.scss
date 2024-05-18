@@ -98,13 +98,28 @@
                     }
                 }
                 &:hover {
-                    background: #f8f8f9;
+                    background: #c73030;
+
                     cursor: pointer;
+                    p{
+                        color: #fff ;
+                    }
                 }
             }
             .active {
                 background: #f8f8f9;
             }
         }
+    }
+}
+@media (max-width: 960px) {
+    .showroom-main {
+        grid-template-columns: 1fr;
+        grid-gap: 20px 0;
+    }
+    .showroom-title {
+        font-size: 24px;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 }
