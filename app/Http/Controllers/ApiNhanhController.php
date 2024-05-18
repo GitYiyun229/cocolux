@@ -151,11 +151,6 @@ class ApiNhanhController extends Controller
                 $inventory = $resp_end;
             } else {
                 $inventory = $resp_end['inventories'];
-                \Log::info([
-                    'message' => json_encode($product),
-                    'line' => __LINE__,
-                    'method' => __METHOD__
-                ]);
             }
             $stocks = array();
             $depots = $inventory['depots'];
@@ -182,6 +177,13 @@ class ApiNhanhController extends Controller
             $product_nhanh = $this->searchProducts($product->sku);
             if ($product_nhanh) {
                 if ($attribute == 'inventoryChange') {
+                    \Log::info([
+                        'message' => json_encode($resp_end),
+                        'message1' => json_encode($product),
+                        'message2' => json_encode($product_nhanh),
+                        'line' => __LINE__,
+                        'method' => __METHOD__
+                    ]);
                 } else {
                     \Log::info([
                         'message' => json_encode($resp_end),
