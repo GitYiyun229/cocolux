@@ -68,7 +68,7 @@
 
                     </ul>
                 </div>
-                <div class="tab-content-cat">
+                <div class="tab-content-cat px-2">
                     @foreach ($stores as $key => $items)
                         <div class="tab-pane-cat row-item {{ $loop->first ? 'active' : '' }}"
                             id="profile-cat-{{ $items->id }}">
