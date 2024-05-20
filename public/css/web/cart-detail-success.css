@@ -22900,8 +22900,8 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   .circle-tel {
     width: 40px;
     height: 40px;
-    right: 60px;
-    bottom: 120px;
+    right: 25px;
+    bottom: 130px;
   }
   .circle-tel::before {
     width: 50px;
@@ -22913,6 +22913,12 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   }
 }
 
+@media (max-width: 960px) {
+  .zalo-chat-widget {
+    bottom: 65px !important;
+    right: 16px !important;
+  }
+}
 .shake-bottom {
   animation: shake-bottom 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite both;
 }

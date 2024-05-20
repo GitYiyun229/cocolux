@@ -813,8 +813,8 @@ ol.breadcrumb {
     @media (max-width: 960px) {
         width: 40px;
         height: 40px;
-        right: 60px;
-        bottom: 120px;
+        right: 25px;
+        bottom: 130px;
         &::before {
             width: 50px;
             height: 50px;
@@ -823,6 +823,12 @@ ol.breadcrumb {
             width: 26px;
             height: auto;
         }
+    }
+}
+@media (max-width: 960px) {
+    .zalo-chat-widget {
+        bottom: 65px !important;
+        right: 16px !important;
     }
 }
 .shake-bottom {
