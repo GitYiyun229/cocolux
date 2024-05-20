@@ -12,7 +12,10 @@ $(document).ready(function () {
         $("option").removeClass("selected");
         $("option:selected").addClass("selected");
     });
-
+    $("#district").change(function () {
+        $("option").removeClass("selected");
+        $("option:selected").addClass("selected");
+    });
 });
 
 $("#province").change(function () {
@@ -45,7 +48,7 @@ $("#province").change(function () {
             $(this).hide();
         }
     });
-
+    $("#district").val("");
     // Hiển thị thông báo khi không có phần tử nào được hiển thị
     if (!anyDisplayed) {
         $("#myTab-cat").append(

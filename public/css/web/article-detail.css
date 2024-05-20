@@ -23457,11 +23457,6 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   margin: 20px auto;
   width: 80%;
   max-width: 100%;
-  display: flex;
-  overflow: auto;
-  gap: 10px;
-  white-space: nowrap;
-  flex-wrap: nowrap;
 }
 .layout-main-detail .detail-content table tr td {
   border: 1px solid #999;
@@ -23640,3 +23635,12 @@ nav[aria-label=breadcrumb] ol {
 }
 
 /* purgecss end ignore */
+@media (max-width: 960px) {
+  .layout-main-detail .detail-content table {
+    display: flex;
+    overflow: auto;
+    gap: 10px;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+  }
+}
