@@ -117,8 +117,8 @@
                 @endif
             </div>
             <div class="col-md-6">
-                <b>Thông tin đơn hàng trên Nhanh</b>
-                <p>{{ $order->message }}</p>
+                <b>Thông tin đơn hàng trên Nhanh : {{ $order->nhanh_order_id }}</b>
+                <p>{{ $order->message }} : <span>{{ $order->status_description_nhanh}}  </span></p>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
