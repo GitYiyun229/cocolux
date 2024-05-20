@@ -5,11 +5,12 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.store.name')</label> <span class="text-danger">*</span>
-                    <input type="text" class="form-control" name="name" value="{{ isset($store) ? $store->name : old('name') }}" required>
+                    <input type="text" class="form-control" name="name"
+                        value="{{ isset($store) ? $store->name : old('name') }}" required>
                     @if ($errors->has('name'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('name') }}</strong>
-                </span>
+                            <strong>{{ $errors->first('name') }}</strong>
+                        </span>
                     @endif
                 </div>
             </div>
@@ -17,21 +18,26 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.store.phone')</label>
-                    <input type="text" class="form-control" name="phone" value="{{ isset($store) ? $store->phone : old('phone') }}">
+                    <input type="text" class="form-control" name="phone"
+                        value="{{ isset($store) ? $store->phone : old('phone') }}">
                     @if ($errors->has('phone'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('phone') }}</strong>
-                </span>
+                            <strong>{{ $errors->first('phone') }}</strong>
+                        </span>
                     @endif
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-box form-group">
                     <label for="city">Tỉnh thành <span>*</span></label>
-                    <select name="province" id="province" class="selec2-box form-control" onchange="loaddistrict(this.value)" required>
+                    <select name="province" id="province" class="selec2-box form-control"
+                        onchange="loaddistrict(this.value)" required>
                         <option value="0" selected hidden disabled>Chọn Tỉnh/ Thành phố</option>
                         @forelse($list_city as $item)
-                            <option value="{{ $item->code }}">{{ $item->name }}</option>
+                            <option value="{{ $item->code }}" {{ (isset($store) && $store->province == $item->code ? 'selected' : old('province') == $item->code) ? 'selected' : '' }}>
+                                {{ $item->name }}
+                            </option>
+
                         @empty
                         @endforelse
                     </select>
@@ -40,16 +46,25 @@
             <div class="col-md-6">
                 <div class="form-box form-group">
                     <label for="district">Quận huyện <span>*</span></label>
-                    <select name="district" id="district" class="selec2-box form-control" onchange="loadward(this.value)" required>
-                        <option value="0" selected hidden disabled>Chọn Quận/ Huyện</option>
+
+                    <select name="district" id="district" class="selec2-box form-control"
+                        onchange="loadward(this.value)" required>
+                        @forelse($list_district as $item)
+                            <option value="{{ $item->code }}" {{ (isset($store) && $store->district == $item->code ? 'selected' : old('district') == $item->code) ? 'selected' : '' }}>{{ $item->name }}</option>
+                        @empty
+                        @endforelse
                     </select>
+
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-box form-group">
                     <label for="ward">Phường xã <span>*</span></label>
                     <select name="ward" id="ward" class="selec2-box form-control" required>
-                        <option value="0" selected hidden disabled>Chọn Phường/ Xã</option>
+                        @forelse($list_wards as $item)
+                        <option value="{{ $item->code }}" {{ (isset($store) && $store->ward == $item->code ? 'selected' : old('ward') == $item->code) ? 'selected' : '' }} >{{$item->name}}</option>
+                          @empty
+                        @endforelse
                     </select>
                 </div>
             </div>
@@ -57,11 +72,12 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.store.address')</label>
-                    <input type="text" class="form-control" name="address" value="{{ isset($store) ? $store->address : old('address') }}">
+                    <input type="text" class="form-control" name="address"
+                        value="{{ isset($store) ? $store->address : old('address') }}">
                     @if ($errors->has('address'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('address') }}</strong>
-                </span>
+                            <strong>{{ $errors->first('address') }}</strong>
+                        </span>
                     @endif
                 </div>
             </div>
@@ -69,11 +85,12 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.store.email')</label>
-                    <input type="text" class="form-control" name="email" value="{{ isset($store) ? $store->email : old('email') }}">
+                    <input type="text" class="form-control" name="email"
+                        value="{{ isset($store) ? $store->email : old('email') }}">
                     @if ($errors->has('email'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('email') }}</strong>
-                </span>
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </span>
                     @endif
                 </div>
             </div>
@@ -81,11 +98,12 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>Id Kho trên Nhanh</label>
-                    <input type="text" class="form-control" name="id_nhanh" value="{{ isset($store) ? $store->id_nhanh : old('id_nhanh') }}">
+                    <input type="text" class="form-control" name="id_nhanh"
+                        value="{{ isset($store) ? $store->id_nhanh : old('id_nhanh') }}">
                     @if ($errors->has('id_nhanh'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('id_nhanh') }}</strong>
-                </span>
+                            <strong>{{ $errors->first('id_nhanh') }}</strong>
+                        </span>
                     @endif
                 </div>
             </div>
@@ -95,18 +113,25 @@
                     <label>@lang('form.page.active')</label> <span class="text-danger">*</span>
                     <div class="form-group">
                         <div class="icheck-success d-inline">
-                            <input class="" type="radio" id="statusRadio1" name="active" value="{{ \App\Models\Store::STATUS_ACTIVE }}" {{ (isset($store->active) && $store->active == \App\Models\Store::STATUS_ACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\Page::STATUS_ACTIVE)) ? 'checked' : '' }}  required>
-                            <label for="statusRadio1" class="custom-control-label">@lang('form.status.active')&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            <input class="" type="radio" id="statusRadio1" name="active"
+                                value="{{ \App\Models\Store::STATUS_ACTIVE }}"
+                                {{ (isset($store->active) && $store->active == \App\Models\Store::STATUS_ACTIVE ? 'checked' : old('active') && old('active') == \App\Models\Page::STATUS_ACTIVE) ? 'checked' : '' }}
+                                required>
+                            <label for="statusRadio1"
+                                class="custom-control-label">@lang('form.status.active')&nbsp;&nbsp;&nbsp;&nbsp;</label>
                         </div>
                         <div class="icheck-danger d-inline">
-                            <input class="" type="radio" id="statusRadio2" name="active" value="{{ \App\Models\Store::STATUS_INACTIVE }}" {{ (isset($store) && $store->active == \App\Models\Store::STATUS_INACTIVE) ? 'checked' : (old('active') && (old('active') == \App\Models\Page::STATUS_INACTIVE)) ? 'checked' : '' }}  required>
+                            <input class="" type="radio" id="statusRadio2" name="active"
+                                value="{{ \App\Models\Store::STATUS_INACTIVE }}"
+                                {{ (isset($store) && $store->active == \App\Models\Store::STATUS_INACTIVE ? 'checked' : old('active') && old('active') == \App\Models\Page::STATUS_INACTIVE) ? 'checked' : '' }}
+                                required>
                             <label for="statusRadio2" class="custom-control-label">@lang('form.status.inactive')</label>
                         </div>
                     </div>
                     @if ($errors->has('active'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('active') }}</strong>
-                </span>
+                            <strong>{{ $errors->first('active') }}</strong>
+                        </span>
                     @endif
                 </div>
             </div>
@@ -116,18 +141,25 @@
                     <label>@lang('form.article.is_home')</label> <span class="text-danger">*</span>
                     <div class="form-group">
                         <div class="icheck-success d-inline">
-                            <input class="" type="radio" id="homeRadio1" name="is_home" value="{{ \App\Models\Article::IS_HOME }}" {{ (isset($store->is_home) && $store->is_home == \App\Models\Article::IS_HOME) ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\Article::IS_HOME)) ? 'checked' : '' }}  required>
-                            <label for="homeRadio1" class="custom-control-label">@lang('form.status.is_home')&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            <input class="" type="radio" id="homeRadio1" name="is_home"
+                                value="{{ \App\Models\Article::IS_HOME }}"
+                                {{ (isset($store->is_home) && $store->is_home == \App\Models\Article::IS_HOME ? 'checked' : old('is_home') && old('is_home') == \App\Models\Article::IS_HOME) ? 'checked' : '' }}
+                                required>
+                            <label for="homeRadio1"
+                                class="custom-control-label">@lang('form.status.is_home')&nbsp;&nbsp;&nbsp;&nbsp;</label>
                         </div>
                         <div class="icheck-danger d-inline">
-                            <input class="" type="radio" id="homeRadio2" name="is_home" value="{{ \App\Models\Article::IS_NOT_HOME }}" {{ (isset($store) && $store->is_home == \App\Models\Article::IS_NOT_HOME) ? 'checked' : (old('is_home') && (old('is_home') == \App\Models\Article::IS_NOT_HOME)) ? 'checked' : '' }}  required>
+                            <input class="" type="radio" id="homeRadio2" name="is_home"
+                                value="{{ \App\Models\Article::IS_NOT_HOME }}"
+                                {{ (isset($store) && $store->is_home == \App\Models\Article::IS_NOT_HOME ? 'checked' : old('is_home') && old('is_home') == \App\Models\Article::IS_NOT_HOME) ? 'checked' : '' }}
+                                required>
                             <label for="homeRadio2" class="custom-control-label">@lang('form.status.is_not_home')</label>
                         </div>
                     </div>
                     @if ($errors->has('is_home'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('is_home') }}</strong>
-                </span>
+                            <strong>{{ $errors->first('is_home') }}</strong>
+                        </span>
                     @endif
                 </div>
             </div>
@@ -135,11 +167,14 @@
                 <div class="form-group">
                     <label>Hình ảnh</label>
                     <div class="input-group">
-                        @include('admin.components.buttons.image',['src' => isset($store->image) ? $store->image : old('image'),'name' => 'image'])
+                        @include('admin.components.buttons.image', [
+                            'src' => isset($store->image) ? $store->image : old('image'),
+                            'name' => 'image',
+                        ])
                         @if ($errors->has('image'))
                             <span class="help-block text-danger">
-                        <strong>{{ $errors->first('image') }}</strong>
-                    </span>
+                                <strong>{{ $errors->first('image') }}</strong>
+                            </span>
                         @endif
                     </div>
                 </div>
@@ -172,18 +207,19 @@
                 <!-- text input -->
                 <div class="form-group">
                     <label>@lang('form.store.ifame_googlemap')</label>
-                    <input type="text" class="form-control" name="ifame_googlemap" value="{{ isset($store) ? $store->ifame_googlemap : old('ifame_googlemap') }}">
+                    <input type="text" class="form-control" name="ifame_googlemap"
+                        value="{{ isset($store) ? $store->ifame_googlemap : old('ifame_googlemap') }}">
                     @if ($errors->has('ifame_googlemap'))
                         <span class="help-block text-danger">
-                    <strong>{{ $errors->first('ifame_googlemap') }}</strong>
-                </span>
+                            <strong>{{ $errors->first('ifame_googlemap') }}</strong>
+                        </span>
                     @endif
                 </div>
             </div>
         </div>
     </div>
     <div class="col-sm-5">
-{{--        @include('admin.store.form.ping')--}}
+        {{--        @include('admin.store.form.ping') --}}
     </div>
 </div>
 @section('script')
@@ -199,7 +235,7 @@
                     city_id: city_id,
                     _token: "{{ csrf_token() }}",
                 },
-                success: function (data) {
+                success: function(data) {
                     let option = ''
                     option += `<option data-id="0" value="0">Chọn Quận/Huyện</option>`;
                     data.district.forEach(item => {
@@ -213,8 +249,7 @@
                     $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship));
                     return true;
                 },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                }
+                error: function(XMLHttpRequest, textStatus, errorThrown) {}
             });
             return false;
         }
@@ -229,7 +264,7 @@
                     district_id: district_id,
                     _token: "{{ csrf_token() }}",
                 },
-                success: function (data) {
+                success: function(data) {
                     let option = ''
                     option += `<option data-id="0" value="0">Chọn Phường/ Xã</option>`;
                     data.ward.forEach(item => {
@@ -243,8 +278,7 @@
                     $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship));
                     return true;
                 },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                }
+                error: function(XMLHttpRequest, textStatus, errorThrown) {}
             });
             return false;
         }
