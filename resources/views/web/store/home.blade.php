@@ -6,7 +6,7 @@
                 {{ Breadcrumbs::render('StoreCocolux') }}
             </nav>
 
-            <div class="py-5 showroom-main">
+            <div class="py-2 showroom-main">
                 <div class="right-main-showroom">
                     <div class="filter-showroom">
                         <select name="province" id="province" class="select_box form-control">
