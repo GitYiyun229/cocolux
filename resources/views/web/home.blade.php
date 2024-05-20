@@ -70,6 +70,10 @@
                     </a>
                     @empty
                     @endforelse
+                     <a href="{{ route('StoreCocolux') }}" class="item-category d-flex flex-column align-items-center text-center text-uppercase">
+                        <img data-src="{{ asset('images/he-thong-cua-hang-image.svg') }}" alt="Hệ thống cửa hàng Cocolux" class="img-fluid lazy" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
+                        Hệ thống cửa hàng
+                    </a>
                 </div>
             @endif
 
@@ -167,7 +171,7 @@
                 </div>
                 <div class="slide-main">
                     <div class="slide-template-slide owl-carousel">
-                        
+
                         @if(!empty($product_flash))
                         @forelse($product_flash as $item_fl)
                             <a href="{{ route('detailProduct',['slug'=>trim($item_fl->slug), 'sku' => $item_fl->sku]) }}" class="product-template">
