@@ -1309,7 +1309,6 @@ class ProductController extends Controller
         if (is_numeric($maDonHang)) {
             $maDonHang = 'DH' . $maDonHang;
         }
-        // dd($maDonHang);
         if (strpos($maDonHang, 'DH') == 0) {
             $id = (int) substr($maDonHang, 2);
             $order = Order::where('id', $id)->first();
