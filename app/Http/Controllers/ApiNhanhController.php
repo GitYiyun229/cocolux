@@ -174,26 +174,30 @@ class ApiNhanhController extends Controller
                 }
             }
 
+            \Log::info([
+                'message' => json_encode($attribute),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            \Log::info([
+                'message' => json_encode($resp_end),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            \Log::info([
+                'message' => json_encode($product->sku),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+
             $product_nhanh = $this->searchProducts($product->sku);
             if ($product_nhanh) {
-                // if ($attribute == 'inventoryChange') {
-                //     \Log::info([
-                //         'message' => json_encode($resp_end),
-                //         'message1' => json_encode($product),
-                //         'message2' => json_encode($product_nhanh),
-                //         'line' => __LINE__,
-                //         'method' => __METHOD__
-                //     ]);
-                // } else {
-                //     \Log::info([
-                //         'message' => json_encode($resp_end),
-                //         'message1' => json_encode($product),
-                //         'message2' => json_encode($product_nhanh),
-                //         'line' => __LINE__,
-                //         'method' => __METHOD__
-                //     ]);
-                // }
 
+                \Log::info([
+                    'message' => json_encode($product_nhanh),
+                    'line' => __LINE__,
+                    'method' => __METHOD__
+                ]);
                 $data = array();
                 if (isset($product_nhanh['price'])) {
                     $data['price'] = $product_nhanh['price'];

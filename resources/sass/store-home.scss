@@ -115,6 +115,10 @@
     }
 }
 @media (max-width: 960px) {
+    #myTab-cat {
+        max-height: 250px;
+    }
+
     .showroom-main {
         grid-template-columns: 1fr;
         grid-gap: 20px 0;
