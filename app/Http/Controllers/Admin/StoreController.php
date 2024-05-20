@@ -12,6 +12,8 @@ use App\Http\Requests\Store\CreateStore;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Repositories\Contracts\StoreInterface;
+use App\Models\Districts;
+use App\Models\Wards;
 
 class StoreController extends Controller
 {
@@ -91,7 +93,10 @@ class StoreController extends Controller
     {
         $store = $this->storeRepository->getOneById($id);
         $list_city = City::all();
-        return view('admin.store.update', compact('store','list_city'));
+        // $list_city = City::has('store')->get();
+        $list_district = Districts::has('store')->get();
+        $list_wards = Wards::has('store')->get();
+        return view('admin.store.update', compact('store','list_city', 'list_district', 'list_wards'));
     }
 
     /**
