@@ -23637,9 +23637,8 @@ nav[aria-label=breadcrumb] ol {
 /* purgecss end ignore */
 @media (max-width: 960px) {
   .layout-main-detail .detail-content table {
-    display: flex;
+    display: grid;
     overflow: auto;
-    gap: 10px;
     white-space: nowrap;
     flex-wrap: nowrap;
   }
