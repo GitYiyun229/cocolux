@@ -1306,7 +1306,10 @@ class ProductController extends Controller
     public function searchOrder(Request $request)
     {
         $maDonHang = $request->input('order');
-        $maDonHang = 'DH'. $maDonHang;
+        if (is_numeric($maDonHang)) {
+            $maDonHang = 'DH' . $maDonHang;
+        }
+        // dd($maDonHang);
         if (strpos($maDonHang, 'DH') == 0) {
             $id = (int) substr($maDonHang, 2);
             $order = Order::where('id', $id)->first();
