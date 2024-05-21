@@ -75,12 +75,12 @@ class ApiNhanhController extends Controller
                             if ($product) {
                                 $this->updateProduct($item, $product, 'inventoryChange');
                                 \Log::info([
-                                    'message' => $item,
+                                    'message' => json_encode($item),
                                     'line' => __LINE__,
                                     'method' => __METHOD__
                                 ]);
                                 \Log::info([
-                                    'message' => $product,
+                                    'message' => json_encode($product),
                                     'line' => __LINE__,
                                     'method' => __METHOD__
                                 ]);
@@ -151,7 +151,7 @@ class ApiNhanhController extends Controller
         $data = json_decode($response->getBody(), true);
         if ($status !== null && $status == 1) {
             \Log::info([
-                'message' => json_encode($data),
+                'message' => ($data),
                 'line' => __LINE__,
                 'method' => __METHOD__
             ]);
