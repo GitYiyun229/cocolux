@@ -149,7 +149,7 @@ class ApiNhanhController extends Controller
             'form_params' => $this->request_params
         ]);
         $data = json_decode($response->getBody(), true);
-        if ($status == 1) {
+        if ($status !== null && $status == 1) {
             \Log::info([
                 'message' => json_encode($data),
                 'line' => __LINE__,
