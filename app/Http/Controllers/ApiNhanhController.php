@@ -80,7 +80,7 @@ class ApiNhanhController extends Controller
                                     'method' => __METHOD__
                                 ]);
                                 \Log::info([
-                                    'message' => json_encode($product),
+                                    'message' => ($product),
                                     'line' => __LINE__,
                                     'method' => __METHOD__
                                 ]);
@@ -573,6 +573,26 @@ class ApiNhanhController extends Controller
                 'method' => __METHOD__
             ]);
             return response()->json(['message' => 'OK'], 200);
+        }
+    }
+    // tim san pham
+    public function searchOderMember($phone)
+    {
+        $api = "/api/order/index";
+        $client = new Client();
+        $data = [
+            "customerMobile" => $phone
+        ];
+        $this->request_params['data'] = json_encode($data);
+        $response = $client->post($this->linkApi . $api, [
+            'form_params' => $this->request_params
+        ]);
+        $data = json_decode($response->getBody(), true);
+        dd($data);
+        if ($data['code'] == 1) {
+            return end($data['data']['products']);
+        } else {
+            return null;
         }
     }
 }

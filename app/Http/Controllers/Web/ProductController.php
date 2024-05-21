@@ -1305,7 +1305,10 @@ class ProductController extends Controller
 
     public function searchOrder(Request $request)
     {
+
         $maDonHang = $request->input('order');
+        // $result = $this->apiNhanhController->searchOrderMember();
+
         if (is_numeric($maDonHang)) {
             $maDonHang = 'DH' . $maDonHang;
         }
