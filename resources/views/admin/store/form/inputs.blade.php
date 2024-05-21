@@ -37,7 +37,6 @@
                             <option value="{{ $item->code }}" {{ (isset($store) && $store->province == $item->code ? 'selected' : old('province') == $item->code) ? 'selected' : '' }}>
                                 {{ $item->name }}
                             </option>
-
                         @empty
                         @endforelse
                     </select>
