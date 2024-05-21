@@ -63,6 +63,7 @@ class ApiNhanhController extends Controller
                         $product = ProductOptions::where('sku', $item['code'])->first();
                         if ($product) {
                             $this->updateProduct($item, $product, 'productUpdate');
+
                         }
                         return response()->json(['message' => 'OK'], 200);
                     } elseif ($resp['event'] == 'productDelete') {
@@ -73,6 +74,16 @@ class ApiNhanhController extends Controller
                             $product = ProductOptions::where('sku', $item['code'])->first();
                             if ($product) {
                                 $this->updateProduct($item, $product, 'inventoryChange');
+                                \Log::info([
+                                    'message' => $item,
+                                    'line' => __LINE__,
+                                    'method' => __METHOD__
+                                ]);
+                                \Log::info([
+                                    'message' => $product,
+                                    'line' => __LINE__,
+                                    'method' => __METHOD__
+                                ]);
                             }
                         }
                         return response()->json(['message' => 'OK'], 200);
@@ -124,7 +135,7 @@ class ApiNhanhController extends Controller
     }
 
     // tim san pham
-    public function searchProducts($sku)
+    public function searchProducts($sku, $status = null)
     {
         $api = "/api/product/search";
         $client = new Client();
@@ -132,11 +143,24 @@ class ApiNhanhController extends Controller
         $data = [
             "name" => $sku
         ];
+
         $this->request_params['data'] = json_encode($data);
         $response = $client->post($this->linkApi . $api, [
             'form_params' => $this->request_params
         ]);
         $data = json_decode($response->getBody(), true);
+        if ($status !== null && $status == 1) {
+            \Log::info([
+                'message' => json_encode($data),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            \Log::info([
+                'message' => ($sku),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+        }
         if ($data['code'] == 1) {
             return end($data['data']['products']);
         } else {
@@ -147,10 +171,14 @@ class ApiNhanhController extends Controller
     public function updateProduct($resp_end, $product, $attribute = null)
     {
         try {
+            $nhanh_status = '';
             if ($attribute == 'inventoryChange') {
                 $inventory = $resp_end;
+                $nhanh_status = '1';
+
             } else {
                 $inventory = $resp_end['inventories'];
+
             }
             $stocks = array();
             $depots = $inventory['depots'];
@@ -173,26 +201,8 @@ class ApiNhanhController extends Controller
                     }
                 }
             }
-
-            \Log::info([
-                'message' => json_encode($attribute),
-                'line' => __LINE__,
-                'method' => __METHOD__
-            ]);
-            \Log::info([
-                'message' => json_encode($resp_end),
-                'line' => __LINE__,
-                'method' => __METHOD__
-            ]);
-            \Log::info([
-                'message' => json_encode($product->sku),
-                'line' => __LINE__,
-                'method' => __METHOD__
-            ]);
-
-            $product_nhanh = $this->searchProducts($product->sku);
+            $product_nhanh = $this->searchProducts($product->sku, $nhanh_status);
             if ($product_nhanh) {
-
                 \Log::info([
                     'message' => json_encode($product_nhanh),
                     'line' => __LINE__,
