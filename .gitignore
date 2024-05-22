@@ -5,6 +5,7 @@
 /public/storage
 /public/danh-gia
 /public/webhook
+/public/robots.txt
 public/images/cdn_images
 public/images/thumbs_images
 /storage/*.key
