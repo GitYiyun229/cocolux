@@ -63,7 +63,6 @@ class ApiNhanhController extends Controller
                         $product = ProductOptions::where('sku', $item['code'])->first();
                         if ($product) {
                             $this->updateProduct($item, $product, 'productUpdate');
-
                         }
                         return response()->json(['message' => 'OK'], 200);
                     } elseif ($resp['event'] == 'productDelete') {
@@ -75,11 +74,6 @@ class ApiNhanhController extends Controller
                             if ($product) {
                                 \Log::info([
                                     'message' => json_encode($item),
-                                    'line' => __LINE__,
-                                    'method' => __METHOD__
-                                ]);
-                                \Log::info([
-                                    'message' => ($product->sku),
                                     'line' => __LINE__,
                                     'method' => __METHOD__
                                 ]);
@@ -165,7 +159,6 @@ class ApiNhanhController extends Controller
                 $inventory = $resp_end;
             } else {
                 $inventory = $resp_end['inventories'];
-
             }
             \Log::info([
                 'message' => json_encode($resp_end),
