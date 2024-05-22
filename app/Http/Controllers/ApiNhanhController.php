@@ -49,12 +49,6 @@ class ApiNhanhController extends Controller
                 $jsonData = $request->json()->all();
                 $content = json_encode($jsonData, JSON_PRETTY_PRINT);
                 $resp = json_decode($content, true);
-                \Log::info([
-                    'message' => $resp['event'],
-                    'line' => __LINE__,
-                    'method' => __METHOD__
-                ]);
-
                 if ($resp['webhooksVerifyToken'] == 'updateFromNhanh2023' && $resp['businessId'] == 157423) {
                     if ($resp['event'] == 'productAdd') {
                         return response()->json(['message' => 'OK'], 200);
@@ -74,16 +68,6 @@ class ApiNhanhController extends Controller
                             $product = ProductOptions::where('sku', $item['code'])->first();
                             if ($product) {
                                 $this->updateProduct($item, $product, 'inventoryChange');
-                                \Log::info([
-                                    'message' => json_encode($item),
-                                    'line' => __LINE__,
-                                    'method' => __METHOD__
-                                ]);
-                                \Log::info([
-                                    'message' => ($product),
-                                    'line' => __LINE__,
-                                    'method' => __METHOD__
-                                ]);
                             }
                         }
                         return response()->json(['message' => 'OK'], 200);
@@ -135,7 +119,7 @@ class ApiNhanhController extends Controller
     }
 
     // tim san pham
-    public function searchProducts($sku, $status = null)
+    public function searchProducts($sku)
     {
         $api = "/api/product/search";
         $client = new Client();
@@ -149,18 +133,7 @@ class ApiNhanhController extends Controller
             'form_params' => $this->request_params
         ]);
         $data = json_decode($response->getBody(), true);
-        if ($status !== null && $status == 1) {
-            \Log::info([
-                'message' => ($data),
-                'line' => __LINE__,
-                'method' => __METHOD__
-            ]);
-            \Log::info([
-                'message' => ($sku),
-                'line' => __LINE__,
-                'method' => __METHOD__
-            ]);
-        }
+
         if ($data['code'] == 1) {
             return end($data['data']['products']);
         } else {
@@ -174,8 +147,6 @@ class ApiNhanhController extends Controller
             $nhanh_status = '';
             if ($attribute == 'inventoryChange') {
                 $inventory = $resp_end;
-                $nhanh_status = '1';
-
             } else {
                 $inventory = $resp_end['inventories'];
 
@@ -201,13 +172,8 @@ class ApiNhanhController extends Controller
                     }
                 }
             }
-            $product_nhanh = $this->searchProducts($product->sku, $nhanh_status);
+            $product_nhanh = $this->searchProducts($product->sku);
             if ($product_nhanh) {
-                \Log::info([
-                    'message' => json_encode($product_nhanh),
-                    'line' => __LINE__,
-                    'method' => __METHOD__
-                ]);
                 $data = array();
                 if (isset($product_nhanh['price'])) {
                     $data['price'] = $product_nhanh['price'];
@@ -575,24 +541,5 @@ class ApiNhanhController extends Controller
             return response()->json(['message' => 'OK'], 200);
         }
     }
-    // tim san pham
-    public function searchOderMember($phone)
-    {
-        $api = "/api/order/index";
-        $client = new Client();
-        $data = [
-            "customerMobile" => $phone
-        ];
-        $this->request_params['data'] = json_encode($data);
-        $response = $client->post($this->linkApi . $api, [
-            'form_params' => $this->request_params
-        ]);
-        $data = json_decode($response->getBody(), true);
-        dd($data);
-        if ($data['code'] == 1) {
-            return end($data['data']['products']);
-        } else {
-            return null;
-        }
-    }
+
 }

@@ -1307,8 +1307,6 @@ class ProductController extends Controller
     {
 
         $maDonHang = $request->input('order');
-        // $result = $this->apiNhanhController->searchOrderMember();
-
         if (is_numeric($maDonHang)) {
             $maDonHang = 'DH' . $maDonHang;
         }
@@ -1370,4 +1368,42 @@ class ProductController extends Controller
             return redirect()->back();
         }
     }
+    public function searchOderMember($phone)
+    {
+        $currentDate = Carbon::now()->toDateString();
+        $tenDaysAgo = Carbon::now()->subDays(9)->toDateString();
+        $api = "/api/order/index";
+        $client = new Client();
+        $data = [
+            "fromDate" => $tenDaysAgo,
+            "toDate" => $currentDate,
+            "customerMobile" => $phone
+        ];
+        $this->request_params['data'] = json_encode($data);
+        $response = $client->post($this->linkApi . $api, [
+            'form_params' => $this->request_params
+        ]);
+        $data = json_decode($response->getBody(), true);
+        if ($data['code'] == 1) {
+            return end($data['data']);
+        } else {
+            return null;
+        }
+    }
+    // public function searchOrder(Request $request)
+    // {
+    //     $maDonHang = $request->input('order');
+    //     if (strlen($maDonHang) <= 10 || preg_match('/[a-zA-Z\W]/', $maDonHang)) {
+    //         $data = ($this->searchOderMember($maDonHang));
+    //         if ($data) {
+    //             return redirect()->route('detailOrderNhanh', ['id' => $maDonHang]);
+    //         } else {
+    //             Session::flash('danger', 'Mã đơn hàng không tồn tại');
+    //             return redirect()->back();
+    //         }
+    //     } else {
+    //         Session::flash('danger', 'Mã đơn hàng không tồn tại');
+    //         return redirect()->back();
+    //     }
+    // }
 }
