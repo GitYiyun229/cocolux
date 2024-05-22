@@ -16,7 +16,6 @@ Disallow: /*sid*
 Disallow: /search?keyword*
 Disallow: /*page*
 Disallow: /*utm_source*
-Disallow: /*?source=*
-Disallow: /*?sid=*
+Disallow: /*source*
 Disallow: /*attributes*
 Sitemap: https://cocolux.com/sitemap.xml
