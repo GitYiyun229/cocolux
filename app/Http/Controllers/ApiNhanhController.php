@@ -517,6 +517,11 @@ class ApiNhanhController extends Controller
             'form_params' => $this->request_params
         ]);
         $data = json_decode($response->getBody(), true);
+        \Log::info([
+            'message' => $data,
+            'line' => __LINE__,
+            'method' => __METHOD__
+        ]);
         if ($data['code'] == 0) {
             $order->update([
                 'message' => 'Chưa đẩy được đơn hàng lên nhanh',
