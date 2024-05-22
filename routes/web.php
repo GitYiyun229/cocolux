@@ -159,6 +159,7 @@ Route::group(['namespace' => 'Web'], function (){
     Route::post('/order', 'ProductController@order')->name('order');
     Route::get('/dat-hang-thanh-cong/{id}', 'ProductController@success')->name('orderProductSuccess');
     Route::get('/chi-tiet-don-hang/{id}', 'ProductController@detailOrderSuccess')->name('detailOrderSuccess');
+    Route::get('/kiem-tra-don-hang/{id}', 'ProductController@detailOrderNhanh')->name('detailOrderNhanh');
     Route::get('/thong-tin/{slug}', 'PageController@index')->name('detailPage');
     Route::get('/hoi-dap/{slug}', 'PageController@index')->name('detailPageQa');
     Route::post('/load-district', 'ProductController@load_district')->name('loadDistrict');
