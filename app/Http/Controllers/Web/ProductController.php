@@ -1290,11 +1290,7 @@ class ProductController extends Controller
             'method' => __METHOD__
         ]);
         Session::forget('cart');
-        \Log::info([
-            'message' => $id,
-            'line' => __LINE__,
-            'method' => __METHOD__
-        ]);
+     
         try {
             $order = Order::findOrFail($id);
 
