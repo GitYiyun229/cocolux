@@ -1293,6 +1293,16 @@ class ProductController extends Controller
 
         try {
             $order = Order::findOrFail($id);
+            \Log::info([
+                'message' => $id,
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            \Log::info([
+                'message' => $order->message,
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
         } catch (ModelNotFoundException $e) {
             abort(404);
         }
