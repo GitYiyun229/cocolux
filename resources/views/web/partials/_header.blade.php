@@ -67,7 +67,7 @@
         @endif
         <div class="header-main-menu">
             <form action="{{ route('search') }}" name="search_product" id="search_product" method="get">
-                <div class="dropdown">
+                {{-- <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle form-drop-btn" id="dropdown_change" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <span>Tất cả</span>
                     </button>
@@ -86,7 +86,7 @@
                         @empty
                         @endforelse
                     </div>
-                </div>
+                </div> --}}
                 <input type="text" class="form-control" name="keyword" id="keyword" value="{{ old('keyword') }}" autocomplete="off" placeholder="Tìm sản phẩm bạn mong muốn..." required>
                 <input type="hidden" name="categories" id="cat_product">
                 <button type="submit" class="btn form-submit" name="submit-form-search" id="submit-form-search" aria-label="Submit form search">
