@@ -49,11 +49,7 @@ class ApiNhanhController extends Controller
                 $jsonData = $request->json()->all();
                 $content = json_encode($jsonData, JSON_PRETTY_PRINT);
                 $resp = json_decode($content, true);
-                \Log::info([
-                    'message' => $resp['event'],
-                    'line' => __LINE__,
-                    'method' => __METHOD__
-                ]);
+
 
                 if ($resp['webhooksVerifyToken'] == 'updateFromNhanh2023' && $resp['businessId'] == 157423) {
                     if ($resp['event'] == 'productAdd') {
@@ -72,11 +68,7 @@ class ApiNhanhController extends Controller
                         foreach ($list_change as $item) {
                             $product = ProductOptions::where('sku', $item['code'])->first();
                             if ($product) {
-                                \Log::info([
-                                    'message' => json_encode($item),
-                                    'line' => __LINE__,
-                                    'method' => __METHOD__
-                                ]);
+
                                 $this->updateProduct($item, $product, 'inventoryChange');
 
                             }
@@ -160,11 +152,7 @@ class ApiNhanhController extends Controller
             } else {
                 $inventory = $resp_end['inventories'];
             }
-            \Log::info([
-                'message' => json_encode($resp_end),
-                'line' => __LINE__,
-                'method' => __METHOD__
-            ]);
+
             $stocks = array();
             $depots = $inventory['depots'];
             if ($depots) {
@@ -188,11 +176,7 @@ class ApiNhanhController extends Controller
             }
             $product_nhanh = $this->searchProducts($product->sku);
             if ($product_nhanh) {
-                \Log::info([
-                    'message' => json_encode($product_nhanh['price']),
-                    'line' => __LINE__,
-                    'method' => __METHOD__
-                ]);
+
                 $data = array();
                 if (isset($product_nhanh['price'])) {
                     $data['price'] = $product_nhanh['price'];

@@ -22456,7 +22456,7 @@ body a:hover {
 .header-menu .menu-site .menu-poster {
   position: absolute;
   right: -15px;
-  bottom: -15px;
+  bottom: 0px;
 }
 .header-menu .menu-site .menu-poster img {
   width: 160px;
@@ -22514,7 +22514,8 @@ body a:hover {
   left: 220px;
   border: 1px solid #c73030;
   height: 100%;
-  padding: 15px;
+  padding: 15px 15px 0 15px;
+  overflow: hidden;
   width: 650px;
   z-index: 2;
   background: #fff;
