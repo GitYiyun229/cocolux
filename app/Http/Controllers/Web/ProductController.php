@@ -792,7 +792,7 @@ class ProductController extends Controller
                 $query->select('applied_stop_time', 'sku', 'price')->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->where('type', 'flash_deal')->orderBy('price', 'asc');
             }])->orderBy('is_default', 'DESC')->paginate(30);
-
+            
         return view('web.product.flash_sale', compact('productOptions'));
     }
 
@@ -1290,7 +1290,7 @@ class ProductController extends Controller
             'method' => __METHOD__
         ]);
         Session::forget('cart');
-     
+
         try {
             $order = Order::findOrFail($id);
 

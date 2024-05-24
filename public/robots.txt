@@ -12,10 +12,10 @@ Disallow: /sess/
 Disallow: /tmp/
 Disallow: /web.config
 Disallow: /*slug*
-Disallow: /*sid*
 Disallow: /search?keyword*
 Disallow: /*page*
 Disallow: /*utm_source*
-Disallow: /*source*
+Disallow: /*?source=*
+Disallow: /*?sid=*
 Disallow: /*attributes*
 Sitemap: https://cocolux.com/sitemap.xml
