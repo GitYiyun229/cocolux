@@ -49,7 +49,11 @@ class ApiNhanhController extends Controller
                 $jsonData = $request->json()->all();
                 $content = json_encode($jsonData, JSON_PRETTY_PRINT);
                 $resp = json_decode($content, true);
-
+                \Log::info([
+                    'message' => $resp['event'],
+                    'line' => __LINE__,
+                    'method' => __METHOD__
+                ]);
 
                 if ($resp['webhooksVerifyToken'] == 'updateFromNhanh2023' && $resp['businessId'] == 157423) {
                     if ($resp['event'] == 'productAdd') {
@@ -68,9 +72,17 @@ class ApiNhanhController extends Controller
                         foreach ($list_change as $item) {
                             $product = ProductOptions::where('sku', $item['code'])->first();
                             if ($product) {
-
                                 $this->updateProduct($item, $product, 'inventoryChange');
-
+                                \Log::info([
+                                    'message' => $item,
+                                    'line' => __LINE__,
+                                    'method' => __METHOD__
+                                ]);
+                                \Log::info([
+                                    'message' => $product,
+                                    'line' => __LINE__,
+                                    'method' => __METHOD__
+                                ]);
                             }
                         }
                         return response()->json(['message' => 'OK'], 200);
@@ -176,7 +188,6 @@ class ApiNhanhController extends Controller
             }
             $product_nhanh = $this->searchProducts($product->sku);
             if ($product_nhanh) {
-
                 $data = array();
                 if (isset($product_nhanh['price'])) {
                     $data['price'] = $product_nhanh['price'];
