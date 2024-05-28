@@ -73,16 +73,6 @@ class ApiNhanhController extends Controller
                             $product = ProductOptions::where('sku', $item['code'])->first();
                             if ($product) {
                                 $this->updateProduct($item, $product, 'inventoryChange');
-                                \Log::info([
-                                    'message' => $item,
-                                    'line' => __LINE__,
-                                    'method' => __METHOD__
-                                ]);
-                                \Log::info([
-                                    'message' => $product,
-                                    'line' => __LINE__,
-                                    'method' => __METHOD__
-                                ]);
                             }
                         }
                         return response()->json(['message' => 'OK'], 200);
@@ -147,7 +137,11 @@ class ApiNhanhController extends Controller
             'form_params' => $this->request_params
         ]);
         $data = json_decode($response->getBody(), true);
-
+        \Log::info([
+            'message' => $data,
+            'line' => __LINE__,
+            'method' => __METHOD__
+        ]);
         if ($data['code'] == 1) {
             return end($data['data']['products']);
         } else {
@@ -187,12 +181,18 @@ class ApiNhanhController extends Controller
                 }
             }
             \Log::info([
-                'message' => $stocks,
+                'message' => $resp_end,
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+            \Log::info([
+                'message' => $product,
                 'line' => __LINE__,
                 'method' => __METHOD__
             ]);
             $product_nhanh = $this->searchProducts($product->sku);
             if ($product_nhanh) {
+
                 \Log::info([
                     'message' => $product_nhanh,
                     'line' => __LINE__,
@@ -211,6 +211,11 @@ class ApiNhanhController extends Controller
                 $data['stocks'] = $stocks;
                 $data['nhanhid'] = $product_nhanh['idNhanh'];
                 $data['brand'] = $product_nhanh['brandName'];
+                \Log::info([
+                    'message' => $data,
+                    'line' => __LINE__,
+                    'method' => __METHOD__
+                ]);
                 return $product->update($data);
             }
             return response()->json(['message' => 'OK'], 200);
@@ -566,5 +571,4 @@ class ApiNhanhController extends Controller
             return response()->json(['message' => 'OK'], 200);
         }
     }
-
 }
