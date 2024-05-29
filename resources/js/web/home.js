@@ -1,13 +1,14 @@
-
+require("../bootstrap");
+import $ from "jquery";
 import "bootstrap";
 import "owl.carousel";
 window.$ = $;
-import swal from 'sweetalert2';
+import swal from "sweetalert2";
 window.Swal = swal;
 import LazyLoad from "vanilla-lazyload";
 
-require('./template');
-require('./main');
+require("./template");
+require("./main");
 
 var lazyLoadInstance = new LazyLoad({
     // Your custom settings go here
@@ -22,101 +23,101 @@ var lazyLoadInstance = new LazyLoad({
 //
 // });
 
-$('.banner-slick').owlCarousel({
-    margin:10,
-    autoplay:true,
-    autoplayTimeout:3000,
-    responsiveClass:true,
+$(".banner-slick").owlCarousel({
+    margin: 10,
+    autoplay: true,
+    autoplayTimeout: 3000,
+    responsiveClass: true,
     loop: false,
     rewind: true,
-    responsive:{
-        0:{
-            items:1,
-            nav:true
+    responsive: {
+        0: {
+            items: 1,
+            nav: true,
         },
-        600:{
-            items:1,
-            nav:false
+        600: {
+            items: 1,
+            nav: false,
         },
-        1000:{
-            items:1,
-            nav:true,
-            loop:false
-        }
-    }
+        1000: {
+            items: 1,
+            nav: true,
+            loop: false,
+        },
+    },
 });
 
 setTimeout(() => {
-    var carouselData = $('.banner-slick').data();
-    var carouselOptions = carouselData['owl.carousel'].options;
+    var carouselData = $(".banner-slick").data();
+    var carouselOptions = carouselData["owl.carousel"].options;
     carouselOptions.autoplayTimeout = 6000;
-    $('.banner-slick').trigger('refresh.owl.carousel');
+    $(".banner-slick").trigger("refresh.owl.carousel");
 }, 1000);
 
-$('.section-store-main').owlCarousel({
+$(".section-store-main").owlCarousel({
     loop: false,
     rewind: true,
-    dots:false,
-    responsiveClass:true,
-    responsive:{
-        0:{
-            items:2,
-            nav:true
+    dots: false,
+    responsiveClass: true,
+    responsive: {
+        0: {
+            items: 2,
+            nav: true,
         },
-        600:{
-            items:4,
-            nav:false
+        600: {
+            items: 4,
+            nav: false,
         },
-        1000:{
-            items:6,
-            nav:true,
-            loop:false
-        }
-    }
+        1000: {
+            items: 6,
+            nav: true,
+            loop: false,
+        },
+    },
 });
 
-$('.slide-template-slide').owlCarousel({
+$(".slide-template-slide").owlCarousel({
     loop: false,
     rewind: true,
-    dots:false,
-    responsiveClass:true,
-    responsive:{
-        0:{
-            items:2,
-            nav:true
+    dots: false,
+    responsiveClass: true,
+    responsive: {
+        0: {
+            items: 2,
+            nav: true,
         },
-        600:{
-            items:3,
-            nav:false
+        600: {
+            items: 3,
+            nav: false,
         },
-        1000:{
-            items:5,
-            nav:true,
-            loop:false
-        }
-    }
+        1000: {
+            items: 5,
+            nav: true,
+            loop: false,
+        },
+    },
 });
 
-$('.slide-template-slide-coupon').owlCarousel({
+$(".slide-template-slide-coupon").owlCarousel({
     loop: false,
     rewind: true,
-    dots:false,
-    responsiveClass:true,
-    responsive:{
-        0:{
-            items:1,
-            nav:true
+    dots: false,
+    responsiveClass: true,
+    responsive: {
+        0: {
+            items: 1,
+            nav: true,
         },
-        600:{
-            items:2,
-            nav:false
+        600: {
+            items: 2,
+            nav: false,
         },
-        1000:{
-            items:4,
-            nav:true,
-            loop:false
-        }
-    }
+        1000: {
+            items: 4,
+            nav: true,
+            loop: false,
+        },
+    },
 });
 
 $(".count-down").each(function (e) {
@@ -124,8 +125,8 @@ $(".count-down").each(function (e) {
 });
 
 function countdowwn(element) {
-    let is_title = element.attr('is-title');
-    let e = element.attr('time-end');
+    let is_title = element.attr("is-title");
+    let e = element.attr("time-end");
     let l = new Date(e).getTime();
     let n = setInterval(function () {
         let e = new Date().getTime();
@@ -158,34 +159,31 @@ function countdowwn(element) {
         }
 
         if (t < 0) {
-            clearInterval(n), element.html("Đã hết khuyến mại")
-        };
-
+            clearInterval(n), element.html("Đã hết khuyến mại");
+        }
     }, 1e3);
 }
 
-$('.btn-copy').click(function(){
-    let value = $(this).data('coupon');
+$(".btn-copy").click(function () {
+    let value = $(this).data("coupon");
     let temp = $("<input>");
     $("body").append(temp);
     temp.val(value).select();
     try {
         document.execCommand("copy");
-        console.log('Text copied to clipboard successfully');
-        Swal.fire(
-            'Thành công!',
-            'Copy thành công',
-            'success'
-        );
+        console.log("Text copied to clipboard successfully");
+        Swal.fire("Thành công!", "Copy thành công", "success");
     } catch (err) {
-        console.error('Error copying text to clipboard:', err);
+        console.error("Error copying text to clipboard:", err);
     } finally {
         temp.remove();
     }
-})
+});
 
-$('.modal-footer #coupon-end, .modal-body #coupon-here').click(function() {
-    const coupon_here = document.querySelector(".modal-body #coupon-here #coupon-modal");
+$(".modal-footer #coupon-end, .modal-body #coupon-here").click(function () {
+    const coupon_here = document.querySelector(
+        ".modal-body #coupon-here #coupon-modal"
+    );
 
     // Tạo một đối tượng Range để chọn nội dung của phần tử
     const range = document.createRange();
@@ -204,28 +202,24 @@ $('.modal-footer #coupon-end, .modal-body #coupon-here').click(function() {
             event.clipboardData.setData("text/plain", coupon_here.textContent);
         }
 
-        Swal.fire(
-            'Thành công!',
-            'Copy thành công',
-            'success'
-        );
+        Swal.fire("Thành công!", "Copy thành công", "success");
     } catch (err) {
-        console.error('Error copying text to clipboard:', err);
+        console.error("Error copying text to clipboard:", err);
     } finally {
         // Xóa lựa chọn
         selection.removeAllRanges();
     }
 });
 
-$('.btn-value').click(function(){
-    let value = $(this).data('value-coupon');
-    $(".modal-body #name-coupon").text( 'Giảm ' + value.value );
-    $(".modal-body #des-coupon").text( value.name );
-    $(".modal-body #coupon-modal").text( value.items.code );
-    $(".modal-body #coupon-here").data('coupon',value.items.code );
-    $(".modal-footer #coupon-end").data('coupon',value.items.code );
-    $(".modal-body #startDate").text( value.start_date );
-    $(".modal-body #endDate").text( value.end_date );
-    $(".modal-body #show_date").text( value.start_date + '- '+ value.end_date );
-    $(".modal-body #description-coupon").text( value.description );
-})
+$(".btn-value").click(function () {
+    let value = $(this).data("value-coupon");
+    $(".modal-body #name-coupon").text("Giảm " + value.value);
+    $(".modal-body #des-coupon").text(value.name);
+    $(".modal-body #coupon-modal").text(value.items.code);
+    $(".modal-body #coupon-here").data("coupon", value.items.code);
+    $(".modal-footer #coupon-end").data("coupon", value.items.code);
+    $(".modal-body #startDate").text(value.start_date);
+    $(".modal-body #endDate").text(value.end_date);
+    $(".modal-body #show_date").text(value.start_date + "- " + value.end_date);
+    $(".modal-body #description-coupon").text(value.description);
+});
