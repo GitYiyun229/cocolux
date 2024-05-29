@@ -1318,8 +1318,6 @@ class ProductController extends Controller
     public function searchOrder(Request $request)
     {
 
-        // $this->searchOrder2($request);
-        // dd(111);
         $maDonHang = $request->input('order');
         if (is_numeric($maDonHang)) {
             $maDonHang = 'DH' . $maDonHang;
@@ -1404,12 +1402,11 @@ class ProductController extends Controller
     //         return null;
     //     }
     // }
-    // public function searchOrder2(Request $request)
+    // public function searchOrder(Request $request)
     // {
     //     $maDonHang = $request->input('order');
     //     if (strlen($maDonHang) <= 10 || preg_match('/[a-zA-Z\W]/', $maDonHang)) {
     //         $data = ($this->searchOderMember($maDonHang));
-    //         dd($data);
     //         if ($data) {
     //             return redirect()->route('detailOrderNhanh', ['id' => $maDonHang]);
     //         } else {
