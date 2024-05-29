@@ -14,6 +14,7 @@ require('laravel-mix-purgecss');
 
 mix.js('resources/js/admin/setting.js', 'public/js/admin');
 mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/web/home2.js', 'public/js/web')
     .js('resources/js/web/home.js', 'public/js/web')
     .js('resources/js/web/show-room.js', 'public/js/web')
     .js('resources/js/web/article-detail.js', 'public/js/web')

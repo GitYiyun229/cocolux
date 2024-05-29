@@ -1,10 +1,9 @@
-require('../bootstrap');
-import $ from "jquery";
+
+import "bootstrap";
+import "owl.carousel";
 window.$ = $;
-import 'bootstrap';
 import swal from 'sweetalert2';
 window.Swal = swal;
-import 'owl.carousel';
 import LazyLoad from "vanilla-lazyload";
 
 require('./template');
