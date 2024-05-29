@@ -477,6 +477,7 @@
 @endsection
 
 @section('script')
+    @parent
     <script src="{{ mix('js/web/home.js') }}"></script>
     @include('web.components.extend')
 @endsection
