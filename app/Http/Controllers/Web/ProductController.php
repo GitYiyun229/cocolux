@@ -1319,7 +1319,7 @@ class ProductController extends Controller
     {
 
         $maDonHang = $request->input('order');
-        if (!preg_match('/[a-zA-Z\W]/', $maDonHang) && strlen($maDonHang) >= 10) {
+        if (!preg_match('/[a-zA-Z\W]/', $maDonHang) && strlen($maDonHang) >= 9) {
             return redirect()->route('detailOrderSuccess2', ['id' => $maDonHang]);
         } elseif (!preg_match('/[a-zA-Z\W]/', $maDonHang) && (strlen($maDonHang) <= 6 && strlen($maDonHang) >= 4)) {
             if (is_numeric($maDonHang)) {
@@ -1391,7 +1391,7 @@ class ProductController extends Controller
         $tenDaysAgo = Carbon::now()->subDays(9)->toDateString();
         $api = "/api/order/index";
         $client = new Client();
-        if(strlen($phone) > 10){
+        if(strlen($phone) == 9){
             $mdh=$phone;
             $data = [
                 "fromDate" => $tenDaysAgo,
@@ -1420,7 +1420,7 @@ class ProductController extends Controller
     public function detailOrderSuccess2($order_id)
     {
         $maDonHang = $order_id;
-        if (strlen($maDonHang) >= 10) {
+        if (strlen($maDonHang) >= 9) {
             $data = ($this->searchOderMember($maDonHang));
             if ($data) {
                 return view('web.cart.detail_order_success_nhanh', compact('data', 'maDonHang'));
