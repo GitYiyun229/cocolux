@@ -195,7 +195,7 @@
                 <div class="menu-content">
                     <form action="{{ route('searchOrder') }}" method="POST" name="search-order">
                         @csrf
-                        <input type="text" class="form-control" placeholder="Nhập mã đơn hàng" name="order" id="order">
+                        <input type="text" class="form-control" placeholder="Nhập số điện thoại ,mã đơn hàng" name="order" id="order">
                         <button class="btn" type="submit">Kiểm tra đơn hàng</button>
                     </form>
                 </div>
