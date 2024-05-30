@@ -54,7 +54,7 @@
     <!-- Scripts -->
     @yield('script')
     <div class="circle-tel d-flex align-items-center justify-content-center">
-        <a href="tel:{{ $setting['hotline']}}">
+        <a href="tel:{{ $setting['hotline'] }}">
             <svg class="shake-bottom" width="30" height="30" viewBox="0 0 32 32" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -66,6 +66,8 @@
             </svg>
         </a>
     </div>
+    <div class="zalo-chat-widget" data-oaid="169586825510484028" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="" data-height=""></div>
+    <script src="https://sp.zalo.me/plugins/sdk.js"></script>
 </body>
 
 </html>

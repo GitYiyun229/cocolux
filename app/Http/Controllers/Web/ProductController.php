@@ -1319,22 +1319,27 @@ class ProductController extends Controller
     {
 
         $maDonHang = $request->input('order');
-        if (is_numeric($maDonHang)) {
-            $maDonHang = 'DH' . $maDonHang;
-        }
-        if (strpos($maDonHang, 'DH') == 0) {
-            $id = (int) substr($maDonHang, 2);
-            $order = Order::where('id', $id)->first();
-            if ($order) {
-                return redirect()->route('detailOrderSuccess', ['id' => $order->id]);
-            } else {
-                Session::flash('danger', 'Mã đơn hàng không tồn tại');
-                return redirect()->back();
+        if (!preg_match('/[a-zA-Z\W]/', $maDonHang) && strlen($maDonHang) == 10) {
+            return redirect()->route('detailOrderSuccess2', ['id' => $maDonHang]);
+        } elseif (!preg_match('/[a-zA-Z\W]/', $maDonHang) && (strlen($maDonHang) <= 6 && strlen($maDonHang) >= 4)) {
+            if (is_numeric($maDonHang)) {
+                $maDonHang = 'DH' . $maDonHang;
+            }
+            if (strpos($maDonHang, 'DH') == 0) {
+                $id = (int) substr($maDonHang, 2);
+                $order = Order::where('id', $id)->first();
+                if ($order) {
+                    return redirect()->route('detailOrderSuccess', ['id' => $order->id]);
+                } else {
+                    Session::flash('danger', 'Mã đơn hàng không tồn tại');
+                    return redirect()->back();
+                }
             }
         } else {
             Session::flash('danger', 'Mã đơn hàng không tồn tại');
             return redirect()->back();
         }
+
     }
 
     public function detailOrderSuccess($id)
@@ -1380,42 +1385,42 @@ class ProductController extends Controller
             return redirect()->back();
         }
     }
-    // public function searchOderMember($phone)
-    // {
-    //     $currentDate = Carbon::now()->toDateString();
-    //     $tenDaysAgo = Carbon::now()->subDays(9)->toDateString();
-    //     $api = "/api/order/index";
-    //     $client = new Client();
-    //     $data = [
-    //         "fromDate" => $tenDaysAgo,
-    //         "toDate" => $currentDate,
-    //         "customerMobile" => $phone
-    //     ];
-    //     $this->request_params['data'] = json_encode($data);
-    //     $response = $client->post($this->linkApi . $api, [
-    //         'form_params' => $this->request_params
-    //     ]);
-    //     $data = json_decode($response->getBody(), true);
-    //     if ($data['code'] == 1) {
-    //         return end($data['data']);
-    //     } else {
-    //         return null;
-    //     }
-    // }
-    // public function searchOrder(Request $request)
-    // {
-    //     $maDonHang = $request->input('order');
-    //     if (strlen($maDonHang) <= 10 || preg_match('/[a-zA-Z\W]/', $maDonHang)) {
-    //         $data = ($this->searchOderMember($maDonHang));
-    //         if ($data) {
-    //             return redirect()->route('detailOrderNhanh', ['id' => $maDonHang]);
-    //         } else {
-    //             Session::flash('danger', 'Mã đơn hàng không tồn tại');
-    //             return redirect()->back();
-    //         }
-    //     } else {
-    //         Session::flash('danger', 'Mã đơn hàng không tồn tại');
-    //         return redirect()->back();
-    //     }
-    // }
+    public function searchOderMember($phone)
+    {
+        $currentDate = Carbon::now()->toDateString();
+        $tenDaysAgo = Carbon::now()->subDays(9)->toDateString();
+        $api = "/api/order/index";
+        $client = new Client();
+        $data = [
+            "fromDate" => $tenDaysAgo,
+            "toDate" => $currentDate,
+            "customerMobile" => $phone
+        ];
+        $this->request_params['data'] = json_encode($data);
+        $response = $client->post($this->linkApi . $api, [
+            'form_params' => $this->request_params
+        ]);
+        $data = json_decode($response->getBody(), true);
+        if ($data['code'] == 1) {
+            return end($data['data']);
+        } else {
+            return null;
+        }
+    }
+    public function detailOrderSuccess2($order_id)
+    {
+        $maDonHang = $order_id;
+        if (strlen($maDonHang) <= 10) {
+            $data = ($this->searchOderMember($maDonHang));
+            if ($data) {
+                return view('web.cart.detail_order_success_nhanh', compact('data', 'maDonHang'));
+            } else {
+                Session::flash('danger', 'Mã đơn hàng không tồn tại');
+                return redirect()->back();
+            }
+        } else {
+            Session::flash('danger', 'Mã đơn hàng không tồn tại');
+            return redirect()->back();
+        }
+    }
 }
