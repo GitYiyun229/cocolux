@@ -1319,7 +1319,7 @@ class ProductController extends Controller
     {
 
         $maDonHang = $request->input('order');
-        if (!preg_match('/[a-zA-Z\W]/', $maDonHang) && strlen($maDonHang) == 10) {
+        if (!preg_match('/[a-zA-Z\W]/', $maDonHang) && strlen($maDonHang) >= 10) {
             return redirect()->route('detailOrderSuccess2', ['id' => $maDonHang]);
         } elseif (!preg_match('/[a-zA-Z\W]/', $maDonHang) && (strlen($maDonHang) <= 6 && strlen($maDonHang) >= 4)) {
             if (is_numeric($maDonHang)) {
