@@ -41,6 +41,12 @@ Breadcrumbs::for('StoreCocolux', function ($trail) {
     $trail->push('Hệ thống cửa hàng', route('homeBrand'));
 });
 
+//search mã đơn hàng trên nhanh qua sđt
+Breadcrumbs::for('detailOrderSuccess2', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Tra cứu đơn hàng', route('homeBrand'));
+});
+
 // Home > Thương hiệu > Brand
 Breadcrumbs::for('detailBrand', function ($trail, $brand) {
     $trail->parent('home');
