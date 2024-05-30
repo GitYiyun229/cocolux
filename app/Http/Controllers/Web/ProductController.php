@@ -1391,11 +1391,21 @@ class ProductController extends Controller
         $tenDaysAgo = Carbon::now()->subDays(9)->toDateString();
         $api = "/api/order/index";
         $client = new Client();
-        $data = [
-            "fromDate" => $tenDaysAgo,
-            "toDate" => $currentDate,
-            "customerMobile" => $phone
-        ];
+        if(strlen($phone) > 10){
+            $mdh=$phone;
+            $data = [
+                "fromDate" => $tenDaysAgo,
+                "toDate" => $currentDate,
+                "id" => $mdh
+            ];
+        }else{
+            $data = [
+                "fromDate" => $tenDaysAgo,
+                "toDate" => $currentDate,
+                "customerMobile" => $phone
+            ];
+        }
+
         $this->request_params['data'] = json_encode($data);
         $response = $client->post($this->linkApi . $api, [
             'form_params' => $this->request_params
@@ -1410,7 +1420,7 @@ class ProductController extends Controller
     public function detailOrderSuccess2($order_id)
     {
         $maDonHang = $order_id;
-        if (strlen($maDonHang) <= 10) {
+        if (strlen($maDonHang) >= 10) {
             $data = ($this->searchOderMember($maDonHang));
             if ($data) {
                 return view('web.cart.detail_order_success_nhanh', compact('data', 'maDonHang'));
