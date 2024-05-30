@@ -1317,7 +1317,6 @@ class ProductController extends Controller
 
     public function searchOrder(Request $request)
     {
-
         $maDonHang = $request->input('order');
         if (!preg_match('/[a-zA-Z\W]/', $maDonHang) && strlen($maDonHang) >= 9) {
             return redirect()->route('detailOrderSuccess2', ['id' => $maDonHang]);

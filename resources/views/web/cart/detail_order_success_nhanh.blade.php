@@ -14,7 +14,7 @@
                 @csrf
                 <h3 class="text mb-2"> Tra cứu đơn hàng </h3>
                 <div class="buttom-search d-grid">
-                    <input type="text" class="form-control" placeholder="Nhập mã đơn hàng" name="order" id="order">
+                    <input type="text" class="form-control" placeholder="Nhập số điện thoại , mã Id nhanh hoặc mã đơn hàng WEB " name="order" id="order">
                     <button class="btn  d-flex justify-content-center align-items-center" type="submit"><img
                             src="{{ asset('images/search-nhanh-icon.svg') }}" alt="" width="29" height="29"
                             class="img-fluid">Tra cứu</button>
