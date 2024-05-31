@@ -1,14 +1,27 @@
-require('../bootstrap');
-import $ from "jquery";
-window.$ = $;
-import 'bootstrap';
-import swal from 'sweetalert2';
-window.Swal = swal;
-import 'owl.carousel';
-import LazyLoad from "vanilla-lazyload";
-require('./template');
-require('./main');
+// require('../bootstrap');
+// import $ from "jquery";
+// import "owl.carousel";
+// import LazyLoad from "vanilla-lazyload";
+// import "bootstrap";
+// window.$ = $;
+// import swal from 'sweetalert2';
+// window.Swal = swal;
+// require('./template');
+// require('./main');
 
+
+// Import thư viện cần thiết
+require('../bootstrap'); // Khởi tạo Bootstrap
+import $ from "jquery"; // Import jQuery
+window.$ = $; // Đặt jQuery thành biến toàn cục
+import "owl.carousel"; // Import Owl Carousel
+import "bootstrap"; // Import Bootstrap
+import LazyLoad from "vanilla-lazyload"; // Import LazyLoad
+import swal from 'sweetalert2'; // Import SweetAlert2
+window.Swal = swal; // Đặt SweetAlert2 thành biến toàn cục
+// Import các tệp JavaScript tùy chỉnh
+require('./template'); // Tệp template.js tùy chỉnh
+require('./main'); // Tệp main.js tùy chỉnh
 var lazyLoadInstance = new LazyLoad({
     // Your custom settings go here
 });
