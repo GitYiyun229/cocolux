@@ -160,8 +160,11 @@
                                                     <div class="progress-bar bg-danger" role="progressbar"
                                                         style="width: {{ $item->progressbar }}%"
                                                         aria-valuenow="{{ $item->progressbar }}" aria-valuemin="0"
-                                                        aria-valuemax="100"></div>
+                                                        aria-valuemax="100"
+                                                        aria-label="Progress: {{ $item->progressbar }}%">
+                                                    </div>
                                                 </div>
+
                                                 <div class="d-flex justify-content-between align-items-center mt-1">
                                                     <button type="button" class="btn btn-call-modal p-0 btn-value"
                                                         data-value-coupon="{{ json_encode($item) }}"

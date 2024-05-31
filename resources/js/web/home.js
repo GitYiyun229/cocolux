@@ -22,6 +22,10 @@ window.Swal = swal; // Đặt SweetAlert2 thành biến toàn cục
 // Import các tệp JavaScript tùy chỉnh
 require('./template'); // Tệp template.js tùy chỉnh
 require('./main'); // Tệp main.js tùy chỉnh
+
+
+
+
 var lazyLoadInstance = new LazyLoad({
     // Your custom settings go here
 });
@@ -41,6 +45,7 @@ $('.banner-slick').owlCarousel({
     autoplayTimeout:3000,
     responsiveClass:true,
     loop: false,
+    dots:false,
     rewind: true,
     responsive:{
         0:{
