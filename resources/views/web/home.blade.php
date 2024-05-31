@@ -210,8 +210,14 @@
                                         @endif
                                         <div
                                             class="product-thumbnail @if ($item_fl->promotionItem && $item_fl->promotionItem->applied_stop_time) image-frame @endif">
-                                            <img src="{{ asset($item_fl->image_first) }}" alt="{{ $item_fl->title }}"
-                                                class="img-fluid">
+
+                                            <picture>
+                                                <source
+                                                    srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item_fl->image_first)) }}"
+                                                    type="image/webp">
+                                                <img src="{{ asset($item_fl->image_first) }}"
+                                                    alt="{{ $item_fl->title }}" class="img-fluid">
+                                            </picture>
                                         </div>
                                         <div class="product-price">
                                             <div class="public-price">{{ format_money($item_fl->promotionItem->price) }}
