@@ -66,8 +66,7 @@
             </svg>
         </a>
     </div>
-    <div class="zalo-chat-widget" data-oaid="169586825510484028" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="" data-height=""></div>
-    <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+
 </body>
 
 </html>
