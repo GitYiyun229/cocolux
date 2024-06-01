@@ -6,7 +6,7 @@
  * or disable the default devtool with "devtool: false".
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
-(self["webpackChunk"] = self["webpackChunk"] || []).push([["/js/web/home1"],{
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["/js/web/home_bs"],{
 
 /***/ "./node_modules/@popperjs/core/lib/createPopper.js":
 /*!*********************************************************!*\
@@ -645,14 +645,14 @@ eval("window._ = __webpack_require__(/*! lodash */ \"./node_modules/lodash/lodas
 
 /***/ }),
 
-/***/ "./resources/js/web/home1.js":
-/*!***********************************!*\
-  !*** ./resources/js/web/home1.js ***!
-  \***********************************/
+/***/ "./resources/js/web/home_bs.js":
+/*!*************************************!*\
+  !*** ./resources/js/web/home_bs.js ***!
+  \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var owl_carousel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! owl.carousel */ \"./node_modules/owl.carousel/dist/owl.carousel.js\");\n/* harmony import */ var owl_carousel__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(owl_carousel__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.esm.js\");\n// Import thư viện cần thiết\n// require('../bootstrap');\n// import $ from \"jquery\";\n// window.$ = $;\n// import \"owl.carousel\";\n// import \"bootstrap\";\n\n\nwindow.$ = (jquery__WEBPACK_IMPORTED_MODULE_0___default());\n\n\n__webpack_require__(/*! ../bootstrap */ \"./resources/js/bootstrap.js\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvanMvd2ViL2hvbWUxLmpzIiwibWFwcGluZ3MiOiI7Ozs7OztBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTs7QUFHdUI7QUFDdkJDLE1BQU0sQ0FBQ0QsQ0FBQyxHQUFHQSwrQ0FBQztBQUNVO0FBQ0g7QUFDbkJFLG1CQUFPLENBQUMsaURBQWMsQ0FBQyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3Jlc291cmNlcy9qcy93ZWIvaG9tZTEuanM/MDU5ZiJdLCJzb3VyY2VzQ29udGVudCI6WyJcbi8vIEltcG9ydCB0aMawIHZp4buHbiBj4bqnbiB0aGnhur90XG4vLyByZXF1aXJlKCcuLi9ib290c3RyYXAnKTtcbi8vIGltcG9ydCAkIGZyb20gXCJqcXVlcnlcIjtcbi8vIHdpbmRvdy4kID0gJDtcbi8vIGltcG9ydCBcIm93bC5jYXJvdXNlbFwiO1xuLy8gaW1wb3J0IFwiYm9vdHN0cmFwXCI7XG5cblxuaW1wb3J0ICQgZnJvbSBcImpxdWVyeVwiO1xud2luZG93LiQgPSAkO1xuaW1wb3J0IFwib3dsLmNhcm91c2VsXCI7XG5pbXBvcnQgXCJib290c3RyYXBcIjtcbnJlcXVpcmUoXCIuLi9ib290c3RyYXBcIik7XG5cbiJdLCJuYW1lcyI6WyIkIiwid2luZG93IiwicmVxdWlyZSJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/js/web/home1.js\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.esm.js\");\n// Nhóm import liên quan đến Bootstrap\n\n__webpack_require__(/*! ../bootstrap */ \"./resources/js/bootstrap.js\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvanMvd2ViL2hvbWVfYnMuanMiLCJtYXBwaW5ncyI6Ijs7QUFBQTtBQUNtQjtBQUNuQkEsbUJBQU8sQ0FBQyxpREFBYyxDQUFDIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcmVzb3VyY2VzL2pzL3dlYi9ob21lX2JzLmpzPzA3NDMiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gTmjDs20gaW1wb3J0IGxpw6puIHF1YW4gxJHhur9uIEJvb3RzdHJhcFxuaW1wb3J0IFwiYm9vdHN0cmFwXCI7XG5yZXF1aXJlKFwiLi4vYm9vdHN0cmFwXCIpO1xuIl0sIm5hbWVzIjpbInJlcXVpcmUiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/js/web/home_bs.js\n");
 
 /***/ }),
 
@@ -722,7 +722,7 @@ eval("/* provided dependency */ var Buffer = __webpack_require__(/*! buffer */ \
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ __webpack_require__.O(0, ["/js/web/vendor"], () => (__webpack_exec__("./resources/js/web/home1.js")));
+/******/ __webpack_require__.O(0, ["/js/web/vendor"], () => (__webpack_exec__("./resources/js/web/home_bs.js")));
 /******/ var __webpack_exports__ = __webpack_require__.O();
 /******/ }
 ]);
