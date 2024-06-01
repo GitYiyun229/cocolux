@@ -23048,6 +23048,15 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   max-width: 800px;
 }
 
+#products-list-order tr,
+#products-list-order td {
+  border-style: none;
+  border: none;
+}
+#products-list-order tr {
+  border-bottom: 1px solid #d4d4d4;
+}
+
 .form-search-nhanh input {
   padding: 0.775rem 0.75rem;
 }
@@ -23067,7 +23076,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
 }
 
 .TableOrder-Nhanh.description-main-view {
-  max-height: 350px;
+  max-height: 375px;
   -webkit-mask-image: -webkit-linear-gradient(top, #000 60%, transparent);
 }
 
@@ -23082,7 +23091,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
 }
 .TableOrder-Nhanh h3 p {
   border-bottom: 2px solid red;
-  width: 230px;
+  width: 250px;
   padding-bottom: 10px;
   margin: 0px;
   font-size: 20px;
@@ -23091,17 +23100,18 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   height: 1px;
   background: #bebebe;
 }
-.TableOrder-Nhanh .order-right .cl-order {
+
+.order-right .cl-order {
   color: #c73030;
 }
-.TableOrder-Nhanh .order-right .status-order {
+.order-right .status-order {
   background: #c73030;
   color: #fff;
   text-align: center;
   padding: 10px;
   border-radius: 5px;
 }
-.TableOrder-Nhanh .order-right .arrow {
+.order-right .arrow {
   border-bottom: 1px solid #bebebe;
 }
 
@@ -23122,6 +23132,10 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
 }
 .order-nhanh .btn-more-less-view.less span:nth-child(2) {
   display: block;
+}
+
+.modal .modal-dialog {
+  --bs-modal-width: 1100px;
 }
 
 /* purgecss start ignore */

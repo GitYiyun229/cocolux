@@ -1404,7 +1404,6 @@ class ProductController extends Controller
                 "customerMobile" => $phone
             ];
         }
-
         $this->request_params['data'] = json_encode($data);
         $response = $client->post($this->linkApi . $api, [
             'form_params' => $this->request_params
@@ -1422,6 +1421,8 @@ class ProductController extends Controller
         if (strlen($maDonHang) >= 9) {
             $data = ($this->searchOderMember($maDonHang));
             if ($data) {
+                $phone='';
+                $name='';
                 return view('web.cart.detail_order_success_nhanh', compact('data', 'maDonHang'));
             } else {
                 Session::flash('danger', 'Mã đơn hàng không tồn tại');
