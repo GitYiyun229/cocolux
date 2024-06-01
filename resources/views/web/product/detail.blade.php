@@ -657,8 +657,17 @@
                                     @forelse($list_image as $k => $item)
                                         <a data-index="{{ $k }}"
                                             class="modal-thumbnail-item thumbnail-item-{{ $k }} @if ($k == 0) active @endif">
-                                            <img src="{{ asset(replace_image($item)) }}" alt="{{ $product->title }}"
-                                                class="img-fluid">
+
+                                    
+
+                                            <picture>
+                                                <source
+                                                    srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item)) }}"
+                                                    type="image/webp">
+                                                <img src="{{ asset($item) }}" alt="{{ $product->title }}"
+                                                    class="img-fluid">
+                                            </picture>
+
                                         </a>
                                     @empty
                                     @endforelse
