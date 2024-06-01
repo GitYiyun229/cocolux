@@ -1421,9 +1421,11 @@ class ProductController extends Controller
         if (strlen($maDonHang) >= 9) {
             $data = ($this->searchOderMember($maDonHang));
             if ($data) {
-                $phone='';
-                $name='';
-                return view('web.cart.detail_order_success_nhanh', compact('data', 'maDonHang'));
+                $firstElement = reset($data);
+                $name= $firstElement['customerName'];
+                $phone= $firstElement['customerMobile'];
+
+                return view('web.cart.detail_order_success_nhanh', compact('data', 'maDonHang','phone','name'));
             } else {
                 Session::flash('danger', 'Mã đơn hàng không tồn tại');
                 return redirect()->back();
