@@ -1,18 +1,10 @@
 
 // Import thư viện cần thiết
-require('../bootstrap');
-import $ from "jquery";
-window.$ = $;
-import "owl.carousel";
-import "bootstrap";
 import LazyLoad from "vanilla-lazyload";
-import swal from 'sweetalert2';
+import swal from "sweetalert2";
 window.Swal = swal;
-require('./template');
-require('./main');
-
-
-
+require("./template");
+require("./main");
 
 var lazyLoadInstance = new LazyLoad({
     // Your custom settings go here
