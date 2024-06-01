@@ -18,11 +18,7 @@ $(".btn-value-order").click(function () {
     let total_tamtinh = 0;
     let voucherText = "";
     if (value.couponCode !== null && value.moneyDiscount !== 0) {
-        voucherText =
-            value.couponCode +
-            "/" +
-            value.moneyDiscount.toLocaleString("vi-VN") +
-            "đ";
+        voucherText =value.couponCode +"/" + value.moneyDiscount.toLocaleString("vi-VN") +"đ";
     } else if (value.couponCode !== null) {
         voucherText = value.couponCode;
     }
@@ -40,18 +36,14 @@ $(".btn-value-order").click(function () {
         let productTotal = product.price * product.quantity;
         total_tamtinh += productTotal;
         $(".modal-body #products-list-order").append(
-            `<tr>
-            <td class="overflow-hidden text-start py-2">${
-                product.productName
-            }</td>
+            `<tr><td class="overflow-hidden text-start py-2">${product.productName}</td>
             <td class="py-2">${product.price.toLocaleString("vi-VN")}đ</td>
             <td class="py-2">${product.quantity}</td>
-            <td class="py-2">${(
-                product.price * product.quantity
-            ).toLocaleString("vi-VN")}đ</td>
+            <td class="py-2">${(product.price * product.quantity).toLocaleString("vi-VN")}đ</td>
             </tr>`
         );
     });
+
     $(".modal-body #price_tamtinh").text(
         total_tamtinh.toLocaleString("vi-VN") + "đ"
     );
