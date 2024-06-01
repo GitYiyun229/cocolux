@@ -190,7 +190,7 @@
                             <a href="{{ route('flashSaleProducts') }}" title="Flash Deal"
                                 class="d-flex align-items-center gap-2">
                                 <img data-src="{{ asset('images/hot_icon.svg') }}" alt="flash deal icon"
-                                    class="img-fluid" height="18" width="18">
+                                    class="img-fluid lazy" height="18" width="18">
                                 <h2>Flash Deal</h2>
                             </a>
                             {{--                        | --}}
