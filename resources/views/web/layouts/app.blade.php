@@ -31,7 +31,7 @@
     <script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-NGPB3KQ"></script>
     <script type="text/javascript" async=""
         src="https://www.googletagmanager.com/gtag/js?id=G-JKPNMVXR47&amp;l=dataLayer&amp;cx=c" nonce="g3FmeM9o"></script>
-    {{-- <script type="text/javascript">
+    <script type="text/javascript">
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
@@ -46,7 +46,7 @@
                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-NGPB3KQ');
-    </script> --}}
+    </script>
 </head>
 
 <body>
