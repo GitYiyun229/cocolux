@@ -18,13 +18,13 @@
                                             <a data-index="{{ $k }}"
                                                 class="thumbnail-item thumbnail-item-{{ $k }} @if ($k == 0) active @endif"
                                                 data-bs-toggle="modal" data-bs-target="#imageModal">
-                                    
+
                                                 <picture>
                                                     <source
                                                         srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item)) }}"
                                                         type="image/webp">
-                                                    <img src="{{ asset($item) }}"
-                                                        alt="{{ $product->title}}" class="img-fluid">
+                                                    <img src="{{ asset($item) }}" alt="{{ $product->title }}"
+                                                        class="img-fluid">
                                                 </picture>
                                             </a>
                                         @empty
@@ -34,8 +34,14 @@
 
                                 <div class="thumbnail-image">
                                     <a href="" data-bs-toggle="modal" data-bs-target="#imageModal">
-                                        <img src="{{ !empty($list_image) ? asset(replace_image($list_image[0])) : '' }}"
-                                            alt="{{ $product->title }}" class="img-fluid detail-thumbnail-image">
+
+                                        <picture>
+                                            <source
+                                                srcset="{{ !empty($list_image) ? asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $list_image[0])) : '' }}"
+                                                type="image/webp">
+                                            <img src="{{ !empty($list_image) ? asset(replace_image($list_image[0])) : '' }}"
+                                                alt="{{ $product->title }}" class="img-fluid detail-thumbnail-image">
+                                        </picture>
                                     </a>
                                     <div class="detail-share d-none">
                                         Thêm vào danh sách yêu thích
