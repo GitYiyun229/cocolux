@@ -630,8 +630,17 @@
                         <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                         <div class="main-image position-relative">
-                            <img src="{{ !empty($list_image) ? asset(replace_image($list_image[0])) : '' }}"
-                                class="img-fluid detail-thumbnail-image-modal" alt="{{ $product->image }}">
+
+
+                            <picture>
+                                <source
+                                    srcset="{{ !empty($list_image) ? asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $list_image[0])) : '' }}"
+                                    type="image/webp">
+                                <img src="{{ !empty($list_image) ? asset(replace_image($list_image[0])) : '' }}"
+                                    class="img-fluid detail-thumbnail-image-modal" alt="{{ $product->image }}">
+                            </picture>
+
+
                             <a href=""
                                 class="btn-slide-prev position-absolute d-flex align-items-center justify-content-center text-white">
                                 <i class="fa-solid fa-chevron-left"></i>
