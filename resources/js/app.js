@@ -9,6 +9,7 @@ require("./web/template");
 require("./web/main");
 
 $(".btn-value-order").click(function () {
+     $("#products-list-order").empty();
     let value = $(this).data("value-order-nhanh");
     $(".modal-body #Id_nhanh").text(value.id);
     $(".modal-body #CreatedDateTime").text(value.createdDateTime);

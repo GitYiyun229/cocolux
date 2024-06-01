@@ -154,7 +154,7 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <p>Mã giảm giá/Thẻ quà tặng</p>
-                        <p id="id_voucher">3453453</p>
+                        <p id="id_voucher"></p>
 
                     </div>
                     <div class="d-flex justify-content-between">
