@@ -14,7 +14,8 @@
                 @csrf
                 <h3 class="text mb-2"> Tra cứu đơn hàng </h3>
                 <div class="buttom-search d-grid">
-                    <input type="text" class="form-control" placeholder="Nhập số điện thoại , mã Id nhanh hoặc mã đơn hàng WEB " name="order" id="order">
+                    <input type="text" class="form-control"
+                        placeholder="Nhập số điện thoại , mã Id nhanh hoặc mã đơn hàng WEB " name="order" id="order">
                     <button class="btn  d-flex justify-content-center align-items-center" type="submit"><img
                             src="{{ asset('images/search-nhanh-icon.svg') }}" alt="" width="29" height="29"
                             class="img-fluid">Tra cứu</button>
@@ -22,39 +23,72 @@
             </form>
             @if (!empty($data))
                 <div class="TableOrder-Nhanh p-4 description-main-view">
-                    <h3 class="m-0"><p class="d-flex align-items-center gap-2"> <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    <h3 class="m-0">
+                        <p class="d-flex align-items-center gap-2">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
-                                    d="M11 17H13V11H11V17ZM12 9C12.2833 9 12.5208 8.90417 12.7125 8.7125C12.9042 8.52083 13 8.28333 13 8C13 7.71667 12.9042 7.47917 12.7125 7.2875C12.5208 7.09583 12.2833 7 12 7C11.7167 7 11.4792 7.09583 11.2875 7.2875C11.0958 7.47917 11 7.71667 11 8C11 8.28333 11.0958 8.52083 11.2875 8.7125C11.4792 8.90417 11.7167 9 12 9ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22ZM12 20C14.2333 20 16.125 19.225 17.675 17.675C19.225 16.125 20 14.2333 20 12C20 9.76667 19.225 7.875 17.675 6.325C16.125 4.775 14.2333 4 12 4C9.76667 4 7.875 4.775 6.325 6.325C4.775 7.875 4 9.76667 4 12C4 14.2333 4.775 16.125 6.325 17.675C7.875 19.225 9.76667 20 12 20Z"
+                                    d="M7 9V7H21V9H7ZM7 13V11H21V13H7ZM7 17V15H21V17H7ZM4 9C3.71667 9 3.47917 8.90417 3.2875 8.7125C3.09583 8.52083 3 8.28333 3 8C3 7.71667 3.09583 7.47917 3.2875 7.2875C3.47917 7.09583 3.71667 7 4 7C4.28333 7 4.52083 7.09583 4.7125 7.2875C4.90417 7.47917 5 7.71667 5 8C5 8.28333 4.90417 8.52083 4.7125 8.7125C4.52083 8.90417 4.28333 9 4 9ZM4 13C3.71667 13 3.47917 12.9042 3.2875 12.7125C3.09583 12.5208 3 12.2833 3 12C3 11.7167 3.09583 11.4792 3.2875 11.2875C3.47917 11.0958 3.71667 11 4 11C4.28333 11 4.52083 11.0958 4.7125 11.2875C4.90417 11.4792 5 11.7167 5 12C5 12.2833 4.90417 12.5208 4.7125 12.7125C4.52083 12.9042 4.28333 13 4 13ZM4 17C3.71667 17 3.47917 16.9042 3.2875 16.7125C3.09583 16.5208 3 16.2833 3 16C3 15.7167 3.09583 15.4792 3.2875 15.2875C3.47917 15.0958 3.71667 15 4 15C4.28333 15 4.52083 15.0958 4.7125 15.2875C4.90417 15.4792 5 15.7167 5 16C5 16.2833 4.90417 16.5208 4.7125 16.7125C4.52083 16.9042 4.28333 17 4 17Z"
                                     fill="#C73030" />
-                            </svg>Thông tin đơn hàng</p>
+                            </svg>
+
+                            Danh sách đơn hàng
+                        </p>
                     </h3>
                     <div class="arow-h3 mb-3"></div>
-                    @forelse($data as $k => $item)
-                        <div class=" d-flex gap-3 align-items-center mb-3">
-                            <div class="order-left">
-                                <p>Mã đơn hàng</p>
-                                <p>Ngày đặt hàng : </p>
-                                <p>Tên khách hàng:</p>
-                                <p>Số điện thoại:</p>
-                                <p>Giá trị đơn hàng:</p>
-                                <p class="">Trạng thái hiện tại:</p>
-                            </div>
-                            <div class="order-right">
-                                <p class="fw-bold">#{{ $item['id'] }}</p>
-                                <p class="fw-bold"> {{ $item['createdDateTime'] }} </p>
-                                <p class="fw-bold"> {{ $item['customerName'] }}</p>
-                                <p class="fw-bold">{{ $item['customerMobile'] }}</p>
-                                <p class="fw-bold cl-order">{{ number_format($item['calcTotalMoney'], 0, ',', '.') }} đ</p>
-                                <p class="status-order m-0">{{ $item['statusName'] }}</p>
-                            </div>
-                        </div>
-                         <div class="arow-h3 my-3"></div>
-                        @if ($loop->iteration >= 1)
-                            <div class=" py-3"></div>
-                        @endif
-                    @empty
-                    @endforelse
+
+                    <div class="d-flex justify-content-end gap-4">
+                        <p>Tên khách hàng : </p>
+                        <p> Số điện thoại :</p>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+
+                        <table class='ccs-table account-table order-detail-table table'>
+
+                            <thead>
+                                <tr>
+                                    <th>Đơn hàng</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Thời gian đặt hàng</th>
+                                    <th>Trạng thái đơn hàng</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($data as $k => $item)
+                                    <tr key={{ $k }}>
+                                        <td class="py-3">
+                                            <p class="m-0">#{{ $item['id'] }}</p>
+                                        </td>
+
+                                        <td class="py-3">
+                                            <p class="m-0 cl-order">
+                                                {{ number_format($item['calcTotalMoney'], 0, ',', '.') }}đ
+                                            </p>
+                                        </td>
+
+                                        <td class="py-3">
+                                            <p class="m-0"> {{ $item['createdDateTime'] }} </p>
+                                        </td>
+
+                                        <td class="py-3">
+                                            <p class="status-order m-0">{{ $item['statusName'] }}</p>
+                                        </td>
+
+                                        <td class="py-3">
+                                            <button type="button" class="btn btn-call-modal p-0 btn-value-order mt-2"
+                                                data-value-order-nhanh="{{ json_encode($item) }}" data-bs-toggle="modal"
+                                                data-bs-target="#info-order-detail">Chi tiết</button>
+                                        </td>
+                                    </tr>
+                                    @if ($loop->iteration >= 1)
+                                        <div class=" py-3"></div>
+                                    @endif
+                                @empty
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
                 <div class="modal-footer justify-content-center align-items-center flex-nowrap mb-4">
@@ -67,6 +101,78 @@
             @endif
         </div>
     </main>
+    <!-- Modal -->
+    <div class="modal fade" id="info-order-detail" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title d-flex align-items-center gap-2" id="couponModalLabel"> <svg width="24"
+                            height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M7 9V7H21V9H7ZM7 13V11H21V13H7ZM7 17V15H21V17H7ZM4 9C3.71667 9 3.47917 8.90417 3.2875 8.7125C3.09583 8.52083 3 8.28333 3 8C3 7.71667 3.09583 7.47917 3.2875 7.2875C3.47917 7.09583 3.71667 7 4 7C4.28333 7 4.52083 7.09583 4.7125 7.2875C4.90417 7.47917 5 7.71667 5 8C5 8.28333 4.90417 8.52083 4.7125 8.7125C4.52083 8.90417 4.28333 9 4 9ZM4 13C3.71667 13 3.47917 12.9042 3.2875 12.7125C3.09583 12.5208 3 12.2833 3 12C3 11.7167 3.09583 11.4792 3.2875 11.2875C3.47917 11.0958 3.71667 11 4 11C4.28333 11 4.52083 11.0958 4.7125 11.2875C4.90417 11.4792 5 11.7167 5 12C5 12.2833 4.90417 12.5208 4.7125 12.7125C4.52083 12.9042 4.28333 13 4 13ZM4 17C3.71667 17 3.47917 16.9042 3.2875 16.7125C3.09583 16.5208 3 16.2833 3 16C3 15.7167 3.09583 15.4792 3.2875 15.2875C3.47917 15.0958 3.71667 15 4 15C4.28333 15 4.52083 15.0958 4.7125 15.2875C4.90417 15.4792 5 15.7167 5 16C5 16.2833 4.90417 16.5208 4.7125 16.7125C4.52083 16.9042 4.28333 17 4 17Z"
+                                fill="#C73030" />
+                        </svg>Chi tiết Đơn hàng</h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class=" d-flex gap-3 align-items-center mb-3">
+                        <div class="order-left">
+                            <p class="mb-1">Mã đơn hàng</p>
+                            <p class="mb-1">Ngày đặt hàng : </p>
+                            <p class="mb-1">Tên khách hàng:</p>
+                            <p class="mb-1">Số điện thoại:</p>
+                            <p class="mt-2">Trạng thái hiện tại:</p>
+                        </div>
+                        <div class="order-right">
+                            <p class="fw-bold mb-1" id="Id_nhanh"></p>
+                            <p class="fw-bold mb-1" id="CreatedDateTime"></p>
+                            <p class="fw-bold mb-1" id="Name_MemberOrder"></p>
+                            <p class="fw-bold mb-1" id="Phone_MemberPhone"></p>
+                            <p class="status-order mb-0" id="Status_Name"></p>
+                        </div>
+                    </div>
+                    <div>
+                        <table class="ccs-table account-table order-detail-table table">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Đơn giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-list-order">
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Tạm tính</p>
+                        <p id="price_tamtinh"></p>
+
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Mã giảm giá/Thẻ quà tặng</p>
+                        <p id="id_voucher">3453453</p>
+
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Phí giao hàng</p>
+                        <p id="id_price_vanchuyen"></p>
+
+                    </div>
+
+                    <div class="border-top my-3"></div>
+                    <div class="d-flex justify-content-between">
+                        <p>Tổng giá trị đơn hàng</p>
+                        <p id="id_price_total"></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('link')
