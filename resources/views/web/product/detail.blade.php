@@ -113,8 +113,13 @@
                                                     class="@if ($product->id == $item->id) active @endif"
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     data-bs-title="{{ $item->title }}">
-                                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
+                                                         <picture>
+                                                    <source
+                                                        srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"
+                                                        type="image/webp">
+                                                    <img src="{{ asset($item->image_first) }}" alt="{{ $product->title }}"
                                                         class="img-fluid">
+                                                </picture>
                                                 </a>
                                             @empty
                                             @endforelse
@@ -657,9 +662,6 @@
                                     @forelse($list_image as $k => $item)
                                         <a data-index="{{ $k }}"
                                             class="modal-thumbnail-item thumbnail-item-{{ $k }} @if ($k == 0) active @endif">
-
-                                    
-
                                             <picture>
                                                 <source
                                                     srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item)) }}"
@@ -667,7 +669,6 @@
                                                 <img src="{{ asset($item) }}" alt="{{ $product->title }}"
                                                     class="img-fluid">
                                             </picture>
-
                                         </a>
                                     @empty
                                     @endforelse
