@@ -18,7 +18,6 @@
                                             <a data-index="{{ $k }}"
                                                 class="thumbnail-item thumbnail-item-{{ $k }} @if ($k == 0) active @endif"
                                                 data-bs-toggle="modal" data-bs-target="#imageModal">
-
                                                 <picture>
                                                     <source
                                                         srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item)) }}"
@@ -653,7 +652,7 @@
                             <picture>
                                 <source
                                     srcset="{{ !empty($list_image) ? asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $list_image[0])) : '' }}"
-                                    type="image/webp">
+                                    type="image/webp" class="detail-thumbnail-image-modal">
                                 <img src="{{ !empty($list_image) ? asset(replace_image($list_image[0])) : '' }}"
                                     class="img-fluid detail-thumbnail-image-modal" alt="{{ $product->image }}">
                             </picture>
