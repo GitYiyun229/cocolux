@@ -148,6 +148,7 @@ $('.thumbnail-item').click(function() {
 
     $('.detail-thumbnail-image').attr('src', src);
     $('.detail-thumbnail-image-modal').attr('src', src);
+    $('.detail-thumbnail-image-modal-webp').attr('srcset', src);
 
     $('.thumbnail-item').removeClass('active');
     $('.modal-thumbnail-item').removeClass('active');
@@ -158,6 +159,7 @@ $('.thumbnail-item').click(function() {
 $('.modal-thumbnail-item').click(function() {
     let src = $(this).find('img').attr('src');
     $('.detail-thumbnail-image-modal').attr('src', src);
+    $(".detail-thumbnail-image-modal-webp").attr("srcset", src);
     $('.modal-thumbnail-item').removeClass('active');
     $(this).addClass('active');
 })

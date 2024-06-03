@@ -652,7 +652,7 @@
                             <picture>
                                 <source
                                     srcset="{{ !empty($list_image) ? asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $list_image[0])) : '' }}"
-                                    type="image/webp" class="detail-thumbnail-image-modal">
+                                    type="image/webp" class="detail-thumbnail-image-modal-webp">
                                 <img src="{{ !empty($list_image) ? asset(replace_image($list_image[0])) : '' }}"
                                     class="img-fluid detail-thumbnail-image-modal" alt="{{ $product->image }}">
                             </picture>
