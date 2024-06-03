@@ -176,6 +176,7 @@ Route::group(['namespace' => 'Web'], function (){
     Route::get('/kiem-tra-don-hang/{baokimID}/{orderId}', 'ProductController@checkOrder')->name('checkOrder');
     Route::any('/thanh-toan-khong-thanh-cong/{orderId}', 'ProductController@orderPayBaoKimNotSuccess')->name('orderPayBaoKimNotSuccess');
     Route::get('/cua-hang', 'StoreController@index')->name('StoreCocolux');
+    Route::get('/tim-kiem-don-hang-nhanh', 'ProductController@SearchNhanh')->name('CocoluxSearchNhanh');
     // Route::get('/404', 'HomeController@error')->name('404');
     Route::get('/404', function () {
         return redirect()->route('404');
