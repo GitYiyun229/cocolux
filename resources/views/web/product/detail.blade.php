@@ -113,13 +113,14 @@
                                                     class="@if ($product->id == $item->id) active @endif"
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     data-bs-title="{{ $item->title }}">
-                                                         <picture>
+
+
                                                     <source
                                                         srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"
                                                         type="image/webp">
-                                                    <img src="{{ asset($item->image_first) }}" alt="{{ $product->title }}"
+                                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
                                                         class="img-fluid">
-                                                </picture>
+                                                    </picture>
                                                 </a>
                                             @empty
                                             @endforelse
@@ -483,6 +484,19 @@
                                             class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
                                             <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
                                                 class="img-fluid">
+                                            <picture>
+                                                <source
+                                                    srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"
+                                                    type="image/webp">
+
+                                                         <picture>
+                                                    <source
+                                                        srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"
+                                                        type="image/webp">
+                                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
+                                                        class="img-fluid">
+                                                </picture>
+                                            </picture>
                                         </div>
                                         <div class="product-price">
                                             @if ($item->promotionItem)
@@ -583,8 +597,14 @@
                                         @endif
                                     @endif
                                     <div class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
-                                        <img src="{{ asset(replace_image($item->image_first)) }}"
-                                            alt="{{ $item->title }}" class="img-fluid">
+                               
+                                        <picture>
+                                            <source
+                                                srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"
+                                                type="image/webp">
+                                            <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
+                                                class="img-fluid">
+                                        </picture>
                                     </div>
                                     <div class="product-price">
                                         @if ($item->promotionItem)
