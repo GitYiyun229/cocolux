@@ -1315,6 +1315,10 @@ class ProductController extends Controller
         return view('web.cart.register_success', compact('order', 'maDonHang'));
     }
 
+    public function SearchNhanh(Request $request)
+    {
+        return view('web.cart.detail_order_nhanh');
+    }
     public function searchOrder(Request $request)
     {
         $maDonHang = $request->input('order');
