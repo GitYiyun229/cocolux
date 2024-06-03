@@ -559,5 +559,35 @@
     <script src="{{ mix('js/web/home_jq_owl.js') }}"></script>
     <script src="{{ mix('js/web/home_bs.js') }}"></script>
     <script src="{{ mix('js/web/home.js') }}"></script>
+    <script>
+        function checkWebpSupport(pictureElement) {
+            var sourceElement = pictureElement.querySelector("source");
+            var imgElement = pictureElement.querySelector("img");
+
+            function checkWebp(callback) {
+                var image = new Image();
+                image.onload = function() {
+                    var isSupported = (image.width > 0) && (image.height > 0);
+                    callback(isSupported);
+                };
+                image.onerror = function() {
+                    callback(false);
+                };
+                image.src = sourceElement.getAttribute("srcset");
+            }
+
+            checkWebp(function(isSupported) {
+                if (!isSupported) {
+                    pictureElement.removeChild(sourceElement);
+                    imgElement.style.display = "block";
+                }
+            });
+        }
+
+        var pictureElements = document.querySelectorAll("picture");
+        pictureElements.forEach(function(pictureElement) {
+            checkWebpSupport(pictureElement);
+        });
+    </script>
     @include('web.components.extend')
 @endsection
