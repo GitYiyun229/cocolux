@@ -113,13 +113,12 @@
                                                     class="@if ($product->id == $item->id) active @endif"
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     data-bs-title="{{ $item->title }}">
-
-
-                                                    <source
-                                                        srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"
-                                                        type="image/webp">
-                                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
-                                                        class="img-fluid">
+                                                    <picture>
+                                                        <source
+                                                            srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"
+                                                            type="image/webp">
+                                                        <img src="{{ asset($item->image_first) }}"
+                                                            alt="{{ $item->title }}" class="img-fluid">
                                                     </picture>
                                                 </a>
                                             @empty
