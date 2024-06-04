@@ -749,12 +749,7 @@
 
 @section('script')
     @parent
-    <script src="{{ mix('js/web/product-detail.js') }}"></script>
-    @include('web.components.extend')
-    <script>
-        window.addToCart = '{{ route('addToCart') }}';
-    </script>
-    <script>
+        <script>
         function checkWebpSupport(pictureElement) {
             var sourceElement = pictureElement.querySelector("source");
             var imgElement = pictureElement.querySelector("img");
@@ -784,4 +779,10 @@
             checkWebpSupport(pictureElement);
         });
     </script>
+    <script src="{{ mix('js/web/product-detail.js') }}"></script>
+    @include('web.components.extend')
+    <script>
+        window.addToCart = '{{ route('addToCart') }}';
+    </script>
+
 @endsection
