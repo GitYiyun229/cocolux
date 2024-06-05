@@ -23651,8 +23651,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
 }
 
 .list-product-article .slide-template-slick {
-  max-height: 800px;
-  overflow: hidden;
+  display: flex;
 }
 .list-product-article .title-product-same {
   color: #000;
