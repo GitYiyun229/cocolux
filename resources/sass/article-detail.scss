@@ -374,8 +374,7 @@
 }
 .list-product-article {
     .slide-template-slick {
-        max-height: 800px;
-        overflow: hidden;
+        display: flex;
     }
     .title-product-same {
         color: #000;
