@@ -432,11 +432,31 @@ nav[aria-label="breadcrumb"] {
 }
 /* purgecss end ignore */
 @media (max-width: 960px) {
-
     .layout-main-detail .detail-content table {
         display: grid;
         overflow: auto;
         white-space: nowrap;
         flex-wrap: nowrap;
+    }
+}
+h2,
+.h2 {
+    font-size: calc(1.325rem + 0.9vw) !important;
+}
+@media (min-width: 1200px) {
+    h2,
+    .h2 {
+        font-size: 2rem;
+    }
+}
+
+h3,
+.h3 {
+    font-size: calc(1.3rem + 0.6vw) !important;
+}
+@media (min-width: 1200px) {
+    h3,
+    .h3 {
+        font-size: 1.75rem;
     }
 }
