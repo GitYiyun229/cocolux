@@ -23197,7 +23197,8 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   transition: opacity 400ms ease;
 }
 
-.owl-carousel .owl-item .owl-lazy[src^=""], .owl-carousel .owl-item .owl-lazy:not([src]) {
+.owl-carousel .owl-item .owl-lazy[src^=""],
+.owl-carousel .owl-item .owl-lazy:not([src]) {
   max-height: 0;
 }
 
@@ -23506,6 +23507,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   margin-bottom: 20px;
 }
 .list-coupon .slide-main-coupon .slide-template-slide-coupon {
+  display: flex;
   max-height: 123px;
   overflow: hidden;
 }
@@ -23546,14 +23548,14 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   height: 4px;
 }
 .list-coupon .slide-main-coupon .slide-template-slide-coupon .item-coupon .box-coupon .btn-call-modal {
-  color: #C73030;
+  color: #c73030;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
 .list-coupon .slide-main-coupon .slide-template-slide-coupon .item-coupon .box-coupon button {
-  color: #FFF;
+  color: #fff;
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
@@ -23645,6 +23647,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   padding: 5px;
 }
 .slide-template .slide-main .slide-template-slide {
+  display: flex;
   max-height: 352px;
   overflow: hidden;
 }
@@ -24070,6 +24073,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   padding: 5px;
 }
 .section-flash-mobile .slide-main .slide-template-slide {
+  display: flex;
   max-height: 352px;
   overflow: hidden;
 }
