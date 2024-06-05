@@ -373,6 +373,10 @@
     }
 }
 .list-product-article {
+    .slide-template-slick {
+        max-height: 800px;
+        overflow: hidden;
+    }
     .title-product-same {
         color: #000;
         font-size: 20px;
@@ -442,23 +446,22 @@ nav[aria-label="breadcrumb"] {
 h2,
 .h2 {
     font-size: calc(1.325rem + 0.9vw) !important;
-      span{
-        font-family:  unset !important;
+    span {
+        font-family: unset !important;
     }
 }
 @media (min-width: 1200px) {
     h2,
     .h2 {
         font-size: 2rem;
-
     }
 }
 
 h3,
 .h3 {
     font-size: calc(1.3rem + 0.6vw) !important;
-    span{
-        font-family:  unset !important;
+    span {
+        font-family: unset !important;
     }
 }
 @media (min-width: 1200px) {

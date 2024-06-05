@@ -23650,6 +23650,10 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   line-height: 24px;
 }
 
+.list-product-article .slide-template-slick {
+  max-height: 800px;
+  overflow: hidden;
+}
 .list-product-article .title-product-same {
   color: #000;
   font-size: 20px;
