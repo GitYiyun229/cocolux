@@ -126,7 +126,7 @@ class ArticleController extends Controller
                     $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                         ->orderBy('price', 'asc');
                 }])->where('sku', '!=', null)->first();
-                if($product_sku){
+                if(isset($product_sku)){
                     $productInfoMap[$product->id] = [
                         'title' => $product->title,
                         'image' => $product->image_first,
