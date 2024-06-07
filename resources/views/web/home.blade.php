@@ -470,7 +470,7 @@
                                 </div>
                                 <div class="article-title">
                                     <span>
-                                        {{ $item->description }}
+                                        {!! $item->description  !!}
                                     </span>
                                 </div>
                             </a>
