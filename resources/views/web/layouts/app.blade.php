@@ -28,24 +28,37 @@
     {{--    <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
     @yield('link')
     @yield('preload')
-    <script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-NGPB3KQ"></script>
-    <script type="text/javascript" async=""
-        src="https://www.googletagmanager.com/gtag/js?id=G-JKPNMVXR47&amp;l=dataLayer&amp;cx=c" nonce="g3FmeM9o"></script>
     <script type="text/javascript">
-        (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-NGPB3KQ');
+        // Đặt thời gian trì hoãn là 7 giây (7000 milliseconds)
+        setTimeout(function() {
+            // Tạo script đầu tiên
+            var script1 = document.createElement('script');
+            script1.src = "https://www.googletagmanager.com/gtm.js?id=GTM-NGPB3KQ";
+            script1.async = true;
+            document.head.appendChild(script1);
+
+            // Tạo script thứ hai
+            var script2 = document.createElement('script');
+            script2.src = "https://www.googletagmanager.com/gtag/js?id=G-JKPNMVXR47&l=dataLayer&cx=c";
+            script2.async = true;
+            script2.setAttribute("nonce", "g3FmeM9o");
+            document.head.appendChild(script2);
+
+            // Thực thi mã JavaScript sau khi các script đã được tải
+            (function(w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({
+                    'gtm.start': new Date().getTime(),
+                    event: 'gtm.js'
+                });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', 'GTM-NGPB3KQ');
+        }, 7000); // 7000 milliseconds = 7 seconds
     </script>
 </head>
 
