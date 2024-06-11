@@ -137,7 +137,7 @@
                 <div class="list-coupon">
                     <h2 class="text-center">Mã khuyến mại</h2>
                     <div class="slide-main-coupon">
-                        <div class="slide-template-slide-coupon owl-carousel">
+                        <div class="slide-template-slide-coupon owl-carousel justify-content-center">
                             @forelse($list_coupon as $item)
                                 @if ($item->items)
                                     <div class="item-coupon">
