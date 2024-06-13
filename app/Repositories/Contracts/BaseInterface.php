@@ -40,6 +40,12 @@ interface BaseInterface
      * @param array $attributes
      * @return mixed
      */
+    public function getActive(): Collection;
+
+    /**
+     * @param array $attributes
+     * @return mixed
+     */
     public function create(array $attributes);
 
     /**
