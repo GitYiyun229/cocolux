@@ -138,7 +138,7 @@
                                         </div>
                                         <span>25%</span>
                                     </div>
-                                      @if(isset($setting['policy_ship']) && !empty($setting['policy_ship']))
+                                     @if(isset($setting['policy_ship']) && !empty($setting['policy_ship']))
                                         <div class="policy_ship mb-3">
                                             {!! $setting['policy_ship'] !!}
                                         </div>
@@ -751,36 +751,42 @@
 
 @section('script')
     @parent
-        <script>
-        function checkWebpSupport(pictureElement) {
-            var sourceElement = pictureElement.querySelector("source");
-            var imgElement = pictureElement.querySelector("img");
+  <script>
+    // Hàm kiểm tra hỗ trợ WebP
+    function checkWebpSupport(callback) {
+        var image = new Image();
+        image.onload = function() {
+            // Kiểm tra nếu hình ảnh được tải thành công
+            var isSupported = (image.width > 0) && (image.height > 0);
+            callback(isSupported);
+        };
+        image.onerror = function() {
+            // Nếu hình ảnh không được tải thành công
+            callback(false);
+        };
+        // URL hình ảnh WebP nhỏ hợp lệ
+        image.src = "data:image/webp;base64,UklGRhIAAABXRUJQVlA4TA0AAAAvAAAAHEwCAfQ=";
+    }
 
-            function checkWebp(callback) {
-                var image = new Image();
-                image.onload = function() {
-                    var isSupported = (image.width > 0) && (image.height > 0);
-                    callback(isSupported);
-                };
-                image.onerror = function() {
-                    callback(false);
-                };
-                image.src = sourceElement.getAttribute("srcset");
-            }
-
-            checkWebp(function(isSupported) {
-                if (!isSupported) {
+    // Kiểm tra hỗ trợ WebP một lần khi trang tải
+    checkWebpSupport(function(isSupported) {
+        if (!isSupported) {
+            // Nếu không hỗ trợ WebP, loại bỏ tất cả các phần tử <source> và hiển thị <img>
+            var pictureElements = document.querySelectorAll("picture");
+            pictureElements.forEach(function(pictureElement) {
+                var sourceElement = pictureElement.querySelector("source");
+                var imgElement = pictureElement.querySelector("img");
+                if (sourceElement) {
                     pictureElement.removeChild(sourceElement);
+                }
+                if (imgElement) {
                     imgElement.style.display = "block";
                 }
             });
         }
+    });
+</script>
 
-        var pictureElements = document.querySelectorAll("picture");
-        pictureElements.forEach(function(pictureElement) {
-            checkWebpSupport(pictureElement);
-        });
-    </script>
     <script src="{{ mix('js/web/product-detail.js') }}"></script>
     @include('web.components.extend')
     <script>
