@@ -1,7 +1,7 @@
 @if (!$isMobile)
     @if (!empty($setting['image_top_head']))
-        <div class="banner-top-image_top_head w-100 " style="max-height:40px">
-            <img src="{{ $setting['image_top_head'] }}" alt="cocolux" class="img-fluid">
+        <div class="banner-top-image_top_head w-100 overflow-hidden" style="max-height:40px">
+            <img  src="{{ $setting['image_top_head'] }}" alt="cocolux" class="img-fluid w-100 overflow-hidden" style="max-height:40px">
         </div>
     @endif
 @endif
