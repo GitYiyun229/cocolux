@@ -138,12 +138,11 @@
                                         </div>
                                         <span>25%</span>
                                     </div>
-                                   @if(isset($setting['policy_ship']) && !empty($setting['policy_ship']))
+                                      @if(isset($setting['policy_ship']) && !empty($setting['policy_ship']))
                                         <div class="policy_ship mb-3">
                                             {!! $setting['policy_ship'] !!}
                                         </div>
                                     @endif
-
                                     @if ($count_store)
                                         <div class="detail-button">
                                             <div class="dropdown detail-address">
@@ -752,41 +751,40 @@
 
 @section('script')
     @parent
-    <script>
-        function checkWebpSupport(callback) {
-            var image = new Image();
-            image.onload = function() {
-                var isSupported = (image.width > 0) && (image.height > 0);
-                callback(isSupported);
-            };
-            image.onerror = function() {
-                callback(false);
-            };
-            // Một URL hình ảnh WebP hợp lệ
-            image.src = "data:image/webp;base64,UklGRhIAAABXRUJQVlA4TA0AAAAvAAAAHEwCAfQ=";
+        <script>
+        function checkWebpSupport(pictureElement) {
+            var sourceElement = pictureElement.querySelector("source");
+            var imgElement = pictureElement.querySelector("img");
+
+            function checkWebp(callback) {
+                var image = new Image();
+                image.onload = function() {
+                    var isSupported = (image.width > 0) && (image.height > 0);
+                    callback(isSupported);
+                };
+                image.onerror = function() {
+                    callback(false);
+                };
+                image.src = sourceElement.getAttribute("srcset");
+            }
+
+            checkWebp(function(isSupported) {
+                if (!isSupported) {
+                    pictureElement.removeChild(sourceElement);
+                    imgElement.style.display = "block";
+                }
+            });
         }
 
-        checkWebpSupport(function(isSupported) {
-            if (!isSupported) {
-                // Nếu không hỗ trợ WebP, loại bỏ tất cả các phần tử <source> và hiển thị <img>
-                var pictureElements = document.querySelectorAll("picture");
-                pictureElements.forEach(function(pictureElement) {
-                    var sourceElement = pictureElement.querySelector("source");
-                    var imgElement = pictureElement.querySelector("img");
-                    if (sourceElement) {
-                        pictureElement.removeChild(sourceElement);
-                    }
-                    if (imgElement) {
-                        imgElement.style.display = "block";
-                    }
-                });
-            }
+        var pictureElements = document.querySelectorAll("picture");
+        pictureElements.forEach(function(pictureElement) {
+            checkWebpSupport(pictureElement);
         });
     </script>
-
     <script src="{{ mix('js/web/product-detail.js') }}"></script>
     @include('web.components.extend')
     <script>
         window.addToCart = '{{ route('addToCart') }}';
     </script>
+
 @endsection
