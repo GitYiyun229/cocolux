@@ -749,40 +749,41 @@
 
 @section('script')
     @parent
-        <script>
-        function checkWebpSupport(pictureElement) {
-            var sourceElement = pictureElement.querySelector("source");
-            var imgElement = pictureElement.querySelector("img");
-
-            function checkWebp(callback) {
-                var image = new Image();
-                image.onload = function() {
-                    var isSupported = (image.width > 0) && (image.height > 0);
-                    callback(isSupported);
-                };
-                image.onerror = function() {
-                    callback(false);
-                };
-                image.src = sourceElement.getAttribute("srcset");
-            }
-
-            checkWebp(function(isSupported) {
-                if (!isSupported) {
-                    pictureElement.removeChild(sourceElement);
-                    imgElement.style.display = "block";
-                }
-            });
+    <script>
+        function checkWebpSupport(callback) {
+            var image = new Image();
+            image.onload = function() {
+                var isSupported = (image.width > 0) && (image.height > 0);
+                callback(isSupported);
+            };
+            image.onerror = function() {
+                callback(false);
+            };
+            // Một URL hình ảnh WebP hợp lệ
+            image.src = "data:image/webp;base64,UklGRhIAAABXRUJQVlA4TA0AAAAvAAAAHEwCAfQ=";
         }
 
-        var pictureElements = document.querySelectorAll("picture");
-        pictureElements.forEach(function(pictureElement) {
-            checkWebpSupport(pictureElement);
+        checkWebpSupport(function(isSupported) {
+            if (!isSupported) {
+                // Nếu không hỗ trợ WebP, loại bỏ tất cả các phần tử <source> và hiển thị <img>
+                var pictureElements = document.querySelectorAll("picture");
+                pictureElements.forEach(function(pictureElement) {
+                    var sourceElement = pictureElement.querySelector("source");
+                    var imgElement = pictureElement.querySelector("img");
+                    if (sourceElement) {
+                        pictureElement.removeChild(sourceElement);
+                    }
+                    if (imgElement) {
+                        imgElement.style.display = "block";
+                    }
+                });
+            }
         });
     </script>
+
     <script src="{{ mix('js/web/product-detail.js') }}"></script>
     @include('web.components.extend')
     <script>
         window.addToCart = '{{ route('addToCart') }}';
     </script>
-
 @endsection
