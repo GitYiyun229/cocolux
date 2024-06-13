@@ -1,10 +1,4 @@
-@if (!$isMobile)
-    @if (!empty($setting['image_top_head']))
-        <div class="banner-top-image_top_head">
-            <img src="{{ $setting['image_top_head'] }}" alt="cocolux" class="img-fluid">
-        </div>
-    @endif
-@endif
+
 <div class="header-top">
     <div class="container">
         <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
