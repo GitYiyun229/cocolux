@@ -138,7 +138,7 @@
                                         </div>
                                         <span>25%</span>
                                     </div>
-                                     @if(isset($setting['policy_ship']) && !empty($setting['policy_ship']))
+                                    @if (isset($setting['policy_ship']) && !empty($setting['policy_ship']))
                                         <div class="policy_ship mb-3">
                                             {!! $setting['policy_ship'] !!}
                                         </div>
@@ -751,7 +751,7 @@
 
 @section('script')
     @parent
-  <script>
+    {{-- <script>
     // Hàm kiểm tra hỗ trợ WebP
     function checkWebpSupport(callback) {
         var image = new Image();
@@ -785,12 +785,11 @@
             });
         }
     });
-</script>
+</script> --}}
 
     <script src="{{ mix('js/web/product-detail.js') }}"></script>
     @include('web.components.extend')
     <script>
         window.addToCart = '{{ route('addToCart') }}';
     </script>
-
 @endsection
