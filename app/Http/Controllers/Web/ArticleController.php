@@ -109,6 +109,7 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function detail($slug, $id)
     {
         $article = $this->articleRepository->getOneById($id, ['category']);

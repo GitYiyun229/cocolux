@@ -16,7 +16,7 @@ class Voucher extends Model
     const VOUCHER_TYPE_P = 2;
 
     protected $appends = [
-      'total_using_voucher',
+        'total_using_voucher',
         'time_end_voucher',
         'progressbar'
     ];
@@ -39,7 +39,8 @@ class Voucher extends Model
     public function getTimeEndVoucherAttribute()
     {
         $end_date = new \DateTime($this->end_date);
-        $start_date = new \DateTime($this->start_date);
+        // $start_date = new \DateTime($this->start_date);
+        $start_date = new \DateTime();
 
         $difference = $end_date->diff($start_date);
 
