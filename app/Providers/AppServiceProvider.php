@@ -28,32 +28,32 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(SettingInterface $settingRepository,MenuInterface $menuRepository)
+    public function boot(SettingInterface $settingRepository, MenuInterface $menuRepository)
     {
         $menu_top = null;
         $menu_footer = null;
         $cat_products = null;
         $setting = null;
         if (!Request::is('admin/*')) {
-            // if (Schema::hasTable('setting')) {
+            if (Schema::hasTable('setting')) {
                 // $setting = $settingRepository->getActive('active',1)->pluck('value', 'key');
                 $setting = $settingRepository->getAll()->pluck('value', 'key');
                 // dd($setting);
-            // }
-            // if (Schema::hasTable('menu')) {
+            }
+            if (Schema::hasTable('menu')) {
                 $menu_top = $menuRepository->getMenusByCategoryId(3)->toTree();
                 $menu_footer = $menuRepository->getMenusByCategoryId(4)->toTree();
-            // }
-            // if (Schema::hasTable('products_categories')) {
+            }
+            if (Schema::hasTable('products_categories')) {
                 $cat_products = ProductsCategories::where(['is_visible' => 1])->withDepth()->defaultOrder()->get()->toTree();
-            // }
-//            View::composer(['web.partials._header', 'web.partials._footer'], function ($view) {
-//                $config = Setting::all();
-//                $view->with('menus', $config);
-//            });
+            }
+            //            View::composer(['web.partials._header', 'web.partials._footer'], function ($view) {
+            //                $config = Setting::all();
+            //                $view->with('menus', $config);
+            //            });
         }
         View::share('setting', $setting);
-        View::composer(['web.partials._header', 'web.partials._footer', 'web.layouts.web', 'web.home'], function ($view) use ($menu_top,$menu_footer , $cat_products) {
+        View::composer(['web.partials._header', 'web.partials._footer', 'web.layouts.web', 'web.home'], function ($view) use ($menu_top, $menu_footer, $cat_products) {
             $view->with('menus', $menu_top);
             $view->with('menus_footer', $menu_footer);
             $view->with('cat_products', $cat_products);
@@ -62,6 +62,5 @@ class AppServiceProvider extends ServiceProvider
         $detect = new MobileDetect();
         $isMobile = $detect->isMobile();
         View::share('isMobile', $isMobile);
-
     }
 }
