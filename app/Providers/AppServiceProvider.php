@@ -35,17 +35,18 @@ class AppServiceProvider extends ServiceProvider
         $cat_products = null;
         $setting = null;
         if (!Request::is('admin/*')) {
-            if (Schema::hasTable('setting')) {
-                $setting = $settingRepository->getActive('active',1)->pluck('value', 'key');
+            // if (Schema::hasTable('setting')) {
+                // $setting = $settingRepository->getActive('active',1)->pluck('value', 'key');
+                $setting = $settingRepository->getAll()->pluck('value', 'key');
                 // dd($setting);
-            }
-            if (Schema::hasTable('menu')) {
+            // }
+            // if (Schema::hasTable('menu')) {
                 $menu_top = $menuRepository->getMenusByCategoryId(3)->toTree();
                 $menu_footer = $menuRepository->getMenusByCategoryId(4)->toTree();
-            }
-            if (Schema::hasTable('products_categories')) {
+            // }
+            // if (Schema::hasTable('products_categories')) {
                 $cat_products = ProductsCategories::where(['is_visible' => 1])->withDepth()->defaultOrder()->get()->toTree();
-            }
+            // }
 //            View::composer(['web.partials._header', 'web.partials._footer'], function ($view) {
 //                $config = Setting::all();
 //                $view->with('menus', $config);
