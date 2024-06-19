@@ -42,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
                     $carry[$setting['key']] = $setting['active'] == 1 ? $setting['value'] : '';
                     return $carry;
                 }, []);
+                
             }
             if (Schema::hasTable('menu')) {
                 $menu_top = $menuRepository->getMenusByCategoryId(3)->toTree();
