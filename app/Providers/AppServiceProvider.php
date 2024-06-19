@@ -38,15 +38,10 @@ class AppServiceProvider extends ServiceProvider
             if (Schema::hasTable('setting')) {
                 // $setting = $settingRepository->getActive('active',1)->pluck('value', 'key');
                 $all = $settingRepository->getAll()->toArray();
-                $settings = [];
-                foreach($all as $setting) {
-                    if($setting['active'] == 1) {
-                        $settings[$setting['key']] = $setting['value'];
-                    } else {
-                        $settings[$setting['key']] = '';
-
-                    }
-                }
+                $settings = array_reduce($all, function ($carry, $setting) {
+                    $carry[$setting['key']] = $setting['active'] == 1 ? $setting['value'] : '';
+                    return $carry;
+                }, []);
             }
             if (Schema::hasTable('menu')) {
                 $menu_top = $menuRepository->getMenusByCategoryId(3)->toTree();

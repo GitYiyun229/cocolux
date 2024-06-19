@@ -891,6 +891,7 @@ class ProductController extends Controller
             if (!empty($promotion_hots->sort_product)) {
                 $productOptions = $productOptions->orderByRaw("FIELD(sku, $promotion_hots->sort_product)");
             }
+
             $productOptions = $productOptions->paginate(30);
         }
 
