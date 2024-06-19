@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
             if (Schema::hasTable('setting')) {
                 // $setting = $settingRepository->getActive('active',1)->pluck('value', 'key');
                 $all = $settingRepository->getAll()->toArray();
-                $settings = array_reduce($all, function ($carry, $setting) {
+                $setting = array_reduce($all, function ($carry, $setting) {
                     $carry[$setting['key']] = $setting['active'] == 1 ? $setting['value'] : '';
                     return $carry;
                 }, []);
@@ -55,7 +55,7 @@ class AppServiceProvider extends ServiceProvider
             //                $view->with('menus', $config);
             //            });
         }
-        View::share('setting', $settings);
+        View::share('setting', $setting);
         View::composer(['web.partials._header', 'web.partials._footer', 'web.layouts.web', 'web.home'], function ($view) use ($menu_top, $menu_footer, $cat_products) {
             $view->with('menus', $menu_top);
             $view->with('menus_footer', $menu_footer);
