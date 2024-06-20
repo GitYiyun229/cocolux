@@ -25,7 +25,7 @@
                     <div class="group-item">
                         @forelse($brand as $k => $item)
                             <a href="{{ route('detailBrand',['slug' => $item->slug,'id' => $item->id]) }}" class="brand-template">
-                                <img src="{{ str_replace('https://cdn.cocolux.com', 'https://cocolux.com/storage/upload_image/images/cdn_images', $item->image?$item->image:'') }}" alt="{{ $item->name }}" class="img-fluid">
+                                <img src="{{ str_replace('https://cdn.cocolux.com', 'https://cocolux.com/storage/upload_image/images/cdn_images',($item->image ?$item->image:'')) }}" alt="{{ $item->name }}" class="img-fluid">
                                 <div class="title">{{ $item->name }}</div>
                             </a>
                         @empty
