@@ -18,6 +18,9 @@ use App\Http\Requests\Product\UpdateProduct;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\ImageManagerStatic as Image;
+
 
 class ProductController extends Controller
 {
@@ -193,6 +196,11 @@ class ProductController extends Controller
                 }
                 $data['image'] = $this->productResponstory->saveFileUpload($data['image'], $this->resizeImage, $id, 'product', 'resize');
             }
+
+            if (!empty($data['image'])) {
+                $img_webp = $this->imgwebp($data['image'], $this->resizeImage);
+            }
+
             if (empty($data['slug'])) {
                 $data['slug'] = $req->input('slug') ? \Str::slug($req->input('slug'), '-') : \Str::slug($data['title'], '-');
             }
@@ -351,5 +359,18 @@ class ProductController extends Controller
             'status' => true,
             'message' => trans('message.change_is_new_product_success')
         ];
+    }
+
+
+    function imgwebp($image, $resizeImage)
+    {
+        $manager = new ImageManager(['driver' => 'gd']);
+        $imagePath = public_path($image);
+        $imageName = basename($image);
+        // dd($resizeImage);
+        $imagepath_rep = str_replace($imageName, '', $imagePath);
+        $image = Image::make($imagePath)->resize(600, 600);
+        $newImagePath = ($imagepath_rep) . pathinfo($imageName, PATHINFO_FILENAME) . '.webp';
+        $image->save($newImagePath, 90);
     }
 }

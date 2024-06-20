@@ -508,7 +508,7 @@
                                                 @endif
                                             @endif
                                         </div>
-                                        <div class="product-brand">
+                                        <div class="product-brand" style="height:18px">
                                             {{ $item->brand }}
                                         </div>
                                         <div class="product-title">
@@ -614,7 +614,7 @@
                                             @endif
                                         @endif
                                     </div>
-                                    <div class="product-brand">
+                                    <div class="product-brand"  style="height:18px">
                                         {{ $item->brand }}
                                     </div>
                                     <div class="product-title">

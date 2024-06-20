@@ -34,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         $menu_footer = null;
         $cat_products = null;
         $setting = null;
+        $settings = null;
         if (!Request::is('admin/*')) {
             if (Schema::hasTable('setting')) {
                 // $setting = $settingRepository->getActive('active',1)->pluck('value', 'key');
