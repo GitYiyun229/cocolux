@@ -125,7 +125,7 @@ Route::redirect('/danh-muc/thuc-pham-chuc-nang-i.73', '/danh-muc/thuc-pham-chuc-
 Route::redirect('/danh-muc/nuoc-hoa-nu-i.74', '/danh-muc/nuoc-hoa-nu-i.176', 301);
 Route::redirect('/danh-muc/gift-set-i.77', '/danh-muc/gift-set-i.178', 301);
 
-Route::group(['namespace' => 'Web'], function (){
+Route::group(['namespace' => 'Web'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/blog', 'ArticleController@index')->name('homeArticle');
     Route::get('/chuyen-muc/{slug}-i.{id}', 'ArticleController@cat')
@@ -181,6 +181,7 @@ Route::group(['namespace' => 'Web'], function (){
     Route::get('/404', function () {
         return redirect()->route('404');
     })->name('404');
+ 
 });
 
 
@@ -237,7 +238,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::get('', 'MenuCategoryController@index')->name('index');
         Route::get('/create', 'MenuCategoryController@create')->name('create')->middleware('permission:create_menu_categories');
         Route::post('/store', 'MenuCategoryController@store')->name('store')->middleware('permission:create_menu_categories');
-        Route::get('/edit/{id}', 'MenuCategoryController@edit')->name('edit')->middleware('permission:edit_menu_categories');        Route::post('/update/{id}', 'MenuCategoryController@update')->name('update')->middleware('permission:edit_menu_categories');
+        Route::get('/edit/{id}', 'MenuCategoryController@edit')->name('edit')->middleware('permission:edit_menu_categories');
+        Route::post('/update/{id}', 'MenuCategoryController@update')->name('update')->middleware('permission:edit_menu_categories');
         Route::post('/destroy/{id}', 'MenuCategoryController@destroy')->name('destroy')->middleware('permission:delete_menu_categories');
         Route::post('/update-tree', 'MenuCategoryController@updateTree')->name('updateTree')->middleware('permission:edit_menu_categories');
     });
@@ -245,9 +247,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 
     Route::group(['prefix' => 'menu', 'as' => 'menu.', 'middleware' => ['permission:view_menu']], function () {
         Route::get('', 'MenuController@index')->name('index');
-//        Route::get('/create', 'MenuController@create')->name('create')->middleware('permission:create_menu');
+        //        Route::get('/create', 'MenuController@create')->name('create')->middleware('permission:create_menu');
         Route::post('/store', 'MenuController@store')->name('store')->middleware('permission:create_menu');
-//        Route::get('/edit/{id}', 'MenuController@edit')->name('edit')->middleware('permission:edit_menu');
+        //        Route::get('/edit/{id}', 'MenuController@edit')->name('edit')->middleware('permission:edit_menu');
         Route::post('/update/{id}', 'MenuController@update')->name('update')->middleware('permission:edit_menu');
         Route::post('/destroy/{id}', 'MenuController@destroy')->name('destroy')->middleware('permission:delete_menu');
         Route::post('/update-tree', 'MenuController@updateTree')->name('updateTree')->middleware('permission:edit_menu');
@@ -349,7 +351,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 
     Route::group(['prefix' => 'product', 'as' => 'product.', 'middleware' => ['permission:view_product']], function () {
         Route::get('', 'ProductController@index')->name('index');
-//        Route::get('/create', 'ProductController@create')->name('create')->middleware('permission:create_product');
+        //        Route::get('/create', 'ProductController@create')->name('create')->middleware('permission:create_product');
         Route::post('/store', 'ProductController@store')->name('store')->middleware('permission:create_product');
         Route::get('/edit/{id}', 'ProductController@edit')->name('edit')->middleware('permission:edit_product');
         Route::post('/update/{id}', 'ProductController@update')->name('update')->middleware('permission:edit_product');
@@ -429,7 +431,4 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
         Route::post('/destroy/{id}', 'VoucherController@destroy')->name('destroy')->middleware('permission:delete_voucher');
         Route::post('/change-active-voucher/{id}', 'VoucherController@changeActive')->name('changeActive')->middleware('permission:edit_voucher');
     });
-
 });
-
-

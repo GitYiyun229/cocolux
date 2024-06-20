@@ -565,7 +565,7 @@
     <script src="{{ mix('js/web/home_jq_owl.js') }}"></script>
     <script src="{{ mix('js/web/home_bs.js') }}"></script>
     <script src="{{ mix('js/web/home.js') }}"></script>
-    <script>
+    {{-- <script>
         function checkWebpSupport(pictureElement) {
             var sourceElement = pictureElement.querySelector("source");
             var imgElement = pictureElement.querySelector("img");
@@ -594,6 +594,6 @@
         pictureElements.forEach(function(pictureElement) {
             checkWebpSupport(pictureElement);
         });
-    </script>
+    </script> --}}
     @include('web.components.extend')
 @endsection
