@@ -364,13 +364,14 @@ class ProductController extends Controller
 
     function imgwebp($image)
     {
-        $manager = new ImageManager(['driver' => 'gd']);
-        $imagePath = public_path($image);
-        $imageName = basename($image);
-        // dd($resizeImage);
-        $imagepath_rep = str_replace($imageName, '', $imagePath);
-        $image = Image::make($imagePath)->resize(600, 600);
-        $newImagePath = ($imagepath_rep) . pathinfo($imageName, PATHINFO_FILENAME) . '.webp';
-        $image->save($newImagePath, 90);
+        if (Storage::disk('local')->exists($image)) {
+            $manager = new ImageManager(['driver' => 'gd']);
+            $imagePath = public_path($image);
+            $imageName = basename($image);
+            $imagepath_rep = str_replace($imageName, '', $imagePath);
+            $image = Image::make($imagePath)->resize(600, 600);
+            $newImagePath = ($imagepath_rep) . pathinfo($imageName, PATHINFO_FILENAME) . '.webp';
+            $image->save($newImagePath, 90);
+        }
     }
 }
