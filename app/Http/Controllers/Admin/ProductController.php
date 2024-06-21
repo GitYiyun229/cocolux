@@ -197,7 +197,7 @@ class ProductController extends Controller
                 $data['image'] = $this->productResponstory->saveFileUpload($data['image'], $this->resizeImage, $id, 'product', 'resize');
             }
 
-            if (!empty($data['image'])) {
+            if (!empty($data['image']) && $data_root->image != $data['image']) {
                 $img_webp = $this->imgwebp($data['image'], $this->resizeImage);
             }
 
