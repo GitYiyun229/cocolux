@@ -235,7 +235,7 @@
                                                 <div class="origin-price">{{ format_money($item_fl->normal_price) }}</div>
                                             @endif
                                         </div>
-                                        <div class="product-brand">
+                                        <div class="product-brand" style="height: 18px">
                                             {{ $item_fl->brand ?: $item_fl->product->brand }}
                                         </div>
                                         <div class="product-title">
@@ -306,7 +306,7 @@
                                             @endif
                                         @endif
                                     </div>
-                                    <div class="product-brand">
+                                    <div class="product-brand" style="height: 18px">
                                         {{ $item->brand }}
                                     </div>
                                     <div class="product-title">
@@ -422,7 +422,7 @@
                                                         @endif
                                                     @endif
                                                 </div>
-                                                <div class="product-brand">
+                                                <div class="product-brand" style="height: 18px">
                                                     {{ $item->brand }}
                                                 </div>
                                                 <div class="product-title">
