@@ -195,10 +195,10 @@ class ProductController extends Controller
                     }
                 }
                 $data['image'] = $this->productResponstory->saveFileUpload($data['image'], $this->resizeImage, $id, 'product', 'resize');
+                $this->imgwebp($data['image']);
             }
 
             if (!empty($data['image']) && $data_root->image != $data['image']) {
-                $img_webp = $this->imgwebp($data['image'], $this->resizeImage);
             }
 
             if (empty($data['slug'])) {
@@ -362,7 +362,7 @@ class ProductController extends Controller
     }
 
 
-    function imgwebp($image, $resizeImage)
+    function imgwebp($image)
     {
         $manager = new ImageManager(['driver' => 'gd']);
         $imagePath = public_path($image);
