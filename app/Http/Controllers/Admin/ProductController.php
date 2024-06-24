@@ -194,9 +194,9 @@ class ProductController extends Controller
                     }
                 }
                 $data['image'] = $this->productResponstory->saveFileUpload($data['image'], $this->resizeImage, $id, 'product', 'resize');
-
-                $this->imgwebp($data['image']);
-
+                if (!empty($data['image']) && $data_root->image != $data['image']) {
+                    $this->imgwebp($data['image']);
+                }
             }
             if (isset($req['sortedIds']) && !empty($req['sortedIds'])) {
                 foreach (explode(',', $req['sortedIds']) as $item) {
@@ -206,8 +206,7 @@ class ProductController extends Controller
 
 
 
-            if (!empty($data['image']) && $data_root->image != $data['image']) {
-            }
+
 
             if (empty($data['slug'])) {
                 $data['slug'] = $req->input('slug') ? \Str::slug($req->input('slug'), '-') : \Str::slug($data['title'], '-');
