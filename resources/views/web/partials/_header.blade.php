@@ -65,7 +65,10 @@
                                                 @endforelse
                                             </div>
                                             <div class="menu-poster">
+                                                @if (!empty($item->image))
                                                 <img src="{{ $item->image }}" alt="">
+
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
