@@ -66,7 +66,7 @@
                                             </div>
                                             <div class="menu-poster">
                                                 @if (!empty($item->image))
-                                                <img src="{{ $item->image }}" alt="1">
+                                                <img src="{{ $item->image }}" alt="">
                                                 @endif
                                             </div>
                                         </div>
@@ -173,7 +173,9 @@
                                             @endforelse
                                         </div>
                                         <div class="menu-poster">
-                                            <img src="{{ $item->image }}" alt="">
+                                              @if (!empty($item->image))
+                                                <img src="{{ $item->image }}" alt="">
+                                                @endif
                                         </div>
                                     </div>
                                 </div>
