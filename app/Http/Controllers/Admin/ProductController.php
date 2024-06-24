@@ -198,6 +198,9 @@ class ProductController extends Controller
                     $this->imgwebp($data['image']);
                 }
             }
+
+
+            //upload ảnh nhiều bằng ckfinder3 thì dùng hàm này
             if (isset($req['sortedIds']) && !empty($req['sortedIds'])) {
                 foreach (explode(',', $req['sortedIds']) as $item) {
                     $this->imgwebp($item);
