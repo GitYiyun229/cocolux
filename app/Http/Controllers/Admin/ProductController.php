@@ -178,12 +178,9 @@ class ProductController extends Controller
     {
         $data_root = $this->productResponstory->getOneById($id);
         DB::beginTransaction();
-        // dd($req['sortedIds']);
-        // dd($images_updload);
+
         try {
             $data = $req->validated();
-
-
             if (!empty($data['description']) && $data_root->content != $data['description']) {
                 $ContentHtml = $data['description'];
                 $html = $this->productResponstory->FileHtmlImageToWebp($ContentHtml, $id, 'product');
@@ -197,9 +194,10 @@ class ProductController extends Controller
                     }
                 }
                 $data['image'] = $this->productResponstory->saveFileUpload($data['image'], $this->resizeImage, $id, 'product', 'resize');
+
                 $this->imgwebp($data['image']);
+
             }
-            // dd($req);
             if (isset($req['sortedIds']) && !empty($req['sortedIds'])) {
                 foreach (explode(',', $req['sortedIds']) as $item) {
                     $this->imgwebp($item);
