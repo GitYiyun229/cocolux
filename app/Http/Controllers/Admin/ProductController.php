@@ -178,10 +178,12 @@ class ProductController extends Controller
     {
         $data_root = $this->productResponstory->getOneById($id);
         DB::beginTransaction();
-        // dd($req->canonical_url);
-
+        // dd($req['sortedIds']);
+        // dd($images_updload);
         try {
             $data = $req->validated();
+
+
             if (!empty($data['description']) && $data_root->content != $data['description']) {
                 $ContentHtml = $data['description'];
                 $html = $this->productResponstory->FileHtmlImageToWebp($ContentHtml, $id, 'product');
@@ -197,6 +199,12 @@ class ProductController extends Controller
                 $data['image'] = $this->productResponstory->saveFileUpload($data['image'], $this->resizeImage, $id, 'product', 'resize');
                 $this->imgwebp($data['image']);
             }
+            if (!empty($req['sortedIds'])) {
+                foreach (explode(',', $req['sortedIds']) as $item) {
+                    $this->imgwebp($item);
+                }
+            }
+
 
             if (!empty($data['image']) && $data_root->image != $data['image']) {
             }
@@ -212,6 +220,7 @@ class ProductController extends Controller
             $attributes = array();
             $attribute_path = array();
             foreach ($attribute as $item) {
+
                 if (request($item->code)) {
                     if ($item->type == 'select') {
                         $attribute_value = AttributeValues::select('id', 'name')->where(['active' => 1, 'id' => request($item->code)])->first();
@@ -255,7 +264,10 @@ class ProductController extends Controller
             } else {
                 $data['category_path'] = $category->id;
             }
-            // dd($data);
+            // dd(
+            //     $attribute
+            // );
+            // dd($data['image']);
             $data_root->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_product_success'));
@@ -364,13 +376,17 @@ class ProductController extends Controller
 
     function imgwebp($image)
     {
-        if (Storage::disk('local')->exists($image)) {
-            $manager = new ImageManager(['driver' => 'gd']);
-            $imagePath = public_path($image);
-            $imageName = basename($image);
-            $imagepath_rep = str_replace($imageName, '', $imagePath);
-            $image = Image::make($imagePath)->resize(600, 600);
-            $newImagePath = ($imagepath_rep) . pathinfo($imageName, PATHINFO_FILENAME) . '.webp';
+        $manager = new ImageManager(['driver' => 'gd']);
+
+        $imagePath = public_path($image);
+        $imageName = basename($image);
+        $imagepath_rep = str_replace($imageName, '', $imagePath);
+        $newImageName = pathinfo($imageName, PATHINFO_FILENAME) . '.webp';
+        $newImagePath = $imagepath_rep . $newImageName;
+
+        $image = Image::make($imagePath)->resize(600, 600);
+
+        if (!Storage::disk('public')->exists($newImageName)) {
             $image->save($newImagePath, 90);
         }
     }
