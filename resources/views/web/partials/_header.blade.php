@@ -66,8 +66,7 @@
                                             </div>
                                             <div class="menu-poster">
                                                 @if (!empty($item->image))
-                                                <img src="{{ $item->image }}" alt="">
-
+                                                <img src="{{ $item->image }}" alt="1">
                                                 @endif
                                             </div>
                                         </div>
