@@ -199,11 +199,13 @@ class ProductController extends Controller
                 $data['image'] = $this->productResponstory->saveFileUpload($data['image'], $this->resizeImage, $id, 'product', 'resize');
                 $this->imgwebp($data['image']);
             }
-            if (!empty($req['sortedIds'])) {
+            // dd($req);
+            if (isset($req['sortedIds']) && !empty($req['sortedIds'])) {
                 foreach (explode(',', $req['sortedIds']) as $item) {
                     $this->imgwebp($item);
                 }
             }
+
 
 
             if (!empty($data['image']) && $data_root->image != $data['image']) {
