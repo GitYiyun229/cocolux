@@ -304,7 +304,7 @@ class ApiNhanhController extends Controller
         if ($total_price < $couponCode['fromValue']) {
             return response()->json(array(
                 'error' => true,
-                'message'   => 'Chua đủ điều kiện áp dụng mã ( >= ' . format_money($couponCode['fromValue']) . ') sản phẩm không khuyến mại.'
+                'message'   => 'Chưa đủ điều kiện áp dụng mã ( >= ' . format_money($couponCode['fromValue']) . ') sản phẩm không khuyến mại.'
             ));
         }
         return response()->json(array(
