@@ -24771,3 +24771,263 @@ Trang cocolux.com đã tải thành công.
 Trang cocolux.com đã tải thành công.
 Setting up watches.
 Watches established.
+Setting up watches.  Beware: since -r was given, this may take a while!
+Failed to watch /work/finalstyle/cocolux/storage/app/public/upload_image/; upper limit on inotify watches reached!
+Please increase the amount of inotify watches allowed per user via `/proc/sys/fs/inotify/max_user_watches'.
+Setting up watches.  Beware: since -r was given, this may take a while!
+Watches established.
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-10.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-10.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-10.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-10.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-10.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-10.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-10.webp
+Decoded /tmp/magick-2362dS5otrm2nAvk. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-2362iFsk-OaQ2dO3
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-10.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-10.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-10.webp (not a supported image type)
+Decoded /tmp/magick-2370W54PHfLKqLsG. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-2370bOZpHROgSveo
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-10.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-10.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-10.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-10.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-10.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-10.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-10.jpg/sale-10__150x150.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-10.jpg/sale-10__150x150.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-10.jpg/sale-10__150x150.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-10.jpg/sale-10__150x150.webp
+Decoded /tmp/magick-2393BEpIFmyyqAUt. Dimensions: 150 x 150. Now saving...
+Saved file /tmp/magick-2393vfvD9xU3yTiJ
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-10.jpg/sale-10__150x150.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-10.jpg/sale-10__150x150.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-10.jpg/sale-10__150x150.webp (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-doc.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-doc.webp
+Decoded /tmp/magick-28173Lxmb5e9y1EC. Dimensions: 564 x 844. Now saving...
+Saved file /tmp/magick-2817VqsqQ5bWcul9
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-doc.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-doc.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-doc.webp (not a supported image type)
+Decoded /tmp/magick-2827Q_D8HPEm6WhO. Dimensions: 564 x 844. Now saving...
+Saved file /tmp/magick-2827aL44hFpnd7Yj
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-doc.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-doc.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-doc.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/huyen/chuong-trinh/cocolux-sunblock-ngang.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/huyen/chuong-trinh/cocolux-sunblock-ngang.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/huyen/chuong-trinh/cocolux-sunblock-ngang.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-ngang.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-ngang.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-ngang.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-ngang.webp
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg/cocolux-sunblock-doc__150x150.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg/cocolux-sunblock-doc__150x150.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg/cocolux-sunblock-doc__150x150.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg/cocolux-sunblock-doc__150x150.webp
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/huyen/chuong-trinh/cocolux-sunblock-ngang.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/huyen/chuong-trinh/cocolux-sunblock-ngang.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/huyen/chuong-trinh/cocolux-sunblock-ngang.jpg.cache (not a supported image type)
+Decoded /tmp/magick-2887HuDJDz7TZZ37. Dimensions: 1600 x 1066. Now saving...
+Saved file /tmp/magick-2887uId6k_wKFQJq
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-ngang.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-ngang.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-ngang.webp (not a supported image type)
+Decoded /tmp/magick-2896eEkTKphVV1Ah. Dimensions: 1600 x 1066. Now saving...
+Saved file /tmp/magick-2896ySVXv009lXHy
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-ngang.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-ngang.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/huyen/chuong-trinh/cocolux-sunblock-ngang.webp (not a supported image type)
+Decoded /tmp/magick-29096xH-cINqTyuB. Dimensions: 100 x 150. Now saving...
+Saved file /tmp/magick-2909U3KaEfLO4YIQ
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg/cocolux-sunblock-doc__150x150.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg/cocolux-sunblock-doc__150x150.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg/cocolux-sunblock-doc__150x150.webp (not a supported image type)
+Decoded /tmp/magick-2918B9mrfYU4X5kK. Dimensions: 100 x 150. Now saving...
+Saved file /tmp/magick-2918_iFgqvachYPY
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg/cocolux-sunblock-doc__150x150.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg/cocolux-sunblock-doc__150x150.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/huyen/chuong-trinh/cocolux-sunblock-doc.jpg/cocolux-sunblock-doc__150x150.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-11.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-11.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-11.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-11.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-11.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-11.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-11.webp
+Decoded /tmp/magick-3043NXv5cp1ZHL2b. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-3043RWwmEO8jceVx
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-11.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-11.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-11.webp (not a supported image type)
+Decoded /tmp/magick-3053K2P2zbXWQqMC. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-30534ohCtYRT6QBV
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-11.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-11.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-11.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-11.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-11.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-11.jpg.cache (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-12.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-12.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-12.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-12.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-12.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-12.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-12.webp
+Decoded /tmp/magick-3146c_Wj9ugNnciL. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-31469VE71oxKqsUw
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-12.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-12.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-12.webp (not a supported image type)
+Decoded /tmp/magick-3154EOeHAMLZqjx0. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-3154feYzWV2GYMXK
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-12.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-12.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-12.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-12.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-12.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-12.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/thuong-hieu/khaitruong.png -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/thuong-hieu/khaitruong.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/images/thuong-hieu/khaitruong.png -> /work/finalstyle/cocolux/storage/app/public/upload_image/images/thuong-hieu/khaitruong.webp
+Decoded /tmp/magick-3520BsdZx2UrY7Ws. Dimensions: 499 x 579. Now saving...
+Saved file /tmp/magick-3520MSstlvRzYrDo
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/thuong-hieu/khaitruong.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/thuong-hieu/khaitruong.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/thuong-hieu/khaitruong.webp (not a supported image type)
+Decoded /tmp/magick-3530b1Q7YoJARCdE. Dimensions: 499 x 579. Now saving...
+Saved file /tmp/magick-3530t3o81VUccXVy
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/thuong-hieu/khaitruong.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/thuong-hieu/khaitruong.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/thuong-hieu/khaitruong.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-7.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-7.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-7.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-7.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-7.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-7.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-7.webp
+Decoded /tmp/magick-3657HQHi2EWIdAer. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-36571cX_MIyiE7ti
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-7.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-7.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-7.webp (not a supported image type)
+Decoded /tmp/magick-3665FAl0p4bvHaeF. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-3665-cWtVDg9mOdv
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-7.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-7.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-7.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-7.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-7.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-7.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-7.jpg/sale-7__150x150.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-7.jpg/sale-7__150x150.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-7.jpg/sale-7__150x150.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-7.jpg/sale-7__150x150.webp
+Decoded /tmp/magick-3689789Y0l678Iv2. Dimensions: 150 x 150. Now saving...
+Saved file /tmp/magick-3689mXR2_4hzpsbn
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-7.jpg/sale-7__150x150.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-7.jpg/sale-7__150x150.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-7.jpg/sale-7__150x150.webp (not a supported image type)
+Decoded /tmp/magick-3697UiVT1Z7Ke5k8. Dimensions: 150 x 150. Now saving...
+Saved file /tmp/magick-36978fU6J0fHNHrs
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-7.jpg/sale-7__150x150.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-7.jpg/sale-7__150x150.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-7.jpg/sale-7__150x150.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-8.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-8.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-8.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-8.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-8.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-8.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-8.webp
+Decoded /tmp/magick-3811gAPSUbsDa2D9. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-3811WlUtz2Vl799h
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-8.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-8.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-8.webp (not a supported image type)
+Decoded /tmp/magick-3819viB9N_zLDBip. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-3819jD83fDQ04LBw
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-8.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-8.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-8.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-8.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-8.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-8.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-8.jpg/sale-8__150x150.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-8.jpg/sale-8__150x150.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-8.jpg/sale-8__150x150.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-8.jpg/sale-8__150x150.webp
+Decoded /tmp/magick-3844TTRNbXmbeVVc. Dimensions: 150 x 150. Now saving...
+Saved file /tmp/magick-3844bljqvyLBqEIM
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-8.jpg/sale-8__150x150.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-8.jpg/sale-8__150x150.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-8.jpg/sale-8__150x150.webp (not a supported image type)
+Decoded /tmp/magick-3852d2sVUAhD7gQg. Dimensions: 150 x 150. Now saving...
+Saved file /tmp/magick-3852LALfxIrCbcZP
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-8.jpg/sale-8__150x150.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-8.jpg/sale-8__150x150.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-8.jpg/sale-8__150x150.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-9.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-9.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-9.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-9.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-9.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-9.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-9.webp
+Decoded /tmp/magick-3930Uabbx172eA6e. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-39303DJId89VeQzj
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-9.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-9.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-9.webp (not a supported image type)
+Decoded /tmp/magick-3938tDVzfkVhbRRq. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-3938F5xQra92fImu
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-9.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-9.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-9.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-9.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-9.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-9.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-9.jpg/sale-9__150x150.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-9.jpg/sale-9__150x150.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-9.jpg/sale-9__150x150.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-9.jpg/sale-9__150x150.webp
+Decoded /tmp/magick-39617odNMhMhp14N. Dimensions: 150 x 150. Now saving...
+Saved file /tmp/magick-3961XvUWNi8fYees
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-9.jpg/sale-9__150x150.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-9.jpg/sale-9__150x150.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-9.jpg/sale-9__150x150.webp (not a supported image type)
+Decoded /tmp/magick-39693M-ObFWbYMi0. Dimensions: 150 x 150. Now saving...
+Saved file /tmp/magick-3969wx3QrvXo9s4z
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-9.jpg/sale-9__150x150.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-9.jpg/sale-9__150x150.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-9.jpg/sale-9__150x150.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-18.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-18.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-18.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-18.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-18.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-18.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-18.webp
+Decoded /tmp/magick-4068tHMPeqAuFUEE. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-40680nOUzoWzUxqq
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-18.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-18.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-18.webp (not a supported image type)
+Decoded /tmp/magick-4076F6ABZIb0M2JS. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-4076KkftSqqqo0cD
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-18.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-18.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-18.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-18.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-18.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-18.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-18.jpg/sale-18__150x150.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-18.jpg/sale-18__150x150.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-18.jpg/sale-18__150x150.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-18.jpg/sale-18__150x150.webp
+Decoded /tmp/magick-4100Qg5sEGsnoJt0. Dimensions: 150 x 150. Now saving...
+Saved file /tmp/magick-4100pdwRkLwSFQA5
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-18.jpg/sale-18__150x150.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-18.jpg/sale-18__150x150.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-18.jpg/sale-18__150x150.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-16.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-16.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-16.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-16.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-16.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-16.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-16.webp
+Decoded /tmp/magick-41595tZqXTL6fdWu. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-4159U8w4xcszxsB2
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-16.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-16.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-16.webp (not a supported image type)
+Decoded /tmp/magick-4167j2uF8FQoYrBJ. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-4167GX4lRxuWv5Uf
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-16.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-16.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-16.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-16.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-16.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-16.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-16.jpg/sale-16__150x150.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-16.jpg/sale-16__150x150.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-16.jpg/sale-16__150x150.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-16.jpg/sale-16__150x150.webp
+Decoded /tmp/magick-4192bGATcaAZvrAc. Dimensions: 150 x 150. Now saving...
+Saved file /tmp/magick-4192W34vzLiNN5nc
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-16.jpg/sale-16__150x150.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-16.jpg/sale-16__150x150.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-16.jpg/sale-16__150x150.webp (not a supported image type)
+Decoded /tmp/magick-4200euRZaFWErfMh. Dimensions: 150 x 150. Now saving...
+Saved file /tmp/magick-4200Oec8Bn8xe6Wg
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-16.jpg/sale-16__150x150.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-16.jpg/sale-16__150x150.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-16.jpg/sale-16__150x150.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-15.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-15.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-15.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-15.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-15.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-15.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-15.webp
+Decoded /tmp/magick-4371ILl9zEiCoiJa. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-4371_urz4DBewnzP
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-15.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-15.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-15.webp (not a supported image type)
+Decoded /tmp/magick-4379tbDVNhFxuJcm. Dimensions: 1200 x 1200. Now saving...
+Saved file /tmp/magick-4379iCJ-EAwhNpZZ
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-15.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/images/sale-15.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/images/sale-15.webp (not a supported image type)
+mogrify: no decode delegate for this image format `CACHE' @ error/constitute.c/ReadImage/564.
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-15.jpg.cache -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/data/Images/sale-15.jpg.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/data/Images/sale-15.jpg.cache (not a supported image type)
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-15.jpg/sale-15__150x150.jpg -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-15.jpg/sale-15__150x150.webp
+Converted to WebP: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-15.jpg/sale-15__150x150.jpg -> /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-15.jpg/sale-15__150x150.webp
+Decoded /tmp/magick-4404vcmkPYeEaAOU. Dimensions: 150 x 150. Now saving...
+Saved file /tmp/magick-4404z5qIsO4Kj9k2
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-15.jpg/sale-15__150x150.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-15.jpg/sale-15__150x150.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-15.jpg/sale-15__150x150.webp (not a supported image type)
+Decoded /tmp/magick-4412eknAqlP0rFhc. Dimensions: 150 x 150. Now saving...
+Saved file /tmp/magick-4412UU37DzCIivei
+Processed: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-15.jpg/sale-15__150x150.webp -> /work/finalstyle/cocolux/storage/app/thumbs/public/upload_image/.ckfinder/cache/thumbs/Images/sale-15.jpg/sale-15__150x150.webp
+Skipped: /work/finalstyle/cocolux/storage/app/public/upload_image/.ckfinder/cache/thumbs/Images/sale-15.jpg/sale-15__150x150.webp (not a supported image type)
