@@ -1,7 +1,8 @@
 @if (!$isMobile)
     @if (isset($setting['image_top_head']) && !empty($setting['image_top_head']))
         <div class="banner-top-image_top_head w-100 overflow-hidden" style="max-height:80px">
-            <img  src="{{ $setting['image_top_head'] }}" alt="cocolux" class="img-fluid w-100 overflow-hidden" style="max-height:80px">
+            <img src="{{ $setting['image_top_head'] }}" alt="cocolux" class="img-fluid w-100 overflow-hidden"
+                style="max-height:80px">
         </div>
     @endif
 @endif
@@ -31,6 +32,7 @@
                     </a>
                     <div class="menu-content">
                         @forelse($cat_products as $item)
+
                             <div class="menu-item">
                                 <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}"
                                     class="menu-btn">{{ $item->title }} <i class="fa-solid fa-angle-right"></i></a>
@@ -64,9 +66,9 @@
                                                 @empty
                                                 @endforelse
                                             </div>
-                                            <div class="menu-poster">
+                                            <div class="menu-poster 2345234">
                                                 @if (!empty($item->image))
-                                                <img src="{{ $item->image }}" alt="">
+                                                    <img src="{{ $item->image }}" alt="342442">
                                                 @endif
                                             </div>
                                         </div>
@@ -172,10 +174,10 @@
                                             @empty
                                             @endforelse
                                         </div>
-                                        <div class="menu-poster">
-                                              @if (!empty($item->image))
+                                        <div class="menu-poster 342342">
+                                            @if (!empty($item->image))
                                                 <img src="{{ $item->image }}" alt="">
-                                                @endif
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
