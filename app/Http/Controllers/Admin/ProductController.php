@@ -179,8 +179,10 @@ class ProductController extends Controller
         $data_root = $this->productResponstory->getOneById($id);
         DB::beginTransaction();
 
+
         try {
             $data = $req->validated();
+            // dd($data);
             if (!empty($data['description']) && $data_root->content != $data['description']) {
                 $ContentHtml = $data['description'];
                 $html = $this->productResponstory->FileHtmlImageToWebp($ContentHtml, $id, 'product');
@@ -198,8 +200,9 @@ class ProductController extends Controller
                     $this->imgwebp($data['image']);
                 }
             }
+            $data['updated_at'] = now()->format('Y-m-d H:i:s');
 
-
+            // dd($data['updated_at']);
             //upload ảnh nhiều bằng ckfinder3 thì dùng hàm này
             if (isset($req['sortedIds']) && !empty($req['sortedIds'])) {
                 foreach (explode(',', $req['sortedIds']) as $item) {
