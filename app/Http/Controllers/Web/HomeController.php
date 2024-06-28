@@ -87,7 +87,7 @@ class HomeController extends Controller
             })->with(['promotionItem' => function ($query) use ($now) {
                 $query->select('applied_stop_time', 'sku', 'price')->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->where('type', 'flash_deal')->orderBy('price', 'asc');
-            }])->whereNotNull('slug')->whereNotNull('sku')->limit(10)->get();
+            }])->whereNotNull('slug')->whereNotNull('sku')->limit(15)->get();
         $flash_skus = $product_flash->pluck('sku');
         $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
             ->select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id')
@@ -98,7 +98,7 @@ class HomeController extends Controller
                     ->orderBy('price', 'asc');
             }])->whereHas('product', function ($query) {
                 $query->where(['is_hot' => 1, 'active' => 1]);
-            })->whereNotIn('sku', $flash_skus)->whereNotNull('slug')->whereNotNull('sku')->limit(10)->get();
+            })->whereNotIn('sku', $flash_skus)->whereNotNull('slug')->whereNotNull('sku')->orderBy('updated_at', 'desc')->limit(20)->get();
 
         $attribute_brand = AttributeValues::where(['attribute_id' => 19, 'active' => 1, 'is_home' => 1])->select('id', 'name', 'slug', 'image')->orderBy('ordering', 'ASC')->limit(15)->get(); // thương hiệu
         $cats = ProductsCategories::where(['is_home' => 1, 'active' => 1, 'parent_id' => null])
