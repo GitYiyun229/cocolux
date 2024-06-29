@@ -240,10 +240,12 @@ class ApiNhanhController extends Controller
         ];
         $this->request_params['data'] = json_encode($data);
 
+
         $response = $client->post($this->linkApi . $api, [
             'form_params' => $this->request_params
         ]);
         $data = json_decode($response->getBody(), true);
+
         if ($data['code'] == 0) {
             return response()->json(array(
                 'error' => true,
@@ -274,6 +276,8 @@ class ApiNhanhController extends Controller
             ));
         }
 
+        $status_voucher = $this->searchCoupon($coupon);
+
         $voucherItem = VoucherItem::where('code', $coupon)->first();
         $list_products_promotion = '';
         if ($voucherItem) {
@@ -291,12 +295,17 @@ class ApiNhanhController extends Controller
                     $query->select('applied_stop_time', 'sku', 'price')
                         ->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)->orderBy('price', 'asc');
                 }])->first();
-            if ($product) {
+
+            if ($product && $status_voucher == false) { // tính theo giá gốc
                 if ($product->promotionItem || $product->price != $product->normal_price) {
-                    $price = 0;
+                    $price = $product->promotionItem->value;
                 } else {
                     $price = $product->price;
                 }
+            }
+
+            if ($product && $status_voucher == true) { // tính theo tổng giá trị đơn hàng
+                $price = $product->price;
             }
             $quantity = $item['quantity']; // Số lượng
             $total_price = $total_price + $price * $quantity;
@@ -304,17 +313,47 @@ class ApiNhanhController extends Controller
         if ($total_price < $couponCode['fromValue']) {
             return response()->json(array(
                 'error' => true,
-                'message'   => 'Chua đủ điều kiện áp dụng mã ( >= ' . format_money($couponCode['fromValue']) . ') sản phẩm không khuyến mại.'
+                'message'   => 'Chưa đủ điều kiện áp dụng mã ( >= ' . format_money($couponCode['fromValue']) . ') '
             ));
+        }
+
+        
+        if ($status_voucher == false) {
+            $message = "Không áp dụng cho sản phẩm đang trong CTKM khác";
+        } else {
+            $message = "Áp dụng mã thành công";
         }
         return response()->json(array(
             'error' => false,
-            'message'   => 'Áp dụng mã thành công',
+            'message'   => $message,
             'data' => $couponCode,
+            'status' => $status_voucher,
             'list_products_promotion' => $list_products_promotion
         ));
     }
 
+
+    public function searchCoupon($coupon)
+    {
+        $api = "/api/promotion/coupon?act=list";
+        $client = new Client();
+        $data = [
+            'couponCode' => $coupon
+        ];
+        $this->request_params['data'] = json_encode($data);
+        $response = $client->post($this->linkApi . $api, [
+            'form_params' => $this->request_params
+        ]);
+        $data = json_decode($response->getBody(), true);
+
+        $couponCode = reset($data['data']['result'][0]['options']);
+        if ($couponCode == true) {
+            $result = $couponCode;
+        } else {
+            $result = $couponCode;
+        }
+        return $result;
+    }
     public function callApiListCoupon($page = 1)
     {
         $api = "/api/promotion/coupon?act=list";

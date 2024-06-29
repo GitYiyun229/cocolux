@@ -1104,6 +1104,7 @@ class ProductController extends Controller
         // Duyệt qua các sản phẩm trong giỏ hàng để lấy thông tin sản phẩm
         $cartItems = [];
         $total_price = 0;
+        $total_price_normal = 0;
         $total_price_in_promotion = 0;
         $total_price_not_in_promotion = 0;
         if (!$cart) {
@@ -1120,10 +1121,12 @@ class ProductController extends Controller
             $quantity = $item['quantity']; // Số lượng
             if ($product->promotionItem) {
                 $price = $product->promotionItem->price;
+                $price_normal = $product->price;
                 $promotion = 0;
                 $total_price_in_promotion = $total_price_in_promotion + $price * $quantity;
             } else {
                 $price = $product->price;
+                $price_normal = $product->price;
                 $promotion = 1;
                 $total_price_not_in_promotion = $total_price_not_in_promotion + $price * $quantity;
             }
@@ -1137,12 +1140,13 @@ class ProductController extends Controller
                 'promotion' => $promotion, // Khuyến mại
             ];
             $total_price = $total_price + $price * $quantity;
+            $total_price_normal = $total_price_normal + $price_normal * $quantity;
         }
         $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('id', 'ASC')->get();
 
         $list_city = City::all();
 
-        return view('web.cart.payment', compact('cart', 'cartItems', 'total_price', 'list_city', 'total_price_not_in_promotion', 'total_price_in_promotion', 'list_coupon'));
+        return view('web.cart.payment', compact('cart', 'cartItems', 'total_price', 'total_price_normal', 'list_city', 'total_price_not_in_promotion', 'total_price_in_promotion', 'list_coupon'));
     }
 
     public function load_district(Request $request)
@@ -1343,6 +1347,7 @@ class ProductController extends Controller
             Session::flash('danger', 'Mã đơn hàng không tồn tại');
             return redirect()->back();
         }
+
     }
 
     public function detailOrderSuccess($id)
@@ -1394,14 +1399,14 @@ class ProductController extends Controller
         $tenDaysAgo = Carbon::now()->subDays(9)->toDateString();
         $api = "/api/order/index";
         $client = new Client();
-        if (strlen($phone) == 9) {
-            $mdh = $phone;
+        if(strlen($phone) == 9){
+            $mdh=$phone;
             $data = [
                 "fromDate" => $tenDaysAgo,
                 "toDate" => $currentDate,
                 "id" => $mdh
             ];
-        } else {
+        }else{
             $data = [
                 "fromDate" => $tenDaysAgo,
                 "toDate" => $currentDate,
@@ -1426,10 +1431,10 @@ class ProductController extends Controller
             $data = ($this->searchOderMember($maDonHang));
             if ($data) {
                 $firstElement = reset($data);
-                $name = $firstElement['customerName'];
-                $phone = $firstElement['customerMobile'];
+                $name= $firstElement['customerName'];
+                $phone= $firstElement['customerMobile'];
 
-                return view('web.cart.detail_order_success_nhanh', compact('data', 'maDonHang', 'phone', 'name'));
+                return view('web.cart.detail_order_success_nhanh', compact('data', 'maDonHang','phone','name'));
             } else {
                 Session::flash('danger', 'Mã đơn hàng không tồn tại');
                 return redirect()->back();
