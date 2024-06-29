@@ -126,8 +126,8 @@
                                     @forelse($cartItems as $item)
                                         <a class="item-product"
                                             href="{{ !empty($item['product']->slug) && !empty($item['product']->sku) ? route('detailProduct', ['slug' => $item['product']->slug, 'sku' => $item['product']->sku]) : '' }}">
-                                            <img src="{{ $item['product']->image_first }}" alt="{{ $item['product']->title }}"
-                                                class="img-fluid">
+                                            <img src="{{ $item['product']->image_first }}"
+                                                alt="{{ $item['product']->title }}" class="img-fluid">
                                             <div class="item-info">
                                                 <p class="item-brand mb-0 fw-bold text-uppercase">
                                                     {{ $item['product']->brand }}</p>
@@ -155,6 +155,8 @@
                                     <span>{{ format_money($total_price) }}</span>
                                     <input type="hidden" value="{{ $total_price }}" name="total_price"
                                         id="total_price">
+                                    <input type="hidden" value="{{ $total_price_normal }}" name="total_price_normal"
+                                        id="total_price_normal">
                                     <input type="hidden" value="{{ $total_price_not_in_promotion }}"
                                         name="total_price_not_in_promotion" id="total_price_not_in_promotion">
                                     <input type="hidden" value="{{ $total_price_in_promotion }}"
@@ -542,6 +544,8 @@
                             .val()); // tong gia san pham sale
                         let price_total_not_sale = parseInt($("#layoutForm #total_price_not_in_promotion")
                             .val()); // tong gia san pham ko sale
+                        let price_total_normal = parseInt($("#layoutForm #total_price_normal")
+                            .val()); // tong gia san pham trong giỏ hàng tính theo giá ko sale
                         if (price_total_not_sale) {
                             if (list_products_promotion) {
                                 let list_product_pro = list_products_promotion.split(",");
@@ -572,31 +576,65 @@
                                         total_price_ship_coupon));
                                 }
                             } else {
-                                if (parseInt(result.data.valueType) == 1) {
-                                    $("#layoutForm #coupon_if_have").css({
-                                        "display": "flex"
-                                    });
-                                    $("#layoutForm #coupon_now").html("-" + formatMoney(parseInt(result.data
-                                        .value)));
-                                    $("#price_coupon_now").val(result.data.value);
-                                    let total_price = price_total_sale + price_total_not_sale;
-                                    let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
-                                        parseInt(result.data.value);
-                                    $("#layoutForm #total_price_ship").html(formatMoney(
-                                        total_price_ship_coupon));
-                                } else {
-                                    $("#layoutForm #coupon_if_have").css({
-                                        "display": "flex"
-                                    });
-                                    $("#layoutForm #coupon_now").html("-" + parseInt(result.data.value) + "%");
-                                    let total_price = price_total_sale + price_total_not_sale;
-                                    let coupon_ = parseInt(result.data.value);
-                                    let price_coupon = price_total_not_sale * coupon_ / 100;
-                                    $("#price_coupon_now").val(price_coupon);
-                                    let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
-                                        price_coupon;
-                                    $("#layoutForm #total_price_ship").html(formatMoney(
-                                        total_price_ship_coupon));
+                                if (result.status == true) {
+                                    if (parseInt(result.data.valueType) == 1) {
+
+                                        $("#layoutForm #coupon_if_have").css({
+                                            "display": "flex"
+                                        });
+                                        $("#layoutForm #coupon_now").html("-" + formatMoney(parseInt(result.data
+                                            .value)));
+                                        $("#price_coupon_now").val(result.data.value);
+                                        let total_price = price_total_sale + price_total_not_sale;
+                                        let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
+                                            parseInt(result.data.value);
+                                        $("#layoutForm #total_price_ship").html(formatMoney(
+                                            total_price_ship_coupon));
+                                    } else {
+                                        $("#layoutForm #coupon_if_have").css({
+                                            "display": "flex"
+                                        });
+                                        $("#layoutForm #coupon_now").html("-" + parseInt(result.data.value) +
+                                            "%");
+                                        let total_price = price_total_sale + price_total_not_sale;
+                                        let coupon_ = parseInt(result.data.value);
+                                        let price_coupon = price_total_not_sale * coupon_ / 100;
+                                        $("#price_coupon_now").val(price_coupon);
+                                        let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
+                                            price_coupon;
+                                        $("#layoutForm #total_price_ship").html(formatMoney(
+                                            total_price_ship_coupon));
+                                    }
+                                }else{
+                                     alert(result.message);
+                                     if (parseInt(result.data.valueType) == 1) {
+
+                                        $("#layoutForm #coupon_if_have").css({
+                                            "display": "flex"
+                                        });
+                                        $("#layoutForm #coupon_now").html("-" + formatMoney(parseInt(result.data
+                                            .value)));
+                                        $("#price_coupon_now").val(result.data.value);
+                                        let total_price = price_total_normal;
+                                        let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
+                                            parseInt(result.data.value);
+                                        $("#layoutForm #total_price_ship").html(formatMoney(
+                                            total_price_ship_coupon));
+                                    } else {
+                                        $("#layoutForm #coupon_if_have").css({
+                                            "display": "flex"
+                                        });
+                                        $("#layoutForm #coupon_now").html("-" + parseInt(result.data.value) +
+                                            "%");
+                                        let total_price = price_total_normal;
+                                        let coupon_ = parseInt(result.data.value);
+                                        let price_coupon = price_total_not_sale * coupon_ / 100;
+                                        $("#price_coupon_now").val(price_coupon);
+                                        let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
+                                            price_coupon;
+                                        $("#layoutForm #total_price_ship").html(formatMoney(
+                                            total_price_ship_coupon));
+                                    }
                                 }
                             }
                         } else {
