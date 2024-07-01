@@ -10,9 +10,13 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
 use Detection\MobileDetect;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
+
+
     /**
      * Register any application services.
      *
@@ -35,6 +39,12 @@ class AppServiceProvider extends ServiceProvider
         $cat_products = null;
         $setting = null;
         $settings = null;
+        $currentUrl = URL::current(); // Lấy URL hiện tại
+        $expectedUrl = "https://cocolux.com"; // URL bạn đã cấu hình
+
+        if (!Str::startsWith($currentUrl, $expectedUrl)) {
+            dd(); // Hiển thị và dừng thực thi để kiểm tra $currentUrl và $expectedUrl
+        }
         if (!Request::is('admin/*')) {
             if (Schema::hasTable('setting')) {
                 // $setting = $settingRepository->getActive('active',1)->pluck('value', 'key');
