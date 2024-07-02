@@ -17,7 +17,7 @@
                             <a href="{{ route('detailProduct', ['slug' => $item->slug, 'sku' => $item->sku]) }}"
                                 class="product-template">
                                 {{-- @if ($item->promotionItem->price != $item->normal_price) --}}
-                                @if($item->promotionItem && $item->promotionItem->price != $item->normal_price)
+                                @if ($item->promotionItem && $item->promotionItem->price != $item->normal_price)
                                     <div class="product-discount">
                                         <span
                                             class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
@@ -27,10 +27,13 @@
                                     <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                 </div>
                                 <div class="product-price">
-                                    <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
+                                    @if (isset($item->promotionItem))
+                                        <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
+
+                                    @endif
                                     {{-- @if ($item->promotionItem->price != $item->normal_price)
                                          --}}
-                                         @if($item->promotionItem && $item->promotionItem->price != $item->normal_price)
+                                    @if ($item->promotionItem && $item->promotionItem->price != $item->normal_price)
                                         <div class="origin-price">{{ format_money($item->normal_price) }}</div>
                                     @endif
                                 </div>
