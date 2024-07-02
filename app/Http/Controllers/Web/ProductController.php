@@ -880,7 +880,7 @@ class ProductController extends Controller
             $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id')
                 ->with(['product' => function ($query) {
                     $query->select('id', 'slug', 'brand');
-                }])->whereHas('promotionItem', function ($query) use ($now, $id) {
+                }])->whereHas('product')->whereHas('promotionItem', function ($query) use ($now, $id) {
                     $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                         ->where('type', 'hot_deal')->where('promotion_id', $id);
                 })->with(['promotionItem' => function ($query) use ($now, $id) {
@@ -888,9 +888,15 @@ class ProductController extends Controller
                         ->where('type', 'hot_deal')->where('promotion_id', $id)->orderBy('price', 'asc');
                 }]);
 
+
+            // if (!empty($promotion_hots->sort_product)) {
+            //     $productOptions = $productOptions->orderByRaw("FIELD(sku, $promotion_hots->sort_product)");
+            // }
             if (!empty($promotion_hots->sort_product)) {
-                $productOptions = $productOptions->orderByRaw("FIELD(sku, $promotion_hots->sort_product)");
+                $sortProduct = implode(',', array_map('intval', explode(',', $promotion_hots->sort_product)));
+                $productOptions = $productOptions->orderByRaw("FIELD(sku, $sortProduct)");
             }
+            // dd($productOptions);
 
             $productOptions = $productOptions->paginate(30);
         }
