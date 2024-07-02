@@ -16,7 +16,6 @@
                         @forelse($productOptions as $item)
                             <a href="{{ route('detailProduct', ['slug' => $item->slug, 'sku' => $item->sku]) }}"
                                 class="product-template">
-                                {{-- @if ($item->promotionItem->price != $item->normal_price) --}}
                                 @if ($item->promotionItem && $item->promotionItem->price != $item->normal_price)
                                     <div class="product-discount">
                                         <span
@@ -31,13 +30,11 @@
                                         <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
 
                                     @endif
-                                    {{-- @if ($item->promotionItem->price != $item->normal_price)
-                                         --}}
                                     @if ($item->promotionItem && $item->promotionItem->price != $item->normal_price)
                                         <div class="origin-price">{{ format_money($item->normal_price) }}</div>
                                     @endif
                                 </div>
-                                <div class="product-brand">
+                                <div class="product-brand" style="height: 18px">
                                     {{ $item->brand }}
                                 </div>
                                 <div class="product-title">
