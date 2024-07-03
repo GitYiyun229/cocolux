@@ -273,17 +273,18 @@ class ApiNhanhController extends Controller
                 'message'   => 'Mã này đã hết',
             ));
         }
-
         $voucherItem = VoucherItem::where('code', $coupon)->first();
         $list_products_promotion = '';
         if ($voucherItem) {
             $voucher = Voucher::findOrFail($voucherItem->voucher_id);
             $list_products_promotion = $voucher->products_add;
         }
+        $status_voucher = $this->searchCoupon($coupon);
 
         $cart = Session::get('cart', []);
         $total_price = 0;
         foreach ($cart as $productId => $item) {
+
             $product = ProductOptions::where(['id' => $productId])->select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id')
                 ->with(['product' => function ($query) {
                     $query->select('id', 'slug', 'brand');
@@ -291,9 +292,10 @@ class ApiNhanhController extends Controller
                     $query->select('applied_stop_time', 'sku', 'price')
                         ->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)->orderBy('price', 'asc');
                 }])->first();
-            if ($product) {
+
+            if ($product) { // tính theo giá gốc
                 if ($product->promotionItem || $product->price != $product->normal_price) {
-                    $price = 0;
+                    $price = $product->promotionItem->price;
                 } else {
                     $price = $product->price;
                 }
@@ -301,20 +303,43 @@ class ApiNhanhController extends Controller
             $quantity = $item['quantity']; // Số lượng
             $total_price = $total_price + $price * $quantity;
         }
+
         if ($total_price < $couponCode['fromValue']) {
             return response()->json(array(
                 'error' => true,
-                'message'   => 'Chua đủ điều kiện áp dụng mã ( >= ' . format_money($couponCode['fromValue']) . ') sản phẩm không khuyến mại.'
+                'message'   => 'Chưa đủ điều kiện áp dụng mã ( >= ' . format_money($couponCode['fromValue']) . ')'
             ));
         }
         return response()->json(array(
             'error' => false,
             'message'   => 'Áp dụng mã thành công',
             'data' => $couponCode,
+            'price' => $total_price,
+            'status' => $status_voucher,
             'list_products_promotion' => $list_products_promotion
         ));
     }
+    public function searchCoupon($coupon)
+    {
+        $api = "/api/promotion/coupon?act=list";
+        $client = new Client();
+        $data = [
+            'couponCode' => $coupon
+        ];
+        $this->request_params['data'] = json_encode($data);
+        $response = $client->post($this->linkApi . $api, [
+            'form_params' => $this->request_params
+        ]);
+        $data = json_decode($response->getBody(), true);
 
+        $couponCode = reset($data['data']['result'][0]['options']);
+        if ($couponCode == true) {
+            $result = $couponCode;
+        } else {
+            $result = $couponCode;
+        }
+        return $result;
+    }
     public function callApiListCoupon($page = 1)
     {
         $api = "/api/promotion/coupon?act=list";

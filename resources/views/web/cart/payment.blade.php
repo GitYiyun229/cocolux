@@ -126,8 +126,8 @@
                                     @forelse($cartItems as $item)
                                         <a class="item-product"
                                             href="{{ !empty($item['product']->slug) && !empty($item['product']->sku) ? route('detailProduct', ['slug' => $item['product']->slug, 'sku' => $item['product']->sku]) : '' }}">
-                                            <img src="{{ $item['product']->image_first }}" alt="{{ $item['product']->title }}"
-                                                class="img-fluid">
+                                            <img src="{{ $item['product']->image_first }}"
+                                                alt="{{ $item['product']->title }}" class="img-fluid">
                                             <div class="item-info">
                                                 <p class="item-brand mb-0 fw-bold text-uppercase">
                                                     {{ $item['product']->brand }}</p>
@@ -542,7 +542,7 @@
                             .val()); // tong gia san pham sale
                         let price_total_not_sale = parseInt($("#layoutForm #total_price_not_in_promotion")
                             .val()); // tong gia san pham ko sale
-                        if (price_total_not_sale) {
+                        if (result.status === false) {
                             if (list_products_promotion) {
                                 let list_product_pro = list_products_promotion.split(",");
                                 if (parseInt(result.data.valueType) == 1) {
@@ -561,10 +561,11 @@
                                     $("#layoutForm #coupon_if_have").css({
                                         "display": "flex"
                                     });
-                                    $("#layoutForm #coupon_now").html("-" + parseInt(result.data.value) + "%");
+                                    $("#layoutForm #coupon_now").html("-" + parseInt(result.data.value) +
+                                        "%");
                                     let total_price = price_total_sale + price_total_not_sale;
                                     let coupon_ = parseInt(result.data.value);
-                                    let price_coupon = price_total_not_sale * coupon_ / 100;
+                                    let price_coupon = total_price * coupon_ / 100;
                                     $("#price_coupon_now").val(price_coupon);
                                     let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
                                         price_coupon;
@@ -588,10 +589,11 @@
                                     $("#layoutForm #coupon_if_have").css({
                                         "display": "flex"
                                     });
-                                    $("#layoutForm #coupon_now").html("-" + parseInt(result.data.value) + "%");
+                                    $("#layoutForm #coupon_now").html("-" + parseInt(result.data.value) +
+                                        "%");
                                     let total_price = price_total_sale + price_total_not_sale;
                                     let coupon_ = parseInt(result.data.value);
-                                    let price_coupon = price_total_not_sale * coupon_ / 100;
+                                    let price_coupon = total_price * coupon_ / 100;
                                     $("#price_coupon_now").val(price_coupon);
                                     let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
                                         price_coupon;
@@ -602,6 +604,7 @@
                         } else {
                             alert('Voucher không áp dụng cho sản phẩm đang khuyến mại');
                         }
+
                     }
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {}
