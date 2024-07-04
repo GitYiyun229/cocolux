@@ -81,7 +81,7 @@
                                         @if ($product->promotionItem)
                                             <div class="public-price"><span
                                                     class="fw-bold">{{ format_money($product->promotionItem->price) }}</span>(Đã
-                                                bảo gồm VAT)</div>
+                                                bao gồm VAT)</div>
                                             @if ($product->normal_price)
                                                 <div class="origin-price">
                                                     <span>Giá hãng: {{ format_money($product->normal_price) }}</span>
@@ -92,7 +92,7 @@
                                             @endif
                                         @else
                                             <div class="public-price"><span
-                                                    class="fw-bold">{{ format_money($product->price) }}</span>(Đã bảo gồm
+                                                    class="fw-bold">{{ format_money($product->price) }}</span>(Đã bao gồm
                                                 VAT)</div>
                                             @if ($product->normal_price && $product->price != $product->normal_price)
                                                 <div class="origin-price">

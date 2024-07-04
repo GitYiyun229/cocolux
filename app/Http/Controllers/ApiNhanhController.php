@@ -319,6 +319,7 @@ class ApiNhanhController extends Controller
             'list_products_promotion' => $list_products_promotion
         ));
     }
+    
     public function searchCoupon($coupon)
     {
         $api = "/api/promotion/coupon?act=list";
@@ -340,6 +341,7 @@ class ApiNhanhController extends Controller
         }
         return $result;
     }
+
     public function callApiListCoupon($page = 1)
     {
         $api = "/api/promotion/coupon?act=list";
