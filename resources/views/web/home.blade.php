@@ -224,10 +224,16 @@
                                                 <source
                                                     srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item_fl->image_first)) }}"
                                                     type="image/webp">
+
                                                 <img src="{{ asset($item_fl->image_first) }}"
                                                     alt="{{ $item_fl->title }}" class="img-fluid">
                                             </picture>
-                                          <div class="position-absolute top-0 bottom-0"> <img src="{{ asset($setting['frame_image_for_sale']) }}" alt=""></div>
+                                            @if ($setting['frame_image_for_sale'])
+                                                )
+                                                <div class="position-absolute top-0 bottom-0"> <img
+                                                        src="{{ asset($setting['frame_image_for_sale']) }}"
+                                                        alt=""></div>
+                                            @endif
                                         </div>
                                         <div class="product-price">
                                             <div class="public-price">{{ format_money($item_fl->promotionItem->price) }}
@@ -284,7 +290,8 @@
                                             </div>
                                         @endif
                                     @endif
-                                    <div class="product-thumbnail position-relative  @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame1 @endif">
+                                    <div
+                                        class="product-thumbnail position-relative  @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame1 @endif">
                                         <picture>
                                             <source
                                                 srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"
@@ -292,7 +299,12 @@
                                             <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
                                                 class="img-fluid">
                                         </picture>
-                                         <div class="position-absolute top-0 bottom-0"> <img src="{{ asset($setting['frame_image_for_sale']) }}" alt=""></div>
+                                        @if ($setting['frame_image_for_sale'])
+                                            )
+                                            <div class="position-absolute top-0 bottom-0"> <img
+                                                    src="{{ asset($setting['frame_image_for_sale']) }}" alt="">
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="product-price">
                                         @if ($item->promotionItem)
@@ -406,8 +418,15 @@
                                                             type="image/webp">
                                                         <img data-src="{{ asset($item->image_first) }}"
                                                             alt="{{ $item->title }}" class="img-fluid lazy">
-                                                    </picture >
-                                                     <div class="position-absolute top-0 bottom-0"> <img src="{{ asset($setting['frame_image_for_sale']) }}" alt=""></div>
+                                                    </picture>
+                                                    @if ($setting['frame_image_for_sale'])
+                                                        )
+                                                        <div class="position-absolute top-0 bottom-0"> <img
+                                                                src="{{ asset($setting['frame_image_for_sale']) }}"
+                                                                alt="">
+                                                        </div>
+                                                    @endif
+
                                                 </div>
                                                 <div class="product-price">
                                                     @if ($item->promotionItem)
@@ -473,7 +492,7 @@
                                 </div>
                                 <div class="article-title">
                                     <span>
-                                        {!! $item->description  !!}
+                                        {!! $item->description !!}
                                     </span>
                                 </div>
                             </a>
@@ -571,4 +590,3 @@
 
     @include('web.components.extend')
 @endsection
-
