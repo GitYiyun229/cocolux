@@ -261,7 +261,7 @@
                 </div>
             @endif
             @if (!empty($product_hots))
-                <div class="slide-template bg-white mb-4">
+                <div class="slide-template bg-white mb-4 pt-4">
                     <div class="slide-top">
                         <a href="{{ route('itemHotProducts') }}" class="slide-title">
                             <h2>Sản phẩm hot</h2>
