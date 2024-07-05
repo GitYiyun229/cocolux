@@ -602,7 +602,7 @@
                                 }
                             }
                         } else {
-                            alert('Voucher không áp dụng cho sản phẩm đang khuyến mại');
+                            alert('Voucher không áp dụng cho sản phẩm đang khuyến mãi');
                         }
 
                     }
