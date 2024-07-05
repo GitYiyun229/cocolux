@@ -43,6 +43,7 @@
             @if($setting['frame_image_for_sale'])
                 border-radius: 8px;
                 display: inline-block;
+                padding: 0px 10px 0px 10px;
             @endif
         }
         .image-frame {
