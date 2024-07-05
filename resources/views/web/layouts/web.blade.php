@@ -39,6 +39,12 @@
 @section('link')
     @parent
     <style>
+        .image-frame1 {
+            @if($setting['frame_image_for_sale'])
+                border-radius: 8px;
+                display: inline-block;
+            @endif
+        }
         .image-frame {
             @if($setting['frame_image_for_sale'])
                 background: url('{{ asset($setting['frame_image_for_sale']) }}') center center no-repeat;
