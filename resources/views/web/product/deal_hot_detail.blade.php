@@ -22,13 +22,18 @@
                                             class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
                                     </div>
                                 @endif
-                                <div class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
+                                <div
+                                    class="product-thumbnail position-relative @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame1 @endif">
                                     <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
+                                    @if ($setting['frame_image_for_sale'])
+                                        <div class="position-absolute top-0 bottom-0"> <img
+                                                src="{{ asset($setting['frame_image_for_sale']) }}" alt="">
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="product-price">
                                     @if (isset($item->promotionItem))
                                         <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
-
                                     @endif
                                     @if ($item->promotionItem && $item->promotionItem->price != $item->normal_price)
                                         <div class="origin-price">{{ format_money($item->normal_price) }}</div>
