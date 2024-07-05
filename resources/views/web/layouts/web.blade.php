@@ -46,6 +46,13 @@
                 padding: 0px 10px 0px 10px;
             @endif
         }
+        .image-frame2 {
+            @if($setting['frame_image_for_sale'])
+                border-radius: 8px;
+                display: inline-block;
+                padding: 0px 5px 0px 5px;
+            @endif
+        }
         .image-frame {
             @if($setting['frame_image_for_sale'])
                 background: url('{{ asset($setting['frame_image_for_sale']) }}') center center no-repeat;

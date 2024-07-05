@@ -23,7 +23,7 @@
                                     </div>
                                 @endif
                                 <div
-                                    class="product-thumbnail position-relative @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame1 @endif">
+                                    class="product-thumbnail position-relative @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame2 @endif">
                                     <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
                                     @if ($setting['frame_image_for_sale'])
                                         <div class="position-absolute top-0 bottom-0"> <img
