@@ -29,7 +29,7 @@
                                         </div>
                                     @endif
                                     </div>
-                                    <div class="product-price">
+                                    <div class="product-price mt-2">
                                         <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
                                         @if($item->promotionItem->price != $item->normal_price)
                                             <div class="origin-price">{{ format_money($item->normal_price) }}</div>
