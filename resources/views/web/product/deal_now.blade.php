@@ -15,7 +15,7 @@
                     @if(!empty($productOptions))
                         @forelse($productOptions as $item)
                             @if(isset($item->slug))
-                                <a href="{{ route('detailProduct',['slug'=>$item->slug, 'sku' =>$item->sku]) }}" class="product-template">
+                                <a href="{{ route('detailProduct',['slug'=>$item->slug, 'sku' =>$item->sku]) }}" class="product-template image-frame--2">
                                     @if($item->promotionItem->price != $item->normal_price)
                                         <div class="product-discount">
                                             <span class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
