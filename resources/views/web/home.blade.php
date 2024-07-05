@@ -218,7 +218,7 @@
                                             </div>
                                         @endif
                                         <div
-                                            class="product-thumbnail @if ($item_fl->promotionItem && $item_fl->promotionItem->applied_stop_time) image-frame @endif">
+                                            class="product-thumbnail position-relative @if ($item_fl->promotionItem && $item_fl->promotionItem->applied_stop_time) image-frame1 @endif">
 
                                             <picture>
                                                 <source
@@ -227,6 +227,7 @@
                                                 <img src="{{ asset($item_fl->image_first) }}"
                                                     alt="{{ $item_fl->title }}" class="img-fluid">
                                             </picture>
+                                          <div class="position-absolute top-0 bottom-0"> <img src="{{ asset($setting['frame_image_for_sale']) }}" alt=""></div>
                                         </div>
                                         <div class="product-price">
                                             <div class="public-price">{{ format_money($item_fl->promotionItem->price) }}
@@ -283,7 +284,7 @@
                                             </div>
                                         @endif
                                     @endif
-                                    <div class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
+                                    <div class="product-thumbnail position-relative  @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame1 @endif">
                                         <picture>
                                             <source
                                                 srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"
@@ -291,6 +292,7 @@
                                             <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
                                                 class="img-fluid">
                                         </picture>
+                                         <div class="position-absolute top-0 bottom-0"> <img src="{{ asset($setting['frame_image_for_sale']) }}" alt=""></div>
                                     </div>
                                     <div class="product-price">
                                         @if ($item->promotionItem)
@@ -397,14 +399,15 @@
                                                     @endif
                                                 @endif
                                                 <div
-                                                    class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
+                                                    class="product-thumbnail position-relative @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame1 @endif">
                                                     <picture>
                                                         <source
                                                             srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"
                                                             type="image/webp">
                                                         <img data-src="{{ asset($item->image_first) }}"
                                                             alt="{{ $item->title }}" class="img-fluid lazy">
-                                                    </picture>
+                                                    </picture >
+                                                     <div class="position-absolute top-0 bottom-0"> <img src="{{ asset($setting['frame_image_for_sale']) }}" alt=""></div>
                                                 </div>
                                                 <div class="product-price">
                                                     @if ($item->promotionItem)
@@ -565,36 +568,7 @@
     <script src="{{ mix('js/web/home_jq_owl.js') }}"></script>
     <script src="{{ mix('js/web/home_bs.js') }}"></script>
     <script src="{{ mix('js/web/home.js') }}"></script>
-    {{-- <script>
-        function checkWebpSupport(pictureElement) {
-            var sourceElement = pictureElement.querySelector("source");
-            var imgElement = pictureElement.querySelector("img");
 
-            function checkWebp(callback) {
-                var image = new Image();
-                image.onload = function() {
-                    var isSupported = (image.width > 0) && (image.height > 0);
-                    callback(isSupported);
-                };
-                image.onerror = function() {
-                    callback(false);
-                };
-                image.src = sourceElement.getAttribute("srcset");
-            }
-
-            checkWebp(function(isSupported) {
-                if (!isSupported) {
-                    pictureElement.removeChild(sourceElement);
-                    imgElement.style.display = "block";
-                }
-            });
-        }
-
-        var pictureElements = document.querySelectorAll("picture");
-        pictureElements.forEach(function(pictureElement) {
-            checkWebpSupport(pictureElement);
-        });
-    </script> --}}
     @include('web.components.extend')
 @endsection
 
