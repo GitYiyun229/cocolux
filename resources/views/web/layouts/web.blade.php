@@ -63,7 +63,7 @@
             padding: 0px 11px;
         }
         .image-frame-top {
-            top: 8px;
+            top: 8px ;
         }
 
         .image-frame {
