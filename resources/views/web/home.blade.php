@@ -418,7 +418,7 @@
                                                         <img data-src="{{ asset($item->image_first) }}"
                                                             alt="{{ $item->title }}" class="img-fluid lazy">
                                                     </picture>
-                                                    @if ($setting['frame_image_for_sale'])
+                                                    @if ($setting['frame_image_for_sale'] && $item->promotionItem && $item->promotionItem->applied_stop_time)
                                                         <div class="position-absolute top-0 bottom-0"> <img
                                                                 src="{{ asset($setting['frame_image_for_sale']) }}"
                                                                 alt="">
