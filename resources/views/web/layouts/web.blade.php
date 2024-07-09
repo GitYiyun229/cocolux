@@ -62,6 +62,9 @@
             margin-top: 10px;
             padding: 0px 11px;
         }
+        .image-frame-top {
+            top: 8px;
+        }
 
         .image-frame {
             @if ($setting['frame_image_for_sale'])
