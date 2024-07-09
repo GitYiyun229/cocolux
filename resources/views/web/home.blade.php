@@ -410,7 +410,7 @@
                                                     @endif
                                                 @endif
                                                 <div
-                                                    class="product-thumbnail position-relative @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame1 @endif">
+                                                    class="product-thumbnail position-relative @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame-home-1 @endif">
                                                     <picture>
                                                         <source
                                                             srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"
