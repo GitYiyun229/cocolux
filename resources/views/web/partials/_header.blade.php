@@ -1,8 +1,10 @@
 @if (!$isMobile)
     @if (isset($setting['image_top_head']) && !empty($setting['image_top_head']))
         <div class="banner-top-image_top_head w-100 overflow-hidden" style="max-height:80px">
-            <img src="{{ $setting['image_top_head'] }}" alt="cocolux" class="img-fluid w-100 overflow-hidden"
-                style="max-height:80px">
+            <a href="{{ $setting['link_banner_header_top'] }}" title="cocolux">
+                <img src="{{ $setting['image_top_head'] }}" alt="cocolux"
+                    class="img-fluid w-100 overflow-hidden" style="max-height:80px">
+            </a>
         </div>
     @endif
 @endif
@@ -32,7 +34,6 @@
                     </a>
                     <div class="menu-content">
                         @forelse($cat_products as $item)
-
                             <div class="menu-item">
                                 <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}"
                                     class="menu-btn">{{ $item->title }} <i class="fa-solid fa-angle-right"></i></a>
