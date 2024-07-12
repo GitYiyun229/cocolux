@@ -15,7 +15,7 @@
                     @if (!empty($productOptions))
                         @forelse($productOptions as $item)
                             @if (empty($item->slug) || empty($item->sku))
-                                <p>Missing slug or sku for item: {{ $item->title }}</p>
+                                <p>Missing slug or sku for item: {{ $item->title . $item->sku }}</p>
                             @else
                                 <a href="{{ route('detailProduct', ['slug' => $item->slug, 'sku' => $item->sku]) }}"
                                     class="product-template">
