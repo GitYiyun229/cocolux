@@ -601,7 +601,7 @@ class ProductController extends Controller
         if (!$product) {
             abort(404);
         }
-        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('id', 'ASC')->get();
+        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('ordering', 'ASC')->get();
         // dd($list_coupon);
         if (isset($product->stocks)) {
             $stocks = (object)$product->stocks;
@@ -1138,7 +1138,7 @@ class ProductController extends Controller
             ];
             $total_price = $total_price + $price * $quantity;
         }
-        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('id', 'ASC')->get();
+        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('ordering', 'ASC')->get();
 
         $list_city = City::all();
 
