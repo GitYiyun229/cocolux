@@ -879,7 +879,7 @@ class ProductController extends Controller
         if ($promotion_hots) {
             $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'brand','slug', 'images', 'parent_id')
                 ->with(['product' => function ($query) {
-                    $query->select('id', 'slug');
+                    $query->select('id', 'slug', DB::raw('COALESCE(products.brand, product_options.brand) as brand'));
                 }])->whereHas('promotionItem', function ($query) use ($now, $id) {
                     $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                         ->where('type', 'hot_deal')->where('promotion_id', $id);
