@@ -14,7 +14,7 @@
                 <div class="layout-detail-main bg-white d-grid mb-4">
                     @if (!empty($productOptions))
                         @forelse($productOptions as $item)
-                            @if (!empty($item->slug) && !empty($item->sku) )
+                            @if (!empty($item->slug) && !empty($item->sku))
                                 <a href="{{ route('detailProduct', ['slug' => $item->slug, 'sku' => $item->sku]) }}"
                                     class="product-template">
                                     @if ($item->promotionItem && $item->promotionItem->price != $item->normal_price)
@@ -42,7 +42,18 @@
                                         @endif
                                     </div>
                                     <div class="product-brand" style="height: 18px">
-                                        {{ $item->attributes }}
+                                        @php
+                                            $brand = $item->brand ?? '';
+                                            if (empty($brand) && isset($item->attributes)) {
+                                                foreach ($item->attributes as $attribute) {
+                                                    if ($attribute['id'] == 19) {
+                                                        $brand = $attribute['value']['name'];
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        @endphp
+                                        {{ $brand }}
                                     </div>
                                     <div class="product-title">
                                         {{ $item->title }}
