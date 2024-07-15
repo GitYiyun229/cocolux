@@ -877,20 +877,9 @@ class ProductController extends Controller
         $promotion_hots = $this->dealService->isHotDealAvailable($id);
         $productOptions = null;
         if ($promotion_hots) {
-            // $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id')
-            //     ->with(['product' => function ($query) {
-            //         $query->select('id', 'slug',  DB::raw('COALESCE(brand, "") as brand'));
-            //     }])->whereHas('promotionItem', function ($query) use ($now, $id) {
-            //         $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
-            //             ->where('type', 'hot_deal')->where('promotion_id', $id);
-            //     })->with(['promotionItem' => function ($query) use ($now, $id) {
-            //         $query->select('applied_stop_time', 'sku', 'price')->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
-            //             ->where('type', 'hot_deal')->where('promotion_id', $id)->orderBy('price', 'asc');
-            //     }]);
-
             $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id')
                 ->with(['product' => function ($query) {
-                    $query->select('id', 'slug', DB::raw('COALESCE(products.brand, product_options.brand) as brand'));
+                    $query->select('id', 'slug',  DB::raw('COALESCE(brand, "") as brand'));
                 }])->whereHas('promotionItem', function ($query) use ($now, $id) {
                     $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                         ->where('type', 'hot_deal')->where('promotion_id', $id);
