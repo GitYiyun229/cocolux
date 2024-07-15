@@ -53,7 +53,7 @@
                                                 }
                                             }
                                         @endphp
-                                        {{ $brand }}
+                                        {{ $brand .'-222 '}}
                                     </div>
                                     <div class="product-title">
                                         {{ $item->title }}
