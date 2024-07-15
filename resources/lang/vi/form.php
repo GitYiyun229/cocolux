@@ -314,6 +314,7 @@ return [
         'total_assign' => 'Số lần đã sử dụng',
         'value' => 'Giá trị',
         'value_max' => 'Giá trị tối đa',
+        'ordering' => 'Thứ tự',
         'update' => 'Update',
         'create' => 'Tạo mới',
     ],

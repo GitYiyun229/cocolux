@@ -23,6 +23,7 @@ class CreateVoucherItemsTable extends Migration
             $table->integer('can_used_times')->nullable();
             $table->integer('used_times')->nullable();
             $table->integer('status')->nullable();
+            $table->integer('ordering')->nullable();
             $table->timestamps();
         });
     }
