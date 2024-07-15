@@ -42,7 +42,7 @@
                                         @endif
                                     </div>
                                     <div class="product-brand" style="height: 18px">
-                                        {{ $item->brand }}
+                                       {{ $item->product->brand ?? optional($item->productOptions)->brand }}
                                     </div>
                                     <div class="product-title">
                                         {{ $item->title }}
