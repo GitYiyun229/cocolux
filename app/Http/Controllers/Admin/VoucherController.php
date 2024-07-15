@@ -82,8 +82,10 @@ class VoucherController extends Controller
         DB::beginTransaction();
         try {
             $data['active'] = $request->input('active');
+            $data['ordering'] = $request->input('ordering');
             $data['products_add'] = $request->input('products_add');
             $store = Voucher::findOrFail($id);
+            // dd($store);
             $store->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_store_success'));

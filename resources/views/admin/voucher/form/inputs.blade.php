@@ -142,6 +142,18 @@
                 </div>
             </div>
             <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.voucher.ordering')</label>
+                    <input type="text" class="form-control" name="ordering" value="{{ isset($voucher) ? $voucher->ordering : old('ordering') }}" >
+                    @if ($errors->has('ordering'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('ordering') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
+            <div class="col-sm-6">
                 <div class="form-group">
                     <label>@lang('form.voucher.description')</label>
                     <textarea class="form-control" rows="3" name="description" >{{ isset($voucher) ? $voucher->description : old('description') }}</textarea>
