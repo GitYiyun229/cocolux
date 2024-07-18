@@ -230,7 +230,7 @@
                                                         @else
                                                             <p class="sub-title-coupon">Giảm {{ $item->value }}</p>
                                                         @endif
-                                                        <div class="voucher-detail">
+                                                        <div class="voucher-detail pb-2">
                                                             {{ $item->name }}
 
                                                         </div>
@@ -537,7 +537,7 @@
                                                         @else
                                                             <p class="sub-title-coupon">Giảm {{ $item->value }}</p>
                                                         @endif
-                                                        <div class="voucher-detail">
+                                                        <div class="voucher-detail pb-2">
                                                             {{ $item->name }}
 
 

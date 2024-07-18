@@ -157,9 +157,9 @@
                                                 @else
                                                     <p class="sub-title-coupon">Giảm {{ $item->value }}</p>
                                                 @endif
-                                                <div class="voucher-detail">
+                                                <div class="voucher-detail pb-2">
                                                     {{ $item->name }}
-                                                    
+
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar bg-danger" role="progressbar"
