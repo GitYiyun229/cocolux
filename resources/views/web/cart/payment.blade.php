@@ -287,10 +287,10 @@
                                         </div>
                                         <div class="box-coupon box-coupon-right w-100">
                                             <div
-                                                class="voucher-detail description-main description-main{{ $item->id }} less">
+                                                class="voucher-detail pb-2 description-main description-main{{ $item->id }} less">
                                                 {{ $item->name }}
 
-                                               
+
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center mt-1">
                                                 <div class="d-flex align-items-center justify-content-center">
