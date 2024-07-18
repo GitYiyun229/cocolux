@@ -157,11 +157,7 @@
                                                 @else
                                                     <p class="sub-title-coupon">Giảm {{ $item->value }}</p>
                                                 @endif
-                                                <div class="voucher-detail">
-                                                    {{ $item->name }}
-                                                    <p>Còn {{ $item->total_using_voucher }} mã, hết hạn trong
-                                                        {{ $item->time_end_voucher }} ngày</p>
-                                                </div>
+                                           
                                                 <div class="progress">
                                                     <div class="progress-bar bg-danger" role="progressbar"
                                                         style="width: {{ $item->progressbar }}%"

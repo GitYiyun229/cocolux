@@ -286,13 +286,7 @@
                                             </div>
                                         </div>
                                         <div class="box-coupon box-coupon-right w-100">
-                                            <div
-                                                class="voucher-detail description-main description-main{{ $item->id }} less">
-                                                {{ $item->name }}
-
-                                                <p>Còn {{ $item->total_using_voucher }} mã, hết hạn trong
-                                                    {{ $item->time_end_voucher }} ngày</p>
-                                            </div>
+                                       
                                             <div class="d-flex justify-content-between align-items-center mt-1">
                                                 <div class="d-flex align-items-center justify-content-center">
                                                     <button class="btn-more-less d-flex align-items-center gap-2 fw-bold"
