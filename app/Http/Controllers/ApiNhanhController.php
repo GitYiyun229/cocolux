@@ -250,9 +250,25 @@ class ApiNhanhController extends Controller
         }
         $voucherItem = VoucherItem::where('code', $coupon)->first();
         $list_products_promotion = '';
+        // if (isset($couponCode['products']) && !empty($couponCode['products'])) {
+        //     $import  = $couponCode['products'];
+        //     $products_add = ''; // Khởi tạo chuỗi rỗng cho biến $import
+        //     foreach ($import as $product) {
+        //         if (isset($product['code'])) { // Kiểm tra nếu 'code' tồn tại
+        //             if ($products_add !== '') {
+        //                 $products_add .= ','; // Thêm dấu phẩy vào chuỗi nếu không phải lần đầu tiên
+        //             }
+        //             $products_add .= $product['code']; // Thêm code của sản phẩm vào chuỗi
+        //         }
+        //     }
+        // } else {
+        //     $products_add = '';
+        // }
+        // dd($products_add);
         if ($voucherItem) {
             $voucher = Voucher::findOrFail($voucherItem->voucher_id);
             $list_products_promotion = $voucher->products_add;
+
         }
         $status_voucher = $this->searchCoupon($coupon);
 
