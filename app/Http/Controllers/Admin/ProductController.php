@@ -18,6 +18,9 @@ use App\Http\Requests\Product\UpdateProduct;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\ImageManagerStatic as Image;
+
 
 class ProductController extends Controller
 {
@@ -175,10 +178,11 @@ class ProductController extends Controller
     {
         $data_root = $this->productResponstory->getOneById($id);
         DB::beginTransaction();
-        // dd($req->canonical_url);
+
 
         try {
             $data = $req->validated();
+            // dd($data);
             if (!empty($data['description']) && $data_root->content != $data['description']) {
                 $ContentHtml = $data['description'];
                 $html = $this->productResponstory->FileHtmlImageToWebp($ContentHtml, $id, 'product');
@@ -192,7 +196,20 @@ class ProductController extends Controller
                     }
                 }
                 $data['image'] = $this->productResponstory->saveFileUpload($data['image'], $this->resizeImage, $id, 'product', 'resize');
+                if (!empty($data['image']) && $data_root->image != $data['image']) {
+                    $this->imgwebp($data['image']);
+                }
             }
+            $data['updated_at'] = now()->format('Y-m-d H:i:s');
+
+            // dd($data['updated_at']);
+            //upload ảnh nhiều bằng ckfinder3 thì dùng hàm này
+            if (isset($req['sortedIds']) && !empty($req['sortedIds'])) {
+                foreach (explode(',', $req['sortedIds']) as $item) {
+                    $this->imgwebp($item);
+                }
+            }
+
             if (empty($data['slug'])) {
                 $data['slug'] = $req->input('slug') ? \Str::slug($req->input('slug'), '-') : \Str::slug($data['title'], '-');
             }
@@ -204,6 +221,7 @@ class ProductController extends Controller
             $attributes = array();
             $attribute_path = array();
             foreach ($attribute as $item) {
+
                 if (request($item->code)) {
                     if ($item->type == 'select') {
                         $attribute_value = AttributeValues::select('id', 'name')->where(['active' => 1, 'id' => request($item->code)])->first();
@@ -247,7 +265,10 @@ class ProductController extends Controller
             } else {
                 $data['category_path'] = $category->id;
             }
-            // dd($data);
+            // dd(
+            //     $attribute
+            // );
+            // dd($data['image']);
             $data_root->update($data);
             DB::commit();
             Session::flash('success', trans('message.update_product_success'));
@@ -351,5 +372,28 @@ class ProductController extends Controller
             'status' => true,
             'message' => trans('message.change_is_new_product_success')
         ];
+    }
+
+
+    function imgwebp($image)
+    {
+        try {
+            $manager = new ImageManager(['driver' => 'gd']);
+            $imagePath = public_path($image);
+            $imageName = basename($image);
+            $imagepath_rep = str_replace($imageName, '', $imagePath);
+            $newImageName = pathinfo($imageName, PATHINFO_FILENAME) . '.webp';
+            $newImagePath = $imagepath_rep . $newImageName;
+            $image = Image::make($imagePath)->resize(600, 600);
+            if (!Storage::disk('public')->exists($newImagePath)) {
+                $image->save($newImagePath, 90);
+            }
+        } catch (\Exception $exception) {
+            \Log::info([
+                'message' => $exception->getMessage(),
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
+        }
     }
 }

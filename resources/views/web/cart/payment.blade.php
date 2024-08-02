@@ -126,8 +126,8 @@
                                     @forelse($cartItems as $item)
                                         <a class="item-product"
                                             href="{{ !empty($item['product']->slug) && !empty($item['product']->sku) ? route('detailProduct', ['slug' => $item['product']->slug, 'sku' => $item['product']->sku]) : '' }}">
-                                            <img src="{{ $item['product']->image_first }}" alt="{{ $item['product']->title }}"
-                                                class="img-fluid">
+                                            <img src="{{ $item['product']->image_first }}"
+                                                alt="{{ $item['product']->title }}" class="img-fluid">
                                             <div class="item-info">
                                                 <p class="item-brand mb-0 fw-bold text-uppercase">
                                                     {{ $item['product']->brand }}</p>
@@ -287,11 +287,10 @@
                                         </div>
                                         <div class="box-coupon box-coupon-right w-100">
                                             <div
-                                                class="voucher-detail description-main description-main{{ $item->id }} less">
+                                                class="voucher-detail pb-2 description-main description-main{{ $item->id }} less">
                                                 {{ $item->name }}
 
-                                                <p>Còn {{ $item->total_using_voucher }} mã, hết hạn trong
-                                                    {{ $item->time_end_voucher }} ngày</p>
+
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center mt-1">
                                                 <div class="d-flex align-items-center justify-content-center">
@@ -503,6 +502,8 @@
             });
         }
 
+
+
         function checkCoupon() {
             var coupon = $('#coupon').val();
             if (!coupon) {
@@ -542,71 +543,187 @@
                             .val()); // tong gia san pham sale
                         let price_total_not_sale = parseInt($("#layoutForm #total_price_not_in_promotion")
                             .val()); // tong gia san pham ko sale
-                        if (price_total_not_sale) {
+                        // if (result.status === false) {
+                        //     if (list_products_promotion) {
+                        //         let list_product_pro = list_products_promotion.split(",");
+                        //         if (parseInt(result.data.valueType) == 1) {
+                        //             $("#layoutForm #coupon_if_have").css({
+                        //                 "display": "flex"
+                        //             });
+                        //             $("#layoutForm #coupon_now").html("-" + formatMoney(parseInt(result.data
+                        //                 .value)));
+                        //             $("#price_coupon_now").val(result.data.value);
+                        //             let total_price = price_total_sale + price_total_not_sale;
+                        //             let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
+                        //                 parseInt(result.data.value);
+                        //             $("#layoutForm #total_price_ship").html(formatMoney(
+                        //                 total_price_ship_coupon));
+                        //         } else {
+                        //             $("#layoutForm #coupon_if_have").css({
+                        //                 "display": "flex"
+                        //             });
+                        //             $("#layoutForm #coupon_now").html("-" + parseInt(result.data.value) +
+                        //                 "%");
+                        //             let total_price = price_total_sale + price_total_not_sale;
+                        //             let coupon_ = parseInt(result.data.value);
+                        //             let price_coupon = total_price * coupon_ / 100;
+                        //             $("#price_coupon_now").val(price_coupon);
+                        //             let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
+                        //                 price_coupon;
+                        //             $("#layoutForm #total_price_ship").html(formatMoney(
+                        //                 total_price_ship_coupon));
+                        //         }
+                        //     } else {
+                        //         if (parseInt(result.data.valueType) == 1) {
+                        //             $("#layoutForm #coupon_if_have").css({
+                        //                 "display": "flex"
+                        //             });
+                        //             $("#layoutForm #coupon_now").html("-" + formatMoney(parseInt(result.data
+                        //                 .value)));
+                        //             $("#price_coupon_now").val(result.data.value);
+                        //             let total_price = price_total_sale + price_total_not_sale;
+                        //             let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
+                        //                 parseInt(result.data.value);
+                        //             $("#layoutForm #total_price_ship").html(formatMoney(
+                        //                 total_price_ship_coupon));
+                        //         } else {
+                        //             $("#layoutForm #coupon_if_have").css({
+                        //                 "display": "flex"
+                        //             });
+                        //             $("#layoutForm #coupon_now").html("-" + parseInt(result.data.value) +
+                        //                 "%");
+                        //             let total_price = price_total_sale + price_total_not_sale;
+                        //             let coupon_ = parseInt(result.data.value);
+                        //             let price_coupon = total_price * coupon_ / 100;
+                        //             $("#price_coupon_now").val(price_coupon);
+                        //             let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
+                        //                 price_coupon;
+                        //             $("#layoutForm #total_price_ship").html(formatMoney(
+                        //                 total_price_ship_coupon));
+                        //         }
+                        //     }
+                        // } else {
+                        //     if (price_total_sale) {
+                        //         alert('Voucher không áp dụng cho sản phẩm đang khuyến mãi');
+                        //     } else {
+                        //         if (list_products_promotion) {
+                        //             let list_product_pro = list_products_promotion.split(",");
+                        //             if (parseInt(result.data.valueType) == 1) {
+                        //                 $("#layoutForm #coupon_if_have").css({
+                        //                     "display": "flex"
+                        //                 });
+                        //                 $("#layoutForm #coupon_now").html("-" + formatMoney(parseInt(result.data
+                        //                     .value)));
+                        //                 $("#price_coupon_now").val(result.data.value);
+                        //                 let total_price = price_total_sale + price_total_not_sale;
+                        //                 let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
+                        //                     parseInt(result.data.value);
+                        //                 $("#layoutForm #total_price_ship").html(formatMoney(
+                        //                     total_price_ship_coupon));
+                        //             } else {
+                        //                 $("#layoutForm #coupon_if_have").css({
+                        //                     "display": "flex"
+                        //                 });
+                        //                 $("#layoutForm #coupon_now").html("-" + parseInt(result.data.value) +
+                        //                     "%");
+                        //                 let total_price = price_total_sale + price_total_not_sale;
+                        //                 let coupon_ = parseInt(result.data.value);
+                        //                 let price_coupon = price_total_not_sale * coupon_ / 100;
+                        //                 $("#price_coupon_now").val(price_coupon);
+                        //                 let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
+                        //                     price_coupon;
+                        //                 $("#layoutForm #total_price_ship").html(formatMoney(
+                        //                     total_price_ship_coupon));
+                        //             }
+                        //         } else {
+                        //             if (parseInt(result.data.valueType) == 1) {
+                        //                 $("#layoutForm #coupon_if_have").css({
+                        //                     "display": "flex"
+                        //                 });
+                        //                 $("#layoutForm #coupon_now").html("-" + formatMoney(parseInt(result.data
+                        //                     .value)));
+                        //                 $("#price_coupon_now").val(result.data.value);
+                        //                 let total_price = price_total_sale + price_total_not_sale;
+                        //                 let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
+                        //                     parseInt(result.data.value);
+                        //                 $("#layoutForm #total_price_ship").html(formatMoney(
+                        //                     total_price_ship_coupon));
+                        //             } else {
+                        //                 $("#layoutForm #coupon_if_have").css({
+                        //                     "display": "flex"
+                        //                 });
+                        //                 $("#layoutForm #coupon_now").html("-" + parseInt(result.data.value) +
+                        //                     "%");
+                        //                 let total_price = price_total_sale + price_total_not_sale;
+                        //                 let coupon_ = parseInt(result.data.value);
+                        //                 let price_coupon = price_total_not_sale * coupon_ / 100;
+                        //                 $("#price_coupon_now").val(price_coupon);
+                        //                 let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
+                        //                     price_coupon;
+                        //                 $("#layoutForm #total_price_ship").html(formatMoney(
+                        //                     total_price_ship_coupon));
+                        //             }
+                        //         }
+                        //     }
+                        // }
+                        if (result.status === false) {
                             if (list_products_promotion) {
                                 let list_product_pro = list_products_promotion.split(",");
-                                if (parseInt(result.data.valueType) == 1) {
-                                    $("#layoutForm #coupon_if_have").css({
-                                        "display": "flex"
-                                    });
-                                    $("#layoutForm #coupon_now").html("-" + formatMoney(parseInt(result.data
-                                        .value)));
-                                    $("#price_coupon_now").val(result.data.value);
-                                    let total_price = price_total_sale + price_total_not_sale;
-                                    let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
-                                        parseInt(result.data.value);
-                                    $("#layoutForm #total_price_ship").html(formatMoney(
-                                        total_price_ship_coupon));
+                                // applyCoupon(result, price_total_sale, price_total_not_sale, price_ship);
+                                if (result.status_promition_price_coupon_list === true) {
+                                    applyCoupon(result, price_total_sale, price_total_not_sale, price_ship);
                                 } else {
-                                    $("#layoutForm #coupon_if_have").css({
-                                        "display": "flex"
-                                    });
-                                    $("#layoutForm #coupon_now").html("-" + parseInt(result.data.value) + "%");
-                                    let total_price = price_total_sale + price_total_not_sale;
-                                    let coupon_ = parseInt(result.data.value);
-                                    let price_coupon = price_total_not_sale * coupon_ / 100;
-                                    $("#price_coupon_now").val(price_coupon);
-                                    let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
-                                        price_coupon;
-                                    $("#layoutForm #total_price_ship").html(formatMoney(
-                                        total_price_ship_coupon));
+                                    alert('Voucher không áp dụng cho danh sách sản phẩm này');
                                 }
                             } else {
-                                if (parseInt(result.data.valueType) == 1) {
-                                    $("#layoutForm #coupon_if_have").css({
-                                        "display": "flex"
-                                    });
-                                    $("#layoutForm #coupon_now").html("-" + formatMoney(parseInt(result.data
-                                        .value)));
-                                    $("#price_coupon_now").val(result.data.value);
-                                    let total_price = price_total_sale + price_total_not_sale;
-                                    let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
-                                        parseInt(result.data.value);
-                                    $("#layoutForm #total_price_ship").html(formatMoney(
-                                        total_price_ship_coupon));
-                                } else {
-                                    $("#layoutForm #coupon_if_have").css({
-                                        "display": "flex"
-                                    });
-                                    $("#layoutForm #coupon_now").html("-" + parseInt(result.data.value) + "%");
-                                    let total_price = price_total_sale + price_total_not_sale;
-                                    let coupon_ = parseInt(result.data.value);
-                                    let price_coupon = price_total_not_sale * coupon_ / 100;
-                                    $("#price_coupon_now").val(price_coupon);
-                                    let total_price_ship_coupon = (parseInt(price_ship) + total_price) -
-                                        price_coupon;
-                                    $("#layoutForm #total_price_ship").html(formatMoney(
-                                        total_price_ship_coupon));
-                                }
+                                applyCoupon(result, price_total_sale, price_total_not_sale, price_ship);
                             }
                         } else {
-                            alert('Voucher không áp dụng cho sản phẩm đang khuyến mại');
+                            if (price_total_sale) {
+                                alert('Voucher không áp dụng cho sản phẩm đang khuyến mãi');
+                            } else {
+                                if (list_products_promotion) {
+                                    let list_product_pro = list_products_promotion.split(",");
+                                    // applyCoupon(result, price_total_sale, price_total_not_sale, price_ship);
+                                    if (result.status_promition_price_coupon_list === true) {
+                                        applyCoupon(result, price_total_sale, price_total_not_sale, price_ship);
+                                    } else {
+                                        alert('Voucher không áp dụng cho danh sách sản phẩm này');
+                                    }
+                                } else {
+                                    applyCoupon(result, price_total_sale, price_total_not_sale, price_ship);
+                                }
+                            }
                         }
                     }
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {}
             });
             return false;
+        }
+
+        function applyCoupon(result, price_total_sale, price_total_not_sale, price_ship) {
+            $("#layoutForm #coupon_if_have").css({
+                "display": "flex"
+            });
+            let total_price = price_total_sale + price_total_not_sale;
+            let total_price_ship_coupon;
+            let coupon_value = parseInt(result.data.value);
+
+            if (parseInt(result.data.valueType) == 1) {
+                $("#layoutForm #coupon_now").html("-" + formatMoney(coupon_value));
+                $("#price_coupon_now").val(coupon_value);
+                // total_price_ship_coupon = (parseInt(price_ship) + total_price) - coupon_value;
+                total_price_ship_coupon = Math.max(0, (parseInt(price_ship) + total_price) - coupon_value);
+            } else {
+                $("#layoutForm #coupon_now").html("-" + coupon_value + "%");
+                let price_coupon = total_price * coupon_value / 100;
+                $("#price_coupon_now").val(price_coupon);
+                // total_price_ship_coupon = (parseInt(price_ship) + total_price) - price_coupon;
+                total_price_ship_coupon = Math.max(0, (parseInt(price_ship) + total_price) - price_coupon);
+            }
+
+            $("#layoutForm #total_price_ship").html(formatMoney(total_price_ship_coupon));
         }
         $(document).ready(function() {
             // Hiệu ứng loading khi bắt đầu thực hiện Ajax

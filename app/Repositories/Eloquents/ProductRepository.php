@@ -24,7 +24,6 @@ class ProductRepository extends BaseRepository implements ProductInterface
         if (\request()->hasFile('image')) {
             $data['image'] = $this->saveFileUpload($data['image'], 'images');
         }
-
         return $this->create($data);
     }
 }

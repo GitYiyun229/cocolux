@@ -601,7 +601,7 @@ class ProductController extends Controller
         if (!$product) {
             abort(404);
         }
-        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('id', 'ASC')->get();
+        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('ordering', 'ASC')->get();
         // dd($list_coupon);
         if (isset($product->stocks)) {
             $stocks = (object)$product->stocks;
@@ -879,7 +879,7 @@ class ProductController extends Controller
         if ($promotion_hots) {
             $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id')
                 ->with(['product' => function ($query) {
-                    $query->select('id', 'slug', 'brand');
+                    $query->select('id', 'slug', 'brand', 'attributes');
                 }])->whereHas('promotionItem', function ($query) use ($now, $id) {
                     $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                         ->where('type', 'hot_deal')->where('promotion_id', $id);
@@ -891,6 +891,7 @@ class ProductController extends Controller
             if (!empty($promotion_hots->sort_product)) {
                 $productOptions = $productOptions->orderByRaw("FIELD(sku, $promotion_hots->sort_product)");
             }
+
             $productOptions = $productOptions->paginate(30);
         }
 
@@ -1137,7 +1138,7 @@ class ProductController extends Controller
             ];
             $total_price = $total_price + $price * $quantity;
         }
-        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('id', 'ASC')->get();
+        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('ordering', 'ASC')->get();
 
         $list_city = City::all();
 
@@ -1342,7 +1343,6 @@ class ProductController extends Controller
             Session::flash('danger', 'Mã đơn hàng không tồn tại');
             return redirect()->back();
         }
-
     }
 
     public function detailOrderSuccess($id)
@@ -1394,14 +1394,14 @@ class ProductController extends Controller
         $tenDaysAgo = Carbon::now()->subDays(9)->toDateString();
         $api = "/api/order/index";
         $client = new Client();
-        if(strlen($phone) == 9){
-            $mdh=$phone;
+        if (strlen($phone) == 9) {
+            $mdh = $phone;
             $data = [
                 "fromDate" => $tenDaysAgo,
                 "toDate" => $currentDate,
                 "id" => $mdh
             ];
-        }else{
+        } else {
             $data = [
                 "fromDate" => $tenDaysAgo,
                 "toDate" => $currentDate,
@@ -1426,10 +1426,10 @@ class ProductController extends Controller
             $data = ($this->searchOderMember($maDonHang));
             if ($data) {
                 $firstElement = reset($data);
-                $name= $firstElement['customerName'];
-                $phone= $firstElement['customerMobile'];
+                $name = $firstElement['customerName'];
+                $phone = $firstElement['customerMobile'];
 
-                return view('web.cart.detail_order_success_nhanh', compact('data', 'maDonHang','phone','name'));
+                return view('web.cart.detail_order_success_nhanh', compact('data', 'maDonHang', 'phone', 'name'));
             } else {
                 Session::flash('danger', 'Mã đơn hàng không tồn tại');
                 return redirect()->back();

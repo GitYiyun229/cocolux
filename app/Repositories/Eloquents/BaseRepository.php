@@ -64,6 +64,13 @@ abstract class BaseRepository implements BaseInterface
     {
         return $this->model->all();
     }
+    /**
+     * @return Collection
+     */
+    public function getActive(): Collection
+    {
+        return $this->model->where('active',1)->get();
+    }
 
     /**
      * @param array $attributes

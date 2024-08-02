@@ -87,19 +87,8 @@ class HomeController extends Controller
             })->with(['promotionItem' => function ($query) use ($now) {
                 $query->select('applied_stop_time', 'sku', 'price')->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->where('type', 'flash_deal')->orderBy('price', 'asc');
-            }])->whereNotNull('slug')->whereNotNull('sku')->limit(10)->get();
-        // if ($product_flash->isNotEmpty()) {
-        //     foreach ($product_flash as $flash) {
-        //         if (!isset($flash->brand) && empty($flash->brand)) {
-        //             $brand_product = ProductOptions::Where('id', $flash->id)->first();
-        //             if($brand_product){
-        //                 print_r($brand_product->brand);
-        //                 // Product::where('id', $flash->parent_id)->update(['brand' => '']);
-        //             }
-        //         }
-        //     }
-        // }
-
+            }])->whereNotNull('slug')->whereNotNull('sku')->orderBy('updated_at', 'desc')->limit(15)->get();
+        $flash_skus = $product_flash->pluck('sku');
         $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
             ->select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id')
             ->with(['product' => function ($query) {
@@ -109,7 +98,7 @@ class HomeController extends Controller
                     ->orderBy('price', 'asc');
             }])->whereHas('product', function ($query) {
                 $query->where(['is_hot' => 1, 'active' => 1]);
-            })->whereNotNull('slug')->whereNotNull('sku')->limit(10)->get();
+            })->whereNotIn('sku', $flash_skus)->whereNotNull('slug')->whereNotNull('sku')->orderBy('updated_at', 'desc')->limit(20)->get();
 
         $attribute_brand = AttributeValues::where(['attribute_id' => 19, 'active' => 1, 'is_home' => 1])->select('id', 'name', 'slug', 'image')->orderBy('ordering', 'ASC')->limit(15)->get(); // thương hiệu
         $cats = ProductsCategories::where(['is_home' => 1, 'active' => 1, 'parent_id' => null])
@@ -137,7 +126,7 @@ class HomeController extends Controller
                 ->limit(4)->orderBy('id', 'ASC')->get();
         }
 
-        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('id', 'ASC')->get();
+        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('ordering', 'ASC')->get();
         return view('web.home', compact('slider', 'subBanner', 'product_hots', 'attribute_brand', 'articles', 'product_cats', 'subBanner2', 'cats', 'cat_sub', 'product_flash', 'stores', 'list_coupon'));
     }
     /**

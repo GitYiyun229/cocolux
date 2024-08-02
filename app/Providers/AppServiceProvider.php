@@ -10,9 +10,13 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
 use Detection\MobileDetect;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
+
+
     /**
      * Register any application services.
      *
@@ -28,15 +32,28 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(SettingInterface $settingRepository,MenuInterface $menuRepository)
+    public function boot(SettingInterface $settingRepository, MenuInterface $menuRepository)
     {
         $menu_top = null;
         $menu_footer = null;
         $cat_products = null;
         $setting = null;
+        $settings = null;
+        $currentUrl = URL::current(); // Lấy URL hiện tại
+        // $expectedUrl = "https://cocolux:8890"; // URL bạn đã cấu hình
+        $expectedUrl = "https://cocolux.com"; // URL bạn đã cấu hình
+
+        if (!Str::startsWith($currentUrl, $expectedUrl)) {
+            dd(); // Hiển thị và dừng thực thi để kiểm tra $currentUrl và $expectedUrl
+        }
         if (!Request::is('admin/*')) {
             if (Schema::hasTable('setting')) {
-                $setting = $settingRepository->getAll()->pluck('value', 'key');
+                // $setting = $settingRepository->getActive('active',1)->pluck('value', 'key');
+                $all = $settingRepository->getAll()->toArray();
+                $settings = array_reduce($all, function ($carry, $setting) {
+                    $carry[$setting['key']] = $setting['active'] == 1 ? $setting['value'] : '';
+                    return $carry;
+                }, []);
             }
             if (Schema::hasTable('menu')) {
                 $menu_top = $menuRepository->getMenusByCategoryId(3)->toTree();
@@ -45,13 +62,13 @@ class AppServiceProvider extends ServiceProvider
             if (Schema::hasTable('products_categories')) {
                 $cat_products = ProductsCategories::where(['is_visible' => 1])->withDepth()->defaultOrder()->get()->toTree();
             }
-//            View::composer(['web.partials._header', 'web.partials._footer'], function ($view) {
-//                $config = Setting::all();
-//                $view->with('menus', $config);
-//            });
+            //            View::composer(['web.partials._header', 'web.partials._footer'], function ($view) {
+            //                $config = Setting::all();
+            //                $view->with('menus', $config);
+            //            });
         }
-        View::share('setting', $setting);
-        View::composer(['web.partials._header', 'web.partials._footer', 'web.layouts.web', 'web.home'], function ($view) use ($menu_top,$menu_footer , $cat_products) {
+        View::share('setting', $settings);
+        View::composer(['web.partials._header', 'web.partials._footer', 'web.layouts.web', 'web.home'], function ($view) use ($menu_top, $menu_footer, $cat_products) {
             $view->with('menus', $menu_top);
             $view->with('menus_footer', $menu_footer);
             $view->with('cat_products', $cat_products);
@@ -60,6 +77,5 @@ class AppServiceProvider extends ServiceProvider
         $detect = new MobileDetect();
         $isMobile = $detect->isMobile();
         View::share('isMobile', $isMobile);
-
     }
 }

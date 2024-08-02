@@ -137,7 +137,7 @@
                 <div class="list-coupon">
                     <h2 class="text-center">Mã khuyến mại</h2>
                     <div class="slide-main-coupon">
-                        <div class="slide-template-slide-coupon owl-carousel">
+                        <div class="slide-template-slide-coupon owl-carousel justify-content-center">
                             @forelse($list_coupon as $item)
                                 @if ($item->items)
                                     <div class="item-coupon">
@@ -157,10 +157,9 @@
                                                 @else
                                                     <p class="sub-title-coupon">Giảm {{ $item->value }}</p>
                                                 @endif
-                                                <div class="voucher-detail">
+                                                <div class="voucher-detail pb-2">
                                                     {{ $item->name }}
-                                                    <p>Còn {{ $item->total_using_voucher }} mã, hết hạn trong
-                                                        {{ $item->time_end_voucher }} ngày</p>
+
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar bg-danger" role="progressbar"
@@ -190,7 +189,7 @@
                 </div>
             @endif
             @if (count($product_flash))
-                <div class="section-flash-mobile d-block slide-template bg-white mb-4">
+                <div class="section-flash-mobile d-block slide-template bg-white mb-4 pt-4">
                     <div class="slide-top">
                         <div class="slide-title d-flex align-items-center gap-2">
                             <a href="{{ route('flashSaleProducts') }}" title="Flash Deal"
@@ -218,15 +217,22 @@
                                             </div>
                                         @endif
                                         <div
-                                            class="product-thumbnail @if ($item_fl->promotionItem && $item_fl->promotionItem->applied_stop_time) image-frame @endif">
+                                            class="product-thumbnail position-relative @if ($item_fl->promotionItem && $item_fl->promotionItem->applied_stop_time) image-frame1 @endif">
 
                                             <picture>
                                                 <source
                                                     srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item_fl->image_first)) }}"
                                                     type="image/webp">
+
                                                 <img src="{{ asset($item_fl->image_first) }}"
                                                     alt="{{ $item_fl->title }}" class="img-fluid">
                                             </picture>
+                                            @if ($setting['frame_image_for_sale'])
+
+                                                <div class="position-absolute top-0 bottom-0"> <img
+                                                        src="{{ asset($setting['frame_image_for_sale']) }}"
+                                                        alt=""></div>
+                                            @endif
                                         </div>
                                         <div class="product-price">
                                             <div class="public-price">{{ format_money($item_fl->promotionItem->price) }}
@@ -235,7 +241,7 @@
                                                 <div class="origin-price">{{ format_money($item_fl->normal_price) }}</div>
                                             @endif
                                         </div>
-                                        <div class="product-brand">
+                                        <div class="product-brand" style="height: 18px">
                                             {{ $item_fl->brand ?: $item_fl->product->brand }}
                                         </div>
                                         <div class="product-title">
@@ -254,7 +260,7 @@
                 </div>
             @endif
             @if (!empty($product_hots))
-                <div class="slide-template bg-white mb-4">
+                <div class="slide-template bg-white mb-4 pt-4">
                     <div class="slide-top">
                         <a href="{{ route('itemHotProducts') }}" class="slide-title">
                             <h2>Sản phẩm hot</h2>
@@ -283,7 +289,8 @@
                                             </div>
                                         @endif
                                     @endif
-                                    <div class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
+                                    <div
+                                        class="product-thumbnail position-relative  @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame1 @endif">
                                         <picture>
                                             <source
                                                 srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"
@@ -291,6 +298,11 @@
                                             <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
                                                 class="img-fluid">
                                         </picture>
+                                        @if ($setting['frame_image_for_sale'])
+                                            <div class="position-absolute top-0 bottom-0"> <img
+                                                    src="{{ asset($setting['frame_image_for_sale']) }}" alt="">
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="product-price">
                                         @if ($item->promotionItem)
@@ -306,7 +318,7 @@
                                             @endif
                                         @endif
                                     </div>
-                                    <div class="product-brand">
+                                    <div class="product-brand" style="height: 18px">
                                         {{ $item->brand }}
                                     </div>
                                     <div class="product-title">
@@ -397,7 +409,7 @@
                                                     @endif
                                                 @endif
                                                 <div
-                                                    class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
+                                                    class="product-thumbnail position-relative @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame-home-1 @endif">
                                                     <picture>
                                                         <source
                                                             srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"
@@ -405,6 +417,13 @@
                                                         <img data-src="{{ asset($item->image_first) }}"
                                                             alt="{{ $item->title }}" class="img-fluid lazy">
                                                     </picture>
+                                                    @if ($setting['frame_image_for_sale'] && $item->promotionItem && $item->promotionItem->applied_stop_time)
+                                                        <div class="position-absolute top-0 bottom-0"> <img
+                                                                src="{{ asset($setting['frame_image_for_sale']) }}"
+                                                                alt="">
+                                                        </div>
+                                                    @endif
+
                                                 </div>
                                                 <div class="product-price">
                                                     @if ($item->promotionItem)
@@ -422,7 +441,7 @@
                                                         @endif
                                                     @endif
                                                 </div>
-                                                <div class="product-brand">
+                                                <div class="product-brand" style="height: 18px">
                                                     {{ $item->brand }}
                                                 </div>
                                                 <div class="product-title">
@@ -470,7 +489,7 @@
                                 </div>
                                 <div class="article-title">
                                     <span>
-                                        {!! $item->description  !!}
+                                        {!! $item->description !!}
                                     </span>
                                 </div>
                             </a>
@@ -565,35 +584,6 @@
     <script src="{{ mix('js/web/home_jq_owl.js') }}"></script>
     <script src="{{ mix('js/web/home_bs.js') }}"></script>
     <script src="{{ mix('js/web/home.js') }}"></script>
-    <script>
-        function checkWebpSupport(pictureElement) {
-            var sourceElement = pictureElement.querySelector("source");
-            var imgElement = pictureElement.querySelector("img");
 
-            function checkWebp(callback) {
-                var image = new Image();
-                image.onload = function() {
-                    var isSupported = (image.width > 0) && (image.height > 0);
-                    callback(isSupported);
-                };
-                image.onerror = function() {
-                    callback(false);
-                };
-                image.src = sourceElement.getAttribute("srcset");
-            }
-
-            checkWebp(function(isSupported) {
-                if (!isSupported) {
-                    pictureElement.removeChild(sourceElement);
-                    imgElement.style.display = "block";
-                }
-            });
-        }
-
-        var pictureElements = document.querySelectorAll("picture");
-        pictureElements.forEach(function(pictureElement) {
-            checkWebpSupport(pictureElement);
-        });
-    </script>
     @include('web.components.extend')
 @endsection

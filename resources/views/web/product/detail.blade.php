@@ -81,7 +81,7 @@
                                         @if ($product->promotionItem)
                                             <div class="public-price"><span
                                                     class="fw-bold">{{ format_money($product->promotionItem->price) }}</span>(Đã
-                                                bảo gồm VAT)</div>
+                                                bao gồm VAT)</div>
                                             @if ($product->normal_price)
                                                 <div class="origin-price">
                                                     <span>Giá hãng: {{ format_money($product->normal_price) }}</span>
@@ -92,7 +92,7 @@
                                             @endif
                                         @else
                                             <div class="public-price"><span
-                                                    class="fw-bold">{{ format_money($product->price) }}</span>(Đã bảo gồm
+                                                    class="fw-bold">{{ format_money($product->price) }}</span>(Đã bao gồm
                                                 VAT)</div>
                                             @if ($product->normal_price && $product->price != $product->normal_price)
                                                 <div class="origin-price">
@@ -138,8 +138,10 @@
                                         </div>
                                         <span>25%</span>
                                     </div>
-                                    @if ($setting['policy_ship'])
-                                        <div class="policy_ship mb-3">{!! $setting['policy_ship'] !!}</div>
+                                    @if (isset($setting['policy_ship']) && !empty($setting['policy_ship']))
+                                        <div class="policy_ship mb-3">
+                                            {!! $setting['policy_ship'] !!}
+                                        </div>
                                     @endif
                                     @if ($count_store)
                                         <div class="detail-button">
@@ -228,10 +230,9 @@
                                                         @else
                                                             <p class="sub-title-coupon">Giảm {{ $item->value }}</p>
                                                         @endif
-                                                        <div class="voucher-detail">
+                                                        <div class="voucher-detail pb-2">
                                                             {{ $item->name }}
-                                                            <p>Còn {{ $item->total_using_voucher }} mã, hết hạn trong
-                                                                {{ $item->time_end_voucher }} ngày</p>
+
                                                         </div>
                                                         <div class="progress">
                                                             <div class="progress-bar bg-danger" role="progressbar"
@@ -506,7 +507,7 @@
                                                 @endif
                                             @endif
                                         </div>
-                                        <div class="product-brand">
+                                        <div class="product-brand" style="height:18px">
                                             {{ $item->brand }}
                                         </div>
                                         <div class="product-title">
@@ -536,10 +537,10 @@
                                                         @else
                                                             <p class="sub-title-coupon">Giảm {{ $item->value }}</p>
                                                         @endif
-                                                        <div class="voucher-detail">
+                                                        <div class="voucher-detail pb-2">
                                                             {{ $item->name }}
-                                                            <p>Còn {{ $item->total_using_voucher }} mã, hết hạn trong
-                                                                {{ $item->time_end_voucher }} ngày</p>
+
+
                                                         </div>
                                                         <div class="progress">
                                                             <div class="progress-bar bg-danger" role="progressbar"
@@ -612,7 +613,7 @@
                                             @endif
                                         @endif
                                     </div>
-                                    <div class="product-brand">
+                                    <div class="product-brand"  style="height:18px">
                                         {{ $item->brand }}
                                     </div>
                                     <div class="product-title">
@@ -749,40 +750,10 @@
 
 @section('script')
     @parent
-        <script>
-        function checkWebpSupport(pictureElement) {
-            var sourceElement = pictureElement.querySelector("source");
-            var imgElement = pictureElement.querySelector("img");
 
-            function checkWebp(callback) {
-                var image = new Image();
-                image.onload = function() {
-                    var isSupported = (image.width > 0) && (image.height > 0);
-                    callback(isSupported);
-                };
-                image.onerror = function() {
-                    callback(false);
-                };
-                image.src = sourceElement.getAttribute("srcset");
-            }
-
-            checkWebp(function(isSupported) {
-                if (!isSupported) {
-                    pictureElement.removeChild(sourceElement);
-                    imgElement.style.display = "block";
-                }
-            });
-        }
-
-        var pictureElements = document.querySelectorAll("picture");
-        pictureElements.forEach(function(pictureElement) {
-            checkWebpSupport(pictureElement);
-        });
-    </script>
     <script src="{{ mix('js/web/product-detail.js') }}"></script>
     @include('web.components.extend')
     <script>
         window.addToCart = '{{ route('addToCart') }}';
     </script>
-
 @endsection

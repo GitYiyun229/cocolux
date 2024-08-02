@@ -91,7 +91,7 @@
                                     {{ $item->format_date_created }}
                                 </div>
                                 <div class="news-summary">
-                                    {!! $item->description !!}
+                                    {!! strip_tags($item->description) !!}
                                 </div>
                             </div>
                         </a>
