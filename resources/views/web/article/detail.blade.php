@@ -77,6 +77,7 @@
                         <h1 class="detail-title text-center fw-bold mb-4">
                             {{ $article->title }}
                         </h1>
+
                         <div class="detail-summary">
                             {!! $article->description !!}
                         </div>
@@ -272,7 +273,7 @@
                                         {{ $item->format_date_created }}
                                     </div>
                                     <div class="news-summary">
-                                        {!! $item->description !!}
+                                        {{ html_entity_decode(strip_tags($item->description)) }}
                                     </div>
                                 </div>
                             </a>
