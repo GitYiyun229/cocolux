@@ -669,7 +669,6 @@
                         if (result.status === false) {
                             if (list_products_promotion) {
                                 let list_product_pro = list_products_promotion.split(",");
-                                // applyCoupon(result, price_total_sale, price_total_not_sale, price_ship);
                                 if (result.status_promition_price_coupon_list === true) {
                                     applyCoupon(result, price_total_sale, price_total_not_sale, price_ship);
                                 } else {
@@ -684,7 +683,6 @@
                             } else {
                                 if (list_products_promotion) {
                                     let list_product_pro = list_products_promotion.split(",");
-                                    // applyCoupon(result, price_total_sale, price_total_not_sale, price_ship);
                                     if (result.status_promition_price_coupon_list === true) {
                                         applyCoupon(result, price_total_sale, price_total_not_sale, price_ship);
                                     } else {
