@@ -244,7 +244,7 @@
                                         <div class="product-brand px-2" style="height: 18px">
                                             {{ $item_fl->brand ?: $item_fl->product->brand }}
                                         </div>
-                                        <div class="product-titl px-2e">
+                                        <div class="product-title px-2">
                                             {{ $item_fl->title }}
                                         </div>
                                         @if ($item_fl->promotionItem && $item_fl->promotionItem->applied_stop_time)
