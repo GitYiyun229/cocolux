@@ -199,6 +199,7 @@ class ProductOptionController extends Controller
             $parent_id = $request->input('parent_id');
             $is_default = $request->input('is_default');
             $data['sku'] = $sku;
+            $data['updated_at'] = now()->format('Y-m-d H:i:s');
             $data['barcode'] = $request->input('barcode');
             $data['title'] = $request->input('name');
             $data['price'] = $request->input('price');
