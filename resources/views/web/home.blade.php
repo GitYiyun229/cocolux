@@ -234,17 +234,17 @@
                                                         alt=""></div>
                                             @endif
                                         </div>
-                                        <div class="product-price">
+                                        <div class="product-price px-2">
                                             <div class="public-price">{{ format_money($item_fl->promotionItem->price) }}
                                             </div>
                                             @if ($item_fl->promotionItem->price != $item_fl->normal_price)
                                                 <div class="origin-price">{{ format_money($item_fl->normal_price) }}</div>
                                             @endif
                                         </div>
-                                        <div class="product-brand" style="height: 18px">
+                                        <div class="product-brand px-2" style="height: 18px">
                                             {{ $item_fl->brand ?: $item_fl->product->brand }}
                                         </div>
-                                        <div class="product-title">
+                                        <div class="product-titl px-2e">
                                             {{ $item_fl->title }}
                                         </div>
                                         @if ($item_fl->promotionItem && $item_fl->promotionItem->applied_stop_time)
@@ -304,7 +304,7 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="product-price">
+                                    <div class="product-price px-2">
                                         @if ($item->promotionItem)
                                             <div class="public-price">{{ format_money($item->promotionItem->price) }}
                                             </div>
@@ -318,10 +318,10 @@
                                             @endif
                                         @endif
                                     </div>
-                                    <div class="product-brand" style="height: 18px">
+                                    <div class="product-brand px-2" style="height: 18px">
                                         {{ $item->brand }}
                                     </div>
-                                    <div class="product-title">
+                                    <div class="product-title px-2">
                                         {{ $item->title }}
                                     </div>
                                 </a>
