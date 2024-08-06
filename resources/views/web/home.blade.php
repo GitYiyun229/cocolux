@@ -78,14 +78,14 @@
                     @endforelse
                     <a href="{{ route('StoreCocolux') }}"
                         class="item-category d-flex flex-column align-items-center text-center text-uppercase">
-                        <img data-src="{{ asset('images/he-thong-cua-hang-image.svg') }}" alt="Hệ thống cửa hàng Cocolux"
+                        <img data-src="{{ asset('images/He-thong-cua-hang.svg') }}" alt="Hệ thống cửa hàng Cocolux"
                             class="img-fluid lazy" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
                         Hệ thống cửa hàng
                     </a>
                     <a href="{{ route('CocoluxSearchNhanh') }}"
                         class="item-category d-flex flex-column align-items-center text-center text-uppercase">
-                        <img data-src="{{ asset('images/tra-cuu-don-hang-image.svg') }}" alt="Tra cứu đơn hàng Cocolux"
-                            class="img-fluid lazy" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
+                        <img data-src="{{ asset('images/Tim-kiem-don-hang.png') }}" alt="Tra cứu đơn hàng Cocolux"
+                            class="img-fluid lazy" onerror="this.src='{{ asset('/images/ic-lazy-load-3.svg') }}'">
                         Tra cứu đơn hàng
                     </a>
                 </div>
