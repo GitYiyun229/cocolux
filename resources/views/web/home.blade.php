@@ -189,7 +189,7 @@
                 </div>
             @endif
             @if (count($product_flash))
-                <div class="section-flash-mobile d-block slide-template bg-white mb-4 pt-4">
+                <div class="section-flash-mobile d-block slide-template bg-white mb-4 pt-1">
                     <div class="slide-top">
                         <div class="slide-title d-flex align-items-center gap-2">
                             <a href="{{ route('flashSaleProducts') }}" title="Flash Deal"
