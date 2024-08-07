@@ -23489,10 +23489,13 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   background-color: #a2a5a7; /* Màu sắc khi nút đó được chọn */
 }
 .section-banner-top .banner-wrap {
-  width: calc(100% - 700px);
+  width: calc(100% - 715px);
   display: flex;
   flex-wrap: wrap;
-  gap: 25px;
+  gap: 15px;
+}
+.section-banner-top .banner-wrap a img {
+  height: revert-layer;
 }
 
 .list-coupon {
