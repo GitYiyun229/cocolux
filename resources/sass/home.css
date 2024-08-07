@@ -20178,7 +20178,7 @@ readers do not read off random characters that represent icons */
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2?ebb7a127d2d8ee6f183274b7557718ab) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.ttf?b823fc0dbb5a5f0c21bbcc2a268f92aa) format("truetype");
+  src: url("../webfonts/fa-brands-400.woff2") format("woff2"), url("../webfonts/fa-brands-400.ttf") format("truetype");
 }
 .fab,
 .fa-brands {
@@ -22084,7 +22084,7 @@ readers do not read off random characters that represent icons */
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2?0caf4c6cf244a90efcc5bf6d4e5578c1) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.ttf?0d03b1bbd1d62c1e128489eb2d4fb85d) format("truetype");
+  src: url("../webfonts/fa-regular-400.woff2") format("woff2"), url("../webfonts/fa-regular-400.ttf") format("truetype");
 }
 .far,
 .fa-regular {
@@ -22106,7 +22106,7 @@ readers do not read off random characters that represent icons */
   font-style: normal;
   font-weight: 900;
   font-display: block;
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?59edf72a325ac2048d6077f64773674f) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.ttf?e615bbcb258550973c165dfc0d871c96) format("truetype");
+  src: url("../webfonts/fa-solid-900.woff2") format("woff2"), url("../webfonts/fa-solid-900.ttf") format("truetype");
 }
 .fas,
 .fa-solid {
@@ -22118,55 +22118,55 @@ readers do not read off random characters that represent icons */
   font-family: "BeVietnamPro";
   font-style: normal;
   font-weight: 100;
-  src: url(/fonts/BeVietnamPro-Thin.woff?9add7d16040dbc207b037825cb25d8d5) format("woff");
+  src: url("../fonts/BeVietnamPro/BeVietnamPro-Thin.woff") format("woff");
 }
 @font-face {
   font-family: "BeVietnamPro";
   font-style: normal;
   font-weight: 200;
-  src: url(/fonts/BeVietnamPro-ExtraLight.woff?37daa91a738bf8bc0600c26bdb3b54b9) format("woff");
+  src: url("../fonts/BeVietnamPro/BeVietnamPro-ExtraLight.woff") format("woff");
 }
 @font-face {
   font-family: "BeVietnamPro";
   font-style: normal;
   font-weight: 300;
-  src: url(/fonts/BeVietnamPro-Light.woff?9b5b5eeab88c0f6f0a41a95ec70e4c8c) format("woff");
+  src: url("../fonts/BeVietnamPro/BeVietnamPro-Light.woff") format("woff");
 }
 @font-face {
   font-family: "BeVietnamPro";
   font-style: normal;
   font-weight: 400;
-  src: url(/fonts/BeVietnamPro-Regular.woff?8e66cc1df49147cc5420c61cd9b97bbf) format("woff");
+  src: url("../fonts/BeVietnamPro/BeVietnamPro-Regular.woff") format("woff");
 }
 @font-face {
   font-family: "BeVietnamPro";
   font-style: normal;
   font-weight: 500;
-  src: url(/fonts/BeVietnamPro-Medium.woff?7f8ea273bd6d9979c581b3c4408cc46e) format("woff");
+  src: url("../fonts/BeVietnamPro/BeVietnamPro-Medium.woff") format("woff");
 }
 @font-face {
   font-family: "BeVietnamPro";
   font-style: normal;
   font-weight: 600;
-  src: url(/fonts/BeVietnamPro-SemiBold.woff?88446e8efa8b36345cad3e059c2d4638) format("woff");
+  src: url("../fonts/BeVietnamPro/BeVietnamPro-SemiBold.woff") format("woff");
 }
 @font-face {
   font-family: "BeVietnamPro";
   font-style: normal;
   font-weight: 700;
-  src: url(/fonts/BeVietnamPro-Bold.woff?d6f225e0435fa201c02c1d9a809f4314) format("woff");
+  src: url("../fonts/BeVietnamPro/BeVietnamPro-Bold.woff") format("woff");
 }
 @font-face {
   font-family: "BeVietnamPro";
   font-style: normal;
   font-weight: 800;
-  src: url(/fonts/BeVietnamPro-ExtraBold.woff?1a02c9242f472fa4bc2112cc0e2c2d2e) format("woff");
+  src: url("../fonts/BeVietnamPro/BeVietnamPro-ExtraBold.woff") format("woff");
 }
 @font-face {
   font-family: "BeVietnamPro";
   font-style: normal;
   font-weight: 900;
-  src: url(/fonts/BeVietnamPro-Black.woff?2c629800a3bd42569ef04e5235049f90) format("woff");
+  src: url("../fonts/BeVietnamPro/BeVietnamPro-Black.woff") format("woff");
 }
 body {
   font-family: "BeVietnamPro", sans-serif;
@@ -22737,7 +22737,7 @@ footer form button {
   position: absolute;
   right: 10px;
   top: 8px;
-  background: url(/images/sale-tag.svg?2ac951bf8707d113c83bb8e7c24974e8) center right no-repeat;
+  background: url("../images/sale-tag.svg") center right no-repeat;
   background-size: contain;
   font-weight: 600;
   color: #fff;
@@ -23220,7 +23220,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   top: 50%;
   margin-left: -40px;
   margin-top: -40px;
-  background: url(/images/owl.video.play.png?7f01b07148f205f6e8258e92bbf652d9) no-repeat;
+  background: url("../images/owl.video.play.png") no-repeat;
   cursor: pointer;
   z-index: 1;
   -webkit-backface-visibility: hidden;
@@ -23287,7 +23287,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   outline: none;
   border-radius: 10rem;
   border: 0.05rem solid rgba(255, 122, 122, 0.5);
-  background-image: url(/images/search.svg?45e26a17a0687b68ef3182532c7dc705);
+  background-image: url(../images/search.svg);
   background-size: 1.4rem;
   background-position: left 1.05rem top 0.8rem;
   background-repeat: no-repeat;
@@ -23519,7 +23519,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   }
 }
 .list-coupon .slide-main-coupon .slide-template-slide-coupon .item-coupon {
-  background: url(/images/coupon-s.png?54fec422f9d12ed9f6eefb65102080cb) no-repeat left center;
+  background: url("../images/coupon-s.png") no-repeat left center;
   background-size: cover;
 }
 .list-coupon .slide-main-coupon .slide-template-slide-coupon .item-coupon .box-coupon-right {
@@ -24205,4 +24205,4 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   width: 100%;
 }
 
-/* purgecss end ignore */
+/* purgecss end ignore *//*# sourceMappingURL=home.css.map */
