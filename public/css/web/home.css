@@ -23492,7 +23492,7 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   width: calc(100% - 715px);
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 10px;
 }
 .section-banner-top .banner-wrap a img {
   height: revert-layer;
