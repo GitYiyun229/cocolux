@@ -78,7 +78,7 @@
                     @endforelse
                     <a href="{{ route('StoreCocolux') }}"
                         class="item-category d-flex flex-column align-items-center text-center text-uppercase">
-                        <img data-src="{{ asset('images/He-thong-cua-hang.svg') }}" alt="Hệ thống cửa hàng Cocolux"
+                        <img data-src="{{ asset('images/He-thong-cua-hang.webp') }}" alt="Hệ thống cửa hàng Cocolux"
                             class="img-fluid lazy" onerror="this.src='{{ asset('/images/ic-lazy-load-3.png') }}'">
                         Hệ thống cửa hàng
                     </a>
