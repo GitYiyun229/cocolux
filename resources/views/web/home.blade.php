@@ -489,7 +489,7 @@
                                 </div>
                                 <div class="article-title">
                                     <span>
-                                        {!! $item->description !!}
+                                        {!! strip_tags($item->description) !!}
                                     </span>
                                 </div>
                             </a>
