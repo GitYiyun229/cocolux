@@ -79,7 +79,7 @@
                         </h1>
 
                         <div class="detail-summary">
-                            {!! $article->description !!}
+                            {!! html_entity_decode(strip_tags($article->description)) !!}
                         </div>
                         @if($products_choose)
                         <div class="list-product-article mb-4">
@@ -151,7 +151,7 @@
                         @if(!empty($article->content_faq))
                             <div class="faq-for-article">
                                 <div class="title-faq">
-                                    
+
                                     <span>
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clip-path="url(#clip0_407_691)">
@@ -246,7 +246,7 @@
                                                 <img src="{{ asset($article_item->image_change_url) }}" alt="{{ $article_item->title }}" class="img-fluid rounded">
                                                 <h4 class="my-3 title-blog-item">{{ $article_item->title }}</h4>
                                                 <div class="summary-blog d-none">
-                                                    {!! $article_item->description !!}
+                                                    {!! html_entity_decode(strip_tags($article_item->description)) !!}
                                                 </div>
                                             </a>
                                         </div>
