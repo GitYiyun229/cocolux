@@ -79,7 +79,7 @@
                         </h1>
 
                         <div class="detail-summary">
-                            {!! html_entity_decode(strip_tags($article->description)) !!}
+                            {!! $article->description !!}
                         </div>
                         @if($products_choose)
                         <div class="list-product-article mb-4">
@@ -246,7 +246,7 @@
                                                 <img src="{{ asset($article_item->image_change_url) }}" alt="{{ $article_item->title }}" class="img-fluid rounded">
                                                 <h4 class="my-3 title-blog-item">{{ $article_item->title }}</h4>
                                                 <div class="summary-blog d-none">
-                                                    {!! html_entity_decode(strip_tags($article_item->description)) !!}
+                                                    {!! $article_item->description !!}
                                                 </div>
                                             </a>
                                         </div>
