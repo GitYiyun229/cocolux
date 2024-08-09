@@ -407,8 +407,8 @@
         }
     }
     .banner-wrap {
-        width: calc(100% - 715px);
         display: flex;
+        width: calc(100% - 715px);
         flex-wrap: wrap;
         gap: 10px;
         a img {
