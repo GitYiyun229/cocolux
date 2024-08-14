@@ -609,7 +609,7 @@ class ProductController extends Controller
             $id_stores = array();
             foreach ($stocks as $item) {
                 $active_store = Store::with(['cities', 'districts', 'wards'])->where('id', $item->id)->where('active', 1)->first();
-                if ($item->total_quantity) {
+                if ($item->total_quantity && $active_store) {
                     $id_stores[] = $item->id;
                     $count_store++;
                 }
