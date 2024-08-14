@@ -14,8 +14,11 @@
                 <div class="layout-detail-main bg-white d-grid mb-4">
                     @if (!empty($productOptions))
                         @forelse($productOptions as $item)
-                            @if (!empty($item->slug) && !empty($item->sku))
-                                <a href="{{ route('detailProduct', ['slug' => $item->slug, 'sku' => $item->sku]) }}"
+                            @if (!empty($item->sku))
+                                @php
+                                    $slug = !empty($item->slug) ? $item->slug : 'cocolux';
+                                @endphp
+                                <a href="{{ route('detailProduct', ['slug' => $slug, 'sku' => $item->sku]) }}"
                                     class="product-template">
                                 @else
                                     <div class="product-template">
