@@ -156,13 +156,7 @@ class ApiNhanhController extends Controller
 
             $stocks = array();
             $depots = $inventory['depots'];
-            if ($attribute == 'inventoryChange') {
-                \Log::info([
-                    'message' => $depots,
-                    'line' => __LINE__,
-                    'method' => __METHOD__
-                ]);
-            }
+         
             if ($depots) {
                 foreach ($depots as $k => $item) {
                     if ($item['available']) {
