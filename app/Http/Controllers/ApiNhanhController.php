@@ -162,6 +162,13 @@ class ApiNhanhController extends Controller
                     if ($item['available']) {
                         $store = Store::where('id_nhanh', $k)->first();
                         if ($store) {
+                            if ($attribute == 'inventoryChange') {
+                                \Log::info([
+                                    'message' => $store,
+                                    'line' => __LINE__,
+                                    'method' => __METHOD__
+                                ]);
+                            }
                             $stocks[] = [
                                 'id' => $store->id,
                                 'name' => $store->name,
@@ -172,11 +179,6 @@ class ApiNhanhController extends Controller
                                 'total_stock_quantity' => $item['remain'],
                                 'total_order_quantity' => $item['shipping'],
                             ];
-                            \Log::info([
-                                'message' => $stocks,
-                                'line' => __LINE__,
-                                'method' => __METHOD__
-                            ]);
                         }
                     }
                 }
