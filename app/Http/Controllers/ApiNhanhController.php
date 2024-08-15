@@ -156,11 +156,7 @@ class ApiNhanhController extends Controller
 
             $stocks = array();
             $depots = $inventory['depots'];
-            \Log::info([
-                'message' => $depots,
-                'line' => __LINE__,
-                'method' => __METHOD__
-            ]);
+
             if ($depots) {
                 foreach ($depots as $k => $item) {
                     if ($item['available']) {
@@ -176,6 +172,11 @@ class ApiNhanhController extends Controller
                                 'total_stock_quantity' => $item['remain'],
                                 'total_order_quantity' => $item['shipping'],
                             ];
+                            \Log::info([
+                                'message' => $stocks,
+                                'line' => __LINE__,
+                                'method' => __METHOD__
+                            ]);
                         }
                     }
                 }
