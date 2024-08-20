@@ -561,7 +561,9 @@
                         <div class="detail-coupon">Chi tiết</div>
                         <div id="description-coupon"></div>
                         <p>Có hiệu lực từ <span id="show_date">13/12/2023 - 19/12/2023</span></p>
-                        <p>Không áp dụng đồng thời CTKM khác</p>
+
+                        <p class="infomotion-coupon-option">Không áp dụng đồng thời CTKM khác</p>
+
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between align-items-center flex-nowrap">
