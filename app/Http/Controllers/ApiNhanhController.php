@@ -156,7 +156,7 @@ class ApiNhanhController extends Controller
 
             $stocks = array();
             $depots = $inventory['depots'];
-         
+
             if ($depots) {
                 foreach ($depots as $k => $item) {
                     if ($item['available']) {
@@ -503,6 +503,7 @@ class ApiNhanhController extends Controller
                 }
                 $req['status'] = $item['status'];
                 $req['id_nhanh'] = $item['id'];
+                $req['options'] = $item['options']['notApplyWithDiscountPromotion'];
                 $coupons = $this->getCouponItem($item['id']);
                 if ($coupons) {
                     if ($check_voucher) {
