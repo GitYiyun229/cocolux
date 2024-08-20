@@ -211,10 +211,8 @@ $(".btn-value").click(function () {
     $(".modal-body #description-coupon").text(value.description);
 
      if (value.options === "1") {
-          console.log(value.options);
          $(".modal-body .infomotion-coupon-option").show();
      } else if (value.options === "0") {
-          console.log(value.options);
          $(".modal-body .infomotion-coupon-option").hide();
      }
 });
