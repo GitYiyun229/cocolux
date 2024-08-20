@@ -126,7 +126,8 @@ class HomeController extends Controller
                 ->limit(4)->orderBy('id', 'ASC')->get();
         }
 
-        $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('ordering', 'ASC')->get();
+        // $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('ordering', 'ASC')->get();
+        $list_coupon = Voucher::where(['active' => 1])->with(['items'])->orderBy('ordering', 'ASC')->get();
         return view('web.home', compact('slider', 'subBanner', 'product_hots', 'attribute_brand', 'articles', 'product_cats', 'subBanner2', 'cats', 'cat_sub', 'product_flash', 'stores', 'list_coupon'));
     }
     /**
