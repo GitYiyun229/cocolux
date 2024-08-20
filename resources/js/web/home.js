@@ -209,11 +209,12 @@ $(".btn-value").click(function () {
     $(".modal-body #endDate").text(value.end_date);
     $(".modal-body #show_date").text(value.start_date + "- " + value.end_date);
     $(".modal-body #description-coupon").text(value.description);
-    console.log(value);
 
-     if (value.options === 1) {
+     if (value.options === "1") {
+          console.log(value.options);
          $(".modal-body .infomotion-coupon-option").show();
-     } else if (value.options === 0) {
+     } else if (value.options === "0") {
+          console.log(value.options);
          $(".modal-body .infomotion-coupon-option").hide();
      }
 });
