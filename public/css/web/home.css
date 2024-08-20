@@ -23489,8 +23489,8 @@ ol.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
   background-color: #a2a5a7; /* Màu sắc khi nút đó được chọn */
 }
 .section-banner-top .banner-wrap {
-  width: calc(100% - 715px);
   display: flex;
+  width: calc(100% - 715px);
   flex-wrap: wrap;
   gap: 10px;
 }
