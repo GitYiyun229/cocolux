@@ -58,42 +58,6 @@
                 j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
                 f.parentNode.insertBefore(j, f);
             })(window, document, 'script', 'dataLayer', 'GTM-NGPB3KQ');
-            // Mã theo dõi TikTok Pixel
-            ttq.identify({
-                "email": "<hashed_email_address>",
-                "phone_number": "<hashed_phone_number>",
-                "external_id": "<hashed_extenal_id>"
-            });
-
-            ttq.track('ViewContent', {
-                "contents": [{
-                    "content_id": "<content_identifier>",
-                    "content_type": "<content_type>",
-                    "content_name": "<content_name>"
-                }],
-                "value": "<content_value>",
-                "currency": "<content_currency>"
-            });
-
-            ttq.track('AddToCart', {
-                "contents": [{
-                    "content_id": "<content_identifier>",
-                    "content_type": "<content_type>",
-                    "content_name": "<content_name>"
-                }],
-                "value": "<content_value>",
-                "currency": "<content_currency>"
-            });
-
-            ttq.track('CompletePayment', {
-                "contents": [{
-                    "content_id": "<content_identifier>",
-                    "content_type": "<content_type>",
-                    "content_name": "<content_name>"
-                }],
-                "value": "<content_value>",
-                "currency": "<content_currency>"
-            });
             ! function(w, d, t) {
                 w.TiktokAnalyticsObject = t;
                 var ttq = w[t] = w[t] || [];
