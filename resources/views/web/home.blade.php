@@ -242,7 +242,7 @@
                                             @endif
                                         </div>
                                         <div class="product-brand px-2" style="height: 18px">
-                                            {{ $item_fl->brand ?: $item_fl->product->brand }}
+                                            {{ $item_fl->brand ?? $item_fl->opbrand }}
                                         </div>
                                         <div class="product-title px-2">
                                             {{ $item_fl->title }}
@@ -319,7 +319,7 @@
                                         @endif
                                     </div>
                                     <div class="product-brand px-2" style="height: 18px">
-                                        {{ $item->brand }}
+                                     {{ $item->brand ?? $item->opbrand }}
                                     </div>
                                     <div class="product-title px-2">
                                         {{ $item->title }}
@@ -442,7 +442,8 @@
                                                     @endif
                                                 </div>
                                                 <div class="product-brand" style="height: 18px">
-                                                    {{ $item->brand }}
+                                                    {{-- {{ $item->brand }} --}}
+                                                       {{ $item->brand ?? $item->opbrand }}
                                                 </div>
                                                 <div class="product-title">
                                                     {{ $item->title }}
