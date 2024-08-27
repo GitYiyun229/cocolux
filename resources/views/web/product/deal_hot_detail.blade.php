@@ -45,7 +45,7 @@
                             </div>
                             <div class="product-brand" style="height: 18px">
                                 @php
-                                    $brand = $item->brand ?? '';
+                                    $brand = $item->brand ?? $item->opbrand;
                                     if (empty($brand) && isset($item->attributes)) {
                                         foreach ($item->attributes as $attribute) {
                                             if ($attribute['id'] == 19) {
