@@ -36,7 +36,7 @@
                                     @endif
                                 </div>
                                 <div class="product-brand" style="height:18px;">
-                                    {{ $item->brand }}
+                                    {{ $item->brand ?? $item->opbrand }}
                                 </div>
                                 <div class="product-title">
                                     {{ $item->title }}
