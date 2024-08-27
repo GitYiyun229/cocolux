@@ -75,7 +75,7 @@ class HomeController extends Controller
         $subBanner2 = Banners::where(['active' => 1, 'type' => 'home_v1_primary_banner_2'])->select('id', 'url', 'image_url', 'mobile_url', 'content')->get(); // (3 ảnh hiển thị dưới cùng trên phần danh sách chi nhánh)
 
         $now = Carbon::now();
-        $product_flash = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id', 'brand')
+        $product_flash = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id', 'brand as opbrand')
             ->where(['is_default' => 1, 'active' => 1])
             ->with(['product' => function ($query) {
                 $query->select('id', 'slug', 'brand');
@@ -89,8 +89,9 @@ class HomeController extends Controller
                     ->where('type', 'flash_deal')->orderBy('price', 'asc');
             }])->whereNotNull('slug')->whereNotNull('sku')->orderBy('updated_at', 'desc')->limit(15)->get();
         $flash_skus = $product_flash->pluck('sku');
+
         $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
-            ->select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id')
+            ->select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id', 'brand as opbrand')
             ->with(['product' => function ($query) {
                 $query->select('id', 'is_hot', 'slug', 'brand');
             }, 'promotionItem' => function ($query) use ($now) {
@@ -118,7 +119,7 @@ class HomeController extends Controller
                     $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                         ->orderBy('price', 'asc');
                 }])
-                ->select('id', 'title', 'slug', 'images', 'sku', 'price', 'parent_id', 'normal_price', 'hot_deal', 'flash_deal')
+                ->select('id', 'title', 'slug', 'brand as opbrand', 'images', 'sku', 'price', 'parent_id', 'normal_price', 'hot_deal', 'flash_deal')
                 ->limit(10)->get();
             $cat_sub[$item->id] = ProductsCategories::where(['is_home' => 1, 'active' => 1])
                 ->where('parent_id', 'like', '%' . $item->id . '%')
