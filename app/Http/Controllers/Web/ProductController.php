@@ -877,7 +877,7 @@ class ProductController extends Controller
         $promotion_hots = $this->dealService->isHotDealAvailable($id);
         $productOptions = null;
         if ($promotion_hots) {
-            $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id')
+            $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'brand as opbrand','price', 'normal_price', 'slug', 'images', 'parent_id')
                 ->with(['product' => function ($query) {
                     $query->select('id', 'slug', 'brand', 'attributes');
                 }])->whereHas('promotionItem', function ($query) use ($now, $id) {
