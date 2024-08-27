@@ -781,7 +781,7 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
 
         $now = Carbon::now();
-        $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id')
+        $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'price','brand as opbrand', 'normal_price', 'slug', 'images', 'parent_id')
             ->with(['product' => function ($query) {
                 $query->select('id', 'slug', 'brand');
             }])->whereHas('promotionItem', function ($query) use ($now) {
@@ -840,7 +840,7 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
 
         $now = Carbon::now();
-        $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id')
+        $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title','brand as opbrand', 'price', 'normal_price', 'slug', 'images', 'parent_id')
             ->with(['product' => function ($query) {
                 $query->select('id', 'slug', 'brand');
             }])->whereHas('promotionItem', function ($query) use ($now) {
