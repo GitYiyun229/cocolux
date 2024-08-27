@@ -154,7 +154,7 @@
 
                                             </div>
                                             <div class="product-brand">
-                                                {{ $item->brand }}
+                                                {{ $item->brand ?? $item->opbrand }}
                                             </div>
                                             <div class="product-title">
                                                 {{ $item->title }}
