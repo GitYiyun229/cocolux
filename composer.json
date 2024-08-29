@@ -2,10 +2,7 @@
     "name": "laravel/laravel",
     "type": "production",
     "description": "The Laravel Framework.",
-    "keywords": [
-        "framework",
-        "laravel"
-    ],
+    "keywords": ["framework","laravel"],
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
@@ -25,10 +22,7 @@
         "mobiledetect/mobiledetectlib": "^3.74",
         "spatie/laravel-permission": "^5.7",
         "yajra/laravel-datatables": "^1.5",
-        "yajra/laravel-datatables-oracle": "^9.21",
-        "diglactic/laravel-breadcrumbs": "^6.0",
-        "spatie/laravel-html": "^2.0",
-        "symfony/mailer": "^5.0"
+        "yajra/laravel-datatables-oracle": "^9.21"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
