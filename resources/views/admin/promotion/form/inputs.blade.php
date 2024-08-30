@@ -53,7 +53,7 @@
                     <label>@lang('form.promotion.image_deal')</label> <span class="text-danger">*</span>
                     <div class="input-group">
                         @include('admin.components.buttons.image',['src' => isset($promotion->image_deal) ? $promotion->image_deal : old('image_deal'),'name' => 'image_deal'])
-                        @if ($errors->has('thumbnail_url'))
+                        @if ($errors->has('image_deal'))
                             <span class="help-block text-danger">
                                 <strong>{{ $errors->first('image_deal') }}</strong>
                             </span>
