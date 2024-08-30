@@ -53,11 +53,13 @@ class PromotionsController extends Controller
             $data = array();
             $data['name'] = $request->input('name');
             $data['thumbnail_url'] = $request->input('thumbnail_url');
+            $data['image_deal'] = $request->input('image_deal');
             $data['type'] = $type;
             $data['sort_product'] = $sort_product;
             $data['applied_start_time'] = Carbon::parse($request->input('applied_start_time'));
             $data['applied_stop_time'] = Carbon::parse($request->input('applied_stop_time'));
             $promotion = Promotions::create($data);
+
 
             if ($data['thumbnail_url']) {
                 $fileNameWithoutExtension = urldecode(pathinfo($data['thumbnail_url'], PATHINFO_FILENAME));
@@ -67,8 +69,16 @@ class PromotionsController extends Controller
                 Storage::makeDirectory('public/promotion/');
                 $thumbnail->save($thumbnailPath);
             }
+            if ($data['image_deal']) {
+                $fileNameWithoutExtension = urldecode(pathinfo($data['image_deal'], PATHINFO_FILENAME));
+                $fileName = $fileNameWithoutExtension . '.webp';
+                $thumbnail = Image::make(asset($data['image_deal']))->encode('webp', 75);
+                $thumbnailPath = 'storage/promotion/khung_sale/' . $promotion->id . '-' . $fileName;
+                Storage::makeDirectory('public/promotion/');
+                $thumbnail->save($thumbnailPath);
+            }
 
-            if($file){
+            if ($file) {
                 PromotionItem::where('promotion_id', $promotion->id)->delete();
                 Excel::import(new ProductPromotionImport($promotion, $type, $data['name']), $file);
             }
@@ -87,8 +97,6 @@ class PromotionsController extends Controller
         }
 
         $id_promotion = $request->input('file');
-
-
     }
 
     /**
@@ -121,7 +129,7 @@ class PromotionsController extends Controller
      * @param  \App\Models\Promotions  $promotions
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         DB::beginTransaction();
         try {
@@ -131,27 +139,37 @@ class PromotionsController extends Controller
             $data = array();
             $data['name'] = $request->input('name');
             $data['thumbnail_url'] = $request->input('thumbnail_url');
+            $data['image_deal'] = $request->input('image_deal');
             $data['type'] = $type;
             $data['sort_product'] = $sort_product;
             $data['applied_start_time'] = Carbon::parse($request->input('applied_start_time'));
             $data['applied_stop_time'] = Carbon::parse($request->input('applied_stop_time'));
-            
+
             $promotion = Promotions::findOrFail($id);
             $promotion->update($data);
-
-            if ($data['thumbnail_url']){
+            // dd($promotion);
+            if ($data['thumbnail_url']) {
                 $fileNameWithoutExtension = urldecode(pathinfo($data['thumbnail_url'], PATHINFO_FILENAME));
-                $fileName = $fileNameWithoutExtension. '.webp';
+                $fileName = $fileNameWithoutExtension . '.webp';
                 $thumbnail = Image::make(asset($data['thumbnail_url']))->encode('webp', 75);
-                $thumbnailPath = 'storage/promotion/' .$id.'-'. $fileName;
+                $thumbnailPath = 'storage/promotion/' . $id . '-' . $fileName;
                 Storage::makeDirectory('public/promotion/');
                 $thumbnail->save($thumbnailPath);
             }
 
-            if ($file){
+            if ($data['image_deal']) {
+                $fileNameWithoutExtensionsale = urldecode(pathinfo($data['image_deal'], PATHINFO_FILENAME));
+                $fileNameSale = $fileNameWithoutExtensionsale . '.webp';
+                $thumbnailSale = Image::make(asset($data['image_deal']))->encode('webp', 75);
+                $thumbnailPathSale = 'storage/promotion/khung_sale/' . $id . '-' . $fileNameSale;
+                Storage::makeDirectory('public/promotion/');
+                $thumbnailSale->save($thumbnailPathSale);
+            }
+
+            if ($file) {
                 PromotionItem::where('promotion_id', $id)->delete();
                 Excel::import(new ProductPromotionImport($promotion, $type, $data['name']), $file);
-            }else{
+            } else {
                 $data2['applied_start_time'] = $data['applied_start_time'];
                 $data2['applied_stop_time'] = $data['applied_stop_time'];
                 $data2['type'] = $type;
@@ -180,7 +198,7 @@ class PromotionsController extends Controller
     public function destroy($id)
     {
         Promotions::destroy($id);
-		PromotionItem::where('promotion_id', $id)->delete();
+        PromotionItem::where('promotion_id', $id)->delete();
         return [
             'status' => true,
             'message' => trans('message.delete_promotion_success')

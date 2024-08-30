@@ -294,6 +294,7 @@ return [
         'code' => 'Code',
         'content' => 'Nội dung',
         'thumbnail_url' => 'Hình ảnh',
+        'image_deal' => 'Khung ảnh sale',
         'applied_start_time' => 'Thời gian bắt đâu',
         'applied_stop_time' => 'Thời gian kết thúc',
         'type' => 'Loại ưu đãi',

@@ -48,6 +48,20 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>@lang('form.promotion.image_deal')</label> <span class="text-danger">*</span>
+                    <div class="input-group">
+                        @include('admin.components.buttons.image',['src' => isset($promotion->image_deal) ? $promotion->image_deal : old('image_deal'),'name' => 'image_deal'])
+                        @if ($errors->has('thumbnail_url'))
+                            <span class="help-block text-danger">
+                                <strong>{{ $errors->first('image_deal') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="row">
             <div class="col-sm-6">
