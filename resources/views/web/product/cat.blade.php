@@ -131,6 +131,7 @@
                                             @if (empty($item->stocks))
                                                   <img src="{{ asset('images/ic-tam-het-hang.png') }}" alt="Tạm hết hàng" class="img-fluid lazy position-absolute" >
                                             @endif
+
                                             <div
                                                 class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
                                                 <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"

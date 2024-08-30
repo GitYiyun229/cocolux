@@ -82,6 +82,9 @@ class PromotionsDataTable extends DataTable
             Column::make('thumbnail_url')->title(trans('form.promotion.thumbnail_url'))->render([
                 'renderImage(data)'
             ]),
+            Column::make('image_deal')->title(trans('form.promotion.image_deal'))->render([
+                'renderImage(data)'
+            ]),
             Column::make('type')->title(trans('form.promotion.type')),
             Column::make('applied_start_time')->title(trans('form.promotion.applied_start_time')),
             Column::make('applied_stop_time')->title(trans('form.promotion.applied_stop_time')),
