@@ -74,7 +74,7 @@ class PromotionsController extends Controller
                 $fileName = $fileNameWithoutExtension . '.webp';
                 $thumbnail = Image::make(asset($data['image_deal']))->encode('webp', 75);
                 $thumbnailPath = 'storage/promotion/khung_sale/' . $promotion->id . '-' . $fileName;
-                Storage::makeDirectory('public/promotion/');
+                Storage::makeDirectory('public/promotion/khung_sale/');
                 $thumbnail->save($thumbnailPath);
             }
 
@@ -162,7 +162,7 @@ class PromotionsController extends Controller
                 $fileNameSale = $fileNameWithoutExtensionsale . '.webp';
                 $thumbnailSale = Image::make(asset($data['image_deal']))->encode('webp', 75);
                 $thumbnailPathSale = 'storage/promotion/khung_sale/' . $id . '-' . $fileNameSale;
-                Storage::makeDirectory('public/promotion/');
+                Storage::makeDirectory('public/promotion/khung_sale/');
                 $thumbnailSale->save($thumbnailPathSale);
             }
 
