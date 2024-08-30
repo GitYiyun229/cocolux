@@ -59,6 +59,7 @@ class ProductPromotionImport implements ToModel, WithHeadingRow
                 'type' => $this->type,
                 'applied_start_time' => optional($this->promotion)->applied_start_time->format('Y-m-d H:i:s'),
                 'applied_stop_time' => optional($this->promotion)->applied_stop_time->format('Y-m-d H:i:s'),
+                'image_deal' => $this->promotion->image_deal,
             ];
             PromotionItem::create($data);
         }
