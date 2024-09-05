@@ -162,36 +162,36 @@ class HomeController extends Controller
             ->orderBy('updated_at', 'desc')
             ->limit(20)
             ->get();
-        $product_hots = ProductOptions::select(
-            'product_options.id',
-            'product_options.sku',
-            'product_options.slug',
-            'product_options.title',
-            'product_options.price',
-            'product_options.normal_price',
-            'product_options.images',
-            'product_options.parent_id',
-            'product_options.brand as opbrand',
-            'promotion_items.image_deal as image_deal'
-        )
-            ->join('promotion_items', function ($join) use ($now) {
-                $join->on('product_options.sku', '=', 'promotion_items.sku');
-            })
-            ->where(['product_options.active' => 1, 'product_options.is_default' => 1])
-            ->with(['product' => function ($query) {
-                $query->select('id', 'is_hot', 'slug', 'brand');
-            }, 'promotionItem' => function ($query) use ($now) {
-                $query->where('applied_start_time', '<=', $now)
-                    ->where('applied_stop_time', '>', $now)
-                    ->orderBy('price', 'asc');
-            }])->whereHas('product', function ($query) {
-                $query->where(['is_hot' => 1, 'active' => 1]);
-            })
-            ->whereNotIn('product_options.sku', $flash_skus)
-            ->whereNotNull('product_options.slug')
-            ->whereNotNull('product_options.sku')
-            ->orderBy('product_options.updated_at', 'desc')
-            ->limit(20)->get();
+        // $product_hots = ProductOptions::select(
+        //     'product_options.id',
+        //     'product_options.sku',
+        //     'product_options.slug',
+        //     'product_options.title',
+        //     'product_options.price',
+        //     'product_options.normal_price',
+        //     'product_options.images',
+        //     'product_options.parent_id',
+        //     'product_options.brand as opbrand',
+        //     'promotion_items.image_deal as image_deal'
+        // )
+        //     ->join('promotion_items', function ($join) use ($now) {
+        //         $join->on('product_options.sku', '=', 'promotion_items.sku');
+        //     })
+        //     ->where(['product_options.active' => 1, 'product_options.is_default' => 1])
+        //     ->with(['product' => function ($query) {
+        //         $query->select('id', 'is_hot', 'slug', 'brand');
+        //     }, 'promotionItem' => function ($query) use ($now) {
+        //         $query->where('applied_start_time', '<=', $now)
+        //             ->where('applied_stop_time', '>', $now)
+        //             ->orderBy('price', 'asc');
+        //     }])->whereHas('product', function ($query) {
+        //         $query->where(['is_hot' => 1, 'active' => 1]);
+        //     })
+        //     ->whereNotIn('product_options.sku', $flash_skus)
+        //     ->whereNotNull('product_options.slug')
+        //     ->whereNotNull('product_options.sku')
+        //     ->orderBy('product_options.updated_at', 'desc')
+        //     ->limit(20)->get();
 
         $attribute_brand = AttributeValues::where(['attribute_id' => 19, 'active' => 1, 'is_home' => 1])->select('id', 'name', 'slug', 'image')->orderBy('ordering', 'ASC')->limit(15)->get(); // thương hiệu
         $cats = ProductsCategories::where(['is_home' => 1, 'active' => 1, 'parent_id' => null])
