@@ -227,11 +227,17 @@
                                                 <img src="{{ asset($item_fl->image_first) }}"
                                                     alt="{{ $item_fl->title }}" class="img-fluid">
                                             </picture>
-                                            @if ($setting['frame_image_for_sale'])
 
-                                                <div class="position-absolute top-0 bottom-0"> <img
-                                                        src="{{ asset($setting['frame_image_for_sale']) }}"
-                                                        alt=""></div>
+                                            @if (!empty($item_fl->image_deal))
+                                                <div class="position-absolute top-0 bottom-0">
+                                                    <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp',$item_fl->image_deal)) }}" alt="">
+                                                </div>
+                                            @else
+                                                @if ($setting['frame_image_for_sale'])
+                                                    <div class="position-absolute top-0 bottom-0"> <img
+                                                            src="{{ asset($setting['frame_image_for_sale']) }}"
+                                                            alt=""></div>
+                                                @endif
                                             @endif
                                         </div>
                                         <div class="product-price px-2">
@@ -319,7 +325,7 @@
                                         @endif
                                     </div>
                                     <div class="product-brand px-2" style="height: 18px">
-                                     {{ $item->brand ?? $item->opbrand }}
+                                        {{ $item->brand ?? $item->opbrand }}
                                     </div>
                                     <div class="product-title px-2">
                                         {{ $item->title }}
@@ -443,7 +449,7 @@
                                                 </div>
                                                 <div class="product-brand" style="height: 18px">
                                                     {{-- {{ $item->brand }} --}}
-                                                       {{ $item->brand ?? $item->opbrand }}
+                                                    {{ $item->brand ?? $item->opbrand }}
                                                 </div>
                                                 <div class="product-title">
                                                     {{ $item->title }}

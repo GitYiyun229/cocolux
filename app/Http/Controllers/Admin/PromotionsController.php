@@ -60,24 +60,39 @@ class PromotionsController extends Controller
             $data['applied_stop_time'] = Carbon::parse($request->input('applied_stop_time'));
             $promotion = Promotions::create($data);
 
-
             if ($data['thumbnail_url']) {
-                $fileNameWithoutExtension = urldecode(pathinfo($data['thumbnail_url'], PATHINFO_FILENAME));
-                $fileName = $fileNameWithoutExtension . '.webp';
-                $thumbnail = Image::make(asset($data['thumbnail_url']))->encode('webp', 75);
-                $thumbnailPath = 'storage/promotion/' . $promotion->id . '-' . $fileName;
-                Storage::makeDirectory('public/promotion/');
-                $thumbnail->save($thumbnailPath);
-            }
-            if ($data['image_deal']) {
-                $fileNameWithoutExtension = urldecode(pathinfo($data['image_deal'], PATHINFO_FILENAME));
-                $fileName = $fileNameWithoutExtension . '.webp';
-                $thumbnail = Image::make(asset($data['image_deal']))->encode('webp', 75);
-                $thumbnailPath = 'storage/promotion/khung_sale/' . $promotion->id . '-' . $fileName;
-                Storage::makeDirectory('public/promotion/khung_sale/');
-                $thumbnail->save($thumbnailPath);
+                try {
+                    $fileNameWithoutExtension = urldecode(pathinfo($data['thumbnail_url'], PATHINFO_FILENAME));
+                    $fileName = $fileNameWithoutExtension . '.webp';
+                    $thumbnail = Image::make(asset($data['thumbnail_url']))->encode('webp', 75);
+                    $thumbnailPath = 'storage/promotion/' . $promotion->id . '-' . $fileName;
+                    Storage::makeDirectory('public/promotion/');
+                    $thumbnail->save($thumbnailPath);
+                } catch (\Exception $e) {
+                    \Log::error('Error processing thumbnail URL', [
+                        'url' => $data['thumbnail_url'],
+                        'error' => $e->getMessage(),
+                    ]);
+                    throw $e;
+                }
             }
 
+            if ($data['image_deal']) {
+                try {
+                    $fileNameWithoutExtensionsale = urldecode(pathinfo($data['image_deal'], PATHINFO_FILENAME));
+                    $fileNameSale = $fileNameWithoutExtensionsale . '.webp';
+                    $thumbnailSale = Image::make(asset($data['image_deal']))->encode('webp', 75);
+                    $thumbnailPathSale = 'storage/promotion/khung_sale/' . $promotion->id . '-' . $fileNameSale;
+                    Storage::makeDirectory('public/promotion/khung_sale/');
+                    $thumbnailSale->save($thumbnailPathSale);
+                } catch (\Exception $e) {
+                    \Log::error('Error processing image deal URL', [
+                        'url' => $data['image_deal'],
+                        'error' => $e->getMessage(),
+                    ]);
+                    throw $e;
+                }
+            }
             if ($file) {
                 PromotionItem::where('promotion_id', $promotion->id)->delete();
                 Excel::import(new ProductPromotionImport($promotion, $type, $data['name']), $file);
@@ -147,7 +162,7 @@ class PromotionsController extends Controller
 
             $promotion = Promotions::findOrFail($id);
             $promotion->update($data);
-            // dd($promotion);
+
             if ($data['thumbnail_url']) {
                 $fileNameWithoutExtension = urldecode(pathinfo($data['thumbnail_url'], PATHINFO_FILENAME));
                 $fileName = $fileNameWithoutExtension . '.webp';
@@ -158,20 +173,28 @@ class PromotionsController extends Controller
             }
 
             if ($data['image_deal']) {
-                $fileNameWithoutExtensionsale = urldecode(pathinfo($data['image_deal'], PATHINFO_FILENAME));
-                $fileNameSale = $fileNameWithoutExtensionsale . '.webp';
-                $thumbnailSale = Image::make(asset($data['image_deal']))->encode('webp', 75);
-                $thumbnailPathSale = 'storage/promotion/khung_sale/' . $id . '-' . $fileNameSale;
-                Storage::makeDirectory('public/promotion/khung_sale/');
-                $thumbnailSale->save($thumbnailPathSale);
+                try {
+                    $fileNameWithoutExtensionSale = urldecode(pathinfo($data['image_deal'], PATHINFO_FILENAME));
+                    $fileNameSale = $fileNameWithoutExtensionSale . '.webp';
+                    $thumbnailSale = Image::make(asset($data['image_deal']))->encode('webp', 75);
+                    $thumbnailPathSale = 'storage/promotion/khung_sale/' . $id . '-' . $fileNameSale;
+                    Storage::makeDirectory('public/promotion/khung_sale/');
+                    Storage::put($thumbnailPathSale, (string) $thumbnailSale);
+                } catch (\Exception $exception) {
+                    \Log::error([
+                        'message' => $exception->getMessage(),
+                        'line' => __LINE__,
+                        'method' => __METHOD__
+                    ]);
+                }
             }
-
             if ($file) {
                 PromotionItem::where('promotion_id', $id)->delete();
                 Excel::import(new ProductPromotionImport($promotion, $type, $data['name']), $file);
             } else {
                 $data2['applied_start_time'] = $data['applied_start_time'];
                 $data2['applied_stop_time'] = $data['applied_stop_time'];
+                $data2['image_deal'] = $data['image_deal'];
                 $data2['type'] = $type;
                 PromotionItem::where('promotion_id', $id)->update($data2);
             }
