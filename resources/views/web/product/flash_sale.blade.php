@@ -12,39 +12,50 @@
                 </div>
 
                 <div class="layout-detail-main bg-white d-grid mb-4">
-                    @if(count($productOptions))
+                    @if (count($productOptions))
                         @forelse($productOptions as $item)
-                            @if(isset($item->slug) && $item->promotionItem)
-                            <a href="{{ route('detailProduct',['slug'=>$item->slug, 'sku' =>$item->sku]) }}" class="product-template">
-                                @if($item->promotionItem && $item->promotionItem->price != $item->normal_price)
-                                    <div class="product-discount">
-                                        <span class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
-                                    </div>
-                                @endif
-                                <div class="product-thumbnail @if($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame2 @endif">
-                                    <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
-                                     @if ($setting['frame_image_for_sale'])
-                                        <div class="position-absolute bottom-0 image-frame-top"> <img
-                                                src="{{ asset($setting['frame_image_for_sale']) }}" alt="">
+                            @if (isset($item->slug) && $item->promotionItem)
+                                <a href="{{ route('detailProduct', ['slug' => $item->slug, 'sku' => $item->sku]) }}"
+                                    class="product-template">
+                                    @if ($item->promotionItem && $item->promotionItem->price != $item->normal_price)
+                                        <div class="product-discount">
+                                            <span
+                                                class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
                                         </div>
                                     @endif
-                                </div>
-                                <div class="product-price">
-                                    <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
-                                    @if($item->promotionItem->price != $item->normal_price)
-                                        <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                    <div class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame2 @endif">
+                                        <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
+                                            class="img-fluid">
+                                        @if (!empty($item->image_deal))
+                                            <div class="position-absolute top-0 bottom-0">
+                                                <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
+                                                    alt="">
+                                            </div>
+                                        @else
+                                            @if ($setting['frame_image_for_sale'])
+                                                <div class="position-absolute top-0 bottom-0"> <img
+                                                        src="{{ asset($setting['frame_image_for_sale']) }}" alt="">
+                                                </div>
+                                            @endif
+                                        @endif
+                                    </div>
+                                    <div class="product-price">
+                                        <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
+                                        @if ($item->promotionItem->price != $item->normal_price)
+                                            <div class="origin-price">{{ format_money($item->normal_price) }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="product-brand" style="height:18px;">
+                                        {{ $item->brand ?? $item->opbrand }}
+                                    </div>
+                                    <div class="product-title">
+                                        {{ $item->title }}
+                                    </div>
+                                    @if ($item->promotionItem && $item->promotionItem->applied_stop_time)
+                                        <div class="product-progress-sale count-down"
+                                            time-end="{{ $item->promotionItem->applied_stop_time }}"></div>
                                     @endif
-                                </div>
-                                <div class="product-brand" style="height:18px;">
-                                    {{ $item->brand ?? $item->opbrand }}
-                                </div>
-                                <div class="product-title">
-                                    {{ $item->title }}
-                                </div>
-                                @if($item->promotionItem && $item->promotionItem->applied_stop_time)
-                                    <div class="product-progress-sale count-down" time-end="{{ $item->promotionItem->applied_stop_time }}"></div>
-                                @endif
-                            </a>
+                                </a>
                             @else
                             @endif
                         @empty
@@ -53,8 +64,8 @@
                         <p class="text-center">Không có deal khuyến mãi</p>
                     @endif
                 </div>
-                @if(count($productOptions))
-                {{ $productOptions->links('web.components.pagination') }}
+                @if (count($productOptions))
+                    {{ $productOptions->links('web.components.pagination') }}
                 @endif
             </div>
         </div>

@@ -179,14 +179,13 @@ class HomeController extends Controller
         //     })
         //     ->where(['product_options.active' => 1, 'product_options.is_default' => 1])
         //     ->with(['product' => function ($query) {
-        //         $query->select('id', 'is_hot', 'slug', 'brand');
+        //         $query->select('id', 'is_hot', 'slug', 'brand')
+        //     ->where(['is_hot' => 1, 'active' => 1]);
         //     }, 'promotionItem' => function ($query) use ($now) {
         //         $query->where('applied_start_time', '<=', $now)
         //             ->where('applied_stop_time', '>', $now)
         //             ->orderBy('price', 'asc');
-        //     }])->whereHas('product', function ($query) {
-        //         $query->where(['is_hot' => 1, 'active' => 1]);
-        //     })
+        //     }])
         //     ->whereNotIn('product_options.sku', $flash_skus)
         //     ->whereNotNull('product_options.slug')
         //     ->whereNotNull('product_options.sku')
