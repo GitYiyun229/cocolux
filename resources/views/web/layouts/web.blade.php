@@ -43,26 +43,26 @@
     @parent
     <style>
         .image-frame1 {
-            @if ($setting['frame_image_for_sale'])
+            /* @if ($setting['frame_image_for_sale']) */
                 border-radius: 8px;
                 display: inline-block;
                 padding: 0px 10px 0px 10px;
-            @endif
+            /* @endif */
         }
         .image-frame-home-1 {
-            @if ($setting['frame_image_for_sale'])
+            /* @if ($setting['frame_image_for_sale']) */
                 border-radius: 8px;
                 display: inline-block;
                 padding: 0px 0px 0px 0px;
-            @endif
+            /* @endif */
         }
 
         .image-frame2 {
-            @if ($setting['frame_image_for_sale'])
+            /* @if ($setting['frame_image_for_sale']) */
                 border-radius: 8px;
                 display: inline-block;
                 padding: 0px 5px 0px 5px;
-            @endif
+            /* @endif */
         }
 
         .product-template.image-frame--2 {

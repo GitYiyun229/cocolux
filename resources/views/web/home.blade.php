@@ -311,8 +311,8 @@
                                             </div>
                                         @else
                                             @if ($setting['frame_image_for_sale'])
-                                                <div class="position-absolute top-0 bottom-0"> <img
-                                                        src="{{ asset($setting['frame_image_for_sale']) }}"
+                                                <div class="position-absolute top-0 bottom-0">
+                                                    <img src="{{ asset($setting['frame_image_for_sale']) }}"
                                                         alt="">
                                                 </div>
                                             @endif
