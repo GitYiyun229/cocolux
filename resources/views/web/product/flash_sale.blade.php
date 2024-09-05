@@ -27,13 +27,13 @@
                                         <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
                                             class="img-fluid">
                                         @if (!empty($item->image_deal))
-                                            <div class="position-absolute top-0 bottom-0">
+                                            <div class="position-absolute top-0 bottom-0 image-frame-top">
                                                 <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
                                                     alt="">
                                             </div>
                                         @else
                                             @if ($setting['frame_image_for_sale'])
-                                                <div class="position-absolute top-0 bottom-0"> <img
+                                                <div class="position-absolute top-0 bottom-0 image-frame-top"> <img
                                                         src="{{ asset($setting['frame_image_for_sale']) }}" alt="">
                                                 </div>
                                             @endif
