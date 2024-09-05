@@ -230,7 +230,8 @@
 
                                             @if (!empty($item_fl->image_deal))
                                                 <div class="position-absolute top-0 bottom-0">
-                                                    <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp',$item_fl->image_deal)) }}" alt="">
+                                                    <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item_fl->image_deal)) }}"
+                                                        alt="">
                                                 </div>
                                             @else
                                                 @if ($setting['frame_image_for_sale'])
@@ -304,10 +305,17 @@
                                             <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
                                                 class="img-fluid">
                                         </picture>
-                                        @if ($setting['frame_image_for_sale'])
+                                        @if ($setting['frame_image_for_hot'])
                                             <div class="position-absolute top-0 bottom-0"> <img
-                                                    src="{{ asset($setting['frame_image_for_sale']) }}" alt="">
+                                                    src="{{ asset($setting['frame_image_for_hot']) }}" alt="">
                                             </div>
+                                        @else
+                                            @if ($setting['frame_image_for_sale'])
+                                                <div class="position-absolute top-0 bottom-0"> <img
+                                                        src="{{ asset($setting['frame_image_for_sale']) }}"
+                                                        alt="">
+                                                </div>
+                                            @endif
                                         @endif
                                     </div>
                                     <div class="product-price px-2">
