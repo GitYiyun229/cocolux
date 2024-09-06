@@ -901,7 +901,23 @@ class ProductController extends Controller
         $promotion_hots = $this->dealService->isHotDealAvailable($id);
         $productOptions = null;
         if ($promotion_hots) {
-            $productOptions = ProductOptions::select('id', 'sku', 'slug', 'title', 'brand as opbrand', 'price', 'normal_price', 'slug', 'images', 'parent_id')
+            $productOptions = ProductOptions::select('product_options.id',
+                'product_options.sku',
+                'product_options.slug',
+                'product_options.title',
+                'product_options.brand as opbrand',
+                'product_options.price',
+                'product_options.normal_price',
+                'product_options.slug',
+                'product_options.images',
+                'product_options.parent_id',
+                'promotion_items.image_deal')
+                ->join('promotion_items', function ($join) use ($now) {
+                    $join->on('product_options.sku', '=', 'promotion_items.sku')
+                        ->where('promotion_items.applied_start_time', '<=', $now)
+                        ->where('promotion_items.applied_stop_time', '>', $now)
+                        ->where('promotion_items.type', 'hot_deal');
+                })
                 ->with(['product' => function ($query) {
                     $query->select('id', 'slug', 'brand', 'attributes');
                 }])->whereHas('promotionItem', function ($query) use ($now, $id) {
@@ -911,7 +927,6 @@ class ProductController extends Controller
                     $query->select('applied_stop_time', 'sku', 'price')->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                         ->where('type', 'hot_deal')->where('promotion_id', $id)->orderBy('price', 'asc');
                 }]);
-
             if (!empty($promotion_hots->sort_product)) {
                 $productOptions = $productOptions->orderByRaw("FIELD(sku, $promotion_hots->sort_product)");
             }
