@@ -29,10 +29,17 @@
                             <div
                                 class="product-thumbnail position-relative {{ $item->promotionItem && $item->promotionItem->applied_stop_time ? 'image-frame2' : '' }}">
                                 <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
-                                @if ($setting['frame_image_for_sale'])
-                                    <div class="position-absolute top-0 bottom-0">
-                                        <img src="{{ asset($setting['frame_image_for_sale']) }}" alt="">
+                                @if (!empty($item->image_deal))
+                                    <div class="position-absolute  bottom-0 image-frame-top">
+                                        <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
+                                            alt="">
                                     </div>
+                                @else
+                                    @if ($setting['frame_image_for_sale'])
+                                        <div class="position-absolute  bottom-0 image-frame-top"> <img
+                                                src="{{ asset($setting['frame_image_for_sale']) }}" alt="">
+                                        </div>
+                                    @endif
                                 @endif
                             </div>
                             <div class="product-price">
