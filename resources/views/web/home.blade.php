@@ -431,7 +431,7 @@
                                                             alt="{{ $item->title }}" class="img-fluid lazy">
                                                     </picture>
                                                     @if ($item->promotionItem)
-                                                        @if ($item->promotionItem->image_deal)
+                                                        @if (!empty($item->promotionItem->image_deal))
                                                             <div class="position-absolute top-0 image-frame-top">
                                                                 <img src="{{ asset($item->promotionItem->image_deal) }}"
                                                                     alt="">
