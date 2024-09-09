@@ -57,7 +57,7 @@ class HomeController extends Controller
         $title = Setting::where('key', 'title')->first();
         $meta_key = Setting::where('key', 'meta_key')->first();
         $meta_des = Setting::where('key', 'meta_des')->first();
-        // $frameImage = Setting::where('key', 'frame_image_for_sale')->first();
+        $frameImage = Setting::where('key', 'frame_image_for_sale')->first();
 
         SEOTools::setTitle($title->value);
         SEOTools::setDescription($meta_des->value);
@@ -233,7 +233,7 @@ class HomeController extends Controller
         $title = Setting::where('key', 'title')->first();
         $meta_key = Setting::where('key', 'meta_key')->first();
         $meta_des = Setting::where('key', 'meta_des')->first();
-        // $frameImage = Setting::where('key', 'frame_image_for_sale')->first();
+        $frameImage = Setting::where('key', 'frame_image_for_sale')->first();
 
         SEOTools::setTitle($title->value);
         SEOTools::setDescription($meta_des->value);
