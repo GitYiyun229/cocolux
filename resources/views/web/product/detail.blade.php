@@ -595,7 +595,7 @@
                                             </div>
                                         @endif
                                     @endif
-                                    <div class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
+                                    <div class="product-thumbnail position-relative @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
 
                                         <picture>
                                             <source
