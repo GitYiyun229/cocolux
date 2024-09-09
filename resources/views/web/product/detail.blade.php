@@ -480,7 +480,7 @@
                                             @endif
                                         @endif
                                         <div
-                                            class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
+                                            class="product-thumbnail  position-relative @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame1 @endif">
 
                                             <picture>
                                                 <source
@@ -490,9 +490,10 @@
                                                     class="img-fluid">
                                             </picture>
                                             @if (!empty($item->image_deal))
-                                                <div class="position-absolute top-0 image-frame-top">
+                                                 <div class="position-absolute top-0 bottom-0">
                                                     <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
                                                         alt="">
+
                                                 </div>
                                             @endif
 
@@ -595,7 +596,7 @@
                                             </div>
                                         @endif
                                     @endif
-                                    <div class="product-thumbnail position-relative @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
+                                    <div class="product-thumbnail position-relative  @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame1 @endif">
 
                                         <picture>
                                             <source
@@ -605,9 +606,10 @@
                                                 class="img-fluid">
                                         </picture>
                                            @if (!empty($item->image_deal))
-                                                <div class="position-absolute top-0 image-frame-top">
+                                                <div class="position-absolute top-0 bottom-0">
                                                     <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
                                                         alt="">
+
                                                 </div>
                                             @endif
                                     </div>

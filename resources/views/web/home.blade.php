@@ -229,7 +229,7 @@
                                             </picture>
 
                                             @if (!empty($item_fl->image_deal))
-                                                <div class="position-absolute top-0 bottom-0">
+                                                <div class="position-absolute top-0 image-frame-top">
                                                     <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item_fl->image_deal)) }}"
                                                         alt="">
                                                 </div>
