@@ -32,11 +32,11 @@
                                                     alt="">
                                             </div>
                                         @else
-                                            @if ($setting['frame_image_for_sale'])
+                                            {{-- @if ($setting['frame_image_for_sale'])
                                                 <div class="position-absolute  bottom-0 image-frame-top"> <img
                                                         src="{{ asset($setting['frame_image_for_sale']) }}" alt="">
                                                 </div>
-                                            @endif
+                                            @endif --}}
                                         @endif
                                     </div>
                                     <div class="product-price">

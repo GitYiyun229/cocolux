@@ -233,11 +233,11 @@
                                                         alt="">
                                                 </div>
                                             @else
-                                                @if ($setting['frame_image_for_sale'])
+                                                {{-- @if ($setting['frame_image_for_sale'])
                                                     <div class="position-absolute top-0 bottom-0"> <img
                                                             src="{{ asset($setting['frame_image_for_sale']) }}"
                                                             alt=""></div>
-                                                @endif
+                                                @endif --}}
                                             @endif
                                         </div>
                                         <div class="product-price px-2">
@@ -309,12 +309,12 @@
                                                     src="{{ asset($setting['frame_image_for_hot']) }}" alt="">
                                             </div>
                                         @else
-                                            @if ($setting['frame_image_for_sale'])
+                                            {{-- @if ($setting['frame_image_for_sale'])
                                                 <div class="position-absolute top-0 bottom-0">
                                                     <img src="{{ asset($setting['frame_image_for_sale']) }}"
                                                         alt="">
                                                 </div>
-                                            @endif
+                                            @endif --}}
                                         @endif
                                     </div>
                                     <div class="product-price px-2">
@@ -407,7 +407,7 @@
                                             <a href="{{ route('detailProduct', ['slug' => !empty($item->slug) ? trim($item->slug) : $item->product->slug, 'sku' => $item->sku]) }}"
                                                 class="product-template @if (
                                                     $item->promotionItem ||
-                                                        ($setting['frame_image_for_sale'] && $item->promotionItem && $item->promotionItem->applied_stop_time)) khung-sale @endif">
+                                                        ( $item->promotionItem && $item->promotionItem->applied_stop_time)) khung-sale @endif">
                                                 @if ($item->promotionItem)
                                                     @if ($item->promotionItem->price != $item->normal_price)
                                                         <div class="product-discount">
@@ -438,12 +438,12 @@
                                                                 alt="">
                                                         </div>
                                                     @else
-                                                        @if (!empty($setting['frame_image_for_sale']) && $item->promotionItem && !empty($item->promotionItem->applied_stop_time))
+                                                        {{-- @if (!empty($setting['frame_image_for_sale']) && $item->promotionItem && !empty($item->promotionItem->applied_stop_time))
                                                             <div class="position-absolute top-0 image-frame-top">
                                                                 <img src="{{ asset($setting['frame_image_for_sale']) }}"
                                                                     alt="">
                                                             </div>
-                                                        @endif
+                                                        @endif --}}
                                                     @endif
                                                 </div>
 

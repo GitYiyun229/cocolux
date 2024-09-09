@@ -26,11 +26,11 @@
                                     <div class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame2 @endif">
                                         <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
                                             class="img-fluid">
-                                        @if ($setting['frame_image_for_sale'])
+                                        {{-- @if ($setting['frame_image_for_sale'])
                                             <div class="position-absolute top-0 bottom-0"> <img
                                                     src="{{ asset($setting['frame_image_for_sale']) }}" alt="">
                                             </div>
-                                        @endif
+                                        @endif --}}
                                     </div>
                                     <div class="product-price mt-2">
                                         <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>

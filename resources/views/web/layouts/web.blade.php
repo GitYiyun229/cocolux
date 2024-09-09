@@ -86,13 +86,13 @@
         }
 
         .image-frame {
-            @if ($setting['frame_image_for_sale'])
+            /* @if ($setting['frame_image_for_sale'])
                 background: url('{{ asset($setting['frame_image_for_sale']) }}') center center no-repeat;
                 background-size: cover;
                 padding: 10px;
                 border-radius: 8px;
                 display: inline-block;
-            @endif
+            @endif */
         }
     </style>
 @endsection
