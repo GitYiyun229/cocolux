@@ -489,6 +489,12 @@
                                                 <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
                                                     class="img-fluid">
                                             </picture>
+                                            @if (!empty($item->image_deal))
+                                                <div class="position-absolute top-0 image-frame-top">
+                                                    <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
+                                                        alt="">
+                                                </div>
+                                            @endif
 
                                         </div>
                                         <div class="product-price">
@@ -598,6 +604,12 @@
                                             <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
                                                 class="img-fluid">
                                         </picture>
+                                           @if (!empty($item->image_deal))
+                                                <div class="position-absolute top-0 image-frame-top">
+                                                    <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
+                                                        alt="">
+                                                </div>
+                                            @endif
                                     </div>
                                     <div class="product-price">
                                         @if ($item->promotionItem)
@@ -613,7 +625,7 @@
                                             @endif
                                         @endif
                                     </div>
-                                    <div class="product-brand"  style="height:18px">
+                                    <div class="product-brand" style="height:18px">
                                         {{ $item->brand }}
                                     </div>
                                     <div class="product-title">

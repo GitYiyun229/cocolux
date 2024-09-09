@@ -674,7 +674,30 @@ class ProductController extends Controller
                 $query->select('id', 'sku', 'slug', 'title');
             }])->orderBy('is_default', 'DESC')->get();
 
-        $products = ProductOptions::select('product_options.id', 'product_options.title', 'product_options.slug', 'product_options.images', 'product_options.price', 'product_options.normal_price', 'product_options.normal_price', 'products.category_id', 'product_options.sku', 'product_options.brand', 'product_options.hot_deal', 'product_options.flash_deal')
+        $products = ProductOptions::select(
+            'product_options.id',
+            'product_options.title',
+            'product_options.slug',
+            'product_options.images',
+            'product_options.price',
+            'product_options.normal_price',
+            'product_options.normal_price',
+            'products.category_id',
+            'product_options.sku',
+            'product_options.brand',
+            'product_options.hot_deal',
+            'product_options.flash_deal',
+            'promotion_items.image_deal'
+        )
+            ->join('promotion_items', function ($join) use ($now) {
+                $join->on('product_options.sku', '=', 'promotion_items.sku')
+                    ->where('promotion_items.applied_start_time', '<=', $now)
+                    ->where('promotion_items.applied_stop_time', '>', $now)
+                    ->where(function ($query) {
+                        $query->where('promotion_items.type', 'hot_deal')
+                            ->orWhere('promotion_items.type', 'deal_hot');
+                    });
+            })
             ->where(['product_options.active' => 1])
             ->with(['promotionItem' => function ($query) use ($now) {
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
@@ -694,8 +717,17 @@ class ProductController extends Controller
 
         $list_cats = ProductsCategories::select('id', 'slug', 'title')->whereIn('id', explode(',', $product->product->category_path))->get();
 
-        $product_in_cat = ProductOptions::select('product_options.id', 'product_options.title', 'product_options.slug', 'product_options.images', 'product_options.price', 'product_options.normal_price', 'product_options.normal_price', 'products.category_id', 'product_options.sku', 'product_options.brand', 'product_options.hot_deal', 'product_options.flash_deal')
-            ->where(['product_options.active' => 1])
+        $product_in_cat = ProductOptions::select('product_options.id','promotion_items.image_deal','product_options.title', 'product_options.slug', 'product_options.images', 'product_options.price', 'product_options.normal_price', 'product_options.normal_price', 'products.category_id', 'product_options.sku', 'product_options.brand', 'product_options.hot_deal', 'product_options.flash_deal')
+            ->join('promotion_items', function ($join) use ($now) {
+                $join->on('product_options.sku', '=', 'promotion_items.sku')
+                    ->where('promotion_items.applied_start_time', '<=', $now)
+                    ->where('promotion_items.applied_stop_time', '>', $now)
+                    ->where(function ($query) {
+                        $query->where('promotion_items.type', 'hot_deal')
+                            ->orWhere('promotion_items.type', 'deal_hot');
+                    });
+            })
+        ->where(['product_options.active' => 1])
             ->whereHas('product', function ($query) use ($product) {
                 $query->where('active', 1)->where('category_id', $product->product->category_id);;
             })
@@ -901,7 +933,8 @@ class ProductController extends Controller
         $promotion_hots = $this->dealService->isHotDealAvailable($id);
         $productOptions = null;
         if ($promotion_hots) {
-            $productOptions = ProductOptions::select('product_options.id',
+            $productOptions = ProductOptions::select(
+                'product_options.id',
                 'product_options.sku',
                 'product_options.slug',
                 'product_options.title',
@@ -911,7 +944,8 @@ class ProductController extends Controller
                 'product_options.slug',
                 'product_options.images',
                 'product_options.parent_id',
-                'promotion_items.image_deal')
+                'promotion_items.image_deal'
+            )
                 ->join('promotion_items', function ($join) use ($now) {
                     $join->on('product_options.sku', '=', 'promotion_items.sku')
                         ->where('promotion_items.applied_start_time', '<=', $now)
