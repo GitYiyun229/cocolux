@@ -405,7 +405,9 @@
                                     @if ($product_cats && !empty($product_cats[$cat->id]))
                                         @forelse($product_cats[$cat->id] as $item)
                                             <a href="{{ route('detailProduct', ['slug' => !empty($item->slug) ? trim($item->slug) : $item->product->slug, 'sku' => $item->sku]) }}"
-                                                class="product-template @if($item->promotionItem ||($setting['frame_image_for_sale'] && $item->promotionItem && $item->promotionItem->applied_stop_time)) khung-sale @endif" >
+                                                class="product-template @if (
+                                                    $item->promotionItem ||
+                                                        ($setting['frame_image_for_sale'] && $item->promotionItem && $item->promotionItem->applied_stop_time)) khung-sale @endif">
                                                 @if ($item->promotionItem)
                                                     @if ($item->promotionItem->price != $item->normal_price)
                                                         <div class="product-discount">
@@ -430,15 +432,13 @@
                                                         <img data-src="{{ asset($item->image_first) }}"
                                                             alt="{{ $item->title }}" class="img-fluid lazy">
                                                     </picture>
-                                                    @if ($item->promotionItem)
-                                                        @if (!empty($item->promotionItem->image_deal))
-                                                            <div class="position-absolute top-0 image-frame-top">
-                                                                <img src="{{ asset($item->promotionItem->image_deal) }}"
-                                                                    alt="">
-                                                            </div>
-                                                        @endif
+                                                    @if ($item->promotionItem && !empty($item->promotionItem->image_deal))
+                                                        <div class="position-absolute top-0 image-frame-top">
+                                                            <img src="{{ asset($item->promotionItem->image_deal) }}"
+                                                                alt="">
+                                                        </div>
                                                     @else
-                                                        @if ($setting['frame_image_for_sale'] && $item->promotionItem && $item->promotionItem->applied_stop_time)
+                                                        @if (!empty($setting['frame_image_for_sale']) && $item->promotionItem && !empty($item->promotionItem->applied_stop_time))
                                                             <div class="position-absolute top-0 image-frame-top">
                                                                 <img src="{{ asset($setting['frame_image_for_sale']) }}"
                                                                     alt="">
