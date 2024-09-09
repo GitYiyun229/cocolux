@@ -13,7 +13,7 @@
                     @if (!empty($productOptions))
                         @forelse($productOptions as $item)
                             <a href="{{ route('detailProduct', ['slug' => !empty($item->slug) ? trim($item->slug) : trim($item->product->slug), 'sku' => $item->sku]) }}"
-                                class="product-template">
+                                class="product-template" style="padding: 0px 10px;">
                                 @if ($item->promotionItem)
                                     @if ($item->promotionItem->price != $item->normal_price)
                                         <div class="product-discount">
