@@ -25,6 +25,7 @@
                                                     <img src="{{ asset($item) }}" alt="{{ $product->title }}"
                                                         class="img-fluid">
                                                 </picture>
+
                                             </a>
                                         @empty
                                         @endforelse
@@ -32,8 +33,7 @@
                                 </div>
 
                                 <div class="thumbnail-image">
-                                    <a href="" data-bs-toggle="modal" data-bs-target="#imageModal">
-
+                                    <a class="product-thumbnail position-relative {{ $image_deal != '' ? 'image-frame2' : '' }}" href="" data-bs-toggle="modal" data-bs-target="#imageModal">
                                         <picture>
                                             <source
                                                 srcset="{{ !empty($list_image) ? asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $list_image[0])) : '' }}"
@@ -41,6 +41,12 @@
                                             <img src="{{ !empty($list_image) ? asset(replace_image($list_image[0])) : '' }}"
                                                 alt="{{ $product->title }}" class="img-fluid detail-thumbnail-image">
                                         </picture>
+                                        @if (!empty($image_deal))
+                                            <div class="position-absolute  top-0 bottom-0">
+                                                <img class="detail-thumbnail-image"  src="{{ asset( $image_deal) }}"
+                                                    alt="">
+                                            </div>
+                                        @endif
                                     </a>
                                     <div class="detail-share d-none">
                                         Thêm vào danh sách yêu thích
@@ -490,7 +496,7 @@
                                                     class="img-fluid">
                                             </picture>
                                             @if (!empty($item->image_deal))
-                                                 <div class="position-absolute top-0 bottom-0">
+                                                <div class="position-absolute top-0 bottom-0">
                                                     <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
                                                         alt="">
 
@@ -596,7 +602,8 @@
                                             </div>
                                         @endif
                                     @endif
-                                    <div class="product-thumbnail position-relative  @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame1 @endif">
+                                    <div
+                                        class="product-thumbnail position-relative  @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame1 @endif">
 
                                         <picture>
                                             <source
@@ -605,13 +612,13 @@
                                             <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
                                                 class="img-fluid">
                                         </picture>
-                                           @if (!empty($item->image_deal))
-                                                <div class="position-absolute top-0 bottom-0">
-                                                    <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
-                                                        alt="">
+                                        @if (!empty($item->image_deal))
+                                            <div class="position-absolute top-0 bottom-0">
+                                                <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
+                                                    alt="">
 
-                                                </div>
-                                            @endif
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="product-price">
                                         @if ($item->promotionItem)

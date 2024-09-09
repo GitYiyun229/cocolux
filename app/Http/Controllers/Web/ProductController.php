@@ -594,13 +594,20 @@ class ProductController extends Controller
         $now = Carbon::now();
         $product = ProductOptions::where(['sku' => $sku])->with(['product' => function ($query) {
             $query->select('id', 'category_id', 'sku', 'slug', 'title', 'attributes', 'category_path', 'attribute_path', 'category_id', 'description', 'brand', 'seo_title', 'seo_keyword', 'seo_description', 'canonical_url');
-        }])->with(['promotionItem' => function ($query) use ($now) {
-            $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
-                ->orderBy('price', 'asc');
-        }])->where('sku', '!=', null)->first();
+        }])
+            ->with(['promotionItem' => function ($query) use ($now) {
+                $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
+                    ->orderBy('price', 'asc');
+            }])->where('sku', '!=', null)->first();
+        $image_deal = '';
+        if (!empty($product['promotionItem']['image_deal'])) {
+            $image_deal= $product['promotionItem']['image_deal'];
+        }
+        // dd($product['promotionItem']['image_deal']);
         if (!$product) {
             abort(404);
         }
+
         $list_coupon = Voucher::where(['status' => 1, 'active' => 1])->with(['items'])->orderBy('ordering', 'ASC')->get();
         // dd($list_coupon);
         if (isset($product->stocks)) {
@@ -717,7 +724,7 @@ class ProductController extends Controller
 
         $list_cats = ProductsCategories::select('id', 'slug', 'title')->whereIn('id', explode(',', $product->product->category_path))->get();
 
-        $product_in_cat = ProductOptions::select('product_options.id','promotion_items.image_deal','product_options.title', 'product_options.slug', 'product_options.images', 'product_options.price', 'product_options.normal_price', 'product_options.normal_price', 'products.category_id', 'product_options.sku', 'product_options.brand', 'product_options.hot_deal', 'product_options.flash_deal')
+        $product_in_cat = ProductOptions::select('product_options.id', 'promotion_items.image_deal', 'product_options.title', 'product_options.slug', 'product_options.images', 'product_options.price', 'product_options.normal_price', 'product_options.normal_price', 'products.category_id', 'product_options.sku', 'product_options.brand', 'product_options.hot_deal', 'product_options.flash_deal')
             ->join('promotion_items', function ($join) use ($now) {
                 $join->on('product_options.sku', '=', 'promotion_items.sku')
                     ->where('promotion_items.applied_start_time', '<=', $now)
@@ -727,7 +734,7 @@ class ProductController extends Controller
                             ->orWhere('promotion_items.type', 'deal_hot');
                     });
             })
-        ->where(['product_options.active' => 1])
+            ->where(['product_options.active' => 1])
             ->whereHas('product', function ($query) use ($product) {
                 $query->where('active', 1)->where('category_id', $product->product->category_id);;
             })
@@ -750,7 +757,7 @@ class ProductController extends Controller
         SEOTools::twitter()->setSite('cocolux.com');
         SEOMeta::setKeywords($product->product->seo_keyword ? $product->product->seo_keyword : $product->title);
 
-        return view('web.product.detail', compact('product', 'products', 'list_image', 'list_product_parent', 'attribute_value', 'stocks', 'product_root', 'list_cats', 'stores', 'count_store', 'brand', 'product_in_cat', 'comments', 'percentages', 'averageRating', 'list_coupon'));
+        return view('web.product.detail', compact('product', 'image_deal', 'products', 'list_image', 'list_product_parent', 'attribute_value', 'stocks', 'product_root', 'list_cats', 'stores', 'count_store', 'brand', 'product_in_cat', 'comments', 'percentages', 'averageRating', 'list_coupon'));
     }
 
     public function is_new()
