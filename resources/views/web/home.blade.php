@@ -405,7 +405,7 @@
                                     @if ($product_cats && !empty($product_cats[$cat->id]))
                                         @forelse($product_cats[$cat->id] as $item)
                                             <a href="{{ route('detailProduct', ['slug' => !empty($item->slug) ? trim($item->slug) : $item->product->slug, 'sku' => $item->sku]) }}"
-                                                class="product-template">
+                                                class="product-template @if($item->promotionItem ||($setting['frame_image_for_sale'] && $item->promotionItem && $item->promotionItem->applied_stop_time)) khung-sale @endif" >
                                                 @if ($item->promotionItem)
                                                     @if ($item->promotionItem->price != $item->normal_price)
                                                         <div class="product-discount">
@@ -422,7 +422,7 @@
                                                     @endif
                                                 @endif
                                                 <div
-                                                    class="product-thumbnail position-relative  @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame1 @endif">
+                                                    class="product-thumbnail position-relative  @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame-home-1 @endif">
                                                     <picture>
                                                         <source
                                                             srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"

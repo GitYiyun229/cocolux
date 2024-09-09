@@ -49,6 +49,18 @@
                 padding: 0px 10px 0px 10px;
 
         }
+      a.product-template.khung-sale {
+
+
+                padding: 0px ;
+
+        }
+      a.product-template.khung-sale .product-discount{
+
+
+                right: 0;
+
+        }
         .image-frame-home-1 {
 
                 border-radius: 8px;
@@ -62,7 +74,7 @@
                 border-radius: 8px;
                 display: inline-block;
                 padding: 0px 5px 0px 5px;
-           
+
         }
 
         .product-template.image-frame--2 {
