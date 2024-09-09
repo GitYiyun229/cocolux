@@ -232,6 +232,7 @@
                                                     <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item_fl->image_deal)) }}"
                                                         alt="">
                                                 </div>
+                                         
                                             @endif
                                         </div>
                                         <div class="product-price px-2">
