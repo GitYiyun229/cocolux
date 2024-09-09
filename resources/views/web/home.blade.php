@@ -432,7 +432,7 @@
                                                     </picture>
                                                     @if ($item->promotionItem)
                                                         @if ($item->promotionItem->image_deal)
-                                                            <div class="position-absolute top-0 image-frame-top">
+                                                            <div class="position-absolute top-0 bottom-0">
                                                                 <img src="{{ asset($item->promotionItem->image_deal) }}"
                                                                     alt="">
                                                             </div>
