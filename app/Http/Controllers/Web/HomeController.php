@@ -200,6 +200,7 @@ class HomeController extends Controller
         $cat_sub = array();
         foreach ($cats as $item) {
             $product_cats[$item->id] = ProductOptions::where(['is_default' => 1, 'active' => 1])
+                
                 ->whereHas('product', function ($query) use ($item) {
                     $query->where('is_home', 1)->where('category_path', 'like', '%' . $item->id . '%');
                 })

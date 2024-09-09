@@ -223,7 +223,6 @@
                                                 <source
                                                     srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item_fl->image_first)) }}"
                                                     type="image/webp">
-
                                                 <img src="{{ asset($item_fl->image_first) }}"
                                                     alt="{{ $item_fl->title }}" class="img-fluid">
                                             </picture>
@@ -423,7 +422,7 @@
                                                     @endif
                                                 @endif
                                                 <div
-                                                    class="product-thumbnail position-relative @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame-home-1 @endif">
+                                                    class="product-thumbnail position-relative  @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame-home-1 @endif">
                                                     <picture>
                                                         <source
                                                             srcset="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_first)) }}"
@@ -431,14 +430,23 @@
                                                         <img data-src="{{ asset($item->image_first) }}"
                                                             alt="{{ $item->title }}" class="img-fluid lazy">
                                                     </picture>
-                                                    @if ($setting['frame_image_for_sale'] && $item->promotionItem && $item->promotionItem->applied_stop_time)
-                                                        <div class="position-absolute top-0 bottom-0"> <img
-                                                                src="{{ asset($setting['frame_image_for_sale']) }}"
-                                                                alt="">
-                                                        </div>
+                                                    @if ($item->promotionItem)
+                                                        @if ($item->promotionItem->image_deal)
+                                                            <div class="position-absolute top-0 image-frame-top">
+                                                                <img src="{{ asset($item->promotionItem->image_deal) }}"
+                                                                    alt="">
+                                                            </div>
+                                                        @endif
+                                                    @else
+                                                        @if ($setting['frame_image_for_sale'] && $item->promotionItem && $item->promotionItem->applied_stop_time)
+                                                            <div class="position-absolute top-0 bottom-0">
+                                                                <img src="{{ asset($setting['frame_image_for_sale']) }}"
+                                                                    alt="">
+                                                            </div>
+                                                        @endif
                                                     @endif
-
                                                 </div>
+
                                                 <div class="product-price">
                                                     @if ($item->promotionItem)
                                                         <div class="public-price">
@@ -456,7 +464,6 @@
                                                     @endif
                                                 </div>
                                                 <div class="product-brand" style="height: 18px">
-                                                    {{-- {{ $item->brand }} --}}
                                                     {{ $item->brand ?? $item->opbrand }}
                                                 </div>
                                                 <div class="product-title">
