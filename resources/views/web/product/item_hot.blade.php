@@ -10,39 +10,41 @@
                 </div>
 
                 <div class="layout-detail-main bg-white d-grid mb-4">
-                    @if(!empty($productOptions))
+                    @if (!empty($productOptions))
                         @forelse($productOptions as $item)
-                            <a href="{{ route('detailProduct',['slug'=>!empty($item->slug)?trim($item->slug):trim($item->product->slug), 'sku' =>$item->sku]) }}" class="product-template">
-                                @if($item->promotionItem)
-                                    @if($item->promotionItem->price != $item->normal_price)
+                            <a href="{{ route('detailProduct', ['slug' => !empty($item->slug) ? trim($item->slug) : trim($item->product->slug), 'sku' => $item->sku]) }}"
+                                class="product-template">
+                                @if ($item->promotionItem)
+                                    @if ($item->promotionItem->price != $item->normal_price)
                                         <div class="product-discount">
-                                            <span class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
+                                            <span
+                                                class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
                                         </div>
                                     @endif
                                 @else
-                                    @if($item->price != $item->normal_price)
+                                    @if ($item->price != $item->normal_price)
                                         <div class="product-discount">
-                                            <span class="pe-1">{{ percentage_price($item->price, $item->normal_price) }}</span>
+                                            <span
+                                                class="pe-1">{{ percentage_price($item->price, $item->normal_price) }}</span>
                                         </div>
                                     @endif
                                 @endif
-                                <div class="product-thumbnail @if($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
+                                <div class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
                                     <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
-                                     @if ($setting['frame_image_for_hot'])
-                                                    <div class="position-absolute top-0 bottom-0"> <img
-                                                            src="{{ asset($setting['frame_image_for_hot']) }}"
-                                                            alt=""></div>
-                                                @endif
+                                    @if ($setting['frame_image_for_hot'])
+                                        <div class="position-absolute top-0 bottom-0"> <img
+                                                src="{{ asset($setting['frame_image_for_hot']) }}" alt=""></div>
+                                    @endif
                                 </div>
                                 <div class="product-price">
-                                    @if($item->promotionItem)
+                                    @if ($item->promotionItem)
                                         <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
-                                        @if($item->promotionItem->price != $item->normal_price)
+                                        @if ($item->promotionItem->price != $item->normal_price)
                                             <div class="origin-price">{{ format_money($item->normal_price) }}</div>
                                         @endif
                                     @else
                                         <div class="public-price">{{ format_money($item->price) }}</div>
-                                        @if($item->price != $item->normal_price)
+                                        @if ($item->price != $item->normal_price)
                                             <div class="origin-price">{{ format_money($item->normal_price) }}</div>
                                         @endif
                                     @endif
