@@ -37,8 +37,8 @@ class AppServiceProvider extends ServiceProvider
         $setting = null;
         $settings = null;
         $currentUrl = URL::current(); // Lấy URL hiện tại
-        $expectedUrl = "https://cocolux:8890"; // URL bạn đã cấu hình
-        // $expectedUrl = "https://cocolux.com"; // URL bạn đã cấu hình
+        // $expectedUrl = "https://cocolux:8890"; // URL bạn đã cấu hình
+        $expectedUrl = "https://cocolux.com"; // URL bạn đã cấu hình
         if (!Str::startsWith($currentUrl, $expectedUrl)) {
             dd(); // Hiển thị và dừng thực thi để kiểm tra $currentUrl và $expectedUrl
         }
