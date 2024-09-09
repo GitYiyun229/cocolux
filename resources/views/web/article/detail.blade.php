@@ -111,9 +111,8 @@
                                                     class="img-fluid">
                                                 @if (!empty($item->image_deal))
                                                     <div class="position-absolute top-0 image-frame-top">
-                                                        <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
+                                                        <img style="object-fit: fill !important;"  src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
                                                             alt="">
-
                                                     </div>
                                                 @endif
                                             </div>
@@ -227,7 +226,7 @@
                                                     class="img-fluid">
                                                        @if (!empty($item->image_deal))
                                                     <div class="position-absolute top-0 image-frame-top">
-                                                        <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
+                                                        <img  style="object-fit: fill !important;" src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
                                                             alt="">
                                                     </div>
                                                 @endif
