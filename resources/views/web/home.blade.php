@@ -430,21 +430,21 @@
                                                         <img data-src="{{ asset($item->image_first) }}"
                                                             alt="{{ $item->title }}" class="img-fluid lazy">
                                                     </picture>
-                                                    @if ($item->promotionItem)
+                                                    {{-- @if ($item->promotionItem)
                                                         @if ($item->promotionItem->image_deal)
                                                             <div class="position-absolute top-0 bottom-0">
                                                                 <img src="{{ asset($item->promotionItem->image_deal) }}"
                                                                     alt="">
                                                             </div>
                                                         @endif
-                                                    @else
+                                                    @else --}}
                                                         @if ($setting['frame_image_for_sale'] && $item->promotionItem && $item->promotionItem->applied_stop_time)
                                                             <div class="position-absolute top-0 bottom-0">
                                                                 <img src="{{ asset($setting['frame_image_for_sale']) }}"
                                                                     alt="">
                                                             </div>
                                                         @endif
-                                                    @endif
+                                                    {{-- @endif --}}
                                                 </div>
 
                                                 <div class="product-price">
