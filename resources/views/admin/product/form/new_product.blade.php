@@ -27,7 +27,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>@lang('form.product.category')</label> <span class="text-danger">*</span>
-                                    <select name="category_id" id="category_id" class="form-control" required>
+                                    <select name="category_id" id="category_id" class="form-control select2" required>
                                         @forelse($categories as $key => $category)
                                             <option value="{{ $category['id'] }}" {{ isset($product->category_id) && $product->category_id == $category['id'] ? 'selected' : old('category_id') == $category['id'] ? 'selected' : '' }}>{{ $category['title'] }}</option>
                                         @empty
