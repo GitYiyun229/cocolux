@@ -344,7 +344,7 @@
             <div class="slide-template bg-white mb-5">
                 <div class="slide-top">
                     <a href="{{ route('homeBrand') }}" class="slide-title">
-                        <h3>Thương hiệu nổi bật</h3>
+                        <h2>Thương hiệu nổi bật</h2>
                     </a>
                     <a href="{{ route('homeBrand') }}" class="slide-more">
                         Xem tất cả
