@@ -75,64 +75,59 @@ class HomeController extends Controller
         $subBanner2 = Banners::where(['active' => 1, 'type' => 'home_v1_primary_banner_2'])->select('id', 'url', 'image_url', 'mobile_url', 'content')->get(); // (3 ảnh hiển thị dưới cùng trên phần danh sách chi nhánh)
 
         $now = Carbon::now();
-        // $product_flash = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id', 'brand as opbrand')
-        //     ->join('promotion_items', function ($join) use ($now) {
-        //         $join->on('product_options.sku', '=', 'promotion_items.sku')
-        //             ->where('promotion_items.applied_start_time', '<=', $now)
-        //             ->where('promotion_items.applied_stop_time', '>', $now)
-        //             ->where('promotion_items.type', 'flash_deal');
-        //     })
-        //     ->where(['is_default' => 1, 'active' => 1])
-        //     ->with(['product' => function ($query) {
-        //         $query->select('id', 'slug', 'brand');
-        //     }])
-        //     ->whereHas('product', function ($query) {
-        //         $query->where(['is_hot' => 1, 'active' => 1]);
-        //     })
-        //     ->whereHas('promotionItem', function ($query) use ($now) {
-        //         $query->where('applied_start_time', '<=', $now)
-        //             ->where('applied_stop_time', '>', $now)
-        //             ->where('type', 'flash_deal');
-        //     })
-        //     ->with(['promotionItem' => function ($query) use ($now) {
-        //         $query->select('applied_stop_time', 'sku', 'price', 'image_deal')
-        //             ->where('applied_start_time', '<=', $now)
-        //             ->where('applied_stop_time', '>', $now)
-        //             ->where('type', 'flash_deal')
-        //             ->orderBy('price', 'asc');
-        //     }])
-        //     ->whereNotNull('slug')->whereNotNull('sku')->orderBy('updated_at', 'desc')->limit(15)->get();
-        $product_flash = ProductOptions::select(
-            'product_options.id as product_option_id',
-            'product_options.sku',
-            'product_options.slug',
-            'product_options.title',
-            'product_options.price',
-            'product_options.normal_price',
-            'product_options.slug',
-            'product_options.images',
-            'product_options.parent_id',
-            'product_options.brand as opbrand',
-            'promotion_items.image_deal as image_deal'
-        )
-            ->leftJoin('promotion_items', function ($join) use ($now) {
-                $join->on('product_options.sku', '=', 'promotion_items.sku')
-                    ->where('promotion_items.applied_start_time', '<=', $now)
-                    ->where('promotion_items.applied_stop_time', '>', $now)
-                    ->where('promotion_items.type', 'flash_deal');
-            })
-            ->where(['product_options.is_default' => 1, 'product_options.active' => 1])
+        $product_flash = ProductOptions::select('id', 'sku', 'slug', 'title', 'price', 'normal_price', 'slug', 'images', 'parent_id', 'brand as opbrand')
+
+            ->where(['is_default' => 1, 'active' => 1])
             ->with(['product' => function ($query) {
                 $query->select('id', 'slug', 'brand');
             }])
             ->whereHas('product', function ($query) {
                 $query->where(['is_hot' => 1, 'active' => 1]);
             })
-            ->whereNotNull('product_options.slug')
-            ->whereNotNull('product_options.sku')
-            ->orderBy('product_options.updated_at', 'desc')
-            ->limit(15)
-            ->get();
+            ->whereHas('promotionItem', function ($query) use ($now) {
+                $query->where('applied_start_time', '<=', $now)
+                    ->where('applied_stop_time', '>', $now)
+                    ->where('type', 'flash_deal');
+            })
+            ->with(['promotionItem' => function ($query) use ($now) {
+                $query->select('applied_stop_time', 'sku', 'price', 'image_deal')
+                    ->where('applied_start_time', '<=', $now)
+                    ->where('applied_stop_time', '>', $now)
+                    ->where('type', 'flash_deal')
+                    ->orderBy('price', 'asc');
+            }])
+            ->whereNotNull('slug')->whereNotNull('sku')->orderBy('updated_at', 'desc')->limit(15)->get();
+        // $product_flash = ProductOptions::select(
+        //     'product_options.id as product_option_id',
+        //     'product_options.sku',
+        //     'product_options.slug',
+        //     'product_options.title',
+        //     'product_options.price',
+        //     'product_options.normal_price',
+        //     'product_options.slug',
+        //     'product_options.images',
+        //     'product_options.parent_id',
+        //     'product_options.brand as opbrand',
+        //     'promotion_items.image_deal as image_deal'
+        // )
+        //     ->leftJoin('promotion_items', function ($join) use ($now) {
+        //         $join->on('product_options.sku', '=', 'promotion_items.sku')
+        //             ->where('promotion_items.applied_start_time', '<=', $now)
+        //             ->where('promotion_items.applied_stop_time', '>', $now)
+        //             ->where('promotion_items.type', 'flash_deal');
+        //     })
+        //     ->where(['product_options.is_default' => 1, 'product_options.active' => 1])
+        //     ->with(['product' => function ($query) {
+        //         $query->select('id', 'slug', 'brand');
+        //     }])
+        //     ->whereHas('product', function ($query) {
+        //         $query->where(['is_hot' => 1, 'active' => 1]);
+        //     })
+        //     ->whereNotNull('product_options.slug')
+        //     ->whereNotNull('product_options.sku')
+        //     ->orderBy('product_options.updated_at', 'desc')
+        //     ->limit(15)
+        //     ->get();
         $flash_skus = $product_flash->pluck('sku');
 
         $product_hots = ProductOptions::where(['active' => 1, 'is_default' => 1])
