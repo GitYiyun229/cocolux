@@ -205,7 +205,6 @@
                     </div>
                     <div class="slide-main">
                         <div class="slide-template-slide owl-carousel">
-
                             @if (!empty($product_flash))
                                 @forelse($product_flash as $item_fl)
                                     <a href="{{ route('detailProduct', ['slug' => trim($item_fl->slug), 'sku' => $item_fl->sku]) }}"
@@ -232,7 +231,7 @@
                                                     <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item_fl->image_deal)) }}"
                                                         alt="">
                                                 </div>
-                                         
+
                                             @endif
                                         </div>
                                         <div class="product-price px-2">
@@ -263,7 +262,9 @@
             @if (!empty($product_hots))
                 <div class="slide-template bg-white mb-4 pt-2">
                     <div class="slide-top">
-                        <a href="{{ route('itemHotProducts') }}" class="slide-title">
+                        <a href="{{ route('itemHotProducts') }}" class="slide-title d-flex align-items-center gap-2">
+                               <img data-src="{{ asset('images/hot_tag.svg') }}" alt="flash deal icon"
+                                    class="img-fluid lazy" height="18" width="18">
                             <h2>Sản phẩm hot</h2>
                         </a>
                         <a href="{{ route('itemHotProducts') }}" class="slide-more">
