@@ -115,7 +115,7 @@ class HomeController extends Controller
             'product_options.brand as opbrand',
             'promotion_items.image_deal as image_deal'
         )
-            ->join('promotion_items', function ($join) use ($now) {
+            ->leftJoin('promotion_items', function ($join) use ($now) {
                 $join->on('product_options.sku', '=', 'promotion_items.sku')
                     ->where('promotion_items.applied_start_time', '<=', $now)
                     ->where('promotion_items.applied_stop_time', '>', $now)
