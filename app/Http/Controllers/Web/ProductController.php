@@ -696,7 +696,7 @@ class ProductController extends Controller
             'product_options.flash_deal',
             'promotion_items.image_deal'
         )
-            ->join('promotion_items', function ($join) use ($now) {
+            ->leftJoin('promotion_items', function ($join) use ($now) {
                 $join->on('product_options.sku', '=', 'promotion_items.sku')
                     ->where('promotion_items.applied_start_time', '<=', $now)
                     ->where('promotion_items.applied_stop_time', '>', $now)
@@ -725,7 +725,7 @@ class ProductController extends Controller
         $list_cats = ProductsCategories::select('id', 'slug', 'title')->whereIn('id', explode(',', $product->product->category_path))->get();
 
         $product_in_cat = ProductOptions::select('product_options.id', 'promotion_items.image_deal', 'product_options.title', 'product_options.slug', 'product_options.images', 'product_options.price', 'product_options.normal_price', 'product_options.normal_price', 'products.category_id', 'product_options.sku', 'product_options.brand', 'product_options.hot_deal', 'product_options.flash_deal')
-            ->join('promotion_items', function ($join) use ($now) {
+            ->leftJoin('promotion_items', function ($join) use ($now) {
                 $join->on('product_options.sku', '=', 'promotion_items.sku')
                     ->where('promotion_items.applied_start_time', '<=', $now)
                     ->where('promotion_items.applied_stop_time', '>', $now)
