@@ -33,7 +33,8 @@
                                 </div>
 
                                 <div class="thumbnail-image">
-                                    <a class="product-thumbnail position-relative {{ $image_deal != '' ? 'image-frame2' : '' }}" href="" data-bs-toggle="modal" data-bs-target="#imageModal">
+                                    <a class="product-thumbnail position-relative {{ $image_deal != '' ? 'image-frame2' : '' }}"
+                                        href="" data-bs-toggle="modal" data-bs-target="#imageModal">
                                         <picture>
                                             <source
                                                 srcset="{{ !empty($list_image) ? asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $list_image[0])) : '' }}"
@@ -43,7 +44,7 @@
                                         </picture>
                                         @if (!empty($image_deal))
                                             <div class="position-absolute  top-0 bottom-0">
-                                                <img class="detail-thumbnail-image"  src="{{ asset( $image_deal) }}"
+                                                <img class="detail-thumbnail-image" src="{{ asset($image_deal) }}"
                                                     alt="">
                                             </div>
                                         @endif
@@ -115,7 +116,7 @@
                                         @if (!empty($list_product_parent))
                                             @forelse($list_product_parent as $item)
                                                 <a href="{{ route('detailProduct', ['slug' => !empty($item->slug) ? trim($item->slug) : trim($product_root->slug), 'sku' => $item->sku]) }}"
-                                                    class="@if ($product->id == $item->id) active @endif"
+                                                    class="@if ($product->id == $item->id) active @endif   {{ $image_deal != '' ? 'position-relative p-0 image-frame2' : '' }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     data-bs-title="{{ $item->title }}">
                                                     <picture>
@@ -125,6 +126,12 @@
                                                         <img src="{{ asset($item->image_first) }}"
                                                             alt="{{ $item->title }}" class="img-fluid">
                                                     </picture>
+                                                    @if (!empty($image_deal))
+                                                        <div class="position-absolute  top-0 bottom-0">
+                                                            <img class="detail-thumbnail-image"
+                                                                src="{{ asset($image_deal) }}" alt="">
+                                                        </div>
+                                                    @endif
                                                 </a>
                                             @empty
                                             @endforelse
