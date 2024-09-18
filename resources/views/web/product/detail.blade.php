@@ -116,7 +116,7 @@
                                         @if (!empty($list_product_parent))
                                             @forelse($list_product_parent as $item)
                                                 <a href="{{ route('detailProduct', ['slug' => !empty($item->slug) ? trim($item->slug) : trim($product_root->slug), 'sku' => $item->sku]) }}"
-                                                    class="@if ($product->id == $item->id) active @endif   {{ $$item->promotionItem->image_deal != '' ? 'position-relative p-0 image-frame2' : '' }}"
+                                                    class="@if ($product->id == $item->id) active @endif   {{ $item->promotionItem->image_deal != '' ? 'position-relative p-0 image-frame2' : '' }}"
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     data-bs-title="{{ $item->title }}">
                                                     <picture>
