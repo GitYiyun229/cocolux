@@ -126,10 +126,10 @@
                                                         <img src="{{ asset($item->image_first) }}"
                                                             alt="{{ $item->title }}" class="img-fluid">
                                                     </picture>
-                                                    @if (!empty($image_deal))
+                                                    @if (!empty($item->promotionItem->image_deal))
                                                         <div class="position-absolute  top-0 bottom-0">
                                                             <img class="detail-thumbnail-image"
-                                                                src="{{ asset($image_deal) }}" alt="">
+                                                                src="{{ asset($item->promotionItem->image_deal) }}" alt="">
                                                         </div>
                                                     @endif
                                                 </a>
