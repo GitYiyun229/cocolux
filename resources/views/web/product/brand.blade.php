@@ -215,7 +215,7 @@
             top: 0px;
         }
 
-        .image-frame-top img {
+       .product-template .product-thumbnail img {
             height: 188px;
         }
     </style>
