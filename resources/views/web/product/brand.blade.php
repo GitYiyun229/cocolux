@@ -203,6 +203,22 @@
 @section('link')
     @parent
     <link rel="stylesheet" href="{{ mix('css/web/product-cat.css') }}">
+    <style>
+        .image-frame2 {
+            border-radius: 8px;
+            display: inline-block;
+            padding: 0px 5px 0px 5px;
+
+        }
+
+        .image-frame-top {
+            top: 0px;
+        }
+
+        .image-frame-top img {
+            height: 188px;
+        }
+    </style>
 @endsection
 
 @section('script')
