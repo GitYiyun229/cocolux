@@ -142,7 +142,7 @@
                                                             alt="">
                                                     </div>
                                                 @else
-                                                    @if ($setting['frame_image_for_sale'])
+                                                    @if ($setting['frame_image_for_sale'] && $item->promotionItem && $item->promotionItem->applied_stop_time)
                                                         <div class="position-absolute  bottom-0 image-frame-top"> <img
                                                                 src="{{ asset($setting['frame_image_for_sale']) }}"
                                                                 alt="">
