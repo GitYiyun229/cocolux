@@ -131,12 +131,25 @@
                                             @endif
                                             @if (empty($item->stocks))
                                                 <img src="{{ asset('images/ic-tam-het-hang.png') }}" alt="Tạm hết hàng"
-                                                    class="img-fluid lazy position-absolute" >
+                                                    class="img-fluid lazy position-absolute">
                                             @endif
                                             <div
-                                                class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame @endif">
+                                                class="product-thumbnail @if ($item->promotionItem && $item->promotionItem->applied_stop_time) image-frame2 @endif">
                                                 <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}"
                                                     class="img-fluid">
+                                                @if (!empty($item->promotionItem->image_deal))
+                                                    <div class="position-absolute  bottom-0 image-frame-top">
+                                                        <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->promotionItem->image_deal)) }}"
+                                                            alt="">
+                                                    </div>
+                                                @else
+                                                    @if ($setting['frame_image_for_sale'] && $item->promotionItem && $item->promotionItem->applied_stop_time)
+                                                        <div class="position-absolute  bottom-0 image-frame-top"> <img
+                                                                src="{{ asset($setting['frame_image_for_sale']) }}"
+                                                                alt="">
+                                                        </div>
+                                                    @endif
+                                                @endif
                                             </div>
                                             <div class="product-price">
                                                 @if ($item->promotionItem)
@@ -178,6 +191,28 @@
 @section('link')
     @parent
     <link rel="stylesheet" href="{{ mix('css/web/product-cat.css') }}">
+    <style>
+        .image-frame2 {
+            border-radius: 8px;
+            display: inline-block;
+            padding: 0px 5px 0px 5px;
+
+        }
+
+        .image-frame-top {
+            top: 0px;
+        }
+
+        .product-template .product-thumbnail img {
+            height: 188px;
+        }
+
+        @media (max-width: 960px) {
+            .product-template .product-thumbnail img {
+                height: 140px;
+            }
+        }
+    </style>
 @endsection
 
 @section('script')
