@@ -215,8 +215,14 @@
             top: 0px;
         }
 
-       .product-template .product-thumbnail img {
+        .product-template .product-thumbnail img {
             height: 188px;
+        }
+
+        @media (max-width: 960px) {
+            .product-template .product-thumbnail img {
+                height: 140px;
+            }
         }
     </style>
 @endsection
