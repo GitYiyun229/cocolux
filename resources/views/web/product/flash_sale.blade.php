@@ -57,6 +57,7 @@
                                     @endif
                                 </a>
                             @else
+                                <div>{{ $item->sku }}</div>
                             @endif
                         @empty
                         @endforelse
