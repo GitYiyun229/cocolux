@@ -228,10 +228,9 @@
 
                                             @if (!empty($item_fl->promotionItem->image_deal))
                                                 <div class="position-absolute top-0 image-frame-top">
-                                                    <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item_fl->promotionItem->image_deal)) }}"
+                                                    <img src="{{ asset( $item_fl->promotionItem->image_deal)) }}"
                                                         alt="">
                                                 </div>
-
                                             @endif
                                         </div>
                                         <div class="product-price px-2">
