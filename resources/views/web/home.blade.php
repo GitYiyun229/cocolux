@@ -228,8 +228,8 @@
 
                                             @if (!empty($item_fl->promotionItem->image_deal))
                                                 <div class="position-absolute top-0 image-frame-top">
-                                                    <img src="{{ asset( $item_fl->promotionItem->image_deal)) }}"
-                                                        alt="">
+                                             
+                                                        <img src="{{ asset($item_fl->promotionItem->image_deal) }}" alt="">
                                                 </div>
                                             @endif
                                         </div>
