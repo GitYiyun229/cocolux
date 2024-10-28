@@ -125,7 +125,7 @@
                                                 @if (!empty($item->image_deal))
                                                     <div class="position-absolute top-0 image-frame-top">
                                                         <img style="object-fit: fill !important;"
-                                                            src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
+                                                            src="{{ asset( $item->image_deal) }}"
                                                             alt="">
                                                     </div>
                                                 @endif
@@ -242,7 +242,7 @@
                                                 @if (!empty($item->image_deal))
                                                     <div class="position-absolute top-0 image-frame-top">
                                                         <img style="object-fit: fill !important;"
-                                                            src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
+                                                            src="{{ asset($item->image_deal) }}"
                                                             alt="">
                                                     </div>
                                                 @endif
