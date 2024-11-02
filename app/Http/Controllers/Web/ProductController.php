@@ -677,7 +677,7 @@ class ProductController extends Controller
         $list_product_parent = ProductOptions::select('id', 'images', 'title', 'slug', 'sku')
             ->where(['parent_id' => $product->parent_id])
             ->where('sku', '!=', null)
-            ->where('is_default', '=', 1)
+            // ->where('is_default', '=', 1)
             ->with(['promotionItem' => function ($query) use ($now) {
                 $query->where('applied_start_time', '<=', $now)->where('applied_stop_time', '>', $now)
                     ->orderBy('price', 'asc');
