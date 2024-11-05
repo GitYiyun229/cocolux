@@ -138,7 +138,7 @@
                                                     class="img-fluid">
                                                 @if (!empty($item->promotionItem->image_deal))
                                                     <div class="position-absolute  bottom-0 image-frame-top">
-                                                        <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->promotionItem->image_deal)) }}"
+                                                        <img src="{{ asset( $item->promotionItem->image_deal) }}"
                                                             alt="">
                                                     </div>
                                                 @else
