@@ -504,7 +504,7 @@
                                             </picture>
                                             @if (!empty($item->image_deal))
                                                 <div class="position-absolute top-0 bottom-0">
-                                                    <img src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->image_deal)) }}"
+                                                    <img src="{{ asset($item->image_deal) }}"
                                                         alt="">
 
                                                 </div>
@@ -623,7 +623,7 @@
                                          @if (!empty($item->promotionItem->image_deal))
                                                         <div class="position-absolute  top-0 bottom-0">
                                                             <img class="detail-thumbnail-image"
-                                                                src="{{ asset(preg_replace('/\.(png|jpg|jpeg)$/i', '.webp', $item->promotionItem->image_deal)) }}" alt="">
+                                                                src="{{ asset( $item->promotionItem->image_deal) }}" alt="">
                                                         </div>
                                                     @endif
                                     </div>
