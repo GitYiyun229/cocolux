@@ -138,7 +138,8 @@ class AttributeValueController extends Controller
      */
     public function destroy($id)
     {
-        AttributeValues::delete($id);
+        $attribute_value = AttributeValues::findOrFail($id);
+        $attribute_value->delete();
 
         return [
             'status' => true,
