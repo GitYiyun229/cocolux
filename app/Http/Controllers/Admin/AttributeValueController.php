@@ -109,8 +109,13 @@ class AttributeValueController extends Controller
      */
     public function update(UpdateAttributeValue $req, $id)
     {
+
         try {
             $data = $req->validated();
+            $data['seo_title'] = $req->input('seo_title');
+            $data['seo_keyword'] = $req->input('seo_keyword');
+            $data['seo_description'] = $req->input('seo_description');
+
             $attribute_value = AttributeValues::findOrFail($id);
             if (empty($data['slug'])){
                 $data['slug'] = $req->input('slug')?\Str::slug($req->input('slug'), '-'):\Str::slug($data['name'], '-');
