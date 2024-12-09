@@ -181,7 +181,7 @@ Route::group(['namespace' => 'Web'], function () {
     Route::get('/404', function () {
         return redirect()->route('404');
     })->name('404');
- 
+
 });
 
 
