@@ -42,7 +42,9 @@ class StoreController extends Controller
     public function create()
     {
         $list_city = City::all();
-        return view('admin.store.create', compact('list_city'));
+        $list_district = Districts::all();
+        $list_wards = Wards::all();
+        return view('admin.store.create', compact('list_city', 'list_district', 'list_wards'));
     }
 
     /**
