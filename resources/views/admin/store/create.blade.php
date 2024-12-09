@@ -13,5 +13,15 @@
     </div>
 @endsection
 
-
+@section('script')
+    @parent
+    <script src="{{ asset('js/select2.js') }}?v=1.0"></script>
+    <script>
+        $(document).ready(function() {
+            $('.selec2-box').select2({
+                // Các tùy chọn Select2 ở đây
+            });
+        });
+    </script>
+@endsection
 

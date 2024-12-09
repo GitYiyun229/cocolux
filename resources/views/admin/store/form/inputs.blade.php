@@ -48,7 +48,7 @@
 
                     <select name="district" id="district" class="selec2-box form-control"
                         onchange="loadward(this.value)" required>
-                        @forelse(@$list_district as $item)
+                        @forelse($list_district as $item)
                             <option value="{{ $item->code }}" {{ (isset($store) && $store->district == $item->code ? 'selected' : old('district') == $item->code) ? 'selected' : '' }}>{{ $item->name }}</option>
                         @empty
                         @endforelse
