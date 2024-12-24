@@ -137,17 +137,17 @@ class ApiNhanhController extends Controller
         $response = $client->post($this->linkApi . $api, [
             'form_params' => $this->request_params
         ]);
-        \Log::info([
-            'request_params' => $this->request_params,
-            'line' => __LINE__,
-            'method' => __METHOD__
-        ]);
+        // \Log::info([
+        //     'request_params' => $this->request_params,
+        //     'line' => __LINE__,
+        //     'method' => __METHOD__
+        // ]);
         $data = json_decode($response->getBody(), true);
-        \Log::info([
-            'data_receive' => $data,
-            'line' => __LINE__,
-            'method' => __METHOD__
-        ]);
+        // \Log::info([
+        //     'data_receive' => $data,
+        //     'line' => __LINE__,
+        //     'method' => __METHOD__
+        // ]);
         if ($data['code'] == 1) {
             return end($data['data']['products']);
         } else {
