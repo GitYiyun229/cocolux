@@ -12,6 +12,7 @@
                     @endif
                 </div>
                 <div class="layout-detail-main bg-white d-grid mb-4">
+
                     @if (!empty($productOptions))
                         @forelse($productOptions as $item)
                             @if (!empty($item->slug) && !empty($item->sku))
