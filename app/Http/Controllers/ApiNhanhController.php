@@ -554,7 +554,7 @@ class ApiNhanhController extends Controller
             }
         }
         $products = OrderItem::with(['productOption' => function ($query) {
-            $query->select('id', 'sku', 'slug', 'title');
+            $query->select('id', 'sku', 'slug', 'title', 'nhanhid');
         }])->where('order_id', $id)->get();
         $phone = '0' . $order->tel;
         $payment = $order->payment == 0 ? 'COD' : 'thanh toán Online';
@@ -564,7 +564,7 @@ class ApiNhanhController extends Controller
             $idNhanh = $this->searchProducts($item->productOption->sku);
             $detail = [
                 "id" => $item->productOption->id,
-                "idNhanh" => isset($idNhanh['idNhanh']) ? $idNhanh['idNhanh'] : '',
+                "idNhanh" => isset($idNhanh['idNhanh']) ? $idNhanh['idNhanh'] : $item->nhanhid,
                 "quantity" => $item->product_number,
                 "name" => $item->product_title,
                 "code" => $item->productOption->sku,
