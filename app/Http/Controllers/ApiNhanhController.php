@@ -128,26 +128,14 @@ class ApiNhanhController extends Controller
     {
         $api = "/api/product/search";
         $client = new Client();
-
         $data = [
             "name" => $sku
         ];
-
         $this->request_params['data'] = json_encode($data);
         $response = $client->post($this->linkApi . $api, [
             'form_params' => $this->request_params
         ]);
-        // \Log::info([
-        //     'request_params' => $this->request_params,
-        //     'line' => __LINE__,
-        //     'method' => __METHOD__
-        // ]);
         $data = json_decode($response->getBody(), true);
-        // \Log::info([
-        //     'data_receive' => $data,
-        //     'line' => __LINE__,
-        //     'method' => __METHOD__
-        // ]);
         if ($data['code'] == 1) {
             return end($data['data']['products']);
         } else {
@@ -572,7 +560,12 @@ class ApiNhanhController extends Controller
 
         $productList = [];
         foreach ($products as $item) {
-            $idNhanh = $this->searchProducts($item->productOption->sku);
+            // $idNhanh = $this->searchProducts($item->productOption->sku);
+            \Log::info([
+                'idnhanh' => $item->nhanhid . ' - ' . $products,
+                'line' => __LINE__,
+                'method' => __METHOD__
+            ]);
             $detail = [
                 "id" => $item->productOption->id,
                 "idNhanh" => isset($idNhanh['idNhanh']) ? $idNhanh['idNhanh'] : $item->nhanhid,
