@@ -78,6 +78,11 @@ class ApiNhanhController extends Controller
                         return response()->json(['message' => 'OK'], 200);
                     } elseif ($resp['event'] == 'orderUpdate') {
                         $this->updateOrder($resp['data']);
+                        \Log::info([
+                            'updateOrder' => $resp['data'],
+                            'line' => __LINE__,
+                            'method' => __METHOD__
+                        ]);
                         return response()->json(['message' => 'OK'], 200);
                     } else {
                         return response()->json(['message' => 'OK'], 200);
