@@ -137,6 +137,12 @@ class ApiNhanhController extends Controller
             'form_params' => $this->request_params
         ]);
         $data = json_decode($response->getBody(), true);
+        \Log::info([
+            'json' => $data,
+            'data' => $this->request_params,
+            'line' => __LINE__,
+            'method' => __METHOD__
+        ]);
         if ($data['code'] == 1) {
             return end($data['data']['products']);
         } else {
