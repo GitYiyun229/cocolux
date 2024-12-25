@@ -128,26 +128,14 @@ class ApiNhanhController extends Controller
     {
         $api = "/api/product/search";
         $client = new Client();
-
         $data = [
             "name" => $sku
         ];
-
         $this->request_params['data'] = json_encode($data);
         $response = $client->post($this->linkApi . $api, [
             'form_params' => $this->request_params
         ]);
-        // \Log::info([
-        //     'request_params' => $this->request_params,
-        //     'line' => __LINE__,
-        //     'method' => __METHOD__
-        // ]);
         $data = json_decode($response->getBody(), true);
-        // \Log::info([
-        //     'data_receive' => $data,
-        //     'line' => __LINE__,
-        //     'method' => __METHOD__
-        // ]);
         if ($data['code'] == 1) {
             return end($data['data']['products']);
         } else {
@@ -189,23 +177,23 @@ class ApiNhanhController extends Controller
                 }
             }
 
-            $product_nhanh = $this->searchProducts($product->sku);
-            if ($product_nhanh) {
-                $data = array();
-                if (isset($product_nhanh['price'])) {
-                    $data['price'] = $product_nhanh['price'];
-                }
-                if (isset($product_nhanh['price']) && $product->normal_price < $product_nhanh['price']) {
-                    $data['normal_price'] = $product_nhanh['price'];
-                }
-                if (isset($product_nhanh['oldPrice'])) {
-                    $data['normal_price'] = $product_nhanh['oldPrice'];
-                }
-                $data['stocks'] = $stocks;
-                $data['nhanhid'] = $product_nhanh['idNhanh'];
-                $data['brand'] = $product_nhanh['brandName'];
-                return $product->update($data);
-            }
+            // $product_nhanh = $this->searchProducts($product->sku);
+            // if ($product_nhanh) {
+            //     $data = array();
+            //     if (isset($product_nhanh['price'])) {
+            //         $data['price'] = $product_nhanh['price'];
+            //     }
+            //     if (isset($product_nhanh['price']) && $product->normal_price < $product_nhanh['price']) {
+            //         $data['normal_price'] = $product_nhanh['price'];
+            //     }
+            //     if (isset($product_nhanh['oldPrice'])) {
+            //         $data['normal_price'] = $product_nhanh['oldPrice'];
+            //     }
+            //     $data['stocks'] = $stocks;
+            //     $data['nhanhid'] = $product_nhanh['idNhanh'];
+            //     $data['brand'] = $product_nhanh['brandName'];
+            //     return $product->update($data);
+            // }
             return response()->json(['message' => 'OK'], 200);
         } catch (\Exception $e) {
             \Log::info([
@@ -572,7 +560,7 @@ class ApiNhanhController extends Controller
 
         $productList = [];
         foreach ($products as $item) {
-            $idNhanh = $this->searchProducts($item->productOption->sku);
+            // $idNhanh = $this->searchProducts($item->productOption->sku);
             $detail = [
                 "id" => $item->productOption->id,
                 "idNhanh" => isset($idNhanh['idNhanh']) ? $idNhanh['idNhanh'] : $item->nhanhid,
