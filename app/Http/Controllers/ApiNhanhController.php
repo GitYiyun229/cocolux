@@ -94,11 +94,7 @@ class ApiNhanhController extends Controller
                 return response()->json(['message' => 'OK'], 200);
             }
         } catch (\Exception $e) {
-            \Log::info([
-                'message' => $e->getMessage(),
-                'line' => __LINE__,
-                'method' => __METHOD__
-            ]);
+           
             return response()->json(['message' => 'OK'], 200);
         }
     }
@@ -647,6 +643,7 @@ class ApiNhanhController extends Controller
             return response()->json(['message' => 'OK'], 200);
         } catch (\Exception $e) {
             \Log::info([
+                'message_error' => "Đơn lỗi " . $resp_end,
                 'message' => $e->getMessage(),
                 'line' => __LINE__,
                 'method' => __METHOD__
