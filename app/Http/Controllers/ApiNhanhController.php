@@ -562,22 +562,22 @@ class ApiNhanhController extends Controller
         $products = OrderItem::with(['productOption' => function ($query) {
             $query->select('id', 'sku', 'slug', 'title', 'nhanhid');
         }])->where('order_id', $id)->get();
-        \Log::info([
-            'order_push' => $products,
-            'line' => __LINE__,
-            'method' => __METHOD__
-        ]);
+        // \Log::info([
+        //     'order_push' => $products,
+        //     'line' => __LINE__,
+        //     'method' => __METHOD__
+        // ]);
         $phone = '0' . $order->tel;
         $payment = $order->payment == 0 ? 'COD' : 'thanh toán Online';
 
         $productList = [];
         foreach ($products as $item) {
             // $idNhanh = $this->searchProducts($item->productOption->sku);
-            \Log::info([
-                'idnhanh' => $item->nhanhid . ' - ' . $products,
-                'line' => __LINE__,
-                'method' => __METHOD__
-            ]);
+            // \Log::info([
+            //     'idnhanh' => $item->nhanhid . ' - ' . $products,
+            //     'line' => __LINE__,
+            //     'method' => __METHOD__
+            // ]);
             $detail = [
                 "id" => $item->productOption->id,
                 "idNhanh" => isset($idNhanh['idNhanh']) ? $idNhanh['idNhanh'] : $item->nhanhid,
@@ -654,7 +654,7 @@ class ApiNhanhController extends Controller
             return response()->json(['message' => 'OK'], 200);
         } catch (\Exception $e) {
             \Log::info([
-                'message_error' => "Đơn lỗi " . $resp_end,
+                // 'message_error' => "Đơn lỗi " . $resp_end,
                 'message' => $e->getMessage(),
                 'line' => __LINE__,
                 'method' => __METHOD__
