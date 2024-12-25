@@ -184,23 +184,23 @@ class ApiNhanhController extends Controller
                 }
             }
 
-            $product_nhanh = $this->searchProducts($product->sku);
-            if ($product_nhanh) {
-                $data = array();
-                if (isset($product_nhanh['price'])) {
-                    $data['price'] = $product_nhanh['price'];
-                }
-                if (isset($product_nhanh['price']) && $product->normal_price < $product_nhanh['price']) {
-                    $data['normal_price'] = $product_nhanh['price'];
-                }
-                if (isset($product_nhanh['oldPrice'])) {
-                    $data['normal_price'] = $product_nhanh['oldPrice'];
-                }
-                $data['stocks'] = $stocks;
-                $data['nhanhid'] = $product_nhanh['idNhanh'];
-                $data['brand'] = $product_nhanh['brandName'];
-                return $product->update($data);
-            }
+            // $product_nhanh = $this->searchProducts($product->sku);
+            // if ($product_nhanh) {
+            //     $data = array();
+            //     if (isset($product_nhanh['price'])) {
+            //         $data['price'] = $product_nhanh['price'];
+            //     }
+            //     if (isset($product_nhanh['price']) && $product->normal_price < $product_nhanh['price']) {
+            //         $data['normal_price'] = $product_nhanh['price'];
+            //     }
+            //     if (isset($product_nhanh['oldPrice'])) {
+            //         $data['normal_price'] = $product_nhanh['oldPrice'];
+            //     }
+            //     $data['stocks'] = $stocks;
+            //     $data['nhanhid'] = $product_nhanh['idNhanh'];
+            //     $data['brand'] = $product_nhanh['brandName'];
+            //     return $product->update($data);
+            // }
             return response()->json(['message' => 'OK'], 200);
         } catch (\Exception $e) {
             \Log::info([
