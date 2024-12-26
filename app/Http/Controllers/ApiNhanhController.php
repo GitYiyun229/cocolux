@@ -563,22 +563,13 @@ class ApiNhanhController extends Controller
         $products = OrderItem::with(['productOption' => function ($query) {
             $query->select('id', 'sku', 'slug', 'title', 'nhanhid');
         }])->where('order_id', $id)->get();
-        // \Log::info([
-        //     'order_push' => $products,
-        //     'line' => __LINE__,
-        //     'method' => __METHOD__
-        // ]);
         $phone = '0' . $order->tel;
         $payment = $order->payment == 0 ? 'COD' : 'thanh toán Online';
 
         $productList = [];
         foreach ($products as $item) {
             $idNhanh = $this->searchProducts($item->productOption->sku);
-            // \Log::info([
-            //     'idnhanh' => $item->nhanhid . ' - ' . $products,
-            //     'line' => __LINE__,
-            //     'method' => __METHOD__
-            // ]);
+
             $detail = [
                 "id" => $item->productOption->id,
                 "idNhanh" => isset($idNhanh['idNhanh']) ? $idNhanh['idNhanh'] : $item->nhanhid,
@@ -613,7 +604,11 @@ class ApiNhanhController extends Controller
             "productList" => $productList
         ];
         $this->request_params['data'] = json_encode($data);
-
+        \Log::info([
+            'orderdatanhanh' => json_encode($data),
+            'line' => __LINE__,
+            'method' => __METHOD__
+        ]);
         $response = $client->post($this->linkApi . $api, [
             'form_params' => $this->request_params
         ]);
