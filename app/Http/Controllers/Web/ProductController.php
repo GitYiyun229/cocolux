@@ -50,7 +50,7 @@ class ProductController extends Controller
         'version' => 2.0,
         'appId' => 73906,
         'businessId' => 157423,
-        'accessToken' => "XGZ5UbNYrSuFHqccvHaRyUmalKXWbQnMTPKKQTmH5zWchgEFv9SRKUPAI4UIlREA0XksifCQ8KGaRq2g7XwWL1xI2DmmZhFvRUln5WItTuXTdpAH1n1hMjMI6THgwou4Jqb3L",
+        'accessToken' => "jXrAdiwFvWDqO4KNWEhq2Qp2ClE4NzeD3YC37CNWHqEmzxmfCGG8ZBay87Y1OaevTq7lFX8M0CSCNRDGEQmiFU6pykQ4SJNtyplz480hyd5hqDcNviewmRvdujfOHCHwsVMVF5PGAzMImPZtSUGnPPMEjMQ9zJS1t8zQ1xf",
     ];
 
     protected $productCategoryRepository, $productRepository;
