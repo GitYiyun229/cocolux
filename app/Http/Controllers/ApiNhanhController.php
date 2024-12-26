@@ -32,7 +32,8 @@ class ApiNhanhController extends Controller
         'appId' => 73906,
         'businessId' => 157423,
         //        'accessToken' => "TROS2a2WscEKpwXk3cpRWPDa2vGVTPb0EbYIDK6Vlv6QqAKXFWGVa7wRgQDbKqgUd1Xey6VEJnnPxh8jOEJ2L8fCqK6AZ9TYUmGMW2Z1Ugy7p0lY6RJoQlisj0wHsZV55kCSD0xRrCkYQVzrQjEpD2ne2hdTdh1ED",
-        'accessToken' => "XGZ5UbNYrSuFHqccvHaRyUmalKXWbQnMTPKKQTmH5zWchgEFv9SRKUPAI4UIlREA0XksifCQ8KGaRq2g7XwWL1xI2DmmZhFvRUln5WItTuXTdpAH1n1hMjMI6THgwou4Jqb3L",
+        // 'accessToken' => "XGZ5UbNYrSuFHqccvHaRyUmalKXWbQnMTPKKQTmH5zWchgEFv9SRKUPAI4UIlREA0XksifCQ8KGaRq2g7XwWL1xI2DmmZhFvRUln5WItTuXTdpAH1n1hMjMI6THgwou4Jqb3L",
+        'accessToken' => "jXrAdiwFvWDqO4KNWEhq2Qp2ClE4NzeD3YC37CNWHqEmzxmfCGG8ZBay87Y1OaevTq7lFX8M0CSCNRDGEQmiFU6pykQ4SJNtyplz480hyd5hqDcNviewmRvdujfOHCHwsVMVF5PGAzMImPZtSUGnPPMEjMQ9zJS1t8zQ1xf",
     ];
 
     protected $dealService;
@@ -137,12 +138,12 @@ class ApiNhanhController extends Controller
             'form_params' => $this->request_params
         ]);
         $data = json_decode($response->getBody(), true);
-        \Log::info([
-            'json' => $data,
-            'data' => $this->request_params,
-            'line' => __LINE__,
-            'method' => __METHOD__
-        ]);
+        // \Log::info([
+        //     'json' => $data,
+        //     'data' => $this->request_params,
+        //     'line' => __LINE__,
+        //     'method' => __METHOD__
+        // ]);
         if ($data['code'] == 1) {
             return end($data['data']['products']);
         } else {
@@ -184,23 +185,23 @@ class ApiNhanhController extends Controller
                 }
             }
 
-            // $product_nhanh = $this->searchProducts($product->sku);
-            // if ($product_nhanh) {
-            //     $data = array();
-            //     if (isset($product_nhanh['price'])) {
-            //         $data['price'] = $product_nhanh['price'];
-            //     }
-            //     if (isset($product_nhanh['price']) && $product->normal_price < $product_nhanh['price']) {
-            //         $data['normal_price'] = $product_nhanh['price'];
-            //     }
-            //     if (isset($product_nhanh['oldPrice'])) {
-            //         $data['normal_price'] = $product_nhanh['oldPrice'];
-            //     }
-            //     $data['stocks'] = $stocks;
-            //     $data['nhanhid'] = $product_nhanh['idNhanh'];
-            //     $data['brand'] = $product_nhanh['brandName'];
-            //     return $product->update($data);
-            // }
+            $product_nhanh = $this->searchProducts($product->sku);
+            if ($product_nhanh) {
+                $data = array();
+                if (isset($product_nhanh['price'])) {
+                    $data['price'] = $product_nhanh['price'];
+                }
+                if (isset($product_nhanh['price']) && $product->normal_price < $product_nhanh['price']) {
+                    $data['normal_price'] = $product_nhanh['price'];
+                }
+                if (isset($product_nhanh['oldPrice'])) {
+                    $data['normal_price'] = $product_nhanh['oldPrice'];
+                }
+                $data['stocks'] = $stocks;
+                $data['nhanhid'] = $product_nhanh['idNhanh'];
+                $data['brand'] = $product_nhanh['brandName'];
+                return $product->update($data);
+            }
             return response()->json(['message' => 'OK'], 200);
         } catch (\Exception $e) {
             \Log::info([
@@ -572,7 +573,7 @@ class ApiNhanhController extends Controller
 
         $productList = [];
         foreach ($products as $item) {
-            // $idNhanh = $this->searchProducts($item->productOption->sku);
+            $idNhanh = $this->searchProducts($item->productOption->sku);
             // \Log::info([
             //     'idnhanh' => $item->nhanhid . ' - ' . $products,
             //     'line' => __LINE__,
