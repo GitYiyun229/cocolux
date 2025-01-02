@@ -604,11 +604,11 @@ class ApiNhanhController extends Controller
             "productList" => $productList
         ];
         $this->request_params['data'] = json_encode($data);
-        \Log::info([
-            'orderdatanhanh' => json_encode($data),
-            'line' => __LINE__,
-            'method' => __METHOD__
-        ]);
+        // \Log::info([
+        //     'orderdatanhanh' => json_encode($data),
+        //     'line' => __LINE__,
+        //     'method' => __METHOD__
+        // ]);
         $response = $client->post($this->linkApi . $api, [
             'form_params' => $this->request_params
         ]);
