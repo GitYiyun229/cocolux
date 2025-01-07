@@ -37,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
         $setting = null;
         $settings = null;
         $currentUrl = URL::current(); // Lấy URL hiện tại
+        $currentDomain = parse_url($currentUrl, PHP_URL_HOST);
         $expectedUrls = [
             "https://cocolux:8890", // URL bạn đã cấu hình
             "https://cocolux.com"   // URL bạn đã cấu hình
@@ -48,6 +49,11 @@ class AppServiceProvider extends ServiceProvider
                 $valid = true;
                 break;
             }
+        }
+        $valid = in_array($currentDomain, $expectedUrls);
+
+        if (!$valid) {
+            dd($currentUrl, $expectedUrls); // Hiển thị và dừng thực thi để kiểm tra $currentUrl và $expectedDomains
         }
 
         if (!$valid) {
