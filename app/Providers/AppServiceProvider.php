@@ -42,7 +42,10 @@ class AppServiceProvider extends ServiceProvider
             "https://cocolux:8890", // URL bạn đã cấu hình
             "https://cocolux.com"   // URL bạn đã cấu hình
         ];
-
+        $expectedDomains = [
+            "cocolux:8890", // Domain bạn đã cấu hình
+            "cocolux.com"   // Domain bạn đã cấu hình
+        ];
         $valid = false;
         foreach ($expectedUrls as $expectedUrl) {
             if (Str::startsWith($currentUrl, $expectedUrl)) {
@@ -50,9 +53,9 @@ class AppServiceProvider extends ServiceProvider
                 break;
             }
         }
-        $valid = in_array($currentDomain, $expectedUrls);
+        $valida = in_array($currentDomain, $expectedDomains);
 
-        if (!$valid) {
+        if (!$valida) {
             dd(); // Hiển thị và dừng thực thi để kiểm tra $currentUrl và $expectedDomains
         }
 
