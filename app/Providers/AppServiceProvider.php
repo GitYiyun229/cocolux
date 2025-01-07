@@ -53,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
         $valid = in_array($currentDomain, $expectedUrls);
 
         if (!$valid) {
-            dd($currentUrl, $expectedUrls); // Hiển thị và dừng thực thi để kiểm tra $currentUrl và $expectedDomains
+            dd(); // Hiển thị và dừng thực thi để kiểm tra $currentUrl và $expectedDomains
         }
 
         if (!$valid) {
