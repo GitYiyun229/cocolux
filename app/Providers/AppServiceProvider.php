@@ -58,10 +58,25 @@ class AppServiceProvider extends ServiceProvider
         if (!$valida) {
             dd(); // Hiển thị và dừng thực thi để kiểm tra $currentUrl và $expectedDomains
         }
-
         if (!$valid) {
             dd(); // Hiển thị và dừng thực thi để kiểm tra $currentUrl và $expectedUrls
         }
+
+        $referer = request()->headers->get('referer');
+        $refererDomain = $referer ? parse_url($referer, PHP_URL_HOST) : null;
+        $currentDomain = request()->getHost(); // Lấy domain hiện tại
+
+        // Kiểm tra domain hiện tại có hợp lệ không
+        $validCurrentDomain = in_array($currentDomain, $expectedDomains);
+        // Kiểm tra referer (nếu có)
+        $validRefererDomain = !$refererDomain || in_array($refererDomain, $expectedDomains);
+
+        // Tổng hợp điều kiện hợp lệ
+        if (!$validCurrentDomain || !$validRefererDomain) {
+            dd();
+        }
+
+
         if (!Request::is('admin/*')) {
             if (Schema::hasTable('setting')) {
                 // $setting = $settingRepository->getActive('active',1)->pluck('value', 'key');
