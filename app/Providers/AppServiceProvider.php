@@ -37,15 +37,11 @@ class AppServiceProvider extends ServiceProvider
         $setting = null;
         $settings = null;
         $currentUrl = URL::current(); // Lấy URL hiện tại
-        $currentDomain = parse_url($currentUrl, PHP_URL_HOST);
         $expectedUrls = [
             "https://cocolux:8890", // URL bạn đã cấu hình
             "https://cocolux.com"   // URL bạn đã cấu hình
         ];
-        $expectedDomains = [
-            "cocolux:8890", // Domain bạn đã cấu hình
-            "cocolux.com"   // Domain bạn đã cấu hình
-        ];
+
         $valid = false;
         foreach ($expectedUrls as $expectedUrl) {
             if (Str::startsWith($currentUrl, $expectedUrl)) {
@@ -53,30 +49,10 @@ class AppServiceProvider extends ServiceProvider
                 break;
             }
         }
-        $valida = in_array($currentDomain, $expectedDomains);
 
-        if (!$valida) {
-            dd(); // Hiển thị và dừng thực thi để kiểm tra $currentUrl và $expectedDomains
-        }
         if (!$valid) {
             dd(); // Hiển thị và dừng thực thi để kiểm tra $currentUrl và $expectedUrls
         }
-
-        $referer = request()->headers->get('referer');
-        $refererDomain = $referer ? parse_url($referer, PHP_URL_HOST) : null;
-        $currentDomain = request()->getHost(); // Lấy domain hiện tại
-
-        // Kiểm tra domain hiện tại có hợp lệ không
-        $validCurrentDomain = in_array($currentDomain, $expectedDomains);
-        // Kiểm tra referer (nếu có)
-        $validRefererDomain = !$refererDomain || in_array($refererDomain, $expectedDomains);
-
-        // Tổng hợp điều kiện hợp lệ
-        if (!$validCurrentDomain || !$validRefererDomain) {
-            dd();
-        }
-
-
         if (!Request::is('admin/*')) {
             if (Schema::hasTable('setting')) {
                 // $setting = $settingRepository->getActive('active',1)->pluck('value', 'key');
