@@ -156,7 +156,7 @@
 
                                 </div>
                                 <div class="product-brand">
-                                {!! $item->brand ?? $item->opbrand !!}
+                                    {!! $item->product_brand ?? $item->opbrand !!}
 
                                 </div>
                                 <div class="product-title">

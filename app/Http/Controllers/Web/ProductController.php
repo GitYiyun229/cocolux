@@ -264,7 +264,7 @@ class ProductController extends Controller
                     ->orderBy('price', 'asc');
             }])
             ->select('product_options.id', 'product_options.sku', 'product_options.title', 'product_options.parent_id', 'product_options.stocks', 'product_options.price', 'product_options.normal_price', 'product_options.slug', 'product_options.images', 'product_options.hot_deal', 'product_options.flash_deal')
-            ->addSelect('products.title as product_name', 'product_options.brand as opbrand')
+            ->addSelect('products.title as product_name', 'product_options.brand as opbrand' ,'products.brand AS product_brand')
             ->where('product_options.sku', '!=', null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->orderByRaw("CASE WHEN stocks = '[]' THEN 1 ELSE 0 END ")
