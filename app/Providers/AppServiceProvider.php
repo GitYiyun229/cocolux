@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
                 break;
             }
         }
-
+        
         if (!$valid) {
             dd(); // Hiển thị và dừng thực thi để kiểm tra $currentUrl và $expectedUrls
         }
