@@ -267,7 +267,8 @@ class ProductController extends Controller
             ->addSelect('products.title as product_name', 'product_options.brand as opbrand' ,'products.brand AS product_brand')
             ->where('product_options.sku', '!=', null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
-            ->orderByRaw("CASE WHEN stocks = '[]' THEN 1 ELSE 0 END ")
+            ->orderByRaw("CASE WHEN stocks IS NULL OR stocks = '[]' THEN 1 ELSE 0 END")
+
             ->orderBy($columnToSort, $orderDirection)
             ->paginate(30);
         // ->toSql();
