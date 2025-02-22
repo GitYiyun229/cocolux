@@ -52,6 +52,7 @@ class PromotionsController extends Controller
             $sort_product = $request->input('sort_product');
             $data = array();
             $data['name'] = $request->input('name');
+            $data['link'] = $request->input('link');
             $data['thumbnail_url'] = $request->input('thumbnail_url');
             $data['image_deal'] = $request->input('image_deal');
             $data['type'] = $type;
@@ -153,6 +154,7 @@ class PromotionsController extends Controller
             $sort_product = $request->input('sort_product');
             $data = array();
             $data['name'] = $request->input('name');
+            $data['link'] = $request->input('link');
             $data['thumbnail_url'] = $request->input('thumbnail_url');
             $data['image_deal'] = $request->input('image_deal');
             $data['type'] = $type;

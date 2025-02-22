@@ -13,6 +13,18 @@
                     @endif
                 </div>
             </div>
+            <div class="col-sm-6">
+                <!-- text input -->
+                <div class="form-group">
+                    <label>@lang('form.promotion.link')</label> <span class="text-danger">*</span>
+                    <input type="text" class="form-control" name="link" value="{{ isset($promotion) ? $promotion->link : old('link') }}" required>
+                    @if ($errors->has('link'))
+                        <span class="help-block text-danger">
+                    <strong>{{ $errors->first('link') }}</strong>
+                </span>
+                    @endif
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-6">

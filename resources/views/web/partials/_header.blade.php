@@ -1,12 +1,12 @@
 @if (!$isMobile)
-    @if (isset($setting['image_top_head']) && !empty($setting['image_top_head']))
-        <div class="banner-top-image_top_head w-100 overflow-hidden" style="max-height:80px">
-            <a href="{{ $setting['link_banner_header_top'] }}" title="cocolux">
-                <img src="{{ $setting['image_top_head'] }}" alt="cocolux"
-                    class="img-fluid w-100 overflow-hidden" style="max-height:80px">
-            </a>
-        </div>
-    @endif
+@if (isset($setting['image_top_head']) && !empty($setting['image_top_head']))
+<div class="banner-top-image_top_head w-100 overflow-hidden" style="max-height:80px">
+    <a href="{{ $setting['link_banner_header_top'] }}" title="cocolux" target="_blank">
+        <img src="{{ $setting['image_top_head'] }}" alt="cocolux"
+            class="img-fluid w-100 overflow-hidden" style="max-height:80px">
+    </a>
+</div>
+@endif
 @endif
 <div class="header-top">
     <div class="container">
@@ -26,61 +26,61 @@
             <img src="{{ $setting['logo_scroll'] }}" alt="cocolux" class="img-fluid logo-icon">
         </a>
         @if (!$isMobile)
-            <div class="header-menu">
-                <div class="menu-item menu-site">
-                    <a href="">
-                        <i class="fa-solid fa-bars"></i>
-                        Danh mục sản phẩm
-                    </a>
-                    <div class="menu-content">
-                        @forelse($cat_products as $item)
-                            <div class="menu-item">
-                                <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}"
-                                    class="menu-btn">{{ $item->title }} <i class="fa-solid fa-angle-right"></i></a>
-                                @if (count($item->children) > 0)
-                                    <div class="menu-content">
-                                        <div class="position-relative h-100 w-100">
-                                            <div class="menu-group-top">
-                                                <a
-                                                    href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}?sort=1">Nổi
-                                                    bật</a>
-                                                <a
-                                                    href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}?sort=2">Bán
-                                                    chạy</a>
-                                                <a
-                                                    href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}?sort=3">Hàng
-                                                    mới</a>
-                                            </div>
-                                            <div class="menu-group-bottom">
-                                                @forelse($item->children as $child)
-                                                    <div class="menu-col-item">
-                                                        <a href="{{ route('catProduct', ['slug' => $child->slug, 'id' => $child->id]) }}"
-                                                            class="item-parent">{{ $child->title }}</a>
-                                                        @if (count($child->children) > 0)
-                                                            @forelse($child->children as $lv3)
-                                                                <a href="{{ route('catProduct', ['slug' => $lv3->slug, 'id' => $lv3->id]) }}"
-                                                                    class="item-child">{{ $lv3->title }}</a>
-                                                            @empty
-                                                            @endforelse
-                                                        @endif
-                                                    </div>
-                                                @empty
-                                                @endforelse
-                                            </div>
-                                            <div class="menu-poster 2345234">
-                                                @if (!empty($item->image))
-                                                    <img src="{{ $item->image }}" alt="342442">
-                                                @endif
-                                            </div>
-                                        </div>
+        <div class="header-menu">
+            <div class="menu-item menu-site">
+                <a href="">
+                    <i class="fa-solid fa-bars"></i>
+                    Danh mục sản phẩm
+                </a>
+                <div class="menu-content">
+                    @forelse($cat_products as $item)
+                    <div class="menu-item">
+                        <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}"
+                            class="menu-btn">{{ $item->title }} <i class="fa-solid fa-angle-right"></i></a>
+                        @if (count($item->children) > 0)
+                        <div class="menu-content">
+                            <div class="position-relative h-100 w-100">
+                                <div class="menu-group-top">
+                                    <a
+                                        href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}?sort=1">Nổi
+                                        bật</a>
+                                    <a
+                                        href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}?sort=2">Bán
+                                        chạy</a>
+                                    <a
+                                        href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}?sort=3">Hàng
+                                        mới</a>
+                                </div>
+                                <div class="menu-group-bottom">
+                                    @forelse($item->children as $child)
+                                    <div class="menu-col-item">
+                                        <a href="{{ route('catProduct', ['slug' => $child->slug, 'id' => $child->id]) }}"
+                                            class="item-parent">{{ $child->title }}</a>
+                                        @if (count($child->children) > 0)
+                                        @forelse($child->children as $lv3)
+                                        <a href="{{ route('catProduct', ['slug' => $lv3->slug, 'id' => $lv3->id]) }}"
+                                            class="item-child">{{ $lv3->title }}</a>
+                                        @empty
+                                        @endforelse
+                                        @endif
                                     </div>
-                                @endif
+                                    @empty
+                                    @endforelse
+                                </div>
+                                <div class="menu-poster 2345234">
+                                    @if (!empty($item->image))
+                                    <img src="{{ $item->image }}" alt="342442">
+                                    @endif
+                                </div>
                             </div>
-                        @empty
-                        @endforelse
+                        </div>
+                        @endif
                     </div>
+                    @empty
+                    @endforelse
                 </div>
             </div>
+        </div>
         @endif
         <div class="header-main-menu">
             <form action="{{ route('search') }}" name="search_product" id="search_product" method="get">
@@ -92,17 +92,19 @@
                     <div class="dropdown-menu header-main-dropdown">
                         <div class="dropdown-item item-parent">Tất cả</div>
                         @forelse($cat_products as $item)
-                            <section>
-                                <div class="dropdown-item item-parent" data-value="{{ $item->id }}">
-                                    {{ $item->title }}</div>
-                                @if (count($item->children) > 0)
-                                    @forelse($item->children as $child)
-                                        <div class="dropdown-item item-child" data-value="{{ $child->id }}">
-                                            {{ $child->title }}</div>
-                                    @empty
-                                    @endforelse
-                                @endif
-                            </section>
+                        <section>
+                            <div class="dropdown-item item-parent" data-value="{{ $item->id }}">
+                                {{ $item->title }}
+                            </div>
+                            @if (count($item->children) > 0)
+                            @forelse($item->children as $child)
+                            <div class="dropdown-item item-child" data-value="{{ $child->id }}">
+                                {{ $child->title }}
+                            </div>
+                            @empty
+                            @endforelse
+                            @endif
+                        </section>
                         @empty
                         @endforelse
                     </div>
@@ -131,95 +133,95 @@
     </div>
 </div>
 @if (!$isMobile)
-    <div class="header-bottom">
-        <div class="container header-bottom-menu header-menu">
-            {{-- <div class="menu-item menu-site @if (request()->route()->getName() == 'home') active @endif"> --}}
-            <div class="menu-item menu-site @if (request()->route() && request()->route()->getName() == 'home') active @endif">
+<div class="header-bottom">
+    <div class="container header-bottom-menu header-menu">
+        {{-- <div class="menu-item menu-site @if (request()->route()->getName() == 'home') active @endif"> --}}
+        <div class="menu-item menu-site @if (request()->route() && request()->route()->getName() == 'home') active @endif">
 
-                <a href="">
-                    <i class="fa-solid fa-bars"></i>
-                    Danh mục sản phẩm
-                </a>
-                <div class="menu-content">
-                    @forelse($cat_products as $item)
-                        <div class="menu-item">
-                            <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}"
-                                class="menu-btn">{{ $item->title }} <i class="fa-solid fa-angle-right"></i></a>
-                            @if (count($item->children) > 0)
-                                <div class="menu-content">
-                                    <div class="position-relative h-100 w-100">
-                                        <div class="menu-group-top">
-                                            <a
-                                                href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}?sort=1">Nổi
-                                                bật</a>
-                                            <a
-                                                href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}?sort=2">Bán
-                                                chạy</a>
-                                            <a
-                                                href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}?sort=3">Hàng
-                                                mới</a>
-                                        </div>
-                                        <div class="menu-group-bottom">
-                                            @forelse($item->children as $child)
-                                                <div class="menu-col-item">
-                                                    <a href="{{ route('catProduct', ['slug' => $child->slug, 'id' => $child->id]) }}"
-                                                        class="item-parent">{{ $child->title }}</a>
-                                                    @if (count($child->children) > 0)
-                                                        @forelse($child->children as $lv3)
-                                                            <a href="{{ route('catProduct', ['slug' => $lv3->slug, 'id' => $lv3->id]) }}"
-                                                                class="item-child">{{ $lv3->title }}</a>
-                                                        @empty
-                                                        @endforelse
-                                                    @endif
-                                                </div>
-                                            @empty
-                                            @endforelse
-                                        </div>
-                                        <div class="menu-poster 342342">
-                                            @if (!empty($item->image))
-                                                <img src="{{ $item->image }}" alt="">
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    @empty
-                    @endforelse
-                </div>
-            </div>
-            @if (!empty($menus))
-                @forelse($menus as $item)
-                    <div class="menu-item">
-                        <a href="{{ $item->link }}">{{ $item->name }}</a>
-                        @if (count($item->children) > 0)
-                            <div class="menu-content">
+            <a href="">
+                <i class="fa-solid fa-bars"></i>
+                Danh mục sản phẩm
+            </a>
+            <div class="menu-content">
+                @forelse($cat_products as $item)
+                <div class="menu-item">
+                    <a href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}"
+                        class="menu-btn">{{ $item->title }} <i class="fa-solid fa-angle-right"></i></a>
+                    @if (count($item->children) > 0)
+                    <div class="menu-content">
+                        <div class="position-relative h-100 w-100">
+                            <div class="menu-group-top">
+                                <a
+                                    href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}?sort=1">Nổi
+                                    bật</a>
+                                <a
+                                    href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}?sort=2">Bán
+                                    chạy</a>
+                                <a
+                                    href="{{ route('catProduct', ['slug' => $item->slug, 'id' => $item->id]) }}?sort=3">Hàng
+                                    mới</a>
+                            </div>
+                            <div class="menu-group-bottom">
                                 @forelse($item->children as $child)
-                                    <div class="menu-item">
-                                        <a href="{{ $child->link }}">{{ $child->name }}</a>
-                                    </div>
+                                <div class="menu-col-item">
+                                    <a href="{{ route('catProduct', ['slug' => $child->slug, 'id' => $child->id]) }}"
+                                        class="item-parent">{{ $child->title }}</a>
+                                    @if (count($child->children) > 0)
+                                    @forelse($child->children as $lv3)
+                                    <a href="{{ route('catProduct', ['slug' => $lv3->slug, 'id' => $lv3->id]) }}"
+                                        class="item-child">{{ $lv3->title }}</a>
+                                    @empty
+                                    @endforelse
+                                    @endif
+                                </div>
                                 @empty
                                 @endforelse
                             </div>
-                        @endif
+                            <div class="menu-poster 342342">
+                                @if (!empty($item->image))
+                                <img src="{{ $item->image }}" alt="">
+                                @endif
+                            </div>
+                        </div>
                     </div>
+                    @endif
+                </div>
                 @empty
                 @endforelse
-            @endif
-            <div class="menu-item menu-app ms-auto">
-
             </div>
-            <div class="menu-item menu-search-order">
-                <a href="">Tra cứu đơn hàng</a>
-                <div class="menu-content">
-                    <form action="{{ route('searchOrder') }}" method="POST" name="search-order">
-                        @csrf
-                        <input type="text" class="form-control" placeholder="Nhập số điện thoại ,mã đơn hàng"
-                            name="order" id="order">
-                        <button class="btn" type="submit">Kiểm tra đơn hàng</button>
-                    </form>
+        </div>
+        @if (!empty($menus))
+        @forelse($menus as $item)
+        <div class="menu-item">
+            <a href="{{ $item->link }}">{{ $item->name }}</a>
+            @if (count($item->children) > 0)
+            <div class="menu-content">
+                @forelse($item->children as $child)
+                <div class="menu-item">
+                    <a href="{{ $child->link }}">{{ $child->name }}</a>
                 </div>
+                @empty
+                @endforelse
+            </div>
+            @endif
+        </div>
+        @empty
+        @endforelse
+        @endif
+        <div class="menu-item menu-app ms-auto">
+
+        </div>
+        <div class="menu-item menu-search-order">
+            <a href="">Tra cứu đơn hàng</a>
+            <div class="menu-content">
+                <form action="{{ route('searchOrder') }}" method="POST" name="search-order">
+                    @csrf
+                    <input type="text" class="form-control" placeholder="Nhập số điện thoại ,mã đơn hàng"
+                        name="order" id="order">
+                    <button class="btn" type="submit">Kiểm tra đơn hàng</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 @endif
