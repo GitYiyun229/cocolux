@@ -13,7 +13,7 @@
 
             <div class="layout-main d-grid">
                 @forelse($promotions as $item)
-                <a href="{{ $item->link ?? route('dealHotDetailProducts',['id' => $item->id]) }}" target="_blank" title="{{ $item->name }}">
+                <a href="{{ $item->link ?? route('dealHotDetailProducts',['id' => $item->id]) }}" {!! $item->link ? 'target="_blank"' : '' !!} title="{{ $item->name }}">
                     <img src="{{ $item->thumbnail_url }}" alt="{{ $item->name }}" class="img-fluid mb-2">
                     <div class="fw-bold fs-5">{{ $item->name }}</div>
                 </a>
