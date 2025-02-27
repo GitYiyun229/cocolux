@@ -124,7 +124,7 @@ Route::redirect('/danh-muc/vien-uong-dhc-i.65', '/danh-muc/thuc-pham-chuc-nang-i
 Route::redirect('/danh-muc/thuc-pham-chuc-nang-i.73', '/danh-muc/thuc-pham-chuc-nang-i.177', 301);
 Route::redirect('/danh-muc/nuoc-hoa-nu-i.74', '/danh-muc/nuoc-hoa-nu-i.176', 301);
 Route::redirect('/danh-muc/gift-set-i.77', '/danh-muc/gift-set-i.178', 301);
-Route::redirect('/blog/top-10-mau-toc-nhuom-hot-nhat-2024-i.115', 'blog/top-10-mau-toc-nhuom-hot-nhat-2025-i.115', 301);
+Route::redirect('/blog/top-10-mau-toc-nhuom-hot-nhat-2024-i.115', '/blog/top-10-mau-toc-nhuom-hot-nhat-2025-i.115', 301);
 
 Route::group(['namespace' => 'Web'], function () {
     Route::get('/', 'HomeController@index')->name('home');
