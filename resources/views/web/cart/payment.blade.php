@@ -108,7 +108,9 @@
                                     id="payment1">
                                 <label class="form-check-label" for="payment1">
                                     Chuyển khoản: Tên tài khoản: Phạm Tiến Lợi - Vietcombank : 103878062018 TP Hà Nội - Hội
-                                    sở .Khách hàng thanh toán bằng hình thức chuyển khoản vui lòng ghi lại nội dung chuyển khoản như sau: "Đã chuyển khoản, ngày và giờ chuyển khoản".
+                                    sở.
+                                    </br> 
+                                    Khách hàng thanh toán bằng hình thức chuyển khoản vui lòng ghi lại nội dung chuyển khoản như sau: "Đã chuyển khoản, ngày và giờ chuyển khoản".
                                 </label>
                             </div>
                             <img src="{{ asset('images/payment-coco.jpg') }}" alt="payment" class="img-fluid"
