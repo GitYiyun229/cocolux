@@ -1258,7 +1258,7 @@ class ProductController extends Controller
 
     public function calculator_ship($city_id = null, $district_id = null)
     {
-        $price_ship = 20000;
+        $price_ship = 15000;
 
         $total_price = 0;
         //tính ship, 201 là code hà nội, 234 thanh hóa
