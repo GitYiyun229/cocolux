@@ -1514,9 +1514,9 @@ class ProductController extends Controller
                 $firstElement = reset($data);
                 $name = $firstElement['customerName'];
                 $phone = $firstElement['customerMobile'];
-                $name = strlen($name) > 20 ? substr($name, 0, 20) . '***' : $name;
+                // $name = strlen($name) > 20 ? substr($name, 0, 20) . '***' : $name;
 
-                $phone = substr($phone, 0, -4) . '***';
+                // $phone = substr($phone, 0, -5) . '***';
                 return view('web.cart.detail_order_success_nhanh', compact('data', 'maDonHang', 'phone', 'name'));
             } else {
                 Session::flash('danger', 'Mã đơn hàng không tồn tại');

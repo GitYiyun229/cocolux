@@ -119,7 +119,13 @@
                     Thông tin đơn hàng
                 </div>
                 <div class='order-information bg-white p-3'>
-        
+                    <!-- <div class='block-left'>
+                            <div class='order-title'>Địa chỉ nhận hàng</div>
+                            <div class='order-address'>
+                                <span>Địa chỉ: {{ $order->address }},{{ $order->ward_name }},{{ $order->district_name }},{{ $order->city_name }}</span>
+                                <span>Điện thoại: 0{{ $order->tel }}</span>
+                            </div>
+                        </div> -->
                     <div class='block-right'>
                         <div class="d-none">
                             <span class='highlight'>Phương thức vận chuyển</span>
