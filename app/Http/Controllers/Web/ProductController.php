@@ -264,7 +264,7 @@ class ProductController extends Controller
                     ->orderBy('price', 'asc');
             }])
             ->select('product_options.id', 'product_options.sku', 'product_options.title', 'product_options.parent_id', 'product_options.stocks', 'product_options.price', 'product_options.normal_price', 'product_options.slug', 'product_options.images', 'product_options.hot_deal', 'product_options.flash_deal')
-            ->addSelect('products.title as product_name', 'product_options.brand as opbrand' ,'products.brand AS product_brand')
+            ->addSelect('products.title as product_name', 'product_options.brand as opbrand', 'products.brand AS product_brand')
             ->where('product_options.sku', '!=', null)
             ->join('products', 'product_options.parent_id', '=', 'products.id')
             ->orderByRaw("CASE WHEN stocks IS NULL OR stocks = '[]' THEN 1 ELSE 0 END")
@@ -602,7 +602,7 @@ class ProductController extends Controller
             }])->where('sku', '!=', null)->first();
         $image_deal = '';
         if (!empty($product['promotionItem']['image_deal'])) {
-            $image_deal= $product['promotionItem']['image_deal'];
+            $image_deal = $product['promotionItem']['image_deal'];
         }
         // dd($product['promotionItem']['image_deal']);
         if (!$product) {
@@ -1514,7 +1514,9 @@ class ProductController extends Controller
                 $firstElement = reset($data);
                 $name = $firstElement['customerName'];
                 $phone = $firstElement['customerMobile'];
+                $name = strlen($name) > 20 ? substr($name, 0, 20) . '***' : $name;
 
+                $phone = substr($phone, 0, -4) . '***';
                 return view('web.cart.detail_order_success_nhanh', compact('data', 'maDonHang', 'phone', 'name'));
             } else {
                 Session::flash('danger', 'Mã đơn hàng không tồn tại');
