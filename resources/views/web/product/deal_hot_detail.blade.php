@@ -11,7 +11,7 @@
                     class="img-fluid w-100">
                 @endif
             </div>
-            @if($id == "5454534")
+            @if($id == "485")
             <img src="/public/images/banner485.jpg" alt="">
             @else
             <div class="layout-detail-main bg-white d-grid mb-4">
