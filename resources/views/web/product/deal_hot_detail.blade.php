@@ -16,7 +16,7 @@
                 @if (!empty($productOptions))
                 @forelse($productOptions as $item)
                 @if (!empty($item->slug) && !empty($item->sku))
-                @if($id == "491")
+                @if($id == "495551")
                 <a href="#" class="product-template">
 
                     @else
