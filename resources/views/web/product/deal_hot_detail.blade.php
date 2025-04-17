@@ -11,82 +11,81 @@
                     class="img-fluid w-100">
                 @endif
             </div>
+            @if($id == "5454534")
+            <img src="/public/images/banner485.jpg" alt="">
+            @else
             <div class="layout-detail-main bg-white d-grid mb-4">
 
                 @if (!empty($productOptions))
                 @forelse($productOptions as $item)
                 @if (!empty($item->slug) && !empty($item->sku))
-                @if($id == "495551")
-                <a href="#" class="product-template">
-
+                <a href="{{ route('detailProduct', ['slug' => $item->slug, 'sku' => $item->sku]) }}"
+                    class="product-template">
                     @else
-                    <a href="{{ route('detailProduct', ['slug' => $item->slug, 'sku' => $item->sku]) }}"
-                        class="product-template">
+                    <div class="product-template">
                         @endif
-                        @else
-                        <div class="product-template">
+                        @if ($item->promotionItem && $item->promotionItem->price != $item->normal_price)
+                        <div class="product-discount">
+                            <span class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
+                        </div>
+                        @endif
+                        <div
+                            class="product-thumbnail position-relative {{ $item->promotionItem && $item->promotionItem->applied_stop_time ? 'image-frame2' : '' }}">
+                            <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
+
+                            @if (!empty($item->image_deal))
+                            <div class="position-absolute  top-0 bottom-0">
+                                <img src="{{ asset( $item->image_deal) }}"
+                                    alt="">
+                            </div>
+                            @else
+                            @if ($setting['frame_image_for_sale'])
+                            <div class="position-absolute  top-0 bottom-0"> <img
+                                    src="{{ asset($setting['frame_image_for_sale']) }}" alt="">
+                            </div>
+                            @endif
+                            @endif
+                        </div>
+                        <div class="product-price">
+                            @if (isset($item->promotionItem))
+                            <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
                             @endif
                             @if ($item->promotionItem && $item->promotionItem->price != $item->normal_price)
-                            <div class="product-discount">
-                                <span
-                                    class="pe-1">{{ percentage_price($item->promotionItem->price, $item->normal_price) }}</span>
-                            </div>
+                            <div class="origin-price">{{ format_money($item->normal_price) }}</div>
                             @endif
-                            <div
-                                class="product-thumbnail position-relative {{ $item->promotionItem && $item->promotionItem->applied_stop_time ? 'image-frame2' : '' }}">
-                                <img src="{{ asset($item->image_first) }}" alt="{{ $item->title }}" class="img-fluid">
-
-                                @if (!empty($item->image_deal))
-                                <div class="position-absolute  top-0 bottom-0">
-                                    <img src="{{ asset( $item->image_deal) }}"
-                                        alt="">
-                                </div>
-                                @else
-                                @if ($setting['frame_image_for_sale'])
-                                <div class="position-absolute  top-0 bottom-0"> <img
-                                        src="{{ asset($setting['frame_image_for_sale']) }}" alt="">
-                                </div>
-                                @endif
-                                @endif
-                            </div>
-                            <div class="product-price">
-                                @if (isset($item->promotionItem))
-                                <div class="public-price">{{ format_money($item->promotionItem->price) }}</div>
-                                @endif
-                                @if ($item->promotionItem && $item->promotionItem->price != $item->normal_price)
-                                <div class="origin-price">{{ format_money($item->normal_price) }}</div>
-                                @endif
-                            </div>
-                            <div class="product-brand" style="height: 18px">
-                                @php
-                                $brand = $item->brand ?? $item->opbrand;
-                                if (empty($brand) && isset($item->attributes)) {
-                                foreach ($item->attributes as $attribute) {
-                                if ($attribute['id'] == 19) {
-                                $brand = $attribute['value']['name'];
-                                break;
-                                }
-                                }
-                                }
-                                @endphp
-                                {{ $brand }}
-                            </div>
-                            <div class="product-title">
-                                {{ $item->title }}
-                            </div>
-                            @if ($promotion_hots->applied_stop_time)
-                            <div class="product-progress-sale count-down"
-                                time-end="{{ $promotion_hots->applied_stop_time }}"></div>
-                            @endif
-                            @if (!empty($item->slug) && !empty($item->sku))
-                    </a>
-                    @else
+                        </div>
+                        <div class="product-brand" style="height: 18px">
+                            @php
+                            $brand = $item->brand ?? $item->opbrand;
+                            if (empty($brand) && isset($item->attributes)) {
+                            foreach ($item->attributes as $attribute) {
+                            if ($attribute['id'] == 19) {
+                            $brand = $attribute['value']['name'];
+                            break;
+                            }
+                            }
+                            }
+                            @endphp
+                            {{ $brand }}
+                        </div>
+                        <div class="product-title">
+                            {{ $item->title }}
+                        </div>
+                        @if ($promotion_hots->applied_stop_time)
+                        <div class="product-progress-sale count-down"
+                            time-end="{{ $promotion_hots->applied_stop_time }}"></div>
+                        @endif
+                        @if (!empty($item->slug) && !empty($item->sku))
+                </a>
+                @else
             </div>
             @endif
             @empty
             @endforelse
             @endif
         </div>
+        @endif
+
         @if ($productOptions)
         {{ $productOptions->links('web.components.pagination') }}
         @endif
