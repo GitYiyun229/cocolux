@@ -981,7 +981,7 @@ class ProductController extends Controller
             $productOptions = $productOptions->paginate(30);
         }
 
-        return view('web.product.deal_hot_detail', compact('productOptions', 'promotion_hots'));
+        return view('web.product.deal_hot_detail', compact('productOptions','id', 'promotion_hots'));
     }
 
     public function addToCart(Request $req)
