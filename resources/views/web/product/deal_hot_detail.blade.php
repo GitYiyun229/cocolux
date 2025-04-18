@@ -12,7 +12,7 @@
                 @endif
             </div>
             @if($id == "485")
-            <img class="container" src="{{ asset('images/banner485.jpg') }}" alt="">
+            <img class="container" src="{{ asset('images/Catalogue-01.png') }}" alt="">
             @else
             <div class="layout-detail-main bg-white d-grid mb-4">
 
